@@ -7,7 +7,11 @@ import {
   LOAN_AMOUNT,
   LOAN_INTEREST,
   STAGE_LENGTH,
-  CAMPAIGN_UPKEEP,
+  ARREARS_EFFECTS,
+  ARREARS_SCANDAL_AFTER,
+  CAMPAIGN_SCALES,
+  OFFICE_UPKEEP,
+  scaleCost,
   MOBILIZATION_CAP,
   MOBILIZATION_WEIGHT,
   ISSUE_NOTE_THRESHOLD,
@@ -44,9 +48,10 @@ import {
   type StatKey,
   type Stats,
   type Trait,
+  type CampaignScale,
 } from "./types";
 
-export const STATE_VERSION = 12;
+export const STATE_VERSION = 13;
 
 /**
  * 兩個階段，各 12 回合：
@@ -244,6 +249,10 @@ export function newGame(
     },
     payouts: [],
     loanTaken: false,
+    // 大黨的黨部撥款撐得起標準規模，其他人從精簡開始
+    scale: party.funding >= 700 ? "standard" : "lean",
+    arrears: 0,
+    spending: { staff: 0, ads: 0, events: 0, office: 0, options: 0, loan: 0 },
     turn: 0,
     stats,
     flags,
@@ -424,21 +433,63 @@ export function choose(
   // 媒體聲量退燒
   if (stats.media > MEDIA_FLOOR) stats = { ...stats, media: Math.max(MEDIA_FLOOR, stats.media - MEDIA_DECAY) };
 
-  // 競選總部開銷：付不出來文宣就停擺
+  // 每回合開銷：競選回合依競選規模付人事、廣告、活動；任期中付服務處開銷。
+  // 付不起選定的規模就自動縮編，連精簡都付不起就是欠薪。
+  let scale = state.scale;
+  let arrears = state.arrears;
+  let spending = { ...state.spending, options: state.spending.options + Math.max(0, -(option.funds ?? 0)) };
   if (UPKEEP_PHASES.includes(TURN_PLAN[state.turn])) {
-    if (funds >= CAMPAIGN_UPKEEP) {
-      funds -= CAMPAIGN_UPKEEP;
+    if (funds < scaleCost(scale) && scale !== "lean") {
+      const fallback: CampaignScale = scale === "full" && funds >= scaleCost("standard") ? "standard" : "lean";
+      notices.push({
+        kind: "funds",
+        tone: "bad",
+        text: `經費付不起「${CAMPAIGN_SCALES[scale].label}」規模，競選總部被迫縮編為「${CAMPAIGN_SCALES[fallback].label}」。`,
+      });
+      scale = fallback;
+    }
+    const plan = CAMPAIGN_SCALES[scale];
+    if (funds >= scaleCost(scale)) {
+      const before = stats;
+      funds -= scaleCost(scale);
+      spending = {
+        ...spending,
+        staff: spending.staff + plan.costs.staff,
+        ads: spending.ads + plan.costs.ads,
+        events: spending.events + plan.costs.events,
+      };
+      stats = addDelta(stats, plan.effects);
+      arrears = 0;
+      const c = plan.costs;
+      notices.push({
+        kind: "funds",
+        tone: "bad",
+        text: `競選總部開銷（${plan.label}）：人事 ${c.staff} 萬｜廣告 ${c.ads} 萬｜活動 ${c.events} 萬`,
+        effects: diff(stats, before),
+        funds: -scaleCost(scale),
+      });
     } else {
       const before = stats;
+      spending = { ...spending, staff: spending.staff + funds };
       funds = 0;
-      stats = addDelta(stats, { team: -2 });
+      arrears += 1;
+      stats = addDelta(stats, ARREARS_EFFECTS);
       notices.push({
         kind: "delayed",
         tone: "bad",
-        text: "競選總部付不出開銷：只能靠志工撐著。",
+        text:
+          arrears >= ARREARS_SCANDAL_AFTER
+            ? `連續 ${arrears} 回合發不出薪水。幕僚在網路上爆料「候選人欠薪」，志工也開始請假。`
+            : "競選總部發不出這回合的薪水，幕僚們開始私下找工作。",
         effects: diff(stats, before),
       });
+      if (arrears >= ARREARS_SCANDAL_AFTER) flags = [...new Set([...flags, "unpaid-staff"])];
     }
+  } else {
+    const paid = Math.min(funds, OFFICE_UPKEEP);
+    funds -= paid;
+    spending = { ...spending, office: spending.office + paid };
+    if (paid) notices.push({ kind: "funds", tone: "bad", text: `服務處與政治幕僚開銷：${paid} 萬`, funds: -paid });
   }
 
   // 貸款還款：每回合扣一期；付不出來就逾期上新聞，階段結束還沒還清就違約
@@ -449,6 +500,7 @@ export function choose(
     const due = Math.min(loan.remaining, Math.max(loan.installment, loan.remaining - loan.installment * turnsAfter));
     const paid = Math.min(due, funds);
     funds -= paid;
+    spending = { ...spending, loan: spending.loan + paid };
     loan = { ...loan, remaining: loan.remaining - paid };
     if (paid < due) {
       const before = stats;
@@ -478,6 +530,7 @@ export function choose(
         effects: diff(stats, before),
       });
       loan = { ...loan, remaining: 0 };
+      flags = [...new Set([...flags, "loan-defaulted"])];
     }
   }
 
@@ -521,6 +574,9 @@ export function choose(
     notices,
     crisisLog,
     loan,
+    scale,
+    arrears,
+    spending,
     offered: [],
     history: [
       ...state.history,
@@ -593,4 +649,21 @@ export function totalDelta(state: GameState): Stats {
   const sum = zeroStats();
   for (const h of state.history) for (const k of ALL_STATS) sum[k] += h.delta[k];
   return sum;
+}
+
+/** 調整競選規模：從下一次開銷開始生效 */
+export function setScale(state: GameState, scale: CampaignScale): GameState {
+  return { ...state, scale };
+}
+
+/** 這一回合結束時要付競選規模開銷（競選期與任期尾聲），否則付任期中的服務處開銷 */
+export function isCampaignTurn(turn: number): boolean {
+  return UPKEEP_PHASES.includes(TURN_PLAN[turn]);
+}
+
+/** 下一次入帳還有幾回合，以及照目前數值估計的金額 */
+export function nextPayout(state: GameState): { inTurns: number; estimate: number } {
+  const inTurns = BIG_ROUND - (state.turn % BIG_ROUND);
+  const p = payout(state.stats, state.income);
+  return { inTurns, estimate: p.party + p.donations + p.small };
 }

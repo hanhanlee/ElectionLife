@@ -381,6 +381,26 @@ export interface PendingEffect extends DelayedEffect {
   fromEventId: string;
 }
 
+/** 競選規模：決定每回合的人事、廣告、活動開銷 */
+export type CampaignScale = "lean" | "standard" | "full";
+
+/** 每回合固定開銷的三個項目（萬元） */
+export interface SpendingItems {
+  staff: number;
+  ads: number;
+  events: number;
+}
+
+/** 整局累計的支出，結局頁的「錢花到哪裡去了」 */
+export interface Spending extends SpendingItems {
+  /** 任期中的服務處與幕僚開銷 */
+  office: number;
+  /** 選項裡的活動花費（造勢、廣告、律師費等） */
+  options: number;
+  /** 貸款還款 */
+  loan: number;
+}
+
 export interface GameState {
   version: number;
   seed: number;
@@ -394,6 +414,11 @@ export interface GameState {
   /** 個人貸款：整局只能借一次，借了之後每回合扣本金加利息，必須在該階段結束前還清 */
   loan?: Loan;
   loanTaken: boolean;
+  /** 競選規模，玩家隨時可以調整 */
+  scale: CampaignScale;
+  /** 連續付不出最低開銷（欠薪）的回合數 */
+  arrears: number;
+  spending: Spending;
   /** 0-based，指向 deck 中目前的事件 */
   turn: number;
   stats: Stats;

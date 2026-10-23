@@ -8,7 +8,6 @@ import styles from "./page.module.css";
 const TICK_MS = 70;
 const FIRST_LOCK_MS = 600;
 const LOCK_GAP_MS = 520;
-const HOLD_MS = 900;
 
 const QUIPS = [
   "正在分配你的家世背景…",
@@ -37,27 +36,25 @@ function slotsFor(c: DrawnCharacter): Slot[] {
   ];
 }
 
-/** 「正在隨機你的人生」：每一格像拉霸一樣閃過候選值，再依序定格 */
+/** 「正在隨機你的人生」：每一格像拉霸一樣閃過候選值，再依序定格；全部定格後等玩家按「下一步」 */
 export default function RollingScreen({ character, onDone }: { character: DrawnCharacter; onDone: () => void }) {
   const [reduced] = useState(() => window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false);
   // 以實際經過的時間推進，而不是計算 interval 次數：分頁在背景時計時器會被瀏覽器節流
   const [elapsed, setElapsed] = useState(0);
+  const [skipped, setSkipped] = useState(false);
   const slots = slotsFor(character);
-  const endMs = reduced ? 600 : FIRST_LOCK_MS + LOCK_GAP_MS * (slots.length - 1) + HOLD_MS;
+  const lockAll = FIRST_LOCK_MS + LOCK_GAP_MS * (slots.length - 1);
+  const allLocked = reduced || skipped || elapsed >= lockAll;
 
   useEffect(() => {
+    if (allLocked) return;
     const start = performance.now();
     const id = setInterval(() => setElapsed(performance.now() - start), TICK_MS);
-    const done = setTimeout(onDone, endMs);
-    return () => {
-      clearInterval(id);
-      clearTimeout(done);
-    };
-  }, [onDone, endMs]);
+    return () => clearInterval(id);
+  }, [allLocked]);
 
   const tick = Math.floor(elapsed / TICK_MS);
-  const locked = (i: number) => reduced || elapsed >= FIRST_LOCK_MS + LOCK_GAP_MS * i;
-  const allLocked = slots.every((_, i) => locked(i));
+  const locked = (i: number) => allLocked || elapsed >= FIRST_LOCK_MS + LOCK_GAP_MS * i;
 
   return (
     <main className={styles.main}>
@@ -76,9 +73,15 @@ export default function RollingScreen({ character, onDone }: { character: DrawnC
           );
         })}
       </div>
-      <button className={styles.quiet} onClick={onDone}>
-        跳過動畫
-      </button>
+      {allLocked ? (
+        <button className={styles.primary} onClick={onDone} autoFocus>
+          下一步
+        </button>
+      ) : (
+        <button className={styles.quiet} onClick={() => setSkipped(true)}>
+          跳過動畫
+        </button>
+      )}
     </main>
   );
 }

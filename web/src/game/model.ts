@@ -3,7 +3,7 @@
 // 平衡的目標是好玩、引人反思（「這真的是我們想要候選人做的事嗎？」），不是吻合史實；
 // 中選會數字只是參考，用來讓難度的方向合理。
 
-import type { Issue, Skill, StatDelta, StatKey, Stats } from "./types";
+import type { Issue, Skill, StatDelta, StatKey, Stats, CampaignScale, SpendingItems } from "./types";
 
 export const MODEL_VERSION = "2026.10-draft";
 
@@ -101,8 +101,42 @@ export function payout(stats: Stats, income: { party: number; fundraising: numbe
 export const LOAN_AMOUNT = 3000;
 export const LOAN_INTEREST = 0.15;
 
-/** 競選期與任期尾聲，每回合的競選總部開銷（萬元）；付不出來文宣就停擺 */
-export const CAMPAIGN_UPKEEP = 300;
+/**
+ * 競選規模：競選期與任期尾聲，每回合依規模支出人事、廣告、活動（造勢、晚會）三項開銷。
+ * 規模越大，每回合的聲量與支持越高；付不起時自動縮編，連精簡都付不起就是欠薪。
+ */
+export const CAMPAIGN_SCALES: Record<CampaignScale, { label: string; note: string; costs: SpendingItems; effects: StatDelta }> = {
+  lean: {
+    label: "精簡",
+    note: "只留核心幕僚，不買廣告，活動靠志工",
+    costs: { staff: 180, ads: 0, events: 40 },
+    effects: {},
+  },
+  standard: {
+    label: "標準",
+    note: "正常編制的競選總部，固定的網路與電視廣告",
+    costs: { staff: 250, ads: 150, events: 100 },
+    effects: { media: 1 },
+  },
+  full: {
+    label: "全面",
+    note: "大量人力、全媒體廣告、每週造勢晚會",
+    costs: { staff: 400, ads: 450, events: 350 },
+    effects: { media: 2, approval: 1 },
+  },
+};
+
+export const scaleCost = (scale: CampaignScale) => {
+  const c = CAMPAIGN_SCALES[scale].costs;
+  return c.staff + c.ads + c.events;
+};
+
+/** 任期中（非競選回合）每回合的服務處與政治幕僚開銷 */
+export const OFFICE_UPKEEP = 200;
+
+/** 連精簡規模都付不起時的欠薪懲罰；連續欠薪會被爆料 */
+export const ARREARS_EFFECTS: StatDelta = { team: -4, approval: -2, media: -2 };
+export const ARREARS_SCANDAL_AFTER = 2;
 
 /**
  * 選前動員：投票前，剩下的競選經費自動投入動員（宣傳車、文宣、交通接駁、拜票人力），

@@ -22,7 +22,10 @@ import {
   FIRST_ELECTION_TURN,
   newGame,
   offeredOptions,
+  isCampaignTurn,
   lacksFunds,
+  nextPayout,
+  setScale,
   optionAvailability,
   takeLoan,
   TURN_PLAN,
@@ -30,8 +33,20 @@ import {
 import { difficultyLabel, estimateFirstWinRate } from "@/game/difficulty";
 import { composeIntro, drawCharacter, type DrawnCharacter } from "@/game/profile";
 import RollingScreen from "./RollingScreen";
+import ResultBanner from "./ResultBanner";
+import { buildEpilogue } from "@/game/epilogue";
 import { summarize, type FinalStage, type ReflectionItem } from "@/game/endings";
-import { LOAN_AMOUNT, LOAN_INTEREST, MODEL_VERSION, STAGE_LENGTH, VOTE_WEIGHTS, WEIGHT_NOTES } from "@/game/model";
+import {
+  CAMPAIGN_SCALES,
+  LOAN_AMOUNT,
+  LOAN_INTEREST,
+  MODEL_VERSION,
+  OFFICE_UPKEEP,
+  scaleCost,
+  STAGE_LENGTH,
+  VOTE_WEIGHTS,
+  WEIGHT_NOTES,
+} from "@/game/model";
 import { newSeed } from "@/game/rng";
 import { clearGame, loadGame, saveGame } from "@/game/storage";
 import {
@@ -40,6 +55,7 @@ import {
   STAT_HINTS,
   STAT_LABELS,
   VISIBLE_STATS,
+  type CampaignScale,
   type Condition,
   type Notice,
   type GameState,
@@ -180,6 +196,7 @@ export default function Game() {
         {stageLabel(game, shownTurn)} 第 {(shownTurn % STAGE_LENGTH) + 1} / {STAGE_LENGTH} 回合 ·{" "}
         {phaseLabel(game, TURN_PLAN[shownTurn])}
       </p>
+      {!outcome && <BudgetPanel state={game} onScale={(scale) => setGame(setScale(game, scale))} />}
       {!outcome && canTakeLoan(game) && <LoanOffer state={game} onTake={() => setGame(takeLoan(game))} />}
 
       {outcome ? (
@@ -426,6 +443,57 @@ function formatFunds(n: number): string {
   return `${n.toLocaleString()} 萬`;
 }
 
+const SCALE_ORDER: CampaignScale[] = ["lean", "standard", "full"];
+
+/** 每回合的預算：競選回合選規模（人事、廣告、活動），任期中只有服務處開銷 */
+function BudgetPanel({ state, onScale }: { state: GameState; onScale: (scale: CampaignScale) => void }) {
+  const next = nextPayout(state);
+  const loanDue = state.loan && state.loan.remaining > 0 ? state.loan.installment : 0;
+  if (!isCampaignTurn(state.turn)) {
+    return (
+      <p className={styles.turn}>
+        任期中：每回合服務處與政治幕僚開銷 {formatFunds(OFFICE_UPKEEP)}。下次入帳在 {next.inTurns} 回合後，預估{" "}
+        {formatFunds(next.estimate)}。
+      </p>
+    );
+  }
+  const burn = scaleCost(state.scale) + loanDue;
+  const lasts = burn > 0 ? Math.floor(state.funds / burn) : Infinity;
+  return (
+    <section className={styles.budget}>
+      <div className={styles.scaleRow} role="radiogroup" aria-label="競選規模">
+        {SCALE_ORDER.map((k) => {
+          const plan = CAMPAIGN_SCALES[k];
+          const effect = formatDelta(plan.effects);
+          return (
+            <button
+              key={k}
+              role="radio"
+              aria-checked={state.scale === k}
+              className={state.scale === k ? styles.scaleOn : styles.scaleOff}
+              onClick={() => onScale(k)}
+            >
+              <strong>{plan.label}</strong>
+              <span>{formatFunds(scaleCost(k))}／回合</span>
+              <small>{effect || "沒有額外效果"}</small>
+            </button>
+          );
+        })}
+      </div>
+      <p className={styles.budgetNote}>
+        {CAMPAIGN_SCALES[state.scale].note}。人事 {CAMPAIGN_SCALES[state.scale].costs.staff}｜廣告{" "}
+        {CAMPAIGN_SCALES[state.scale].costs.ads}｜活動 {CAMPAIGN_SCALES[state.scale].costs.events} 萬
+        {loanDue > 0 && `，另有貸款還款 ${loanDue} 萬`}。
+      </p>
+      <p className={lasts <= next.inTurns ? styles.budgetWarn : styles.budgetNote}>
+        照這個規模，經費可以撐 {lasts === Infinity ? "很久" : `${lasts} 回合`}；下次入帳在 {next.inTurns} 回合後，預估{" "}
+        {formatFunds(next.estimate)}。
+        {lasts < next.inTurns && " 撐不到下次入帳：會被迫縮編，連精簡都付不起就是欠薪。"}
+      </p>
+    </section>
+  );
+}
+
 function FundsSummary({ state }: { state: GameState }) {
   const sum = (k: "party" | "donations" | "small") => state.payouts.reduce((s, p) => s + p[k], 0);
   const raised = state.history.reduce((s, h) => {
@@ -434,13 +502,24 @@ function FundsSummary({ state }: { state: GameState }) {
   }, 0);
   const loan = state.loan?.principal ?? 0;
   const income = sum("party") + sum("donations") + sum("small") + raised + loan;
+  const sp = state.spending;
+  const mobilization = state.firstElection?.mobilization ?? 0;
   return (
-    <p>
-      競選經費收入：黨部撥款 {formatFunds(sum("party"))}、政治獻金 {formatFunds(sum("donations"))}、
-      小額捐款 {formatFunds(sum("small"))}、其他募得 {formatFunds(raised)}
-      {loan > 0 && `、個人貸款 ${formatFunds(loan)}`}。花掉 {formatFunds(Math.max(0, income - state.funds))}
-      （活動、競選總部開銷、選前動員、還款、律師費），剩下 {formatFunds(state.funds)}。
-    </p>
+    <>
+      <p>
+        收入：黨部撥款 {formatFunds(sum("party"))}、政治獻金 {formatFunds(sum("donations"))}、小額捐款{" "}
+        {formatFunds(sum("small"))}、其他募得 {formatFunds(raised)}
+        {loan > 0 && `、個人貸款 ${formatFunds(loan)}`}，共 {formatFunds(income)}。
+      </p>
+      <p>
+        支出：人事 {formatFunds(sp.staff)}、廣告 {formatFunds(sp.ads)}、造勢與活動 {formatFunds(sp.events + sp.options)}
+        {sp.office > 0 && `、服務處 ${formatFunds(sp.office)}`}
+        {mobilization > 0 && `、第一次選前動員 ${formatFunds(mobilization)}`}
+        {sp.loan > 0 && `、貸款還款 ${formatFunds(sp.loan)}`}。剩下 {formatFunds(state.funds)}
+        （最後一次投票前自動投入動員）。
+      </p>
+      {state.flags.includes("unpaid-staff") && <p className={styles.notice}>⚠ 你曾經連續欠薪，幕僚上網爆料。</p>}
+    </>
   );
 }
 
@@ -627,15 +706,33 @@ function EndScreen({ state, onRestart }: { state: GameState; onRestart: () => vo
   const party = partyById(state.character.party);
   const challengers = HISTORY.challengers[party.id as keyof typeof HISTORY.challengers];
 
+  const story = buildEpilogue(state, EVENTS, s);
+
   return (
     <main className={styles.main}>
+      <ResultBanner
+        won={s.election.won}
+        result={s.election.won ? winText : loseText}
+        character={characterLabel(state)}
+        vote={Math.round(s.election.probability * 100)}
+      />
+
       <section className={styles.card}>
-        <p className={styles.turn}>{characterLabel(state)}｜{s.election.won ? winText : loseText}</p>
-        <h1 className={styles.title}>{s.ending.title}</h1>
+        <p className={styles.turn}>後日談｜{s.ending.title}</p>
+        <h1 className={styles.epilogueHeadline}>{story.headline}</h1>
         <p className={styles.lead}>{s.ending.tagline}</p>
-        <p>{s.persona}</p>
+        <div className={styles.epilogue}>
+          {story.paragraphs.map((p) => <p key={p}>{p}</p>)}
+        </div>
+        <p><small>{s.persona}</small></p>
       </section>
 
+      <div className={styles.endActions}>
+        <button className={styles.primary} onClick={onRestart}>再來一局</button>
+        <a className={styles.analysisLink} href="#analysis">往下看這一局的事件分析 ↓</a>
+      </div>
+
+      <div id="analysis" />
       <VoterReflection
         items={s.reflection}
         shareHead={`我在《選舉人生》以「${characterLabel(state)}」${s.election.won ? winText : loseText}`}
@@ -752,7 +849,7 @@ function EndScreen({ state, onRestart }: { state: GameState; onRestart: () => vo
         </ul>
       </section>
 
-      <button className={styles.primary} onClick={onRestart}>再選一次</button>
+      <button className={styles.primary} onClick={onRestart}>再來一局</button>
     </main>
   );
 }

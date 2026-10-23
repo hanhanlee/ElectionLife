@@ -13,9 +13,11 @@ import {
   canTakeLoan,
   resolveOption,
   takeLoan,
+  setScale,
 } from "./engine";
-import { LOAN_AMOUNT, LOAN_INTEREST, payout, SKILL_EFFECTS, STAGE_LENGTH } from "./model";
+import { CAMPAIGN_SCALES, LOAN_AMOUNT, LOAN_INTEREST, OFFICE_UPKEEP, payout, scaleCost, SKILL_EFFECTS, STAGE_LENGTH } from "./model";
 import { summarize } from "./endings";
+import { buildEpilogue } from "./epilogue";
 import { mulberry32 } from "./rng";
 import { validateEvents } from "./validate";
 import type { Background, GameOption, GameState, Party } from "./types";
@@ -95,6 +97,28 @@ describe("事件庫", () => {
       const s = newGame(EVENTS, 1, PARTIES[0], b);
       expect(currentEvent(s, EVENTS)!.conditions?.flags).toContain(`bg-${b.id}`);
     }
+  });
+
+  it("後日談會提到這一局玩過的關鍵事件，也有城市專屬段落", () => {
+    let mentioned = 0;
+    for (let seed = 1; seed <= 200; seed++) {
+      const g = playRandom(seed);
+      const s = summarize(g, EVENTS);
+      const text = buildEpilogue(g, EVENTS, s).paragraphs.join("");
+      if (s.reflection.some((r) => text.includes(`「${r.eventTitle}」`) || text.includes(r.eventTitle))) mentioned++;
+    }
+    expect(mentioned).toBeGreaterThan(150);
+  });
+
+  it("同一局重算後日談，結果不變；不同局讀到的段落不同", () => {
+    const g = playRandom(11);
+    const a = buildEpilogue(g, EVENTS, summarize(g, EVENTS));
+    expect(buildEpilogue(g, EVENTS, summarize(g, EVENTS))).toEqual(a);
+    const stories = new Set(Array.from({ length: 100 }, (_, i) => {
+      const x = playRandom(i + 1);
+      return buildEpilogue(x, EVENTS, summarize(x, EVENTS)).paragraphs.join("|");
+    }));
+    expect(stories.size).toBe(100);
   });
 });
 
@@ -242,6 +266,28 @@ describe("數值都有意義", () => {
         for (let i = 1; i < turns.length; i++) expect(turns[i] - turns[i - 1]).toBeGreaterThanOrEqual(3);
       }
     }
+  });
+
+  it("後日談會提到這一局玩過的關鍵事件，也有城市專屬段落", () => {
+    let mentioned = 0;
+    for (let seed = 1; seed <= 200; seed++) {
+      const g = playRandom(seed);
+      const s = summarize(g, EVENTS);
+      const text = buildEpilogue(g, EVENTS, s).paragraphs.join("");
+      if (s.reflection.some((r) => text.includes(`「${r.eventTitle}」`) || text.includes(r.eventTitle))) mentioned++;
+    }
+    expect(mentioned).toBeGreaterThan(150);
+  });
+
+  it("同一局重算後日談，結果不變；不同局讀到的段落不同", () => {
+    const g = playRandom(11);
+    const a = buildEpilogue(g, EVENTS, summarize(g, EVENTS));
+    expect(buildEpilogue(g, EVENTS, summarize(g, EVENTS))).toEqual(a);
+    const stories = new Set(Array.from({ length: 100 }, (_, i) => {
+      const x = playRandom(i + 1);
+      return buildEpilogue(x, EVENTS, summarize(x, EVENTS)).paragraphs.join("|");
+    }));
+    expect(stories.size).toBe(100);
   });
 });
 
@@ -601,5 +647,103 @@ describe("換你當選民", () => {
     const withItems = games({}, 300).filter((s) => summarize(s, EVENTS).reflection.length > 0).length;
     console.log(`有反思題的局：${pct(withItems / 300)}`);
     expect(withItems / 300).toBeGreaterThan(0.98);
+  });
+});
+
+describe("後日談", () => {
+  it("每一局都有大標與至少四段故事，且段落不重複", () => {
+    for (let seed = 1; seed <= 200; seed++) {
+      const g = playRandom(seed);
+      const story = buildEpilogue(g, EVENTS, summarize(g, EVENTS));
+      expect(story.headline.length).toBeGreaterThan(0);
+      expect(story.paragraphs.length).toBeGreaterThanOrEqual(4);
+      expect(new Set(story.paragraphs).size).toBe(story.paragraphs.length);
+    }
+  });
+
+  it("貸款違約的人，後日談會寫到傾家蕩產", () => {
+    const g = playRandom(7);
+    const broke = { ...g, flags: [...g.flags, "loan-defaulted"], loanTaken: true };
+    const story = buildEpilogue(broke, EVENTS, summarize(broke, EVENTS));
+    expect(story.paragraphs.join("")).toContain("銀行");
+    expect(["為了選舉傾家蕩產的人", "把房子押進票匭的人", "被起訴的前候選人", "從選舉公報走進起訴書的人"]).toContain(story.headline);
+  });
+
+  it("落選的挑戰者不會被寫成做過市長", () => {
+    for (let seed = 1; seed <= 200; seed++) {
+      const g = playRandom(seed);
+      const s = summarize(g, EVENTS);
+      if (s.stage !== "first" || g.flags.includes("bg-incumbent")) continue;
+      const text = buildEpilogue(g, EVENTS, s).paragraphs.join("");
+      expect(text).not.toContain("任期");
+      expect(text).not.toContain("卸任");
+    }
+  });
+
+  it("後日談會提到這一局玩過的關鍵事件，也有城市專屬段落", () => {
+    let mentioned = 0;
+    for (let seed = 1; seed <= 200; seed++) {
+      const g = playRandom(seed);
+      const s = summarize(g, EVENTS);
+      const text = buildEpilogue(g, EVENTS, s).paragraphs.join("");
+      if (s.reflection.some((r) => text.includes(`「${r.eventTitle}」`) || text.includes(r.eventTitle))) mentioned++;
+    }
+    expect(mentioned).toBeGreaterThan(150);
+  });
+
+  it("同一局重算後日談，結果不變；不同局讀到的段落不同", () => {
+    const g = playRandom(11);
+    const a = buildEpilogue(g, EVENTS, summarize(g, EVENTS));
+    expect(buildEpilogue(g, EVENTS, summarize(g, EVENTS))).toEqual(a);
+    const stories = new Set(Array.from({ length: 100 }, (_, i) => {
+      const x = playRandom(i + 1);
+      return buildEpilogue(x, EVENTS, summarize(x, EVENTS)).paragraphs.join("|");
+    }));
+    expect(stories.size).toBe(100);
+  });
+});
+
+describe("競選規模與開銷", () => {
+  const pickFree = (s: GameState) => {
+    const e = currentEvent(s, EVENTS)!;
+    return offeredOptions(s, e).find((o) => !o.funds && optionAvailability(s, o) === "open")!.id;
+  };
+
+  it("大黨從標準規模開始，小黨從精簡開始", () => {
+    expect(newGame(EVENTS, 1, PARTIES.find((p) => p.id === "blue")!, BACKGROUNDS[1]).scale).toBe("standard");
+    expect(newGame(EVENTS, 1, PARTIES.find((p) => p.id === "minor")!, BACKGROUNDS[1]).scale).toBe("lean");
+  });
+
+  it("每個競選回合依規模扣人事、廣告、活動，並記錄在支出裡", () => {
+    let s = setScale(newGame(EVENTS, 3, PARTIES[0], BACKGROUNDS[1]), "standard");
+    s = { ...s, funds: 5000 };
+    const next = choose(s, EVENTS, pickFree(s), [], PARTIES);
+    const c = CAMPAIGN_SCALES.standard.costs;
+    expect(next.spending.staff).toBe(c.staff);
+    expect(next.spending.ads).toBe(c.ads);
+    expect(next.spending.events).toBe(c.events);
+    expect(next.notices.some((n) => n.text.startsWith("競選總部開銷"))).toBe(true);
+  });
+
+  it("付不起選定的規模會自動縮編；連精簡都付不起就欠薪，連續欠薪會被爆料", () => {
+    let s = setScale(newGame(EVENTS, 3, PARTIES[0], BACKGROUNDS[1]), "full");
+    s = { ...s, funds: scaleCost("standard") };
+    let next = choose(s, EVENTS, pickFree(s), [], PARTIES);
+    expect(next.scale).toBe("standard");
+    expect(next.funds).toBe(0);
+    for (let i = 0; i < 2; i++) {
+      next = choose({ ...next, funds: 0, notices: [] }, EVENTS, pickFree(next), [], PARTIES);
+    }
+    expect(next.arrears).toBe(2);
+    expect(next.flags).toContain("unpaid-staff");
+  });
+
+  it("任期中只扣服務處開銷", () => {
+    let s = playRandom(5);
+    // 找一局有進入任期的
+    for (let seed = 5; !s.firstElection?.won; seed++) s = playRandom(seed);
+    const termTurns = s.history.filter((h) => TURN_PLAN[h.turn] === "term").length;
+    expect(s.spending.office).toBeLessThanOrEqual(termTurns * OFFICE_UPKEEP);
+    expect(termTurns).toBeGreaterThan(0);
   });
 });

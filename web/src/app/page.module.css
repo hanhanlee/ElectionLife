@@ -318,3 +318,161 @@
     animation: none;
   }
 }
+
+/* 結局頁：開票結果大圖 */
+.bannerWin,
+.bannerLose {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  padding: 36px 20px 28px;
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.bannerWin {
+  background: linear-gradient(160deg, #b91c1c, #7f1d1d);
+}
+
+.bannerLose {
+  background: linear-gradient(160deg, #475569, #1e293b);
+}
+
+.bannerArt {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.bannerLabel,
+.bannerVote,
+.bannerSash,
+.bannerStamp {
+  position: relative;
+}
+
+.bannerLabel {
+  font-size: 0.875rem;
+  opacity: 0.9;
+}
+
+.bannerVote {
+  font-size: 0.8125rem;
+  opacity: 0.8;
+}
+
+.bannerSash,
+.bannerStamp {
+  font-size: clamp(2.75rem, 14vw, 4.5rem);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: 0.08em;
+}
+
+/* 當選：金色彩帶 */
+.bannerSash {
+  color: #7f1d1d;
+  background: linear-gradient(180deg, #fde68a, #f59e0b);
+  padding: 6px 28px;
+  border-radius: 6px;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
+  transform: rotate(-3deg);
+}
+
+/* 落選：褪色印章 */
+.bannerStamp {
+  color: #e2e8f0;
+  border: 4px solid #e2e8f0;
+  padding: 4px 24px;
+  border-radius: 8px;
+  transform: rotate(4deg);
+  opacity: 0.9;
+}
+
+.epilogue {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  line-height: 1.8;
+}
+
+.epilogueHeadline {
+  font-size: 1.5rem;
+  line-height: 1.4;
+}
+
+.endActions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.analysisLink {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+/* 每回合預算：競選規模 */
+.budget {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.scaleRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.scaleOn,
+.scaleOff {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 4px;
+  border-radius: 10px;
+  font: inherit;
+  cursor: pointer;
+  color: var(--foreground);
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.scaleOn {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.scaleOn span,
+.scaleOff span {
+  font-size: 0.8125rem;
+  color: var(--accent);
+}
+
+.scaleOn small,
+.scaleOff small {
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+.budgetNote {
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+.budgetWarn {
+  font-size: 0.8125rem;
+  color: var(--warn);
+  font-weight: 600;
+}
