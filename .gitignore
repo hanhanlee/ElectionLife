@@ -1,0 +1,3 @@
+# 原始 PDF 體積大，以 manifest 記錄來源，可用 scripts 重抓
+data/raw/**/*.pdf
+__pycache__/

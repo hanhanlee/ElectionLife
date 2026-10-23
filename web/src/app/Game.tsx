@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { EVENTS } from "@/content";
+import { EVENTS, HISTORY } from "@/content";
 import { choose, currentEvent, newGame, optionAvailability, TURN_PLAN } from "@/game/engine";
 import { summarize } from "@/game/endings";
 import { VOTE_WEIGHTS, WEIGHT_NOTES, MODEL_VERSION } from "@/game/model";
@@ -189,6 +189,10 @@ function EndScreen({ state, onRestart }: { state: GameState; onRestart: () => vo
         <h2>為什麼是這個結果？</h2>
         <p>模型估計的連任機率：{Math.round(s.election.probability * 100)}%</p>
         <ul className={styles.list}>
+          <li>
+            現任優勢：加分 {s.election.incumbency.toFixed(2)}
+            <small> — 知名度、行政資源與媒體曝光，不管你做了什麼都有。</small>
+          </li>
           {s.election.contributions.filter((c) => VOTE_WEIGHTS[c.stat] > 0).map((c) => (
             <li key={c.stat}>
               {STAT_LABELS[c.stat]}：{c.value >= 0 ? "加分" : "扣分"} {Math.abs(c.value).toFixed(2)}
@@ -197,6 +201,27 @@ function EndScreen({ state, onRestart }: { state: GameState; onRestart: () => vo
           ))}
         </ul>
         <p><small>{WEIGHT_NOTES.integrity}（模型版本 {MODEL_VERSION}，非真實得票預測）</small></p>
+      </section>
+
+      <section className={styles.card}>
+        <h2>現實中呢？</h2>
+        <p>
+          {HISTORY.period} 年間，縣市長以上的現任者尋求連任，{HISTORY.overall.incumbents_running} 人中有{" "}
+          {HISTORY.overall.incumbents_won} 人成功，連任率{" "}
+          <strong>{Math.round(HISTORY.overall.incumbent_win_rate * 100)}%</strong>。直轄市長是{" "}
+          {HISTORY.direct_municipality.incumbents_running} 人中 {HISTORY.direct_municipality.incumbents_won} 人。
+        </p>
+        <p>
+          {s.election.won
+            ? "你和多數現任者一樣連任了。值得想想：選票獎勵的，是你做的哪些事？"
+            : "你屬於少數沒能連任的現任者。現任優勢很大，但不是萬能的。"}
+        </p>
+        <p>
+          <small>
+            資料來源：<a href={HISTORY.source_url} target="_blank" rel="noreferrer">{HISTORY.source_title}</a>
+            （擷取於 {HISTORY.retrieved_at}）。描述性統計，不代表任何行為與連任的因果關係。
+          </small>
+        </p>
       </section>
 
       <section className={styles.card}>

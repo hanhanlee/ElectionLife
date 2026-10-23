@@ -32,8 +32,15 @@ export const WEIGHT_NOTES: Partial<Record<StatKey, string>> = {
   integrity: "本模型假設原則本身不直接換到選票，這正是遊戲想讓你思考的地方。",
 };
 
-/** 基準截距：所有數值皆為 50 時的連任機率約 50% */
+/** 基準截距：所有數值皆為 50 且不計現任優勢時，連任機率約 50% */
 export const VOTE_BIAS = 0;
+
+/**
+ * 現任優勢（logit）：知名度、行政資源與媒體曝光。
+ * 校準目標是中選會 1994–2022 年縣市長以上現任連任率約 73%（content/history.json），
+ * 以隨機策略的連任率接近此數字為準，調整後須跑 npm test 確認。
+ */
+export const INCUMBENCY_BONUS = 0.45;
 
 /** 隨機擾動幅度（logit），代表對手、時事與投票率等不可控因素 */
 export const VOTE_NOISE = 0.6;

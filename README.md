@@ -14,6 +14,8 @@ web/                    Next.js 16（output: export，無後端）
   src/content/events.json  事件庫
 ```
 
+資料抓取腳本在 `scripts/`，原始與彙總資料在 `data/`，來源審閱見 [docs/data-sources-review.md](docs/data-sources-review.md)。
+
 ## 指令（在 `web/` 內）
 
 - `npm run dev`：開發伺服器

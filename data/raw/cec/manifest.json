@@ -1,0 +1,110 @@
+[
+  {
+    "file": "list_C1.json",
+    "source_url": "https://db.cec.gov.tw/static/elections/list/ELC_C1.json",
+    "retrieved_at": "2026-10-23T04:50:34+00:00",
+    "sha256": "3475408d990cb0d6e3c71bc2dcffbc71339fb7d751bdfd959f14d9ac621854f8"
+  },
+  {
+    "file": "tickets/C1/111_05cc7b904c7a30cc7c88d5b10898c98e.json",
+    "source_url": "https://db.cec.gov.tw/static/elections/data/tickets/ELC/C1/00/05cc7b904c7a30cc7c88d5b10898c98e/C/00_000_00_000_0000.json",
+    "retrieved_at": "2026-10-23T04:50:35+00:00",
+    "sha256": "18fadc2e438ba3399e7707970a01aaf441f3d945cd9545b282ac0822c60c6e68"
+  },
+  {
+    "file": "tickets/C1/107_a0222f6529a3ff2192a1a04f209eaac3.json",
+    "source_url": "https://db.cec.gov.tw/static/elections/data/tickets/ELC/C1/00/a0222f6529a3ff2192a1a04f209eaac3/C/00_000_00_000_0000.json",
+    "retrieved_at": "2026-10-23T04:50:37+00:00",
+    "sha256": "f6eb74a9f2b2e20876544d52d71ad3c34537fc5697061b208e19b1f9bee02580"
+  },
+  {
+    "file": "tickets/C1/103_45ca615ee3ff7b12238c79783524bd8f.json",
+    "source_url": "https://db.cec.gov.tw/static/elections/data/tickets/ELC/C1/00/45ca615ee3ff7b12238c79783524bd8f/C/00_000_00_000_0000.json",
+    "retrieved_at": "2026-10-23T04:50:38+00:00",
+    "sha256": "0a10a770e90be6ef91a33dfa8bd6e05096eb7cdd4f2f91b6ee146e2a9b1f1f88"
+  },
+  {
+    "file": "tickets/C1/99_e613c42ee1eddb1fc8c7a75a420ef033.json",
+    "source_url": "https://db.cec.gov.tw/static/elections/data/tickets/ELC/C1/00/e613c42ee1eddb1fc8c7a75a420ef033/C/00_000_00_000_0000.json",
+    "retrieved_at": "2026-10-23T04:50:39+00:00",
+    "sha256": "9e07dbd8ee303f2cf0c9fcfffb8e413c7aa720fcc02d1052902a60bba2f7bf13"
+  },
+  {
+    "file": "tickets/C1/95_d2ce132760640611c410338a3136e810.json",
+    "source_url": "https://db.cec.gov.tw/static/elections/data/tickets/ELC/C1/00/d2ce132760640611c410338a3136e810/C/00_000_00_000_0000.json",
+    "retrieved_at": "2026-10-23T04:50:40+00:00",
+    "sha256": "563c2d54c171c304369a9bd3b5f6d429aaf650c68a9f06becda38d466f758cae"
+  },
+  {
+    "file": "tickets/C1/91_a31daef43bd42a9613254e2d3d18fdbd.json",
+    "source_url": "https://db.cec.gov.tw/static/elections/data/tickets/ELC/C1/00/a31daef43bd42a9613254e2d3d18fdbd/C/00_000_00_000_0000.json",
+    "retrieved_at": "2026-10-23T04:50:41+00:00",
+    "sha256": "f92ad6e2713f8f6adafd32daa98dfdb98d1035441d418b38eedcceb5ab318dab"
+  },
+  {
+    "file": "tickets/C1/87_1cc537ea416941769d8e715a4c37ee6b.json",
+    "source_url": "https://db.cec.gov.tw/static/elections/data/tickets/ELC/C1/00/1cc537ea416941769d8e715a4c37ee6b/C/00_000_00_000_0000.json",
+    "retrieved_at": "2026-10-23T04:50:42+00:00",
+    "sha256": "cd7ab9101b6bcaa4d59755e6c035e4d64374e88764c468062f7a94b7fdcba043"
+  },
+  {
+    "file": "tickets/C1/83_81714e9f8f0072a65451bac5810796fa.json",
+    "source_url": "https://db.cec.gov.tw/static/elections/data/tickets/ELC/C1/00/81714e9f8f0072a65451bac5810796fa/C/00_000_00_000_0000.json",
+    "retrieved_at": "2026-10-23T04:50:43+00:00",
+    "sha256": "017d2853caf5ab025d3565267b7aa7be25bdb93e32adcf88f33a2007bc68c69d"
+  },
+  {
+    "file": "list_C2.json",
+    "source_url": "https://db.cec.gov.tw/static/elections/list/ELC_C2.json",
+    "retrieved_at": "2026-10-23T04:50:44+00:00",
+    "sha256": "d88fc7afd1f782d6ef7ee3f3f4d6f3ab294fe42148056bcb0ae32901c452cc08"
+  },
+  {
+    "file": "tickets/C2/111_1275d73551f2c0caf202e803b1766057.json",
+    "source_url": "https://db.cec.gov.tw/static/elections/data/tickets/ELC/C2/00/1275d73551f2c0caf202e803b1766057/C/00_000_00_000_0000.json",
+    "retrieved_at": "2026-10-23T04:50:45+00:00",
+    "sha256": "c3c4b481f15e34e2eed69abfbb3a2bc2453e455d866f2497a98527e74d2e6e52"
+  },
+  {
+    "file": "tickets/C2/111_63615098f5afa8ec53159c4a86fc01d3.json",
+    "source_url": "https://db.cec.gov.tw/static/elections/data/tickets/ELC/C2/00/63615098f5afa8ec53159c4a86fc01d3/C/00_000_00_000_0000.json",
+    "retrieved_at": "2026-10-23T04:50:46+00:00",
+    "sha256": "7455b1b37ad15f146d776c9ade05f32a32297bb3cb1abb57725bf551b0b86663"
+  },
+  {
+    "file": "tickets/C2/107_f75e94cad2958f8764f9d090e72b5567.json",
+    "source_url": "https://db.cec.gov.tw/static/elections/data/tickets/ELC/C2/00/f75e94cad2958f8764f9d090e72b5567/C/00_000_00_000_0000.json",
+    "retrieved_at": "2026-10-23T04:50:47+00:00",
+    "sha256": "cfba9e111d63cb9ff73c70550b44fc90fad888c3406f6412a321ef10dae1a432"
+  },
+  {
+    "file": "tickets/C2/103_4d5371ae79267a6fd9bb78199c636cfb.json",
+    "source_url": "https://db.cec.gov.tw/static/elections/data/tickets/ELC/C2/00/4d5371ae79267a6fd9bb78199c636cfb/C/00_000_00_000_0000.json",
+    "retrieved_at": "2026-10-23T04:50:49+00:00",
+    "sha256": "6def23862fe1915bec13230847eb5b2af95582d40b563b845650bdf82320b72b"
+  },
+  {
+    "file": "tickets/C2/98_ca9356e2d1cdde43ef4f7115f4898bf5.json",
+    "source_url": "https://db.cec.gov.tw/static/elections/data/tickets/ELC/C2/00/ca9356e2d1cdde43ef4f7115f4898bf5/C/00_000_00_000_0000.json",
+    "retrieved_at": "2026-10-23T04:50:50+00:00",
+    "sha256": "d20698c4fbc325ecac5d401bca0e2e35b68c78a9082db3a63fa47d7b0b242993"
+  },
+  {
+    "file": "tickets/C2/94_0da76d11a1f55dded2bbc358b26cd293.json",
+    "source_url": "https://db.cec.gov.tw/static/elections/data/tickets/ELC/C2/00/0da76d11a1f55dded2bbc358b26cd293/C/00_000_00_000_0000.json",
+    "retrieved_at": "2026-10-23T04:50:51+00:00",
+    "sha256": "9905a19a66b2f9dea30f5fdc177f133ef39e3993b4db8c05ed102b94805800d7"
+  },
+  {
+    "file": "tickets/C2/90_333346bf02c9949349a6735cebaddf4f.json",
+    "source_url": "https://db.cec.gov.tw/static/elections/data/tickets/ELC/C2/00/333346bf02c9949349a6735cebaddf4f/C/00_000_00_000_0000.json",
+    "retrieved_at": "2026-10-23T04:50:52+00:00",
+    "sha256": "947a3908178ee073400017f430aa14adbf2cad10016a49c54ce8d7a19b543546"
+  },
+  {
+    "file": "tickets/C2/86_8a062c6eb5089dceb912a02713b136d8.json",
+    "source_url": "https://db.cec.gov.tw/static/elections/data/tickets/ELC/C2/00/8a062c6eb5089dceb912a02713b136d8/C/00_000_00_000_0000.json",
+    "retrieved_at": "2026-10-23T04:50:53+00:00",
+    "sha256": "98ac36bb6ab4860f92279c8142dad4a4bcf6c8b4639ff3f4229267c618d7b14d"
+  }
+]

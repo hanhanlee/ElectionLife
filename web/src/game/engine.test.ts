@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { EVENTS } from "@/content";
+import { EVENTS, HISTORY as history } from "@/content";
 import { choose, currentEvent, newGame, optionAvailability, TURN_PLAN } from "./engine";
 import { summarize } from "./endings";
 import { mulberry32 } from "./rng";
@@ -72,13 +72,14 @@ describe("回合引擎", () => {
 });
 
 describe("平衡（隨機策略）", () => {
-  it("連任率不會一面倒", () => {
+  it("連任率貼近中選會史實，且不會一面倒", () => {
     let wins = 0;
     const n = 500;
     for (let seed = 0; seed < n; seed++) if (summarize(playRandom(seed)).election.won) wins++;
     const rate = wins / n;
-    console.log(`隨機策略連任率：${(rate * 100).toFixed(1)}%`);
-    expect(rate).toBeGreaterThan(0.15);
-    expect(rate).toBeLessThan(0.85);
+    const target = history.overall.incumbent_win_rate;
+    console.log(`隨機策略連任率：${(rate * 100).toFixed(1)}%（史實 ${(target * 100).toFixed(1)}%）`);
+    expect(Math.abs(rate - target)).toBeLessThan(0.08);
+    expect(rate).toBeLessThan(0.9);
   });
 });

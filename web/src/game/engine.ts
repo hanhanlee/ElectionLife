@@ -1,7 +1,7 @@
 // 回合引擎：純函式，不碰 DOM 與儲存，方便測試與重現。
 
 import { mulberry32 } from "./rng";
-import { START_STATS, VOTE_BIAS, VOTE_NOISE, VOTE_WEIGHTS } from "./model";
+import { INCUMBENCY_BONUS, START_STATS, VOTE_BIAS, VOTE_NOISE, VOTE_WEIGHTS } from "./model";
 import {
   ALL_STATS,
   type Condition,
@@ -148,6 +148,8 @@ export interface ElectionResult {
   probability: number;
   /** 各數值對得票的貢獻（logit），由大到小 */
   contributions: { stat: StatKey; value: number }[];
+  /** 現任優勢的貢獻（logit） */
+  incumbency: number;
 }
 
 const sigmoid = (x: number) => 1 / (1 + Math.exp(-x));
@@ -158,13 +160,14 @@ export function runElection(state: GameState): ElectionResult {
     value: (VOTE_WEIGHTS[stat] * (state.stats[stat] - 50)) / 10,
   })).sort((a, b) => Math.abs(b.value) - Math.abs(a.value));
 
-  const logit = VOTE_BIAS + contributions.reduce((s, c) => s + c.value, 0);
+  const logit = VOTE_BIAS + INCUMBENCY_BONUS + contributions.reduce((s, c) => s + c.value, 0);
   const rng = turnRng(state.seed, TURN_PLAN.length, 0xe1ec);
   const noise = (rng() * 2 - 1) * VOTE_NOISE;
   return {
     won: sigmoid(logit + noise) >= 0.5,
     probability: sigmoid(logit),
     contributions,
+    incumbency: INCUMBENCY_BONUS,
   };
 }
 

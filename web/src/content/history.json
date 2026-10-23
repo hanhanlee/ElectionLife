@@ -1,0 +1,16 @@
+{
+  "period": "1994–2022",
+  "overall": {
+    "incumbents_running": 90,
+    "incumbents_won": 66,
+    "incumbent_win_rate": 0.733
+  },
+  "direct_municipality": {
+    "incumbents_running": 18,
+    "incumbents_won": 13,
+    "incumbent_win_rate": 0.722
+  },
+  "source_title": "中央選舉委員會 選舉資料庫",
+  "source_url": "https://db.cec.gov.tw/",
+  "retrieved_at": "2026-10-23"
+}
