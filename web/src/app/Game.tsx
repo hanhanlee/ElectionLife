@@ -36,13 +36,16 @@ import { newSeed } from "@/game/rng";
 import { clearGame, loadGame, saveGame } from "@/game/storage";
 import {
   ALL_STATS,
+  ISSUE_LABELS,
   STAT_HINTS,
   STAT_LABELS,
   VISIBLE_STATS,
   type Condition,
   type Notice,
   type GameState,
+  type Issue,
   type Phase,
+  type SourceStatus,
   type Stats,
   type StatKey,
 } from "@/game/types";
@@ -304,6 +307,24 @@ function CharacterReveal({ character, onStart }: { character: DrawnCharacter; on
       <section className={styles.card}>
         <h2>{city.name}</h2>
         <p>{city.tagline}</p>
+        <p>{city.voters}</p>
+        <div className={styles.tags}>
+          {city.voterGroups.map((g) => (
+            <span key={g.name} className={styles.tag}>
+              {g.name} {g.share}%
+            </span>
+          ))}
+        </div>
+        <p>
+          <small>
+            選民最在意：
+            {(Object.entries(city.issueWeights) as [Issue, number][])
+              .filter(([, w]) => w >= 1.2)
+              .sort((a, b) => b[1] - a[1])
+              .map(([issue]) => ISSUE_LABELS[issue])
+              .join("、")}
+          </small>
+        </p>
       </section>
       <section className={styles.card}>
         <h2>{party.name}</h2>
@@ -584,6 +605,13 @@ function VoterReflection({ items, shareHead }: { items: ReflectionItem[]; shareH
   );
 }
 
+const SOURCE_LABEL: Record<SourceStatus, string> = {
+  placeholder: "虛構情境",
+  real: "改編自真實事件，來源整理中",
+  draft: "改編自真實事件，查核中",
+  verified: "改編自真實事件，已查核",
+};
+
 const RESULT_LABEL: Record<FinalStage, [string, string]> = {
   first: ["當選", "落選"],
   reelection: ["連任成功", "連任失敗"],
@@ -715,7 +743,7 @@ function EndScreen({ state, onRestart }: { state: GameState; onRestart: () => vo
           {played.map((e) => (
             <li key={e.id}>
               <strong>{e.title}</strong>：{e.source.prototype}
-              {e.source.status !== "verified" && <small>（查核中）</small>}
+              <small>（{SOURCE_LABEL[e.source.status]}）</small>
               {e.source.refs.map((r) => (
                 <a key={r.url + r.quote} href={r.url} target="_blank" rel="noreferrer"> [{r.title}]</a>
               ))}

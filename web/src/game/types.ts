@@ -118,7 +118,13 @@ export interface TraitSkill {
   line: string;
 }
 
-export type SourceStatus = "placeholder" | "draft" | "verified";
+/**
+ * placeholder：虛構情境（沒有特定的真實原型）
+ * real：改編自明確的真實事件，原型記在 realCase，來源待補
+ * draft：已附來源與原文摘錄，待人工查核
+ * verified：人工查核完成
+ */
+export type SourceStatus = "placeholder" | "real" | "draft" | "verified";
 
 export interface SourceRef {
   title: string;
@@ -134,6 +140,8 @@ export interface EventSource {
   prototype: string;
   /** 改編說明：哪些地方被虛構化或簡化 */
   adaptation: string;
+  /** 真實原型（年份、地點、事件），供補來源與查核用；遊戲中不顯示，不寫真實人名 */
+  realCase?: string;
   refs: SourceRef[];
   /** 人工查核者與日期，verified 時必填 */
   reviewedBy?: string;
@@ -182,6 +190,8 @@ export interface GameEvent {
   conditions?: Condition;
   /** 抽選權重，預設 1 */
   weight?: number;
+  /** 事件的議題；省略時由 tags 推斷（見 model.ts 的 ISSUE_TAGS） */
+  issue?: Issue;
   /** 設定時為選項池事件：每次從符合 appearsIf 的選項中隨機抽出這麼多個 */
   drawOptions?: number;
   source: EventSource;
@@ -250,7 +260,30 @@ export interface Burden {
   partyAffinity?: string[];
 }
 
-/** 六都架空城市：目前只作為背景與旗標，城市專屬議題與事件尚未實作 */
+export const ISSUES = [
+  "housing",
+  "transit",
+  "environment",
+  "economy",
+  "welfare",
+  "culture",
+  "local",
+  "safety",
+] as const;
+export type Issue = (typeof ISSUES)[number];
+
+export const ISSUE_LABELS: Record<Issue, string> = {
+  housing: "居住",
+  transit: "交通",
+  environment: "環境",
+  economy: "經濟產業",
+  welfare: "福利照顧",
+  culture: "文化觀光",
+  local: "地方人情",
+  safety: "公共安全",
+};
+
+/** 六都架空城市：選民結構、在意的議題與選舉生態都不同 */
 export interface City {
   id: string;
   name: string;
@@ -258,6 +291,17 @@ export interface City {
   mayorTitle: string;
   tagline: string;
   weight: number;
+  /** 選民結構描述與主要族群（比例僅供顯示） */
+  voters: string;
+  voterGroups: { name: string; share: number }[];
+  /** 開局數值調整（例如財政狀況、媒體密度） */
+  startDelta: StatDelta;
+  /** 選舉時各數值權重的倍率（例如天龍市媒體影響大、媽媽市組織動員影響大） */
+  voteMods: StatDelta;
+  /** 選民對各議題的在意程度：選項的民調效果乘上這個倍率 */
+  issueWeights: Partial<Record<Issue, number>>;
+  /** 議題特別重要或特別不重要時，補在結果後面的敘述 */
+  issueNotes: Partial<Record<Issue, string>>;
 }
 
 /** 開局抽出的人設：城市、資質、包袱、開場句 */
@@ -365,6 +409,8 @@ export interface GameState {
   crisisLog: { id: string; turn: number }[];
   /** 開局資質帶來的能力加減（由 newGame 從資質資料展開） */
   traitSkills: (TraitSkill & { trait: string })[];
+  /** 城市的選民結構（由 newGame 從城市資料複製，讓引擎不必查內容檔） */
+  cityMods?: { voteMods: StatDelta; issueWeights: Partial<Record<Issue, number>>; issueNotes: Partial<Record<Issue, string>> };
   /** 競選期結束後的第一次投票結果；落選則遊戲提前結束 */
   firstElection?: ElectionSnapshot;
   finished: boolean;

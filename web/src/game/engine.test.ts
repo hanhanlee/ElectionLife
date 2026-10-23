@@ -127,7 +127,7 @@ describe("回合引擎", () => {
     for (const s of games({}, 300)) {
       for (const id of s.deck) {
         const e = EVENTS.find((x) => x.id === id)!;
-        const tag = e.conditions?.flags?.find((f) => f.startsWith("party-") || f.startsWith("bg-"));
+        const tag = e.conditions?.flags?.find((f) => f.startsWith("party-") || f.startsWith("bg-") || f.startsWith("city-"));
         // 中途退黨的玩家，結束時已沒有原政黨的旗標；原政黨事件是在退黨前抽到的
         if (tag && !(s.character.formerParty && tag.startsWith("party-"))) expect(s.flags).toContain(tag);
       }
@@ -372,10 +372,13 @@ describe("退黨", () => {
       expect(s.flags).toContain("party-independent");
       expect(s.flags.filter((f) => ["party-blue", "party-major"].includes(f))).toEqual([]);
       expect(s.income.party).toBe(0);
-      while (!s.finished && s.payouts.length < 5) {
+      // 一路玩到退黨之後的下一次入帳
+      const before = s.payouts.length;
+      while (!s.finished && s.payouts.length === before) {
         const open = offeredOptions(s, currentEvent(s, EVENTS)!).filter((o) => optionAvailability(s, o) !== "locked");
         s = choose(s, EVENTS, open[0].id, CRISES, PARTIES);
       }
+      if (s.payouts.length === before) continue;
       expect(s.payouts.at(-1)!.party).toBe(0);
       return;
     }
@@ -468,7 +471,8 @@ describe("資質影響事件結果", () => {
   const blue = PARTIES[0];
   const legislator = BACKGROUNDS.find((b) => b.id === "legislator")!;
   const withTraits = (...traits: string[]) =>
-    newGame(EVENTS, 1, blue, legislator, profileSetup({ city: "tianlong", traits, burden: "old-controversy", origin: 0 }));
+    // 用沒有城市變化、議題倍率也不影響這些選項的城市，單純測資質
+    newGame(EVENTS, 1, blue, legislator, profileSetup({ city: "airplane", traits, burden: "old-controversy", origin: 0 }));
   const option = (eventId: string, optionId: string) =>
     EVENTS.find((e) => e.id === eventId)!.options.find((o) => o.id === optionId)!;
 
@@ -520,6 +524,57 @@ describe("資質影響事件結果", () => {
     const involved = games({}, 200).flatMap((g) => g.history.filter((h) => h.traitsInvolved));
     expect(involved.length).toBeGreaterThan(100);
     console.log(`200 局中被資質影響的選擇：${involved.length} 次`);
+  });
+});
+
+describe("耐玩度與城市差異", () => {
+  const content = { cities: CITIES, parties: PARTIES, backgrounds: BACKGROUNDS, traits: TRAITS, burdens: BURDENS };
+  /** 用全隨機開局（和實際遊戲一樣）玩一局 */
+  function playDrawn(seed: number): GameState {
+    const c = drawCharacter(seed, content);
+    const rand = mulberry32(seed);
+    let s = newGame(EVENTS, seed, c.party, c.background, profileSetup(c.profile));
+    while (!s.finished) {
+      const open = offeredOptions(s, currentEvent(s, EVENTS)!).filter((o) => optionAvailability(s, o) !== "locked");
+      s = choose(s, EVENTS, open[Math.floor(rand() * open.length)].id, CRISES, PARTIES);
+    }
+    return s;
+  }
+
+  it("兩局完整遊戲遇到的事件重複不多（平均共同事件 < 7 個）", () => {
+    const full = Array.from({ length: 400 }, (_, i) => playDrawn(i)).filter((g) => g.history.length === TURN_PLAN.length);
+    let shared = 0, pairs = 0;
+    for (let i = 0; i + 1 < full.length; i += 2) {
+      const a = new Set(full[i].deck);
+      shared += full[i + 1].deck.filter((id) => a.has(id)).length;
+      pairs++;
+    }
+    const avg = shared / pairs;
+    console.log(`兩局完整遊戲平均共同事件：${avg.toFixed(1)} / ${TURN_PLAN.length}`);
+    expect(avg).toBeLessThan(7);
+  });
+
+  it("每個城市都有專屬事件，而且一局裡真的會遇到", () => {
+    for (const c of CITIES) {
+      const own = EVENTS.filter((e) => e.conditions?.flags?.includes(`city-${c.id}`));
+      expect(own.length, c.id).toBeGreaterThanOrEqual(6);
+    }
+    const games = Array.from({ length: 300 }, (_, i) => playDrawn(i));
+    const perGame = games.map((g) => g.deck.filter((id) => EVENTS.find((e) => e.id === id)!.conditions?.flags?.some((f) => f.startsWith("city-"))).length);
+    const avg = perGame.reduce((a, b) => a + b, 0) / perGame.length;
+    console.log(`每局平均遇到的城市專屬事件：${avg.toFixed(1)} 個`);
+    expect(avg).toBeGreaterThan(1.5);
+  });
+
+  it("同一個選項在不同城市，民調效果會依選民結構不同", () => {
+    const blue = PARTIES[0], legislator = BACKGROUNDS.find((b) => b.id === "legislator")!;
+    const inCity = (city: string) =>
+      newGame(EVENTS, 1, blue, legislator, profileSetup({ city, traits: ["principled"], burden: "old-controversy", origin: 0 }));
+    const event = EVENTS.find((e) => e.id === "c-tianlong-housing")!;
+    const build = event.options.find((o) => o.id === "neighbor")!;
+    const tianlong = resolveOption(inCity("tianlong"), build, event).effects.approval!;
+    const gudu = resolveOption(inCity("gudu"), build, event).effects.approval!;
+    expect(tianlong).toBeGreaterThan(gudu);
   });
 });
 

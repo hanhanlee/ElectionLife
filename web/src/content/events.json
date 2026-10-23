@@ -26,7 +26,7 @@
       { "id": "resign", "label": "立刻辭職，背水一戰", "outcome": "很有魄力。你的立委辦公室助理們開始找新工作。", "effects": { "approval": 4, "party": -2, "integrity": 3 } },
       { "id": "record", "label": "花錢把四年的質詢剪成影片，全網投放", "outcome": "你把四年的質詢剪成一支三分鐘影片，觀看次數不錯。", "effects": { "approval": 3, "media": 4 }, "funds": -500, "skill": "debate" }
     ],
-    "source": { "status": "placeholder", "prototype": "立委於任期中轉戰縣市長，當選後辭職導致補選，常被質疑浪費公帑。", "adaptation": "情境為虛構。", "refs": [] }
+    "source": { "status": "draft", "prototype": "立委於任期中轉戰縣市長，當選後辭職導致補選，常被質疑浪費公帑。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "中央社：蔣萬安辭立委 台北市中山北松山明年1月8日補選", "url": "https://www.cna.com.tw/news/aipl/202211185003.aspx", "quote": "蔣萬安辭立委 台北市中山北松山明年1月8日補選", "accessed": "2026-10-23" }], "realCase": "2023 年臺北市第三選舉區立委補選（原立委當選直轄市長後辭職）" }
   },
   {
     "id": "l-councilor",
@@ -40,7 +40,7 @@
       { "id": "elders", "label": "請黨內大老輪流站台", "outcome": "大老們很給面子。你在照片裡站在第二排。", "effects": { "party": 6, "approval": 2 } },
       { "id": "ground", "label": "走遍每一個里，從基層做起", "outcome": "你的鞋底磨壞了三雙。知名度慢慢爬到 25%。", "effects": { "approval": 3, "party": 3 }, "skill": "grassroots" }
     ],
-    "source": { "status": "placeholder", "prototype": "市議員挑戰縣市長時，常面臨全市知名度不足的問題。", "adaptation": "數字與情境為虛構。", "refs": [] }
+    "source": { "status": "draft", "prototype": "市議員挑戰縣市長時，常面臨全市知名度不足的問題。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：九合一大選／黃偉哲小勝4.5萬票連任成功 謝龍介得票率創藍營台南市紀錄", "url": "https://news.pts.org.tw/article/611246", "quote": "黃偉哲小勝4.5萬票連任成功 謝龍介得票率創藍營台南市紀錄", "accessed": "2026-10-23" }], "realCase": "2022 年臺南市長選舉，市議員挑戰現任市長" }
   },
   {
     "id": "l-official",
@@ -54,7 +54,7 @@
       { "id": "own-path", "label": "強調自己的專業，和前長官保持距離", "outcome": "前長官的人覺得你忘恩負義。中間選民覺得你有主見。", "effects": { "approval": 3, "party": -4 } },
       { "id": "details", "label": "用行政經驗講細節，政見附預算表", "outcome": "你的政見是所有候選人中最厚的。讀完的人不多。", "effects": { "achievement": 2, "approval": 1, "integrity": 2 }, "skill": "policy" }
     ],
-    "source": { "status": "placeholder", "prototype": "卸任副首長或政務官參選，常被視為前任團隊的延續，前任的政績與爭議也會被一併檢視。", "adaptation": "情境為虛構。", "refs": [] }
+    "source": { "status": "draft", "prototype": "卸任副首長或政務官參選，常被視為前任團隊的延續，前任的政績與爭議也會被一併檢視。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：侯友宜請辭 宣布投入藍營新北市長初選", "url": "https://news.pts.org.tw/article/386847", "quote": "侯友宜請辭 宣布投入藍營新北市長初選", "accessed": "2026-10-23" }, { "title": "公視新聞網：黃珊珊宣布無黨籍參選台北市長 盼延續柯市府路線【更新】", "url": "https://news.pts.org.tw/article/597158", "quote": "黃珊珊宣布無黨籍參選台北市長", "accessed": "2026-10-23" }], "realCase": "2018 年新北市長選舉、2022 年臺北市長選舉，前副市長參選" }
   },
   {
     "id": "l-outsider",
@@ -68,7 +68,7 @@
       { "id": "pure", "label": "堅持不接受政黨，自組團隊", "outcome": "團隊很有熱情，平均年齡 29 歲，沒人跑過選舉。", "effects": { "integrity": 5, "approval": 3, "party": -4 } },
       { "id": "crowd", "label": "網路小額募款，一天破千萬", "outcome": "你證明了網路的力量。對手開始調查你的捐款名單。", "effects": { "approval": 5, "media": 8 }, "funds": 1500, "skill": "media" }
     ],
-    "source": { "status": "placeholder", "prototype": "政治素人參選縣市長，需在政黨合作與獨立形象之間取捨。", "adaptation": "情境為虛構。", "refs": [] }
+    "source": { "status": "draft", "prototype": "政治素人參選縣市長，需在政黨合作與獨立形象之間取捨。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "中央社：禮讓柯 民進黨北市長不提名", "url": "https://www.cna.com.tw/news/aipl/201406180296.aspx", "quote": "禮讓柯 民進黨北市長不提名", "accessed": "2026-10-23" }], "realCase": "2014 年臺北市長選舉，無黨籍醫師首次參選並當選" }
   },
   {
     "id": "p-platform",
@@ -120,7 +120,7 @@
       { "id": "deal", "label": "談條件，換取黨部全力輔選", "outcome": "樁腳名單送到你桌上，附帶一份人事建議。", "effects": { "party": 12, "integrity": -5 }, "setFlags": ["party-deal"], "funds": 1500 },
       { "id": "indie", "label": "退黨，以無黨籍參選", "outcome": "網路聲量暴衝，組織動員歸零。", "effects": { "party": -25, "approval": 8 }, "switchParty": "independent" }
     ],
-    "source": { "status": "placeholder", "prototype": "直轄市長選舉曾發生黨內初選爭議與脫黨參選。", "adaptation": "情境為虛構。", "refs": [] }
+    "source": { "status": "draft", "prototype": "直轄市長選舉曾發生黨內初選爭議與脫黨參選。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：楊秋興盼獲諒解 將以無黨籍參選", "url": "https://news.pts.org.tw/article/155731", "quote": "楊秋興盼獲諒解 將以無黨籍參選", "accessed": "2026-10-23" }], "realCase": "2010 年高雄市長選舉，時任縣長退出原政黨以無黨籍參選" }
   },
   {
     "id": "c-strategy",
@@ -160,7 +160,7 @@
       { "id": "emotion", "label": "走溫情路線，講家人與成長故事", "outcome": "你說到父親時哽咽了。剪輯片段被分享了二十萬次。", "effects": { "approval": 3, "media": 4 }, "skill": "media" },
       { "id": "ambush", "label": "即興抓住對手的語病，窮追猛打", "outcome": "你一句接一句，對手完全接不住。辯論結束時，全場在喊你的名字。", "effects": { "approval": 6, "media": 6, "integrity": -1 }, "appearsIf": { "flags": ["trait-debater"] } }
     ],
-    "source": { "status": "placeholder", "prototype": "電視辯論會是候選人展現政策能力與話術的重要場合。", "adaptation": "情境為虛構。", "refs": [] }
+    "source": { "status": "draft", "prototype": "電視辯論會是候選人展現政策能力與話術的重要場合。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：台北市長選戰辯論會 首見5人全登場", "url": "https://news.pts.org.tw/article/412652", "quote": "台北市長選戰辯論會 首見5人全登場", "accessed": "2026-10-23" }], "realCase": "歷屆直轄市長選舉的電視辯論會（如 2014、2018、2022 年臺北市長辯論）" }
   },
   {
     "id": "c-poll-behind",
@@ -173,7 +173,7 @@
       { "id": "strategic", "label": "呼籲同陣營選民「集中選票、棄保」", "outcome": "第三勢力的支持者很不爽，但有些人真的轉向了。", "effects": { "approval": 4, "party": -2, "integrity": -1 }, "skill": "deal" },
       { "id": "steady", "label": "不理會民調，照原計畫走", "outcome": "你的團隊繼續掃街。少數人說你有定力，多數人說你沒反應。", "effects": { "integrity": 1, "team": 2 } }
     ],
-    "source": { "status": "placeholder", "prototype": "選戰後期，候選人常以公布內部民調或呼籲棄保因應民調落後。", "adaptation": "情境為虛構。", "refs": [] }
+    "source": { "status": "draft", "prototype": "選戰後期，候選人常以公布內部民調或呼籲棄保因應民調落後。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：綠不讓柯 2018北市長選戰三足鼎立", "url": "https://news.pts.org.tw/article/394095", "quote": "綠不讓柯 2018北市長選戰三足鼎立", "accessed": "2026-10-23" }, { "title": "中央社：柯文哲險勝丁守中 台北市長選舉恐有延長賽", "url": "https://www.cna.com.tw/news/firstnews/201811255004.aspx", "quote": "柯文哲險勝丁守中", "accessed": "2026-10-23" }], "realCase": "2018 年臺北市長選舉選前的棄保操作" }
   },
   {
     "id": "c-endorsement",
@@ -208,7 +208,7 @@
     "scenario": "選前三個月，地方樁腳排好了行程：37 間宮廟、52 場紅白帖、19 場里民旅遊。",
     "tags": ["選戰", "地方"],
     "options": [
-      { "id": "all", "label": "全部跑完，香油錢、紅包白包自己出", "outcome": "你的膝蓋跪壞了，但每個主委都記住了你。", "effects": { "party": 5, "business": 3, "approval": 2, "team": -3 }, "funds": -400, "skill": "grassroots" },
+      { "id": "all", "label": "全部跑完，香油錢、紅包白包自己出", "outcome": "你的膝蓋跪壞了，但每個主委都記住了你。", "effects": { "party": 5, "business": 3, "approval": 2, "team": -3 }, "funds": -400, "skill": "grassroots", "variants": [{ "when": { "flags": ["city-mama"] }, "outcome": "在媽媽市，跑宮廟是基本功。每一間廟的主委都會在選舉時記得你。", "effects": { "party": 4, "approval": 2 } }, { "when": { "flags": ["city-tianlong"] }, "outcome": "天龍市的年輕選民看到你一天跑十間廟，在網路上說你「只會拜票不會做事」。", "effects": { "approval": -4 } }] },
       { "id": "key", "label": "只跑幾個重要的", "outcome": "你錯過的那幾場，主人都在問你去哪了。", "effects": { "party": 2 }, "skill": "grassroots" },
       { "id": "skip", "label": "不跑，把時間拿去準備政策", "outcome": "你的政策白皮書很完整。樁腳們有點冷淡。", "effects": { "party": -3, "integrity": 1, "team": 2 } }
     ],
@@ -392,6 +392,444 @@
     "source": { "status": "placeholder", "prototype": "候選人接受深度政策專訪時，政策準備程度與臨場表達常直接影響選民觀感，也常成為事實查核的對象。", "adaptation": "情境為虛構。", "refs": [] }
   },
   {
+    "id": "c-tianlong-housing",
+    "phase": "campaign",
+    "title": "社宅蓋在我家旁邊",
+    "scenario": "說明會上，一位里長大聲問你：「社宅要蓋在我們里，你選上了會不會停建？」台下的掌聲很整齊。",
+    "tags": ["天龍市", "居住"],
+    "conditions": { "flags": ["city-tianlong"] },
+    "weight": 3,
+    "options": [
+      { "id": "build", "label": "照蓋，但承諾交通與托育配套", "outcome": "里長不太滿意，年輕租屋族把你的回答剪成影片轉發。", "effects": { "approval": 2, "integrity": 3, "party": -2 }, "skill": "policy" },
+      { "id": "neighbor", "label": "保留三成「睦鄰戶」給在地里民", "outcome": "里民滿意了，外地來的租屋族發現自己能抽的戶數變少了。", "effects": { "approval": 4, "integrity": -3, "party": 2 } },
+      { "id": "halt", "label": "承諾「重新檢討」", "outcome": "掌聲很熱烈。重新檢討的意思，大家都懂。", "effects": { "approval": 3, "integrity": -5 } }
+    ],
+    "source": { "status": "draft", "prototype": "社會住宅常遭在地居民反對，部分地方政府以保留「睦鄰戶」名額作為回饋，引發公平性爭議。", "adaptation": "城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：社會住宅保留睦鄰戶 台北市最高達3成", "url": "https://news.pts.org.tw/article/408878", "quote": "社會住宅保留睦鄰戶 台北市最高達3成", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "c-xinlong-commute",
+    "phase": "campaign",
+    "title": "擠不上車的早晨",
+    "scenario": "通勤時間，捷運月台排了三班車的人。一位上班族在你的粉專留言：「選上了，你會每天來擠一次嗎？」",
+    "tags": ["新龍市", "交通", "通勤"],
+    "conditions": { "flags": ["city-xinlong"] },
+    "weight": 3,
+    "options": [
+      { "id": "ride", "label": "隔天早上真的去擠一次，全程直播", "outcome": "你被擠到貼在門上，直播觀看數破十萬。", "effects": { "approval": 3, "media": 6 }, "skill": "media" },
+      { "id": "plan", "label": "提出公車專用道加快速公車的通勤方案", "outcome": "方案很完整，留言區問：「那要幾年？」", "effects": { "approval": 2, "integrity": 2 }, "skill": "policy" },
+      { "id": "promise", "label": "承諾「四年內新增兩條捷運」", "outcome": "掌聲很熱烈。工程師算了一下，四年連環評都做不完。", "effects": { "approval": 5, "integrity": -4 }, "setFlags": ["promise-mrt"] }
+    ],
+    "source": { "status": "draft", "prototype": "新北市民跨區通勤需求大，捷運與公車在尖峰時段長期擁擠。", "adaptation": "城市、人物與數字已虛構化。", "refs": [{ "title": "聯合新聞網：捷運板南線擠爆下月起增1班次（2025）", "url": "https://udn.com/news/story/7323/9104572", "quote": "捷運板南線擠爆下月起增1班次", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "c-airplane-expropriation",
+    "phase": "campaign",
+    "title": "航空城的徵收戶",
+    "scenario": "競選總部外站滿了航空城的徵收戶：一群人要求被納入徵收、拿補償；另一群人舉著「反迫遷」的布條。",
+    "tags": ["飛機城", "土地徵收"],
+    "conditions": { "flags": ["city-airplane"] },
+    "weight": 3,
+    "options": [
+      { "id": "include", "label": "承諾擴大徵收範圍，補償從優", "outcome": "第一群人歡呼，第二群人把你的名字寫上布條。財政局默默算了算補償金。", "effects": { "approval": 3, "treasury": -6, "business": 4 } },
+      { "id": "hearing", "label": "承諾當選後重辦公開聽證", "outcome": "兩群人都不完全滿意，但都願意再談。", "effects": { "integrity": 4, "approval": 1 }, "skill": "negotiate" },
+      { "id": "develop", "label": "強調航空城是城市未來，開發不能停", "outcome": "開發商和工商團體大力支持你。被徵收的人說你沒看見他們。", "effects": { "business": 8, "approval": -3, "party": 2 } }
+    ],
+    "source": { "status": "draft", "prototype": "桃園航空城區段徵收爭議多年，部分居民要求納入徵收以取得補償，也有居民堅持原地保留、反對迫遷。", "adaptation": "城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：航空城計畫 居民對土地徵收意見分歧（2019）", "url": "https://news.pts.org.tw/article/458328", "quote": "希望也能納入區段徵收範圍內，遷到機場南面、重組社區", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "c-mama-freebus",
+    "phase": "campaign",
+    "title": "免費公車要不要加碼",
+    "scenario": "前幾任市長從 8 公里免費一路加碼到 10 公里免費。對手說選上要改成「全程免費」，問你敢不敢跟。",
+    "tags": ["媽媽市", "交通", "福利"],
+    "conditions": { "flags": ["city-mama"] },
+    "weight": 3,
+    "options": [
+      { "id": "match", "label": "跟！而且再加碼雙十公車", "outcome": "公車族很開心。交通局算了算，每年要多一億多。", "effects": { "approval": 6, "treasury": -8 }, "setFlags": ["promise-cash"] },
+      { "id": "residents", "label": "維持現制，但改成只限本市市民", "outcome": "外地通勤族很不爽，市庫省下一筆。", "effects": { "approval": 1, "treasury": 4 } },
+      { "id": "frequency", "label": "不加碼免費，把錢拿去加開班次", "outcome": "很務實。標題寫「XX 不敢跟進免費公車」。", "effects": { "approval": -2, "integrity": 3, "achievement": 2 }, "skill": "policy" }
+    ],
+    "source": { "status": "draft", "prototype": "臺中市公車免費里程政策歷經多任市長加碼，後改為市民限定，財政負擔與成效持續受到討論。", "adaptation": "城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：中市免費公車政策 明年起僅適用台中市民", "url": "https://news.pts.org.tw/article/494752", "quote": "中市免費公車政策 明年起僅適用台中市民", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "c-gudu-oldhouse",
+    "phase": "campaign",
+    "title": "老宅一夜被拆",
+    "scenario": "一棟八十年的老宅才剛被列入古蹟審議名單，屋主就連夜拆了。文史團體要你表態。",
+    "tags": ["古都市", "文化資產"],
+    "conditions": { "flags": ["city-gudu"] },
+    "weight": 3,
+    "options": [
+      { "id": "law", "label": "承諾修法：列冊就等同暫定古蹟，違者重罰", "outcome": "文史團體大力背書，建商和部分屋主覺得你在侵害財產權。", "effects": { "integrity": 4, "business": -5, "approval": 2 }, "skill": "policy" },
+      { "id": "buy", "label": "承諾編預算價購重要老屋", "outcome": "很溫暖的承諾，財政局長看起來很冷。", "effects": { "approval": 3, "treasury": -4 } },
+      { "id": "property", "label": "強調「尊重私有財產」", "outcome": "屋主們感謝你。老屋還會一棟一棟消失。", "effects": { "business": 4, "integrity": -3 } }
+    ],
+    "source": { "status": "draft", "prototype": "老宅在列冊追蹤後、審議前遭屋主拆除，促使地方政府修訂文化資產審議程序。", "adaptation": "城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：新營太子宮郭宅 甫列冊追蹤即拆除", "url": "https://news.pts.org.tw/article/410259", "quote": "新營太子宮郭宅 甫列冊追蹤即拆除", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "c-gangdu-lightrail",
+    "phase": "campaign",
+    "title": "輕軌要不要續建",
+    "scenario": "輕軌第二階段卡在一段林蔭大道。沿線居民擔心三百棵樹不保，也有人說輕軌早就該完工了。",
+    "tags": ["港都市", "交通"],
+    "conditions": { "flags": ["city-gangdu"] },
+    "weight": 3,
+    "options": [
+      { "id": "continue", "label": "續建，但承諾移植與補植樹木", "outcome": "工程繼續，居民半信半疑地盯著每一棵樹。", "effects": { "approval": 1, "achievement": 2, "integrity": 1 }, "skill": "negotiate" },
+      { "id": "underground", "label": "改走地下化", "outcome": "居民鼓掌。工程師說工期多五年、預算多三倍。", "effects": { "approval": 4, "integrity": -3 }, "setFlags": ["promise-mrt"] },
+      { "id": "stop", "label": "喊停，檢討整條路線", "outcome": "反對的人很滿意，等了好幾年的通勤族很不滿意。", "effects": { "approval": -2, "media": 4, "party": 2 } }
+    ],
+    "source": { "status": "draft", "prototype": "高雄輕軌第二階段路段因軌道位置與路樹保存爭議一度停工，居民與市府多次溝通。", "adaptation": "城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：高雄輕軌二階工程環差評估通過（2021）", "url": "https://news.pts.org.tw/article/521205", "quote": "規劃讓輕軌不再佔用馬路，而是北移到美術館旁人行道", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "c-tl-talkshow",
+    "phase": "campaign",
+    "title": "政論節目的邀約",
+    "scenario": "天龍市的政論節目一晚上有六個。每一個都想請你上，每一個的立場都不一樣。",
+    "tags": ["天龍市", "媒體"],
+    "issue": "culture",
+    "conditions": { "flags": ["city-tianlong"] },
+    "weight": 2,
+    "options": [
+      { "id": "all", "label": "每一台都上，一晚趕三個攝影棚", "outcome": "你的臉佔據了整個晚上的頻道，你的喉嚨和團隊都快撐不住了。", "effects": { "media": 10, "team": -4, "approval": 1 }, "skill": "media" },
+      { "id": "friendly", "label": "只上立場友好的節目", "outcome": "主持人一直幫你講話，中間選民轉台了。", "effects": { "media": 4, "party": 3 } },
+      { "id": "hostile", "label": "專挑立場不友好的節目上", "outcome": "你被追問了一整晚，表現好的片段被兩邊的支持者一起轉發。", "effects": { "media": 6, "approval": 2, "integrity": 2 }, "skill": "debate" }
+    ],
+    "source": { "status": "placeholder", "prototype": "首都的政論節目生態密集，候選人上節目的選擇常被解讀為政治立場。", "adaptation": "情境為虛構，取材自台灣地方政治的常見情境。", "refs": [] }
+  },
+  {
+    "id": "c-tl-rent",
+    "phase": "campaign",
+    "title": "租金凍漲政見",
+    "scenario": "天龍市的平均房租吃掉年輕人四成薪水。青年團體問你：敢不敢承諾凍漲公有社宅租金？",
+    "tags": ["天龍市", "居住"],
+    "issue": "housing",
+    "conditions": { "flags": ["city-tianlong"] },
+    "weight": 2,
+    "options": [
+      { "id": "freeze", "label": "承諾任內社宅租金一毛不漲", "outcome": "青年團體大力背書，財政局長算了算維護費。", "effects": { "approval": 5, "treasury": -4 }, "setFlags": ["promise-housing-modest"] },
+      { "id": "subsidy", "label": "承諾擴大租金補貼", "outcome": "很實際，房東們很高興租金補貼又漲了。", "effects": { "approval": 3, "business": 3, "treasury": -3 } },
+      { "id": "supply", "label": "強調「增加供給才是根本」", "outcome": "經濟學家點頭，年輕人說「所以我還是要繳一樣多」。", "effects": { "integrity": 2, "approval": -1 }, "skill": "policy" }
+    ],
+    "source": { "status": "placeholder", "prototype": "首都房租負擔沉重，社宅租金與租金補貼政策是青年選民最關心的議題之一。", "adaptation": "情境為虛構，取材自台灣地方政治的常見情境。", "refs": [] }
+  },
+  {
+    "id": "c-xl-mountain",
+    "phase": "campaign",
+    "title": "山區的最後一班公車",
+    "scenario": "山區里長說：村子的公車一天只有兩班，最後一班下午四點。年輕人都搬走了，剩下的老人去看病要等一整天。",
+    "tags": ["新龍市", "交通", "偏鄉"],
+    "issue": "transit",
+    "conditions": { "flags": ["city-xinlong"] },
+    "weight": 2,
+    "options": [
+      { "id": "demand", "label": "承諾推動預約式小巴", "outcome": "里長很感動，交通局說這種公車每趟都在賠錢。", "effects": { "approval": 3, "integrity": 2 } },
+      { "id": "visit", "label": "親自搭最後一班公車上山，直播全程", "outcome": "你在山路上暈車了，直播觀看數破萬。", "effects": { "media": 6, "approval": 2 }, "skill": "grassroots" },
+      { "id": "urban", "label": "強調資源要先投入人口多的地方", "outcome": "很務實。山區只有幾千票，但每一票都記住了你。", "effects": { "approval": -2 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "新北幅員遼闊，山區與偏鄉的公共運輸長期班次稀少。", "adaptation": "情境為虛構，取材自台灣地方政治的常見情境。", "refs": [] }
+  },
+  {
+    "id": "c-xl-bridge",
+    "phase": "campaign",
+    "title": "大橋的名字",
+    "scenario": "跨河大橋快完工了，命名投票開跑。網路票選第一名是一個迷因，第二名是一位地方仕紳的名字。",
+    "tags": ["新龍市", "城市行銷"],
+    "issue": "culture",
+    "conditions": { "flags": ["city-xinlong"] },
+    "weight": 2,
+    "options": [
+      { "id": "meme", "label": "尊重網路票選，就用迷因當橋名", "outcome": "全國媒體都在報導，地方長輩覺得很丟臉。", "effects": { "media": 8, "approval": 2, "party": -2 } },
+      { "id": "gentry", "label": "用地方仕紳的名字", "outcome": "地方大老很滿意，網友做了更多迷因。", "effects": { "party": 4, "approval": -2 } },
+      { "id": "neutral", "label": "取一個沒有人反對的地名", "outcome": "沒有人反對，也沒有人記得。", "effects": { "integrity": 1 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "大型公共建設的命名常引發網路票選與地方意見的拉鋸。", "adaptation": "情境為虛構，取材自台灣地方政治的常見情境。", "refs": [] }
+  },
+  {
+    "id": "c-ap-hakka",
+    "phase": "campaign",
+    "title": "客家庄的請託",
+    "scenario": "客家庄的老一輩希望你承諾：客語教學要增加時數，客家文化園區要擴建。",
+    "tags": ["飛機城", "文化"],
+    "issue": "culture",
+    "conditions": { "flags": ["city-airplane"] },
+    "weight": 2,
+    "options": [
+      { "id": "promise", "label": "全部答應", "outcome": "庄頭的長輩們很感動，在飯局上一桌一桌幫你拉票。", "effects": { "party": 4, "approval": 2, "integrity": -1 }, "skill": "grassroots" },
+      { "id": "language", "label": "只承諾語言教學，園區再評估", "outcome": "很誠實，長輩們覺得你「不夠誠意」。", "effects": { "integrity": 2, "approval": 1 } },
+      { "id": "speak", "label": "現場用客語致詞", "outcome": "你的客語有點破，但長輩們笑得很開心。", "effects": { "approval": 3, "media": 3 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "桃園客家族群集中，客語教育與客家文化設施是地方選舉的重要議題。", "adaptation": "情境為虛構，取材自台灣地方政治的常見情境。", "refs": [] }
+  },
+  {
+    "id": "c-ap-factory",
+    "phase": "campaign",
+    "title": "大廠的設廠條件",
+    "scenario": "一家半導體大廠考慮在飛機城設廠，條件是：工業用地、用水和用電都要保證。選前宣布會是大新聞。",
+    "tags": ["飛機城", "產業"],
+    "issue": "economy",
+    "conditions": { "flags": ["city-airplane"] },
+    "weight": 2,
+    "options": [
+      { "id": "promise", "label": "全部承諾，選前搶先宣布", "outcome": "新聞標題寫「XX 帶來五千個工作機會」。用水的問題，選後再說。", "effects": { "approval": 6, "business": 6, "integrity": -2 }, "setFlags": ["promise-tourism"] },
+      { "id": "careful", "label": "表示歡迎，但要先做水電評估", "outcome": "很負責任，大廠說會再考慮其他城市。", "effects": { "integrity": 3, "approval": -1 }, "skill": "policy" },
+      { "id": "attack", "label": "質疑對手過去招商不力", "outcome": "選戰火藥味很濃，大廠決定等選完再說。", "effects": { "approval": 2, "media": 3 }, "skill": "confront" }
+    ],
+    "source": { "status": "draft", "prototype": "大型科技廠商設廠需要土地、水電配合，常成為地方首長的選戰政績。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "中央社：台積電不進駐龍潭園區 藍批綠去年選前炒作致破局", "url": "https://www.cna.com.tw/news/aipl/202310180084.aspx", "quote": "台積電不進駐龍潭園區 藍批綠去年選前炒作致破局", "accessed": "2026-10-23" }], "realCase": "半導體大廠在各縣市設廠的土地、水電條件與地方首長招商" }
+  },
+  {
+    "id": "c-mm-pilgrimage",
+    "phase": "campaign",
+    "title": "媽祖遶境",
+    "scenario": "一年一度的媽祖遶境，九天八夜、數十萬信眾。主辦宮廟邀你一起扶轎。",
+    "tags": ["媽媽市", "宗教", "地方"],
+    "issue": "local",
+    "conditions": { "flags": ["city-mama"] },
+    "weight": 3,
+    "options": [
+      { "id": "carry", "label": "全程跟著走，扶轎九天", "outcome": "你的腳底起了十二個水泡，香客們一路幫你加油。", "effects": { "approval": 4, "party": 5, "team": -4 }, "skill": "grassroots" },
+      { "id": "day", "label": "只參加起駕那一天", "outcome": "媒體拍到你扶轎的照片，香客們說你「有心就好」。", "effects": { "approval": 2, "party": 2 } },
+      { "id": "skip", "label": "不參加，政教分離", "outcome": "很有原則。宮廟主委在記者會上說「沒看到市長」。", "effects": { "integrity": 2, "party": -5, "approval": -2 } }
+    ],
+    "source": { "status": "draft", "prototype": "中台灣的媽祖遶境是全台規模最大的宗教活動之一，政治人物參與扶轎是重要的選舉場合。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：大甲媽遶境昨起駕 20萬人次湧入鎮瀾宮", "url": "https://news.pts.org.tw/article/689083", "quote": "大甲媽遶境昨起駕 20萬人次湧入鎮瀾宮", "accessed": "2026-10-23" }], "realCase": "大甲媽祖遶境，政治人物每年參與起駕與扶轎" }
+  },
+  {
+    "id": "c-mm-faction",
+    "phase": "campaign",
+    "title": "派系大老的午宴",
+    "scenario": "地方兩大派系的大老同一天請你吃午飯，一個在海線、一個在山線。你只能去一個。",
+    "tags": ["媽媽市", "派系"],
+    "issue": "local",
+    "conditions": { "flags": ["city-mama"] },
+    "weight": 2,
+    "options": [
+      { "id": "sea", "label": "去海線", "outcome": "海線派系的樁腳全部動起來了。山線那邊，飯菜涼了。", "effects": { "party": 6, "council": 2 }, "skill": "deal" },
+      { "id": "mountain", "label": "去山線", "outcome": "山線派系全力相挺，海線大老說「我們會記得」。", "effects": { "party": 6, "council": 2 }, "skill": "deal" },
+      { "id": "neither", "label": "兩邊都不去，改去夜市掃街", "outcome": "兩邊派系都覺得被冷落，夜市攤商很開心。", "effects": { "party": -4, "approval": 3, "integrity": 2 } }
+    ],
+    "source": { "status": "draft", "prototype": "中台灣地方派系長期分立，候選人與派系的關係常影響選情。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：廖了以挺胡志強 籲紅派全力支持", "url": "https://news.pts.org.tw/article/156228", "quote": "廖了以挺胡志強 籲紅派全力支持", "accessed": "2026-10-23" }], "realCase": "臺中海線、山線的地方派系（紅派、黑派）" }
+  },
+  {
+    "id": "c-gd-temple-fest",
+    "phase": "campaign",
+    "title": "廟會的鞭炮",
+    "scenario": "古都市的廟會一年到頭沒停過。新搬來的住戶投訴鞭炮和陣頭太吵，老居民說這是傳統。",
+    "tags": ["古都市", "宗教", "地方"],
+    "issue": "local",
+    "conditions": { "flags": ["city-gudu"] },
+    "weight": 2,
+    "options": [
+      { "id": "tradition", "label": "支持傳統，廟會照辦", "outcome": "廟方很感激，新住戶在社群上說你「不在乎年輕人」。", "effects": { "party": 4, "approval": 1 }, "skill": "grassroots" },
+      { "id": "rules", "label": "訂定廟會時段與噪音規範", "outcome": "新住戶很滿意，幾位宮廟主委不再接你的電話。", "effects": { "integrity": 2, "party": -4, "approval": 1 } },
+      { "id": "eco", "label": "推動環保鞭炮與電子陣頭", "outcome": "很有創意，老一輩覺得「沒有味道」。", "effects": { "media": 4, "approval": 1 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "宗教廟會的傳統活動與新住民生活品質之間，常有噪音與交通的衝突。", "adaptation": "情境為虛構，取材自台灣地方政治的常見情境。", "refs": [] }
+  },
+  {
+    "id": "c-gd-science",
+    "phase": "campaign",
+    "title": "科學城的願景",
+    "scenario": "對手提出要在古都市南邊蓋一座「科學城」，畫了很漂亮的鳥瞰圖。記者問你怎麼看。",
+    "tags": ["古都市", "產業"],
+    "issue": "economy",
+    "conditions": { "flags": ["city-gudu"] },
+    "weight": 2,
+    "options": [
+      { "id": "bigger", "label": "提出更大的版本：科學城加國際機場", "outcome": "鳥瞰圖更大了，工程師說機場那塊是魚塭。", "effects": { "approval": 4, "integrity": -4 }, "setFlags": ["promise-tourism"] },
+      { "id": "realistic", "label": "指出對手計畫的水電問題", "outcome": "你講得很有道理，但選民比較喜歡看鳥瞰圖。", "effects": { "integrity": 3, "approval": -1 }, "skill": "policy" },
+      { "id": "local", "label": "主打「先照顧在地農漁業」", "outcome": "農漁民很買單，年輕人覺得你沒有願景。", "effects": { "approval": 2, "party": 2 } }
+    ],
+    "source": { "status": "draft", "prototype": "南部城市常以科學園區、大型開發計畫作為選舉政見，可行性常受質疑。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "中央社：台南沙崙智慧綠能科學城整體開發 已展現階段成果", "url": "https://www.cna.com.tw/news/afe/202107120180.aspx", "quote": "台南沙崙智慧綠能科學城整體開發 已展現階段成果", "accessed": "2026-10-23" }], "realCase": "臺南沙崙科學城計畫" }
+  },
+  {
+    "id": "c-gg-port",
+    "phase": "campaign",
+    "title": "港口轉型",
+    "scenario": "老港區的倉庫一排排閒置。有人說要改成文創園區，有人說要蓋遊艇碼頭，碼頭工人說：「那我們呢？」",
+    "tags": ["港都市", "產業"],
+    "issue": "economy",
+    "conditions": { "flags": ["city-gangdu"] },
+    "weight": 2,
+    "options": [
+      { "id": "culture", "label": "主打文創與觀光轉型", "outcome": "年輕人很喜歡，碼頭工人覺得被遺忘。", "effects": { "approval": 2, "media": 4 } },
+      { "id": "workers", "label": "承諾轉型一定先安置碼頭工人", "outcome": "工會全力支持你，文創團體說你保守。", "effects": { "party": 5, "approval": 2 }, "skill": "grassroots" },
+      { "id": "yacht", "label": "承諾遊艇產業專區", "outcome": "遊艇業者和財團很興奮，一般市民不太知道遊艇跟自己有什麼關係。", "effects": { "business": 6, "approval": 1 } }
+    ],
+    "source": { "status": "draft", "prototype": "港口城市的舊港區轉型，在觀光文創、新興產業與既有勞工之間需要取捨。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：高雄亞洲新灣區 民眾:人潮.商機無明顯起色", "url": "https://news.pts.org.tw/article/362550", "quote": "高雄亞洲新灣區 民眾:人潮.商機無明顯起色", "accessed": "2026-10-23" }], "realCase": "高雄舊港區轉型（駁二藝術特區、亞洲新灣區）" }
+  },
+  {
+    "id": "c-religious",
+    "phase": "campaign",
+    "title": "宗教團體的邀約",
+    "scenario": "一個大型宗教團體邀你參加祈福法會，信眾有好幾萬人。他們的領袖暗示：「我們的信眾會看你怎麼對待我們。」",
+    "tags": ["選戰", "宗教"],
+    "issue": "local",
+    "options": [
+      { "id": "attend", "label": "出席，並承諾協助他們的建設案", "outcome": "法會很盛大，信眾鼓掌。建設案的審查，選後再說。", "effects": { "party": 4, "approval": 2, "integrity": -3 }, "skill": "deal" },
+      { "id": "attend-only", "label": "出席祈福，但不做任何承諾", "outcome": "領袖點點頭，表情看不出是滿意還是不滿意。", "effects": { "approval": 1 } },
+      { "id": "decline", "label": "婉拒，避免宗教介入選舉", "outcome": "很有原則，那幾萬票你大概拿不到了。", "effects": { "integrity": 3, "party": -3 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "大型宗教團體的動員力，常使候選人在選舉期間面臨請託與表態壓力。", "adaptation": "情境為虛構，取材自台灣地方政治的常見情境。", "refs": [] }
+  },
+  {
+    "id": "c-union",
+    "phase": "campaign",
+    "title": "工會的支持",
+    "scenario": "產業總工會說：只要你承諾提高市府外包人員的薪資，他們就全力支持你。",
+    "tags": ["選戰", "勞工"],
+    "issue": "economy",
+    "options": [
+      { "id": "promise", "label": "承諾調薪並簽下協議", "outcome": "工會全力動員，市府的外包預算明年要多編一筆。", "effects": { "party": 5, "approval": 2, "treasury": -4 } },
+      { "id": "partial", "label": "承諾檢討，但不簽協議", "outcome": "工會半信半疑，動員打了五折。", "effects": { "party": 2 }, "skill": "negotiate" },
+      { "id": "business", "label": "強調不能增加企業負擔", "outcome": "工商團體很滿意，工會轉而支持你的對手。", "effects": { "business": 5, "party": -3 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "勞工團體的組織動員與政策交換，是選舉中常見的結盟形式。", "adaptation": "情境為虛構，取材自台灣地方政治的常見情境。", "refs": [] }
+  },
+  {
+    "id": "c-podcast",
+    "phase": "campaign",
+    "title": "網紅 Podcast 邀約",
+    "scenario": "一個百萬訂閱的 Podcast 邀你上節目，主持人以「什麼都敢問」聞名。上一位上節目的候選人，民調掉了五個百分點。",
+    "tags": ["選戰", "媒體"],
+    "issue": "culture",
+    "options": [
+      { "id": "go", "label": "上節目，什麼都敢答", "outcome": "三小時的節目被剪成幾十支短影片，有好有壞。", "effects": { "media": 8, "approval": 2 }, "skill": "debate", "variants": [{ "when": { "flags": ["trait-gaffe-prone"] }, "outcome": "你在第二個小時講了一個不該講的笑話。那段被剪成短影音，標題是「候選人真心話」。", "effects": { "approval": -7, "media": 4 } }] },
+      { "id": "prepared", "label": "上節目，但事先要求題綱", "outcome": "主持人在節目一開始就說「這位候選人要求了題綱」。", "effects": { "media": 3, "integrity": -1 } },
+      { "id": "decline", "label": "婉拒", "outcome": "主持人在節目裡空了一張椅子給你。", "effects": { "media": -2 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "網路節目與 Podcast 成為候選人接觸年輕選民的新管道，臨場表現影響很大。", "adaptation": "情境為虛構，取材自台灣地方政治的常見情境。", "refs": [] }
+  },
+  {
+    "id": "c-pets",
+    "phase": "campaign",
+    "title": "毛孩政見",
+    "scenario": "動保團體整理了各候選人的動物政策，你那一欄是空白的。寵物友善的選民比你想像的多。",
+    "tags": ["選戰", "動保"],
+    "issue": "welfare",
+    "options": [
+      { "id": "full", "label": "推出完整的毛孩政見：寵物公園、動物醫院補助", "outcome": "毛孩爸媽們很開心，你的毛孩照片被轉發了十萬次。", "effects": { "approval": 4, "media": 4 } },
+      { "id": "shelter", "label": "承諾改善收容所，推動 TNR", "outcome": "動保團體很肯定，政見不夠可愛，轉發數普通。", "effects": { "approval": 2, "integrity": 2 } },
+      { "id": "skip", "label": "專注在其他議題", "outcome": "動保團體在你的那欄寫上「拒答」。", "effects": { "approval": -2 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "寵物友善政策成為都市選舉中愈來愈受重視的議題。", "adaptation": "情境為虛構，取材自台灣地方政治的常見情境。", "refs": [] }
+  },
+  {
+    "id": "c-night-market",
+    "phase": "campaign",
+    "title": "夜市掃街",
+    "scenario": "週末的夜市擠滿了人，是拉票的好地方，也是被嗆的好地方。",
+    "tags": ["選戰", "地方"],
+    "issue": "local",
+    "options": [
+      { "id": "eat", "label": "一攤一攤吃過去，花錢請攤販喝飲料", "outcome": "你吃了三十攤，攤販們都說會投給你。你的胃說它不會。", "effects": { "approval": 3, "party": 2 }, "skill": "grassroots", "funds": -100 },
+      { "id": "speech", "label": "站上椅子即興演講", "outcome": "有人鼓掌，有人嗆你「下去啦」，兩段影片都紅了。", "effects": { "media": 5, "approval": 1 }, "skill": "debate" },
+      { "id": "listen", "label": "只聽不講，記下攤商的問題", "outcome": "攤商們說很少看到候選人願意聽。新聞沒有報。", "effects": { "integrity": 2, "approval": 1 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "夜市是台灣候選人拉票的經典場合。", "adaptation": "情境為虛構，取材自台灣地方政治的常見情境。", "refs": [] }
+  },
+  {
+    "id": "c-campus",
+    "phase": "campaign",
+    "title": "大學校園座談",
+    "scenario": "學生會邀你參加校園座談。台下的問題很直接：學貸、房租、低薪，還有你為什麼要選。",
+    "tags": ["選戰", "青年", "教育"],
+    "issue": "welfare",
+    "options": [
+      { "id": "honest", "label": "坦白說你沒有所有答案，但會請年輕人進市府", "outcome": "學生們覺得你很真誠，有幾個人當場報名當志工。", "effects": { "approval": 2, "team": 3, "integrity": 2 } },
+      { "id": "promise", "label": "承諾青年租屋補貼加倍", "outcome": "全場歡呼，經濟系教授在台下搖頭。", "effects": { "approval": 4, "integrity": -2 }, "setFlags": ["promise-cash"] },
+      { "id": "lecture", "label": "用二十分鐘講你的奮鬥史", "outcome": "學生們低頭滑手機，有人錄下了你的「想當年」。", "effects": { "approval": -3, "media": 3 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "校園座談是候選人接觸首投族與年輕選民的場合，常面臨尖銳提問。", "adaptation": "情境為虛構，取材自台灣地方政治的常見情境。", "refs": [] }
+  },
+  {
+    "id": "c-elder",
+    "phase": "campaign",
+    "title": "長照據點的阿嬤",
+    "scenario": "你走訪一個社區長照據點，一位阿嬤拉著你的手說：「我兒子在外地，我每天都一個人吃飯。」",
+    "tags": ["選戰", "長照"],
+    "issue": "welfare",
+    "options": [
+      { "id": "plan", "label": "提出「每個里都有共餐據點」的政見", "outcome": "長輩們很感動，政見很具體，預算也很具體。", "effects": { "approval": 4, "integrity": 1 }, "setFlags": ["promise-senior"] },
+      { "id": "stay", "label": "留下來陪阿嬤吃完一頓飯", "outcome": "沒有記者在場，也沒有新聞。阿嬤的里長在選前幫你拉了不少票。", "effects": { "approval": 2, "party": 2, "integrity": 2 }, "skill": "grassroots" },
+      { "id": "photo", "label": "請攝影師拍下溫馨畫面", "outcome": "照片很溫馨，網友發現同一張照片你已經用過兩次。", "effects": { "media": 4, "integrity": -2 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "高齡化社會中，長照與社區照顧是地方選舉的重要議題。", "adaptation": "情境為虛構，取材自台灣地方政治的常見情境。", "refs": [] }
+  },
+  {
+    "id": "c-defector",
+    "phase": "campaign",
+    "title": "對手陣營的人來投靠",
+    "scenario": "對手陣營的一位前幕僚私下找你，說他手上有對手的內部資料，條件是選後給他一個位置。",
+    "tags": ["選戰", "爆料"],
+    "issue": "local",
+    "options": [
+      { "id": "take", "label": "收下資料，承諾給位置", "outcome": "資料很有料，你在辯論會上用了。選後，他來找你兌現承諾。", "effects": { "approval": 5, "integrity": -6 }, "setFlags": ["party-deal"] },
+      { "id": "refuse", "label": "拒絕，並把他請出去", "outcome": "他轉頭去找了另一位候選人。", "effects": { "integrity": 3 } },
+      { "id": "expose", "label": "公開這件事，指控對手陣營內鬨", "outcome": "媒體大幅報導，對手陣營說你在造謠。", "effects": { "media": 5, "approval": 1 }, "skill": "confront" }
+    ],
+    "source": { "status": "placeholder", "prototype": "選戰中的跳槽、爆料與內部資料外流，常成為攻防焦點。", "adaptation": "情境為虛構，取材自台灣地方政治的常見情境。", "refs": [] }
+  },
+  {
+    "id": "c-gg-ferris",
+    "phase": "campaign",
+    "title": "浪漫的大建設",
+    "scenario": "對手提出要在港邊蓋「全亞洲最大的摩天輪」，還說要讓這座城市「人進得來、貨出得去」。網路聲量爆表。",
+    "tags": ["港都市", "政見"],
+    "issue": "economy",
+    "conditions": { "flags": ["city-gangdu"] },
+    "weight": 2,
+    "options": [
+      { "id": "counter", "label": "提出更具體的產業政策回應", "outcome": "政策很紮實，聲量是對手的十分之一。", "effects": { "integrity": 3, "approval": 1 }, "skill": "policy" },
+      { "id": "mock", "label": "嘲諷對手的政見不切實際", "outcome": "你的支持者笑了，猶豫的選民覺得你很酸。", "effects": { "approval": -2, "media": 4 }, "skill": "confront" },
+      { "id": "bigger", "label": "加碼：要蓋更大的摩天輪", "outcome": "網路吵翻天，你的聲量終於追上對手了。", "effects": { "media": 8, "approval": 3, "integrity": -4 }, "setFlags": ["promise-tourism"] }
+    ],
+    "source": { "status": "draft", "prototype": "選戰中以浪漫、宏大的建設口號吸引選民，引發可行性辯論。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "2018 年高雄市長選舉的摩天輪與「人進得來、貨出得去」等政見", "refs": [{ "title": "中央社：愛情摩天輪 韓國瑜：以市府不出一毛錢前提推動", "url": "https://www.cna.com.tw/news/aipl/201812250074.aspx", "quote": "愛情摩天輪 韓國瑜：以市府不出一毛錢前提推動", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "c-gg-northdrift",
+    "phase": "campaign",
+    "title": "北漂的年輕人",
+    "scenario": "一支影片在網路上瘋傳：港都市的年輕人一個個北上工作，留下爸媽在家。留言區都是「我也是」。",
+    "tags": ["港都市", "青年"],
+    "issue": "economy",
+    "conditions": { "flags": ["city-gangdu"] },
+    "weight": 2,
+    "options": [
+      { "id": "jobs", "label": "提出「讓年輕人回家」的就業方案", "outcome": "方案很感人，產業界問你工作從哪裡來。", "effects": { "approval": 4, "integrity": -1 }, "skill": "policy" },
+      { "id": "story", "label": "拍一支自己家人北漂的故事影片", "outcome": "影片被轉了五十萬次，評論說你很會打感情牌。", "effects": { "media": 8, "approval": 2 }, "skill": "media" },
+      { "id": "defend", "label": "強調城市的發展數據其實不差", "outcome": "數據很漂亮，北漂的年輕人覺得你不懂他們。", "effects": { "approval": -3 } }
+    ],
+    "source": { "status": "draft", "prototype": "南部城市青年外流至北部就業的現象，成為選戰中的情感議題。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "2018 年高雄市長選舉的「北漂青年」議題", "refs": [{ "title": "聯合新聞網鳴人堂：讓「北漂族」痛苦的不是高雄，是台北的既得利益者", "url": "https://opinion.udn.com/opinion/story/5955/3466650", "quote": "讓「北漂族」痛苦的不是高雄，是台北的既得利益者", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "c-rally-wave",
+    "phase": "campaign",
+    "title": "突然爆紅的造勢",
+    "scenario": "你的一場造勢晚會意外爆紅，人潮擠滿了整條街，網路上開始出現你的迷因和周邊商品。",
+    "tags": ["選戰", "媒體"],
+    "issue": "local",
+    "options": [
+      { "id": "ride", "label": "乘勝追擊，花錢每天辦一場大型造勢", "outcome": "人潮一場比一場多，你的團隊和喉嚨都快撐不住了。", "effects": { "approval": 5, "media": 8, "team": -5 }, "funds": -1500, "skill": "organize" },
+      { "id": "calm", "label": "降溫，回到政策說明", "outcome": "熱潮慢慢退了，支持者說你「不懂得把握」。", "effects": { "integrity": 2, "media": -3 } },
+      { "id": "merch", "label": "推出官方周邊商品，順勢募款", "outcome": "帽子和 T 恤賣到缺貨，政治獻金滾滾而來。", "effects": { "media": 4, "approval": 1 }, "funds": 1500 }
+    ],
+    "source": { "status": "draft", "prototype": "選戰中突然爆紅的造勢熱潮與網路聲量，常改變選情走向。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "2018 年高雄市長選舉的造勢熱潮", "refs": [{ "title": "公視新聞網：韓國瑜鳳山造勢號稱5萬人 地方熱烈討論", "url": "https://news.pts.org.tw/article/411137", "quote": "韓國瑜鳳山造勢號稱5萬人 地方熱烈討論", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "c-referendum",
+    "phase": "campaign",
+    "title": "公投綁大選",
+    "scenario": "這次選舉同時有十項公投，從核能到同婚都有。記者一項一項問你的立場。",
+    "tags": ["選戰", "公投"],
+    "issue": "culture",
+    "options": [
+      { "id": "all", "label": "每一項都清楚表態", "outcome": "立場很鮮明，每一項都有人因此不投你。", "effects": { "integrity": 4, "approval": -2, "media": 4 } },
+      { "id": "some", "label": "只表態跟市政有關的", "outcome": "很聰明的切割，被追問的時候很尷尬。", "effects": { "approval": 1 }, "skill": "debate" },
+      { "id": "dodge", "label": "「尊重人民的選擇」", "outcome": "記者追問三次，你回答了三次一樣的話。", "effects": { "integrity": -3 } }
+    ],
+    "source": { "status": "draft", "prototype": "地方選舉同時舉行多項全國性公投，候選人被迫對各項議題表態。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "2018 年九合一選舉同時舉行十項公民投票", "refs": [{ "title": "中央社：中選會：九合一投票截止後 近1/3投票所仍在排隊", "url": "https://www.cna.com.tw/news/firstnews/201812020168.aspx", "quote": "中選會：九合一投票截止後 近1/3投票所仍在排隊", "accessed": "2026-10-23" }] }
+  },
+  {
     "id": "e-eve",
     "phase": "eve",
     "title": "選前之夜",
@@ -406,18 +844,46 @@
     "source": { "status": "placeholder", "prototype": "選前之夜是台灣選舉的傳統，候選人在投票前一晚舉辦最後的大型造勢。", "adaptation": "情境為虛構。", "refs": [] }
   },
   {
+    "id": "e-eve-rain",
+    "phase": "eve",
+    "title": "選前之夜下大雨",
+    "scenario": "投票前一晚，氣象局發布豪雨特報。你的選前之夜場地是露天的，已經有幾萬人在路上。",
+    "tags": ["選戰", "選前之夜"],
+    "issue": "local",
+    "options": [
+      { "id": "go-on", "label": "照辦，加租雨棚和接駁車，你也站在雨裡", "outcome": "你全身濕透地喊完最後一句話，那張照片成了選戰最後的經典畫面。", "effects": { "approval": 5, "media": 8, "team": -3 }, "funds": -2000, "skill": "grassroots" },
+      { "id": "indoor", "label": "臨時花錢包下室內體育館", "outcome": "場地小了一半，很多人進不去。", "effects": { "approval": 2, "party": 2 }, "funds": -1000 },
+      { "id": "cancel", "label": "取消，改成網路直播", "outcome": "很安全，也很冷清。", "effects": { "media": 3 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "選前之夜遇上惡劣天候，是候選人最後的考驗之一。", "adaptation": "情境為虛構，取材自台灣地方政治的常見情境。", "refs": [] }
+  },
+  {
+    "id": "e-eve-rival",
+    "phase": "eve",
+    "title": "對手的最後一擊",
+    "scenario": "投票前一晚十點，對手陣營召開記者會，公布一份關於你的「最新資料」。你只剩兩個小時可以回應。",
+    "tags": ["選戰", "選前之夜", "爆料"],
+    "issue": "local",
+    "options": [
+      { "id": "respond", "label": "立刻召開記者會逐點反駁", "outcome": "你的反駁很有力，但選民今晚只會看到標題。", "effects": { "approval": 2, "media": 5 }, "skill": "debate" },
+      { "id": "ignore", "label": "不回應，照原計畫掃街", "outcome": "你的支持者很穩，猶豫的選民帶著疑問去投票。", "effects": { "approval": -2, "integrity": 1 } },
+      { "id": "lawsuit", "label": "宣布提告，並在選前之夜台上痛批", "outcome": "台下的支持者很激動，有人覺得你太激動了。", "effects": { "party": 4, "approval": 1 }, "skill": "confront" }
+    ],
+    "source": { "status": "placeholder", "prototype": "選前最後一夜的爆料，在台灣選舉中被稱為「奧步」，候選人回應時間極短。", "adaptation": "情境為虛構，取材自台灣地方政治的常見情境。", "refs": [] }
+  },
+  {
     "id": "t-typhoon-flood",
     "phase": "term",
     "title": "颱風淹水",
     "scenario": "颱風夜，低窪地區淹到膝蓋。抽水站有三座故障，記者已經在現場連線。",
     "tags": ["防災", "基礎建設"],
     "options": [
-      { "id": "boots", "label": "穿雨鞋到現場視察", "outcome": "畫面很好。抽水站還是壞的。", "effects": { "approval": 6, "media": 6 }, "skill": "media" },
-      { "id": "fix", "label": "坐鎮應變中心，隔天提抽水站更新預算", "outcome": "沒有畫面。但三年後同樣的雨，這裡沒淹。", "effects": { "approval": -4, "treasury": -8, "achievement": 10 }, "requires": { "min": { "treasury": 20 } }, "skill": "admin" },
+      { "id": "boots", "label": "穿雨鞋到現場視察", "outcome": "畫面很好。抽水站還是壞的。", "effects": { "approval": 6, "media": 6 }, "skill": "media", "variants": [{ "when": { "flags": ["city-tianlong"] }, "outcome": "天龍市的網友不買單：「穿雨鞋拍照就是防災嗎？」", "effects": { "approval": -4 } }] },
+      { "id": "fix", "label": "坐鎮應變中心，隔天提抽水站更新預算", "outcome": "沒有畫面。但三年後同樣的雨，這裡沒淹。", "effects": { "approval": -4, "treasury": -8, "achievement": 10 }, "requires": { "min": { "treasury": 20 } }, "skill": "admin", "variants": [{ "when": { "flags": ["city-xinlong"] }, "outcome": "新龍市沿河低窪的里，三年後終於不再淹水。河邊的里長們送來一面錦旗。", "effects": { "approval": 4 } }, { "when": { "flags": ["city-gudu"] }, "outcome": "古都市的老城區排水系統終於更新，下一場颱風，老街沒有淹。", "effects": { "approval": 3 } }] },
       { "id": "blame", "label": "說是「百年一遇的雨量」", "outcome": "氣象專家指出這是今年第三次百年一遇。", "effects": { "approval": -6, "integrity": -3 } },
       { "id": "smart-pump", "label": "啟動任內建好的智慧抽水系統", "outcome": "抽水站全數正常運轉。這次的雨，你的城市沒淹。", "effects": { "achievement": 4, "approval": 5, "media": 4 }, "appearsIf": { "min": { "achievement": 50 } } }
     ],
-    "source": { "status": "placeholder", "prototype": "多個直轄市曾因豪雨積淹水，引發抽水站維護與首長應變表現的討論。", "adaptation": "情境為虛構。", "refs": [] }
+    "source": { "status": "draft", "prototype": "多個直轄市曾因豪雨積淹水，引發抽水站維護與首長應變表現的討論。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：台南馬路成河 河東里淹一層樓", "url": "https://news.pts.org.tw/article/404199", "quote": "台南馬路成河 河東里淹一層樓", "accessed": "2026-10-23" }], "realCase": "2018 年 0823 南部豪雨，臺南、高雄大範圍淹水" }
   },
   {
     "id": "t-dome-overrun",
@@ -430,7 +896,7 @@
       { "id": "audit", "label": "暫停工程，全面查帳", "outcome": "工地圍籬長出了青苔，也長出了一篇篇評論。", "effects": { "approval": -6, "integrity": 6, "achievement": 4, "business": -6 } },
       { "id": "renegotiate", "label": "重新議約，分期完工", "outcome": "沒人滿意，但也沒人能抓到把柄。", "effects": { "treasury": -8, "council": 4, "achievement": 3 } }
     ],
-    "source": { "status": "placeholder", "prototype": "國內曾有大型公共場館 BOT 案延宕多年、追加預算與契約爭議。", "adaptation": "金額與情境為虛構。", "refs": [] }
+    "source": { "status": "draft", "prototype": "國內曾有大型公共場館 BOT 案延宕多年、追加預算與契約爭議。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：大巨蛋案「破壞信賴關係」 監院糾正北市府", "url": "https://news.pts.org.tw/article/331579", "quote": "監院糾正北市府", "accessed": "2026-10-23" }], "realCase": "臺北大巨蛋 BOT 案多年延宕與契約爭議" }
   },
   {
     "id": "t-housing-progress",
@@ -445,7 +911,7 @@
       { "id": "admit", "label": "公開道歉並調整目標", "outcome": "誠實的代價是一週的頭版。", "effects": { "approval": -8, "integrity": 8 } },
       { "id": "rush", "label": "砸錢加速發包", "outcome": "進度上來了，市庫下去了。", "effects": { "treasury": -15, "achievement": 8 }, "requires": { "min": { "treasury": 25 } } }
     ],
-    "source": { "status": "placeholder", "prototype": "社宅政見的兌現進度常成為議會質詢焦點，「戶數」的計算口徑也曾引發爭議。", "adaptation": "數字為虛構。", "refs": [] }
+    "source": { "status": "draft", "prototype": "社宅政見的兌現進度常成為議會質詢焦點，「戶數」的計算口徑也曾引發爭議。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：柯文哲宣布暫緩社宅興建引發跳票爭議 北市議員齊聲批評", "url": "https://news.pts.org.tw/article/544813", "quote": "柯文哲宣布暫緩社宅興建引發跳票爭議", "accessed": "2026-10-23" }], "realCase": "2014 年臺北市長政見「公共住宅 5 萬戶」的兌現與戶數計算爭議" }
   },
   {
     "id": "t-cash-due",
@@ -496,11 +962,11 @@
     "scenario": "觀光局提案辦國際級燈會，預算 8 億，預估帶來 500 萬人次。",
     "tags": ["城市行銷", "財政"],
     "options": [
-      { "id": "go", "label": "辦！還要加無人機秀", "outcome": "IG 被洗版三週。燈籠的後續處理費另計。", "effects": { "approval": 8, "treasury": -12, "media": 8 }, "requires": { "min": { "treasury": 25 } } },
+      { "id": "go", "label": "辦！還要加無人機秀", "outcome": "IG 被洗版三週。燈籠的後續處理費另計。", "effects": { "approval": 8, "treasury": -12, "media": 8 }, "requires": { "min": { "treasury": 25 } }, "variants": [{ "when": { "flags": ["city-gangdu"] }, "outcome": "港都市本來就最會辦大型活動，觀光人潮塞爆了捷運站，飯店一房難求。", "effects": { "approval": 3, "treasury": 3 } }, { "when": { "flags": ["city-tianlong"] }, "outcome": "天龍市的活動太多了，你的燈會被淹沒在一堆展覽和演唱會之間。", "effects": { "approval": -3 } }] },
       { "id": "small", "label": "縮小規模，經費轉去修人行道", "outcome": "人行道很平。沒有人會為人行道打卡。", "effects": { "approval": -2, "achievement": 6, "treasury": -4 } },
       { "id": "sponsor", "label": "找企業冠名贊助", "outcome": "燈會很成功，主燈上是一個很大的建商 logo。", "effects": { "approval": 4, "integrity": -4, "media": 4, "business": 8 } }
     ],
-    "source": { "status": "placeholder", "prototype": "各縣市大型城市行銷活動的效益與經費爭議。", "adaptation": "數字為虛構。", "refs": [] }
+    "source": { "status": "draft", "prototype": "各縣市大型城市行銷活動的效益與經費爭議。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "中央社：台中花博虧損逾38億元 綠議員籲呈報監察院調查", "url": "https://www.cna.com.tw/news/firstnews/202008270316.aspx", "quote": "台中花博虧損逾38億元", "accessed": "2026-10-23" }], "realCase": "2010 年臺北國際花卉博覽會、2018 年臺中世界花卉博覽會的經費與效益爭議" }
   },
   {
     "id": "t-urban-renewal",
@@ -509,11 +975,11 @@
     "scenario": "一處都更案只剩一戶不同意。建商請求市府代為拆除，抗議團體已在現場紮營。",
     "tags": ["都更", "人權"],
     "options": [
-      { "id": "demolish", "label": "依法強制拆除", "outcome": "工程繼續了。那張被抬走的照片也繼續流傳。", "effects": { "achievement": 4, "approval": -8, "integrity": -5, "business": 6 } },
+      { "id": "demolish", "label": "依法強制拆除", "outcome": "工程繼續了。那張被抬走的照片也繼續流傳。", "effects": { "achievement": 4, "approval": -8, "integrity": -5, "business": 6 }, "variants": [{ "when": { "flags": ["city-tianlong"] }, "outcome": "天龍市的媒體全程直播強拆，畫面在全國新聞播了一整天。", "effects": { "approval": -4, "media": 6 } }] },
       { "id": "mediate", "label": "暫緩，市府介入協調", "outcome": "協調了八個月。建商很生氣，住戶有點感動。", "effects": { "achievement": -3, "integrity": 5 }, "skill": "negotiate" },
       { "id": "reform", "label": "推動都更程序修法", "outcome": "修法需要時間，你的任期不太夠。", "effects": { "achievement": 5, "council": -5 }, "requires": { "min": { "council": 40 } } }
     ],
-    "source": { "status": "placeholder", "prototype": "都市更新強制拆除爭議引發程序正義與修法討論。", "adaptation": "情境為虛構。", "refs": [] }
+    "source": { "status": "draft", "prototype": "都市更新強制拆除爭議引發程序正義與修法討論。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：文林苑都更爭議 引發條例檢討修正", "url": "https://news.pts.org.tw/article/238899", "quote": "文林苑都更爭議 引發條例檢討修正", "accessed": "2026-10-23" }], "realCase": "2012 年臺北市士林文林苑都更強制拆除事件" }
   },
   {
     "id": "t-scandal",
@@ -536,11 +1002,11 @@
     "scenario": "交通局要把主幹道的一個車道改成公車專用道。開車族已經在臉書社團集結。",
     "tags": ["交通"],
     "options": [
-      { "id": "push", "label": "照計畫推動", "outcome": "半年後公車快了 12 分鐘。前半年你的粉專留言很精彩。", "effects": { "approval": -6, "achievement": 8 }, "requires": { "min": { "council": 35 } }, "skill": "admin" },
+      { "id": "push", "label": "照計畫推動", "outcome": "半年後公車快了 12 分鐘。前半年你的粉專留言很精彩。", "effects": { "approval": -6, "achievement": 8 }, "requires": { "min": { "council": 35 } }, "skill": "admin", "variants": [{ "when": { "flags": ["city-tianlong"] }, "outcome": "天龍市的通勤族本來就習慣搭公車，反彈比預期小得多。", "effects": { "approval": 4 } }, { "when": { "flags": ["city-mama"] }, "outcome": "媽媽市的汽機車族群龐大，專用道一開，整條路塞成停車場。", "effects": { "approval": -4 } }] },
       { "id": "pilot", "label": "先試辦三個月", "outcome": "試辦期剛好跨過選舉。", "effects": { "achievement": 3 } },
       { "id": "drop", "label": "宣布「聽見民意」撤案", "outcome": "開車族滿意。公車族本來就不太發文。", "effects": { "approval": 3, "achievement": -3 } }
     ],
-    "source": { "status": "placeholder", "prototype": "公車專用道等交通政策初期反彈與長期成效。", "adaptation": "情境為虛構。", "refs": [] }
+    "source": { "status": "draft", "prototype": "公車專用道等交通政策初期反彈與長期成效。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：台中BRT廢止案 監院對中市府提糾正", "url": "https://news.pts.org.tw/article/352836", "quote": "台中BRT廢止案 監院對中市府提糾正", "accessed": "2026-10-23" }], "realCase": "臺中市快捷巴士 BRT 於 2014 年通車，2015 年改為優先公車道" }
   },
   {
     "id": "t-wedding-funeral",
@@ -549,7 +1015,7 @@
     "scenario": "這週有 37 張喜帖、22 張訃聞、一場市政預算的說明會，時間全部撞在一起。",
     "tags": ["地方經營"],
     "options": [
-      { "id": "all", "label": "跑完所有紅白場，紅包白包自己出", "outcome": "你握了 1,800 隻手。預算說明會由副市長代打。", "effects": { "approval": 5, "party": 4, "achievement": -4, "media": 3, "team": -2 }, "funds": -500 },
+      { "id": "all", "label": "跑完所有紅白場，紅包白包自己出", "outcome": "你握了 1,800 隻手。預算說明會由副市長代打。", "effects": { "approval": 5, "party": 4, "achievement": -4, "media": 3, "team": -2 }, "funds": -500, "variants": [{ "when": { "flags": ["city-gudu"] }, "outcome": "古都市的人情味很濃，每一場紅白帖的主人都會記得你來過。", "effects": { "party": 3, "approval": 2 } }, { "when": { "flags": ["city-tianlong"] }, "outcome": "天龍市的選民不太在意你有沒有來喝喜酒，倒是在意你那天的市政會議請假了。", "effects": { "approval": -3 } }] },
       { "id": "budget", "label": "出席預算說明會", "outcome": "說明會很成功。3 位里長說你「變了」。", "effects": { "achievement": 4, "party": -3, "approval": -2 } },
       { "id": "proxy", "label": "派機要秘書帶花籃出席", "outcome": "花店老闆成為你最堅定的支持者。", "effects": { "treasury": -1, "approval": 1 }, "funds": -50 }
     ],
@@ -583,7 +1049,7 @@
       { "id": "distance", "label": "公開表示「市府有不同看法」", "outcome": "民調回升了一點。黨內有人說你「只顧自己」。", "effects": { "approval": 4, "party": -8 } },
       { "id": "quiet", "label": "低調，不表態", "outcome": "兩邊都不滿意，但也沒有人特別生氣。", "effects": { "approval": -2 } }
     ],
-    "source": { "status": "placeholder", "prototype": "地方首長與中央執政黨同黨時，中央施政的評價常影響地方選情。", "adaptation": "情境為虛構。", "refs": [] }
+    "source": { "status": "draft", "prototype": "地方首長與中央執政黨同黨時，中央施政的評價常影響地方選情。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：七縣市綠地變藍天 小英執政期中考慘敗", "url": "https://news.pts.org.tw/article/414091", "quote": "七縣市綠地變藍天 小英執政期中考慘敗", "accessed": "2026-10-23" }], "realCase": "2018 年九合一選舉，中央執政表現影響同黨縣市長選情" }
   },
   {
     "id": "t-party-white",
@@ -613,7 +1079,7 @@
       { "id": "withdraw", "label": "撤回交換，堅守立場", "outcome": "理念保住了。預算沒過。", "effects": { "integrity": 5, "council": -8, "achievement": -3 } },
       { "id": "ignore", "label": "不回應，繼續做事", "outcome": "支持者慢慢散了一些。", "effects": { "approval": -3, "party": -4 } }
     ],
-    "source": { "status": "placeholder", "prototype": "理念型小黨與大黨合作時，常面臨支持者對路線的質疑。", "adaptation": "情境為虛構。", "refs": [] }
+    "source": { "status": "draft", "prototype": "理念型小黨與大黨合作時，常面臨支持者對路線的質疑。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "中央社：民進黨提名許淑華 時力：打破協議深表遺憾", "url": "https://www.cna.com.tw/news/firstnews/201908220190.aspx", "quote": "民進黨提名許淑華 時力：打破協議深表遺憾", "accessed": "2026-10-23" }], "realCase": "理念型小黨與大黨合作路線引發支持者質疑（2016–2019 年）" }
   },
   {
     "id": "t-party-minor",
@@ -658,7 +1124,7 @@
       { "id": "focus", "label": "專心市政，只拍一支站台影片", "outcome": "黨部不太高興。補選結果和你沒什麼關係了。", "effects": { "party": -5, "achievement": 3 } },
       { "id": "aide", "label": "推自己的前辦公室主任參選", "outcome": "你的人脈延續了。對手說這叫「世襲」。", "effects": { "party": 3, "integrity": -3 } }
     ],
-    "source": { "status": "placeholder", "prototype": "立委轉任縣市長後，原選區補選常被視為新任首長的延伸戰場。", "adaptation": "情境為虛構。", "refs": [] }
+    "source": { "status": "draft", "prototype": "立委轉任縣市長後，原選區補選常被視為新任首長的延伸戰場。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "中央社：蔣萬安辭立委 台北市中山北松山明年1月8日補選", "url": "https://www.cna.com.tw/news/aipl/202211185003.aspx", "quote": "蔣萬安辭立委 台北市中山北松山明年1月8日補選", "accessed": "2026-10-23" }], "realCase": "2023 年臺北市第三選舉區立委補選（原立委當選直轄市長後辭職）" }
   },
   {
     "id": "t-bg-councilor",
@@ -703,7 +1169,7 @@
       { "id": "own-team", "label": "堅持用自己的團隊", "outcome": "團隊學得很快。前三個月的公文也退得很快。", "effects": { "integrity": 3, "council": -5, "achievement": -2, "approval": 2 } },
       { "id": "livestream", "label": "每天直播「市長學市政」", "outcome": "觀眾很喜歡看你學習。局處長不太喜歡被直播。", "effects": { "approval": 5, "achievement": -1 } }
     ],
-    "source": { "status": "placeholder", "prototype": "政治素人首長上任初期，需在專業團隊與政治經驗之間取得平衡。", "adaptation": "情境為虛構。", "refs": [] }
+    "source": { "status": "draft", "prototype": "政治素人首長上任初期，需在專業團隊與政治經驗之間取得平衡。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：北市府小內閣 副市長鄧家基.林欽榮", "url": "https://news.pts.org.tw/article/284946", "quote": "北市府小內閣 副市長鄧家基.林欽榮", "accessed": "2026-10-23" }], "realCase": "2014 年臺北市素人市長上任初期的市府團隊組成" }
   },
   {
     "id": "t-bg-incumbent",
@@ -755,7 +1221,7 @@
     "scenario": "一間農地上的違章工廠半夜起火，消防員受傷。調查發現，這樣的工廠全市還有上千家。",
     "tags": ["公安", "產業"],
     "options": [
-      { "id": "crackdown", "label": "全面稽查，違規者斷水斷電", "outcome": "工安大幅改善。幾千個工廠老闆和他們的員工都記住了你。", "effects": { "achievement": 6, "party": -6, "approval": -2, "business": -6 }, "requires": { "min": { "team": 40 } }, "skill": "admin" },
+      { "id": "crackdown", "label": "全面稽查，違規者斷水斷電", "outcome": "工安大幅改善。幾千個工廠老闆和他們的員工都記住了你。", "effects": { "achievement": 6, "party": -6, "approval": -2, "business": -6 }, "requires": { "min": { "team": 40 } }, "skill": "admin", "variants": [{ "when": { "flags": ["city-airplane"] }, "outcome": "飛機城的工廠密度高，斷水斷電讓上百家工廠停工，工人們在市府前抗議。", "effects": { "approval": -4, "business": -3 } }] },
       { "id": "legalize", "label": "輔導就地合法化", "outcome": "工廠老闆們很感激。環保團體說你在幫違法者漂白。", "effects": { "party": 6, "integrity": -5, "council": 3, "business": 8 } },
       { "id": "one", "label": "只處理起火的那一家", "outcome": "事情暫時平息。下一場火在哪裡，沒人知道。", "effects": { "approval": -3 } }
     ],
@@ -795,7 +1261,7 @@
     "tags": ["違建", "地方"],
     "options": [
       { "id": "demolish", "label": "依法拆除", "outcome": "法治的勝利。廟方說「神明會看著」。", "effects": { "integrity": 5, "party": -8, "approval": -3 } },
-      { "id": "legalize", "label": "協助補辦執照就地合法", "outcome": "信眾很感激，主委在選舉時會幫你。", "effects": { "party": 6, "integrity": -4, "council": 3, "business": 3 }, "skill": "deal" },
+      { "id": "legalize", "label": "協助補辦執照就地合法", "outcome": "信眾很感激，主委在選舉時會幫你。", "effects": { "party": 6, "integrity": -4, "council": 3, "business": 3 }, "skill": "deal", "variants": [{ "when": { "flags": ["city-mama"] }, "outcome": "在媽媽市，宮廟就是地方的中心。主委們在選舉時全力動員。", "effects": { "party": 4 } }] },
       { "id": "shelve", "label": "先擱置，之後再說", "outcome": "檢舉人又檢舉了一次，這次附上了你的名字。", "effects": { "integrity": -2, "media": 3 } }
     ],
     "source": { "status": "draft", "prototype": "宮廟違章建築長期未處理，地方政府在依法拆除與地方情感之間的處置受到監察院調查。", "adaptation": "情境已虛構化。", "refs": [{ "title": "臺中市政府：近三年監察院糾正案與調查報告之說明與檢討（2022）", "url": "https://www.rdec.taichung.gov.tw/media/785392/1110413-4-市政府針對近三年監察院對臺中市提出糾正案-糾舉案-調查報告案之說明與檢討專.pdf", "quote": "「瑞和宮」違章建築案", "accessed": "2026-10-23" }] }
@@ -846,7 +1312,7 @@
     "scenario": "兩萬多人上街遊行，抗議行人地獄。訴求很簡單：人行道要能走。",
     "tags": ["交通", "行人"],
     "options": [
-      { "id": "sidewalk", "label": "拓寬人行道，縮減汽車道", "outcome": "走路的人很開心。開車的人塞在路上罵你。", "effects": { "approval": -4, "achievement": 6, "council": -3 }, "skill": "admin" },
+      { "id": "sidewalk", "label": "拓寬人行道，縮減汽車道", "outcome": "走路的人很開心。開車的人塞在路上罵你。", "effects": { "approval": -4, "achievement": 6, "council": -3 }, "skill": "admin", "variants": [{ "when": { "flags": ["city-tianlong"] }, "outcome": "天龍市的行人比車多，人行道拓寬後，走路的人終於可以並肩而行。", "effects": { "approval": 4 } }] },
       { "id": "enforce", "label": "全面取締違規停車", "outcome": "人行道清空了，罰單開了十萬張。", "effects": { "approval": -5, "achievement": 3, "integrity": 2, "treasury": 3 } },
       { "id": "campaign", "label": "辦交通安全宣導活動", "outcome": "宣導影片很可愛，路口還是一樣危險。", "effects": { "media": 4 } }
     ],
@@ -859,7 +1325,7 @@
     "scenario": "確診病例一週破千。疾管署派人進駐，媒體每天報累計數字。",
     "tags": ["防疫"],
     "options": [
-      { "id": "command", "label": "開設一級指揮中心，全局處動員", "outcome": "疫情慢慢壓下來了。局處長們三個月沒放假。", "effects": { "achievement": 6, "team": -5, "treasury": -4 }, "requires": { "min": { "team": 35 } }, "skill": "admin" },
+      { "id": "command", "label": "開設一級指揮中心，全局處動員", "outcome": "疫情慢慢壓下來了。局處長們三個月沒放假。", "effects": { "achievement": 6, "team": -5, "treasury": -4 }, "requires": { "min": { "team": 35 } }, "skill": "admin", "variants": [{ "when": { "flags": ["city-gudu"] }, "outcome": "古都市經歷過大流行，市民和各局處都很有經驗，指揮中心運作得特別順。", "effects": { "achievement": 3, "approval": 2 } }] },
       { "id": "boots", "label": "市長天天穿雨鞋巡視病媒蚊", "outcome": "你的雨鞋照片成了防疫代言。病例數字還在漲。", "effects": { "media": 10, "approval": 3, "team": -2 }, "skill": "media" },
       { "id": "fine", "label": "積水容器一律開罰", "outcome": "罰單開了很多張。孳生源也真的少了。", "effects": { "approval": -4, "achievement": 4, "treasury": 2 } }
     ],
@@ -918,7 +1384,7 @@
       { "id": "abolish", "label": "宣布廢除建議款", "outcome": "公民團體大力讚揚。議會準備好好「審查」你的預算。", "effects": { "integrity": 5, "council": -12, "media": 6 } },
       { "id": "open", "label": "改成公開審查、上網公告", "outcome": "議員們不太情願，但很難公開反對。", "effects": { "council": -3, "integrity": 3, "team": -2 }, "skill": "negotiate" }
     ],
-    "source": { "status": "placeholder", "prototype": "地方議員以「建議款」指定地方小型工程，長期被質疑為選舉綁樁。", "adaptation": "情境為虛構。", "refs": [] }
+    "source": { "status": "draft", "prototype": "地方議員以「建議款」指定地方小型工程，長期被質疑為選舉綁樁。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "報導者：【縣市議員篇】怪獸與它的產地：揭開「配合款」潘朵拉盒子", "url": "https://www.twreporter.org/a/2018-local-election-councillors-matching-grants", "quote": "揭開「配合款」潘朵拉盒子", "accessed": "2026-10-23" }], "realCase": "地方議員「建議款」（地方建設建議經費）制度的綁樁爭議" }
   },
   {
     "id": "t-donor-favor",
@@ -1006,6 +1472,687 @@
     "source": { "status": "placeholder", "prototype": "大型陳抗發生後，首長在對話、驅離與讓步之間的處置。", "adaptation": "情境為虛構。", "refs": [] }
   },
   {
+    "id": "t-tianlong-trash",
+    "phase": "term",
+    "title": "垃圾費隨袋徵收",
+    "scenario": "環保局提案：垃圾費改成隨袋徵收，丟多少付多少。試算顯示垃圾量會大減，但市民得改用專用垃圾袋。",
+    "tags": ["天龍市", "環保"],
+    "conditions": { "flags": ["city-tianlong"] },
+    "weight": 3,
+    "options": [
+      { "id": "go", "label": "全面實施，配合加強稽查", "outcome": "第一個月罵聲不斷，第三個月垃圾量少了三分之一，回收場堆成了山。", "effects": { "approval": -5, "achievement": 7, "treasury": 3, "team": -3 }, "skill": "admin" },
+      { "id": "pilot", "label": "先在兩個行政區試辦", "outcome": "試辦區的成果很漂亮，其他區的人問：「為什麼是我們先？」", "effects": { "achievement": 3, "approval": -1 } },
+      { "id": "shelve", "label": "選前不碰，擱置", "outcome": "垃圾量照舊，焚化爐照燒。環保團體把你列進年度失望名單。", "effects": { "approval": 1, "integrity": -2 } }
+    ],
+    "source": { "status": "draft", "prototype": "臺北市於 2000 年實施垃圾費隨袋徵收，初期引發反彈與清潔隊負擔加重，但垃圾量大幅下降。", "adaptation": "城市、人物與數字已虛構化。", "refs": [{ "title": "遠見雜誌：台北市民展開新生活運動（2000）", "url": "https://www.gvm.com.tw/article/6417", "quote": "八十九年七月比起之前的數量，減少了三分之一", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-xinlong-ringline",
+    "phase": "term",
+    "title": "環狀線的改善清單",
+    "scenario": "新捷運環狀線通車在即，交通部履勘後開出一張改善清單。市民已經等了十年，議員天天問你哪天通車。",
+    "tags": ["新龍市", "交通"],
+    "conditions": { "flags": ["city-xinlong"] },
+    "weight": 3,
+    "options": [
+      { "id": "wait", "label": "全部改善完成才通車", "outcome": "通車晚了兩個月。罵聲很大，但沒有出事。", "effects": { "approval": -4, "integrity": 3, "achievement": 3 }, "skill": "admin" },
+      { "id": "free-ride", "label": "先開放免費試乘，邊營運邊改", "outcome": "試乘人潮擠爆，免費的感覺很好。改善項目還剩一半。", "effects": { "approval": 5, "media": 4, "integrity": -2 }, "delayed": { "afterTurns": 3, "effects": { "approval": -5, "media": 6 }, "text": "環狀線通車後頻傳異常停駛，議會要求專案報告。" } },
+      { "id": "blame", "label": "把延宕推給中央審查太慢", "outcome": "中央和你隔空吵了一週，車還是沒開。", "effects": { "approval": -1, "party": 3, "council": -2 }, "skill": "confront" }
+    ],
+    "source": { "status": "draft", "prototype": "新北捷運環狀線通車前，交通部履勘要求多項改善，通車時程一再受到關注。", "adaptation": "城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：新北環狀捷運線改善中 仍盼春節能試乘（2020）", "url": "https://news.pts.org.tw/article/463071", "quote": "新北環狀捷運線改善中 仍盼春節能試乘", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-airplane-dormfire",
+    "phase": "term",
+    "title": "移工宿舍大火",
+    "scenario": "工業區一棟鐵皮違建宿舍半夜起火，多名移工罹難。宿舍蓋在工廠對面，只有一座樓梯。",
+    "tags": ["飛機城", "移工", "公安"],
+    "conditions": { "flags": ["city-airplane"] },
+    "weight": 3,
+    "options": [
+      { "id": "inspect", "label": "全面清查移工宿舍，違規者限期改善", "outcome": "清查出上千處違規。雇主團體抗議成本太高，議員開始幫他們說話。", "effects": { "achievement": 6, "business": -6, "council": -3, "team": -3 }, "skill": "admin" },
+      { "id": "subsidize", "label": "補助雇主改善宿舍消防設備", "outcome": "雇主很配合，市庫少了一筆錢。", "effects": { "achievement": 3, "treasury": -6, "business": 3 } },
+      { "id": "defer", "label": "強調「宿舍不歸勞動局管」，交給中央", "outcome": "權責劃分得很清楚。下一場火在哪裡，也很清楚。", "effects": { "approval": -5, "integrity": -4 } }
+    ],
+    "source": { "status": "draft", "prototype": "工業區移工違建宿舍火災造成多人死亡，凸顯移工居住安全與主管機關權責不清的問題。", "adaptation": "城市、人物與數字已虛構化。", "refs": [{ "title": "中央社：北台接連大火 燒出移工居住安全疑慮（2017）", "url": "https://www.cna.com.tw/news/firstnews/201712190355.aspx", "quote": "桃園蘆竹工廠違法宿舍大火造成6死5傷", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-mama-coal",
+    "phase": "term",
+    "title": "電廠的煙囪",
+    "scenario": "市郊的燃煤電廠是全國最大的空汙源之一。你可以用自治條例管制生煤用量，但電廠歸中央管。",
+    "tags": ["媽媽市", "空汙"],
+    "conditions": { "flags": ["city-mama"] },
+    "weight": 3,
+    "options": [
+      { "id": "cut", "label": "依自治條例大砍生煤許可量", "outcome": "電廠被迫減煤，中央宣告你的條例牴觸上位法。官司打了好幾年。", "effects": { "approval": 5, "integrity": 3, "council": -2, "party": -3 }, "skill": "confront" },
+      { "id": "negotiate", "label": "和中央談分年減煤時程", "outcome": "時程表談出來了，比你想要的慢很多。", "effects": { "achievement": 3, "integrity": 1 }, "skill": "negotiate" },
+      { "id": "fine", "label": "每次空品不良就開罰，換取新聞版面", "outcome": "罰單開了很多張，空氣還是一樣。", "effects": { "media": 5, "approval": 2 } }
+    ],
+    "source": { "status": "draft", "prototype": "臺中市以自治條例管制燃煤電廠生煤用量並開罰，引發中央與地方的權限爭議。", "adaptation": "城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：台中市重罰中火後 再祭出生煤減量限期令（2019）", "url": "https://news.pts.org.tw/article/452389", "quote": "台中市重罰中火後 再祭出生煤減量限期令", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-gudu-railway",
+    "phase": "term",
+    "title": "最後的拆遷戶",
+    "scenario": "鐵路地下化工程只剩兩戶不肯搬。施工單位準備強制拆除，聲援的學生已經在屋裡守了三天。",
+    "tags": ["古都市", "拆遷", "人權"],
+    "conditions": { "flags": ["city-gudu"] },
+    "weight": 3,
+    "options": [
+      { "id": "demolish", "label": "支持依法拆除，工程不能再拖", "outcome": "工程如期進行。凌晨推擠的畫面在網路上傳了一個月。", "effects": { "achievement": 5, "approval": -4, "integrity": -4 } },
+      { "id": "pause", "label": "要求暫緩，市長親自出面協調", "outcome": "你在屋裡坐了兩個小時。他們沒有答應，但願意再談。", "effects": { "integrity": 4, "achievement": -3, "approval": 1 }, "skill": "negotiate" },
+      { "id": "redesign", "label": "研究讓老屋移置保存、改作公共藝術", "outcome": "很有創意，工程延期半年，預算也多了一筆。", "effects": { "integrity": 3, "treasury": -5, "media": 4 } }
+    ],
+    "source": { "status": "draft", "prototype": "臺南鐵路地下化東移工程的拆遷爭議延續多年，最後的拆遷戶在強制拆除前與聲援者守屋。", "adaptation": "城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：南鐵地下化最後拆遷戶 僵持後暫緩拆（2020）", "url": "https://news.pts.org.tw/article/488162", "quote": "南鐵地下化最後拆遷戶 僵持後暫緩拆", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-gangdu-pipeline",
+    "phase": "term",
+    "title": "地底下的管線",
+    "scenario": "工程單位回報：市區道路下埋著數十條石化管線，沒有人有完整的圖資。業者說「都很安全」。",
+    "tags": ["港都市", "公安"],
+    "conditions": { "flags": ["city-gangdu"] },
+    "weight": 3,
+    "options": [
+      { "id": "map", "label": "全面普查管線圖資，強制業者申報", "outcome": "普查花了兩年和一大筆預算，業者抱怨不斷。地圖終於畫出來了。", "effects": { "achievement": 7, "treasury": -6, "business": -5, "team": -2 }, "skill": "admin" },
+      { "id": "trust", "label": "相信業者，維持現行管理", "outcome": "什麼事都沒發生——目前為止。", "effects": { "business": 4, "integrity": -3 }, "delayed": { "afterTurns": 4, "effects": { "approval": -10, "achievement": -6, "media": 10 }, "text": "一條沒有登記的老舊管線外洩，消防隊找了三個小時才找到閥門。" } },
+      { "id": "relocate", "label": "要求管線限期遷出市區", "outcome": "業者揚言撤資，議會吵翻天。", "effects": { "integrity": 3, "business": -8, "council": -3 }, "skill": "confront" }
+    ],
+    "source": { "status": "draft", "prototype": "2014 年高雄氣爆事故暴露地下石化管線圖資不明、權責不清的問題，監察院糾正市府與經濟部。", "adaptation": "城市、人物與數字已虛構化。", "refs": [{ "title": "風傳媒：地下管線混亂 高雄大氣爆錯失黃金3小時還原（2014）", "url": "https://www.storm.mg/article/34317", "quote": "高雄大氣爆案意外爆出了政府管理石化產業的重大漏洞", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-cinnabar",
+    "phase": "term",
+    "title": "中藥裡的硃砂",
+    "scenario": "多名民眾服用某中醫診所開的藥粉後重金屬中毒。衛生局發現，處方裡有硃砂。",
+    "tags": ["衛生", "公安"],
+    "options": [
+      { "id": "recall", "label": "立刻追查所有病人並公開診所名單", "outcome": "衛生局連夜打了上千通電話。中醫師公會抗議「污名化整個行業」。", "effects": { "achievement": 5, "approval": 3, "team": -3 }, "skill": "admin" },
+      { "id": "quiet", "label": "低調處理，避免引起恐慌", "outcome": "恐慌沒有發生。兩週後，又有三個人送進急診。", "effects": { "integrity": -5, "approval": -4 } },
+      { "id": "regulate", "label": "推動全面檢驗中藥重金屬", "outcome": "檢驗制度上路，醫界與藥商都有意見。", "effects": { "achievement": 4, "business": -3, "council": -2 } }
+    ],
+    "source": { "status": "draft", "prototype": "民眾服用中醫診所處方的中藥粉後出現中毒現象，監察院就地方衛生主管機關的處置進行調查。", "adaptation": "城市、人物與數字已虛構化。", "refs": [{ "title": "臺中市政府：近三年監察院糾正案與調查報告之說明與檢討（2022）", "url": "https://www.rdec.taichung.gov.tw/media/785392/1110413-4-市政府針對近三年監察院對臺中市提出糾正案-糾舉案-調查報告案之說明與檢討專.pdf", "quote": "因醫師以硃砂入藥，致出現中毒現象案", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-central-gift",
+    "phase": "term",
+    "title": "中央的大禮",
+    "scenario": "文化部要在你的城市蓋一座國家級博物館，條件是市府要出地、出配合款、還要負責日後營運。",
+    "tags": ["中央", "文化"],
+    "options": [
+      { "id": "accept", "label": "全部答應，先拿下再說", "outcome": "簽約儀式很風光。十年後的營運費用，是下一任的事。", "effects": { "approval": 4, "media": 4, "treasury": -5 }, "delayed": { "afterTurns": 5, "effects": { "treasury": -5 }, "text": "博物館的營運預算超出預期，市府每年得多編一筆。" } },
+      { "id": "bargain", "label": "談條件：中央負擔營運費用", "outcome": "談判拖了半年，最後條件好了一點，博物館的開館日期也晚了一點。", "effects": { "achievement": 3, "council": 2 }, "skill": "negotiate" },
+      { "id": "decline", "label": "婉拒，市府沒有能力承擔", "outcome": "很誠實，標題寫「XX 把國家級建設推掉」。", "effects": { "approval": -3, "integrity": 3, "treasury": 2 } }
+    ],
+    "source": { "status": "draft", "prototype": "中央部會與地方政府簽訂合作備忘錄興建國家級文化設施，其經費分擔與後續營運受到監察院調查。", "adaptation": "城市、人物與數字已虛構化。", "refs": [{ "title": "臺中市政府：近三年監察院糾正案與調查報告之說明與檢討（2022）", "url": "https://www.rdec.taichung.gov.tw/media/785392/1110413-4-市政府針對近三年監察院對臺中市提出糾正案-糾舉案-調查報告案之說明與檢討專.pdf", "quote": "文化部為辦理「國家漫畫博物館計畫」與臺中市政府簽訂合作備忘錄案", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-tech-tower",
+    "phase": "term",
+    "title": "市有大樓賤賣？",
+    "scenario": "市府出租給企業的科技大樓，租約到期前，承租廠商申請「承租轉承購」，價格是市價的六成。",
+    "tags": ["財政", "企業"],
+    "options": [
+      { "id": "sell", "label": "同意出售，換取企業續留", "outcome": "企業宣布擴大投資。議員質疑你「賤賣市產」。", "effects": { "business": 8, "treasury": 5, "integrity": -4 } },
+      { "id": "market", "label": "要求依市價重新估價", "outcome": "企業不太高興，談判破局，大樓空了半年。", "effects": { "integrity": 3, "treasury": -2, "business": -4 } },
+      { "id": "auction", "label": "公開標售，價高者得", "outcome": "很透明。原承租的企業沒標到，宣布遷廠。", "effects": { "integrity": 2, "treasury": 6, "approval": -3 } }
+    ],
+    "source": { "status": "draft", "prototype": "市府辦理工業區科技大樓承租轉承購案，價格與程序受到監察院調查。", "adaptation": "城市、人物與數字已虛構化。", "refs": [{ "title": "臺中市政府：近三年監察院糾正案與調查報告之說明與檢討（2022）", "url": "https://www.rdec.taichung.gov.tw/media/785392/1110413-4-市政府針對近三年監察院對臺中市提出糾正案-糾舉案-調查報告案之說明與檢討專.pdf", "quote": "本府辦理臺中工業區科技大樓承租轉承購案", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-land-readjust",
+    "phase": "term",
+    "title": "重劃會的補償費",
+    "scenario": "一個民間自辦的市地重劃區，地主們抗議重劃會把他們的房子和祖墳補償費算得很低，而重劃會的理事長是一位建商。",
+    "tags": ["土地", "地方"],
+    "options": [
+      { "id": "review", "label": "市府介入，重新審查補償標準", "outcome": "地主們鬆了一口氣，重劃會揚言提告。", "effects": { "integrity": 4, "business": -5, "approval": 2 }, "skill": "admin" },
+      { "id": "hands-off", "label": "強調是民間自辦，市府不便介入", "outcome": "法律上說得通。上千位地主在市府前拉布條。", "effects": { "business": 4, "approval": -4 } },
+      { "id": "mediate", "label": "請議員出面協調", "outcome": "協調出一個折衷數字。議員在說明會上感謝自己。", "effects": { "council": 4, "integrity": -1 }, "skill": "negotiate" }
+    ],
+    "source": { "status": "draft", "prototype": "民間自辦市地重劃區的補償費審查機制，遭監察院調查。", "adaptation": "城市、人物與數字已虛構化。", "refs": [{ "title": "臺中市政府：近三年監察院糾正案與調查報告之說明與檢討（2022）", "url": "https://www.rdec.taichung.gov.tw/media/785392/1110413-4-市政府針對近三年監察院對臺中市提出糾正案-糾舉案-調查報告案之說明與檢討專.pdf", "quote": "本市黎明自辦市地重劃區重劃會重劃作業檢討", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-old-campus",
+    "phase": "term",
+    "title": "空蕩的老校區",
+    "scenario": "一所高中遷校後，老校區閒置多年。有教育團體想辦公辦民營實驗學校，也有建商想蓋住宅。",
+    "tags": ["教育", "土地"],
+    "options": [
+      { "id": "school", "label": "交給教育團體辦實驗學校", "outcome": "學校辦起來了，家長很熱情。招生人數比預期少，市府每年得補貼。", "effects": { "achievement": 4, "integrity": 2, "treasury": -4 } },
+      { "id": "develop", "label": "標售給建商，挹注市庫", "outcome": "市庫多了一大筆錢。老校友在臉書上寫了很長的悼文。", "effects": { "treasury": 10, "business": 5, "approval": -3 } },
+      { "id": "park", "label": "改成公園與社區活動中心", "outcome": "附近居民很開心，地方議員說要幫你辦啟用典禮。", "effects": { "approval": 3, "treasury": -3, "council": 2 } }
+    ],
+    "source": { "status": "draft", "prototype": "市府規劃於舊校區成立公辦民營實驗教育學校，相關程序遭監察院調查。", "adaptation": "城市、人物與數字已虛構化。", "refs": [{ "title": "臺中市政府：近三年監察院糾正案與調查報告之說明與檢討（2022）", "url": "https://www.rdec.taichung.gov.tw/media/785392/1110413-4-市政府針對近三年監察院對臺中市提出糾正案-糾舉案-調查報告案之說明與檢討專.pdf", "quote": "成立公辦民營實驗教育學校案", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-tl-elevator",
+    "phase": "term",
+    "title": "老公寓加裝電梯",
+    "scenario": "天龍市有上萬棟沒有電梯的老公寓，住在五樓的長輩一年下樓不到幾次。加裝電梯需要全體住戶同意，一樓住戶通常不肯。",
+    "tags": ["天龍市", "居住"],
+    "issue": "housing",
+    "conditions": { "flags": ["city-tianlong"] },
+    "weight": 3,
+    "options": [
+      { "id": "subsidy", "label": "提高補助，一樓住戶另有補償", "outcome": "申請案暴增三倍，市庫的補助預算一下子用完了。", "effects": { "approval": 4, "treasury": -6, "achievement": 4 } },
+      { "id": "law", "label": "推動修法：多數同意即可加裝", "outcome": "長輩們很感激，一樓住戶揚言提告。", "effects": { "approval": 2, "achievement": 3, "council": -3 }, "skill": "policy" },
+      { "id": "status-quo", "label": "維持現行規定", "outcome": "什麼都沒變。五樓的阿嬤還是在窗邊看著樓下。", "effects": { "approval": -3 } }
+    ],
+    "source": { "status": "draft", "prototype": "雙北老公寓加裝電梯需住戶同意，一樓住戶反對常使申請卡關。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：北市面臨「老人住老屋」困境 十年僅補助149例老屋電梯", "url": "https://news.pts.org.tw/article/784633", "quote": "十年僅補助149例老屋電梯", "accessed": "2026-10-23" }], "realCase": "雙北老公寓增設電梯的補助與住戶同意門檻" }
+  },
+  {
+    "id": "t-tl-techpark",
+    "phase": "term",
+    "title": "科技園區招商",
+    "scenario": "天龍市北邊的科技園區蓋好了一半，招商狀況不如預期。一家國際大廠願意進駐，但要求租金打對折。",
+    "tags": ["天龍市", "產業"],
+    "issue": "economy",
+    "conditions": { "flags": ["city-tianlong"] },
+    "weight": 3,
+    "options": [
+      { "id": "discount", "label": "答應打折，換大廠進駐", "outcome": "大廠宣布進駐，媒體標題寫「天龍市搶到國際大廠」。其他廠商問：那我們呢？", "effects": { "approval": 4, "media": 5, "business": 6, "treasury": -5 } },
+      { "id": "tender", "label": "公開招商，價高者得", "outcome": "很公平，大廠轉去別的城市了。", "effects": { "integrity": 2, "treasury": 3, "approval": -2 } },
+      { "id": "startup", "label": "把空間改給新創團隊", "outcome": "年輕創業者很開心，產值短期內看不出來。", "effects": { "approval": 2, "achievement": 2 } }
+    ],
+    "source": { "status": "draft", "prototype": "雙北科技園區開發與大型企業招商，常涉及租金優惠與公平性爭議。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：輝達取得北士科用地為何卡關？ 各方案爭議與各方說法一次看", "url": "https://news.pts.org.tw/article/774810", "quote": "輝達取得北士科用地為何卡關", "accessed": "2026-10-23" }], "realCase": "臺北北投士林科技園區（北士科）的招商與土地標租" }
+  },
+  {
+    "id": "t-xl-riverside",
+    "phase": "term",
+    "title": "河濱的堤防",
+    "scenario": "颱風季前，水利局報告：沿河有三段堤防需要加高。工程會擋住河岸的景觀，也會影響自行車道。",
+    "tags": ["新龍市", "防災"],
+    "issue": "safety",
+    "conditions": { "flags": ["city-xinlong"] },
+    "weight": 3,
+    "options": [
+      { "id": "raise", "label": "全部加高，安全第一", "outcome": "堤防蓋好了，河景沒了，騎單車的人在網路上抱怨了一整年。", "effects": { "achievement": 6, "approval": -2, "treasury": -5 }, "skill": "admin" },
+      { "id": "park", "label": "改做可淹水的河濱公園與滯洪池", "outcome": "設計很漂亮，花的時間和錢都是加高堤防的兩倍。", "effects": { "achievement": 4, "approval": 2, "treasury": -8 } },
+      { "id": "later", "label": "先處理最危險的一段，其他明年再說", "outcome": "最危險的一段蓋好了。第二危險的一段，今年颱風剛好經過。", "effects": { "achievement": 2 }, "delayed": { "afterTurns": 3, "effects": { "approval": -6, "achievement": -3 }, "text": "颱風過境，沒有加高的那段堤防溢堤，三個里泡水。" } }
+    ],
+    "source": { "status": "real", "prototype": "新北沿河地區的堤防與滯洪設施，常面臨防洪安全與河岸景觀、休閒用途之間的取捨。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [], "realCase": "新北大漢溪、淡水河沿岸堤防與二重疏洪道" }
+  },
+  {
+    "id": "t-xl-newtown",
+    "phase": "term",
+    "title": "重劃區的學校不夠",
+    "scenario": "新開發的重劃區湧入三萬人，國小一年級要抽籤才進得去，家長在市府前排隊陳情。",
+    "tags": ["新龍市", "教育"],
+    "issue": "welfare",
+    "conditions": { "flags": ["city-xinlong"] },
+    "weight": 3,
+    "options": [
+      { "id": "new-school", "label": "緊急徵收土地蓋新學校", "outcome": "新學校三年後才能啟用，這三年的孩子還是要抽籤。", "effects": { "achievement": 5, "treasury": -6, "approval": 1 } },
+      { "id": "bus", "label": "開專車把學生載到老市區的學校", "outcome": "老市區的學校終於招滿了，孩子們每天多坐四十分鐘的車。", "effects": { "approval": 2, "treasury": -2 }, "skill": "admin" },
+      { "id": "developer", "label": "要求建商回饋蓋學校", "outcome": "建商答應了，條件是容積獎勵。", "effects": { "business": 6, "achievement": 3, "integrity": -3 }, "skill": "deal" }
+    ],
+    "source": { "status": "draft", "prototype": "新北重劃區人口快速移入，學校、公園等公共設施常跟不上。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：建案開發人口多 少子化卻需增校", "url": "https://news.pts.org.tw/article/63321", "quote": "建案開發人口多 少子化卻需增校", "accessed": "2026-10-23" }], "realCase": "新北林口等重劃區人口快速移入，國小抽籤入學" }
+  },
+  {
+    "id": "t-ap-noise",
+    "phase": "term",
+    "title": "飛機的噪音",
+    "scenario": "機場周邊的居民抗議：夜間航班越來越多，孩子睡不著。航空公司說減班會影響城市經濟。",
+    "tags": ["飛機城", "環境"],
+    "issue": "environment",
+    "conditions": { "flags": ["city-airplane"] },
+    "weight": 3,
+    "options": [
+      { "id": "curfew", "label": "爭取夜間宵禁，限制起降", "outcome": "居民很開心，航空業者和工會一起來抗議。", "effects": { "approval": 2, "business": -6, "integrity": 2 }, "skill": "confront" },
+      { "id": "compensate", "label": "加碼噪音補償金與隔音窗補助", "outcome": "居民收下了補償金，夜裡還是睡不著。", "effects": { "approval": 3, "treasury": -5 } },
+      { "id": "growth", "label": "強調機場是城市的未來", "outcome": "業者大力支持，機場周邊的里在你的選票地圖上變成了另一個顏色。", "effects": { "business": 6, "approval": -3 } }
+    ],
+    "source": { "status": "draft", "prototype": "桃園國際機場周邊居民長期面臨航機噪音問題，補償與夜間管制是持續的爭議。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "中央社：桃機噪音補助6月受理申請 補償金提升至原標準60%", "url": "https://www.cna.com.tw/news/ahel/202406030089.aspx", "quote": "桃機噪音補助6月受理申請", "accessed": "2026-10-23" }], "realCase": "桃園機場周邊航空噪音補助與夜間起降爭議" }
+  },
+  {
+    "id": "t-ap-ponds",
+    "phase": "term",
+    "title": "埤塘要填還是留",
+    "scenario": "城市裡有上千個埤塘，是灌溉和生態的寶庫，也是開發商眼中的空地。一個大型開發案要填掉其中三個。",
+    "tags": ["飛機城", "環境", "土地"],
+    "issue": "environment",
+    "conditions": { "flags": ["city-airplane"] },
+    "weight": 3,
+    "options": [
+      { "id": "keep", "label": "保留埤塘，開發案修改設計", "outcome": "生態團體大力讚揚，開發商說這樣不划算。", "effects": { "integrity": 3, "business": -5, "achievement": 2 } },
+      { "id": "fill", "label": "同意填平，換取開發", "outcome": "開發案動工了，夏天的時候，附近的里開始淹水。", "effects": { "business": 6, "achievement": 2, "integrity": -3 }, "delayed": { "afterTurns": 3, "effects": { "approval": -5 }, "text": "埤塘填平後少了滯洪空間，周邊三個里在大雨後淹水。" } },
+      { "id": "park", "label": "改造成埤塘公園", "outcome": "公園很漂亮，開發商拿到了周邊的容積獎勵。", "effects": { "approval": 3, "treasury": -4, "business": 2 } }
+    ],
+    "source": { "status": "draft", "prototype": "桃園埤塘兼具灌溉、滯洪與生態功能，開發壓力下的存廢一直有爭議。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：桃園大園三大埤塘將填平 野鳥學會盼推動保育共生地", "url": "https://news.pts.org.tw/article/806779", "quote": "桃園大園三大埤塘將填平", "accessed": "2026-10-23" }], "realCase": "桃園埤塘保存與開發填埋爭議" }
+  },
+  {
+    "id": "t-mm-water",
+    "phase": "term",
+    "title": "科學園區搶水",
+    "scenario": "旱季來了，水庫只剩兩成。科學園區要求優先供水，農民的稻田也在等水。",
+    "tags": ["媽媽市", "產業", "環境"],
+    "issue": "economy",
+    "conditions": { "flags": ["city-mama"] },
+    "weight": 3,
+    "options": [
+      { "id": "industry", "label": "優先供給科學園區", "outcome": "晶圓廠保住了產能，農民在田裡看著龜裂的土地。", "effects": { "business": 6, "approval": -3, "achievement": 2 } },
+      { "id": "farm", "label": "停灌補償農民，同時要求工廠節水", "outcome": "農民拿到補償，工廠抱怨節水目標太嚴格。", "effects": { "approval": 2, "treasury": -5, "business": -2 }, "skill": "negotiate" },
+      { "id": "recycle", "label": "推動再生水廠，長期解決", "outcome": "再生水廠要三年後才能蓋好，今年的旱災還是得撐過去。", "effects": { "achievement": 4, "treasury": -4 } }
+    ],
+    "source": { "status": "draft", "prototype": "中部科學園區與農業用水在旱季時常有分配爭議。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "中央社：苗栗台中4/6起民生用水供5停2 科學園區節水不停供", "url": "https://www.cna.com.tw/news/firstnews/202103245008.aspx", "quote": "科學園區節水不停供", "accessed": "2026-10-23" }], "realCase": "2021 年旱災，中部科學園區用水與農田停灌" }
+  },
+  {
+    "id": "t-mm-metro",
+    "phase": "term",
+    "title": "捷運延伸線",
+    "scenario": "捷運第一條線通車後，每個區都在爭第二條線要經過自己。議員們把地圖畫成了一團亂麻。",
+    "tags": ["媽媽市", "交通"],
+    "issue": "transit",
+    "conditions": { "flags": ["city-mama"] },
+    "weight": 3,
+    "options": [
+      { "id": "data", "label": "依運量數據決定路線", "outcome": "路線很合理，沒經過的區的議員開始卡你的預算。", "effects": { "achievement": 4, "council": -5, "integrity": 2 }, "skill": "policy" },
+      { "id": "everyone", "label": "每個區都畫一段，分期興建", "outcome": "每個議員都滿意，工程期變成三十年。", "effects": { "council": 6, "integrity": -3, "approval": 1 }, "setFlags": ["promise-mrt"] },
+      { "id": "brt", "label": "先用快捷公車試水溫", "outcome": "公車專用道開通了，汽車駕駛很不爽。", "effects": { "achievement": 2, "approval": -2 } }
+    ],
+    "source": { "status": "draft", "prototype": "捷運路網規劃常受地方議員爭取影響，路線決策兼具交通與政治考量。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：中捷藍線政院核定通過 將設20座車站估10年後完工", "url": "https://news.pts.org.tw/article/678820", "quote": "中捷藍線政院核定通過", "accessed": "2026-10-23" }], "realCase": "臺中捷運綠線通車後，各區爭取後續路線" }
+  },
+  {
+    "id": "t-gd-tourism",
+    "phase": "term",
+    "title": "古蹟周邊的觀光人潮",
+    "scenario": "老街成了網紅打卡熱點，週末擠滿遊客。在地居民抱怨垃圾、噪音和房租上漲，老店一家家收掉。",
+    "tags": ["古都市", "觀光"],
+    "issue": "culture",
+    "conditions": { "flags": ["city-gudu"] },
+    "weight": 3,
+    "options": [
+      { "id": "limit", "label": "管制車流與民宿數量", "outcome": "老街恢復了一點寧靜，觀光業者說你在趕客人。", "effects": { "integrity": 2, "approval": 1, "business": -4 } },
+      { "id": "expand", "label": "擴大觀光，增設停車場與商圈", "outcome": "觀光收入創新高，又有三家老店被連鎖手搖飲取代。", "effects": { "business": 5, "approval": 2, "integrity": -2 } },
+      { "id": "fund", "label": "抽觀光捐補助老店與居民", "outcome": "老店撐住了，觀光業者說你在多收稅。", "effects": { "achievement": 3, "business": -2 }, "skill": "policy" }
+    ],
+    "source": { "status": "draft", "prototype": "古都觀光熱潮帶來過度觀光、居民生活品質與老店存續的問題。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：台南正興街商圈 特色店家相繼關門離開", "url": "https://news.pts.org.tw/article/433963", "quote": "台南正興街商圈 特色店家相繼關門離開", "accessed": "2026-10-23" }], "realCase": "臺南神農街、正興街等老街觀光化與居民生活衝突" }
+  },
+  {
+    "id": "t-gd-farm",
+    "phase": "term",
+    "title": "農產價格崩盤",
+    "scenario": "今年芒果大豐收，產地價格跌到一公斤十元，農民把芒果倒在路邊。",
+    "tags": ["古都市", "農業"],
+    "issue": "economy",
+    "conditions": { "flags": ["city-gudu"] },
+    "weight": 3,
+    "options": [
+      { "id": "buy", "label": "市府收購，送進學校營養午餐", "outcome": "孩子們吃了一個月的芒果，農民撐過了這一季。", "effects": { "approval": 4, "treasury": -5 } },
+      { "id": "market", "label": "市長親自帶貨直播", "outcome": "你在直播裡吃了十顆芒果，一晚賣出三十噸。", "effects": { "approval": 3, "media": 6 }, "skill": "media" },
+      { "id": "export", "label": "爭取外銷通路，治本", "outcome": "外銷要等明年，今年的芒果還是爛在路邊。", "effects": { "achievement": 3, "approval": -2 } }
+    ],
+    "source": { "status": "draft", "prototype": "農產品產銷失衡時，地方首長常以收購、直播帶貨或拓展外銷因應。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：台南芒果盛產因疫滯銷 政府收購穩定價格", "url": "https://news.pts.org.tw/article/534311", "quote": "台南芒果盛產因疫滯銷 政府收購穩定價格", "accessed": "2026-10-23" }, { "title": "中央社：黃偉哲同台蘇晏霈直播賣芒果 600盒預購一空", "url": "https://www.cna.com.tw/news/ahel/202406040148.aspx", "quote": "直播賣芒果 600盒預購一空", "accessed": "2026-10-23" }], "realCase": "臺南芒果、文旦等農產價格崩跌，首長直播帶貨" }
+  },
+  {
+    "id": "t-gg-concert",
+    "phase": "term",
+    "title": "演唱會經濟",
+    "scenario": "國際巨星要來辦三場演唱會，主辦單位希望市府補助場地費，承諾帶來數十萬觀光客。",
+    "tags": ["港都市", "大型活動"],
+    "issue": "culture",
+    "conditions": { "flags": ["city-gangdu"] },
+    "weight": 3,
+    "options": [
+      { "id": "sponsor", "label": "補助場地費，全城應援", "outcome": "三場全滿，飯店一房難求，市府的應援影片被轉發了百萬次。", "effects": { "approval": 5, "media": 8, "treasury": -5, "business": 3 } },
+      { "id": "partner", "label": "不補助，但協助交通與住宿配套", "outcome": "演唱會照開，市府的角色有點模糊。", "effects": { "achievement": 2, "approval": 1 }, "skill": "admin" },
+      { "id": "pass", "label": "婉拒，這不是市府該花的錢", "outcome": "財政紀律很好，隔壁城市搶走了演唱會。", "effects": { "integrity": 2, "approval": -3 } }
+    ],
+    "source": { "status": "draft", "prototype": "南部城市以大型演唱會帶動觀光與商機，市府補助的成本效益常被討論。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：世運主場館未收天團租金 市府：整體效應更重要", "url": "https://news.pts.org.tw/article/669111", "quote": "世運主場館未收天團租金 市府：整體效應更重要", "accessed": "2026-10-23" }], "realCase": "高雄市以國際巨星演唱會帶動觀光（2023 年起）" }
+  },
+  {
+    "id": "t-gg-steel",
+    "phase": "term",
+    "title": "重工業遷廠",
+    "scenario": "一座老石化廠要關廠遷移，留下大片污染土地和上千名員工。財團想把土地改建成豪宅區。",
+    "tags": ["港都市", "產業", "環境"],
+    "issue": "economy",
+    "conditions": { "flags": ["city-gangdu"] },
+    "weight": 3,
+    "options": [
+      { "id": "housing", "label": "同意變更為住宅區", "outcome": "財團很滿意，土地污染的整治進度沒人知道。", "effects": { "business": 8, "treasury": 4, "integrity": -4 } },
+      { "id": "clean-first", "label": "要求先完成污染整治才能變更", "outcome": "財團說整治要十年，工人們問這十年要做什麼。", "effects": { "integrity": 4, "business": -5, "approval": 1 }, "skill": "confront" },
+      { "id": "green", "label": "規劃成綠能產業園區，優先僱用原廠工人", "outcome": "工人們很感激，綠能產業還在招商中。", "effects": { "achievement": 4, "approval": 3, "treasury": -4 }, "skill": "policy" }
+    ],
+    "source": { "status": "draft", "prototype": "南部重工業與石化廠遷移後的土地利用與污染整治，牽涉財團利益與勞工安置。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：中油高雄煉油廠 元旦正式走入歷史", "url": "https://news.pts.org.tw/article/314059", "quote": "中油高雄煉油廠 元旦正式走入歷史", "accessed": "2026-10-23" }], "realCase": "2015 年中油高雄煉油廠關廠後的土地污染整治與再利用" }
+  },
+  {
+    "id": "t-gg-river",
+    "phase": "term",
+    "title": "河川的味道",
+    "scenario": "市區的河川整治了二十年，夏天還是有臭味。上游的養豬場和工廠排放是主因，但他們都在隔壁縣。",
+    "tags": ["港都市", "環境"],
+    "issue": "environment",
+    "conditions": { "flags": ["city-gangdu"] },
+    "weight": 2,
+    "options": [
+      { "id": "cross", "label": "和隔壁縣協商聯合稽查", "outcome": "協商談了半年，隔壁縣長說要「回去研究」。", "effects": { "achievement": 2, "integrity": 1 }, "skill": "negotiate" },
+      { "id": "sewer", "label": "砸錢擴建市內的污水處理", "outcome": "臭味少了一半，市庫也少了一大筆。", "effects": { "achievement": 5, "treasury": -6 } },
+      { "id": "events", "label": "在河邊辦燈會，讓大家先記住河的美", "outcome": "燈會很成功，臭味在燈會結束後回來了。", "effects": { "approval": 3, "media": 5 } }
+    ],
+    "source": { "status": "draft", "prototype": "南部城市河川污染整治涉及跨縣市污染源，地方政府權責有限。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "中央社：台南改善二仁溪污染 物種由30種提升至41種", "url": "https://www.cna.com.tw/news/aloc/202502100290.aspx", "quote": "台南改善二仁溪污染", "accessed": "2026-10-23" }], "realCase": "高雄愛河、二仁溪的污染整治（上游養豬場與工廠排放）" }
+  },
+  {
+    "id": "t-heatwave",
+    "phase": "term",
+    "title": "熱浪與電費",
+    "scenario": "連續兩週超過 38 度，獨居長輩熱衰竭送醫的人數創新高。很多人家裡有冷氣，但捨不得開。",
+    "tags": ["福利", "防災"],
+    "issue": "welfare",
+    "options": [
+      { "id": "subsidy", "label": "發放弱勢家庭電費補助", "outcome": "冷氣開了，送醫人數降了。電費補助每年都要編。", "effects": { "approval": 4, "treasury": -5 } },
+      { "id": "centers", "label": "開放公共空間當避暑中心", "outcome": "圖書館和活動中心擠滿了長輩，館員們很辛苦。", "effects": { "approval": 2, "achievement": 3, "team": -2 }, "skill": "admin" },
+      { "id": "trees", "label": "推動全市植樹與遮蔭計畫", "outcome": "很長遠的計畫，今年夏天的樹還是小樹苗。", "effects": { "achievement": 3, "approval": -1 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "極端高溫日益頻繁，弱勢族群的熱傷害與能源貧窮成為地方政府的新課題。", "adaptation": "情境為虛構，取材自台灣地方政治的常見情境。", "refs": [] }
+  },
+  {
+    "id": "t-teachers",
+    "phase": "term",
+    "title": "代理教師荒",
+    "scenario": "開學前一週，全市還缺兩百名代理教師。偏遠學校開了十次缺都沒人來應徵。",
+    "tags": ["教育"],
+    "issue": "welfare",
+    "options": [
+      { "id": "pay", "label": "提高偏遠學校代理教師的待遇", "outcome": "應徵的人多了，其他學校的老師問為什麼他們沒有。", "effects": { "achievement": 4, "treasury": -4 } },
+      { "id": "retired", "label": "請退休老師回鍋", "outcome": "退休老師們很樂意幫忙，有些人的教學方式停在二十年前。", "effects": { "achievement": 2, "approval": 1 } },
+      { "id": "merge", "label": "推動小校合併", "outcome": "合併可以解決缺額，但地方家長拉布條抗議「不要廢校」。", "effects": { "achievement": 3, "approval": -4, "treasury": 3 }, "skill": "confront" }
+    ],
+    "source": { "status": "draft", "prototype": "少子化與偏鄉教師流動，使學校代理教師長期短缺。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "中央社：代理教師荒 開學在即全台多校無人報考持續甄選", "url": "https://www.cna.com.tw/news/ahel/202408280139.aspx", "quote": "代理教師荒 開學在即全台多校無人報考持續甄選", "accessed": "2026-10-23" }], "realCase": "2023 年起各縣市代理教師招聘困難，多次開缺無人應徵" }
+  },
+  {
+    "id": "t-bike-share",
+    "phase": "term",
+    "title": "公共自行車換約",
+    "scenario": "公共自行車的營運合約到期，原業者要求大幅提高補助，另一家業者報價很低但從沒營運過。",
+    "tags": ["交通"],
+    "issue": "transit",
+    "options": [
+      { "id": "renew", "label": "和原業者續約，接受漲價", "outcome": "服務不中斷，市庫每年多付一筆。", "effects": { "treasury": -4, "achievement": 1 } },
+      { "id": "cheap", "label": "選擇低價的新業者", "outcome": "省了一筆錢。新系統上線第一週，一半的車借不出來。", "effects": { "treasury": 3, "approval": -4 } },
+      { "id": "negotiate", "label": "重新議價，並要求擴站", "outcome": "談了三個月，價格降了一點，站點多了一點。", "effects": { "achievement": 2, "treasury": -1 }, "skill": "negotiate" }
+    ],
+    "source": { "status": "draft", "prototype": "地方政府公共自行車系統的營運合約與補助金額，常引發議會質詢。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：YouBike新舊系統不相容 無法互相借還車", "url": "https://news.pts.org.tw/article/453777", "quote": "YouBike新舊系統不相容 無法互相借還車", "accessed": "2026-10-23" }], "realCase": "YouBike 換約與 2.0 系統轉換期的營運補助爭議（雙北）" }
+  },
+  {
+    "id": "t-lunch",
+    "phase": "term",
+    "title": "營養午餐食安",
+    "scenario": "學校營養午餐被驗出過期食材，供應商是議員的親戚。家長要求立刻換廠商。",
+    "tags": ["衛生", "教育"],
+    "issue": "safety",
+    "options": [
+      { "id": "terminate", "label": "立刻解約並公開調查結果", "outcome": "家長很滿意，那位議員開始在預算審查時針對你。", "effects": { "approval": 4, "integrity": 3, "council": -5 }, "skill": "confront" },
+      { "id": "warn", "label": "罰款並要求改善，不解約", "outcome": "供應商改善了，家長群組裡的怒氣沒有。", "effects": { "approval": -3, "council": 2 } },
+      { "id": "central", "label": "推動中央廚房，市府自辦", "outcome": "很治本，第一年的成本是原來的兩倍。", "effects": { "achievement": 4, "treasury": -6 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "學校營養午餐的食安問題與供應商利益關係，常成為地方政治爭議。", "adaptation": "情境為虛構，取材自台灣地方政治的常見情境。", "refs": [] }
+  },
+  {
+    "id": "t-parking",
+    "phase": "term",
+    "title": "路邊停車費調漲",
+    "scenario": "交通局提案：市中心路邊停車費調漲一倍，鼓勵大眾運輸。商家擔心客人變少。",
+    "tags": ["交通", "財政"],
+    "issue": "transit",
+    "options": [
+      { "id": "raise", "label": "照案調漲", "outcome": "市中心的車少了，商家說營業額掉了兩成。一年後，停車位終於找得到了。", "effects": { "approval": -4, "treasury": 5, "achievement": 3 } },
+      { "id": "partial", "label": "只在捷運站周邊調漲", "outcome": "很折衷，商家和通勤族都覺得沒被照顧到。", "effects": { "treasury": 2, "achievement": 1 } },
+      { "id": "freeze", "label": "凍漲，選前不碰", "outcome": "商家很滿意。交通局長默默把提案收回抽屜。", "effects": { "approval": 2, "integrity": -1 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "以停車費價格管理引導大眾運輸，常面臨商家與駕駛人的反彈。", "adaptation": "情境為虛構，取材自台灣地方政治的常見情境。", "refs": [] }
+  },
+  {
+    "id": "t-seismic",
+    "phase": "term",
+    "title": "老屋耐震補強",
+    "scenario": "地震後，結構技師公會發布報告：全市有上千棟老建築可能撐不過下一場大地震。名單要不要公開？",
+    "tags": ["公安", "居住"],
+    "issue": "safety",
+    "options": [
+      { "id": "publish", "label": "公開名單，強制補強", "outcome": "住戶們嚇壞了，房價應聲下跌。那些房子終於開始補強。", "effects": { "achievement": 5, "approval": -3, "business": -4 }, "skill": "confront" },
+      { "id": "subsidy", "label": "不公開，但大幅補助自主補強", "outcome": "申請的人不多，大部分住戶不知道自己住在名單上。", "effects": { "treasury": -4, "achievement": 2 } },
+      { "id": "quiet", "label": "內部列管，避免恐慌", "outcome": "沒有恐慌。下一場地震什麼時候來，沒人知道。", "effects": { "integrity": -4 }, "delayed": { "afterTurns": 5, "effects": { "approval": -8, "media": 8 }, "text": "媒體取得市府內部的耐震危險名單，質疑市府刻意隱瞞。" } }
+    ],
+    "source": { "status": "draft", "prototype": "老舊建物的耐震評估結果是否公開，牽涉公共安全、房價與住戶權益。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：維冠樓塌115死 起訴建商林明輝等5人", "url": "https://news.pts.org.tw/article/320705", "quote": "維冠樓塌115死", "accessed": "2026-10-23" }], "realCase": "2016 年臺南維冠大樓倒塌後，各縣市老屋耐震評估與名單公開爭議" }
+  },
+  {
+    "id": "t-sports-bid",
+    "phase": "term",
+    "title": "爭取國際賽事",
+    "scenario": "體育署問你要不要申辦一場國際綜合運動會。需要蓋三座新場館，辦完以後場館怎麼用沒人說得清楚。",
+    "tags": ["大型活動", "財政"],
+    "issue": "culture",
+    "options": [
+      { "id": "bid", "label": "全力申辦", "outcome": "申辦成功，全市沸騰。三座場館的維護費，從明年開始算。", "effects": { "approval": 5, "media": 6, "treasury": -8 }, "delayed": { "afterTurns": 5, "effects": { "treasury": -5, "approval": -2 }, "text": "賽後場館閒置，每年的維護費成了議會質詢的固定題目。" } },
+      { "id": "reuse", "label": "申辦，但只用既有場館改建", "outcome": "規模小了一點，花費也小了很多。", "effects": { "approval": 2, "achievement": 2, "treasury": -3 }, "skill": "admin" },
+      { "id": "pass", "label": "不申辦", "outcome": "財政局長鬆了一口氣，體育界很失望。", "effects": { "integrity": 1, "approval": -2 } }
+    ],
+    "source": { "status": "draft", "prototype": "城市申辦國際賽事帶來曝光，但賽後場館閒置與維護成本常受批評。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：世運主場館淪蚊子館? 陳菊駁馬", "url": "https://news.pts.org.tw/article/158310", "quote": "世運主場館淪蚊子館", "accessed": "2026-10-23" }, { "title": "公視新聞網：北市體育局長請辭 主將頻換世大運總會關注", "url": "https://news.pts.org.tw/article/326437", "quote": "北市體育局長請辭", "accessed": "2026-10-23" }], "realCase": "2009 年高雄世界運動會、2017 年臺北世界大學運動會的場館與經費" }
+  },
+  {
+    "id": "t-bribery",
+    "phase": "term",
+    "title": "公務員收賄",
+    "scenario": "政風處查到建管處一位科長收受建商紅包，加速核發建照。媒體還沒報，你可以決定怎麼處理。",
+    "tags": ["弊案", "人事"],
+    "issue": "local",
+    "options": [
+      { "id": "public", "label": "主動公開，移送法辦", "outcome": "媒體報導「市府自清」，建管處人心惶惶。", "effects": { "integrity": 5, "approval": 2, "team": -3 } },
+      { "id": "internal", "label": "內部懲處，不對外公開", "outcome": "事情悄悄落幕了。三個月後，另一家媒體挖了出來。", "effects": { "integrity": -4 }, "delayed": { "afterTurns": 3, "effects": { "approval": -6, "integrity": -3, "media": 8 }, "text": "媒體揭露市府曾低調處理建管收賄案，標題是「市長知情不報」。" } },
+      { "id": "reform", "label": "公開並推動建照審查全面上網", "outcome": "審查透明了，建商們抱怨流程變慢。", "effects": { "integrity": 4, "achievement": 3, "business": -4 }, "skill": "policy" }
+    ],
+    "source": { "status": "placeholder", "prototype": "地方政府建管、採購等業務的收賄案，考驗首長的處理態度。", "adaptation": "情境為虛構，取材自台灣地方政治的常見情境。", "refs": [] }
+  },
+  {
+    "id": "t-tl-ivoting",
+    "phase": "term",
+    "title": "交給網路投票決定",
+    "scenario": "一項爭議政策吵了半年，你的幕僚建議：乾脆開放市民網路投票，結果市府照辦。",
+    "tags": ["天龍市", "公民參與"],
+    "issue": "culture",
+    "conditions": { "flags": ["city-tianlong"] },
+    "weight": 3,
+    "options": [
+      { "id": "vote", "label": "開放網路投票，結果市府照辦", "outcome": "投票率不到一成，但結果出爐後，反對的人很難再說市府獨斷。", "effects": { "approval": 2, "integrity": 3, "media": 4 }, "skill": "policy" },
+      { "id": "advisory", "label": "投票只當參考，市府保留決定權", "outcome": "參與的人覺得被耍了：「那幹嘛叫我們投？」", "effects": { "approval": -2, "integrity": -1 } },
+      { "id": "decide", "label": "不投票，市長直接拍板", "outcome": "決策很快，留言區說你「獨裁」。", "effects": { "achievement": 2, "approval": -2 }, "skill": "confront" }
+    ],
+    "source": { "status": "draft", "prototype": "地方政府以網路投票讓市民參與部分市政決策，其代表性與約束力常受討論。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "2015 年起臺北市政府推動 i-Voting 網路投票", "refs": [{ "title": "公視新聞網：北市府小內閣 副市長鄧家基.林欽榮", "url": "https://news.pts.org.tw/article/284946", "quote": "再讓台北市民\"I-Voting\"全民投票選出最後人選", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-tl-buslane",
+    "phase": "term",
+    "title": "拆掉公車專用道",
+    "scenario": "市中心一條公車專用道用了二十年，捷運通車後運量大減。交通局建議拆除，公車族說「我們還在用」。",
+    "tags": ["天龍市", "交通"],
+    "issue": "transit",
+    "conditions": { "flags": ["city-tianlong"] },
+    "weight": 3,
+    "options": [
+      { "id": "remove", "label": "拆除，還路於汽機車", "outcome": "車道多了一線，公車族多等了五分鐘。", "effects": { "approval": 1, "achievement": 2 }, "skill": "admin" },
+      { "id": "keep", "label": "保留，大眾運輸優先", "outcome": "公車族很滿意，開車的人繼續塞。", "effects": { "integrity": 2, "approval": -1 } },
+      { "id": "redesign", "label": "改成公車與自行車共用道", "outcome": "設計很新潮，騎單車的人和公車司機每天都在互罵。", "effects": { "media": 4, "approval": -1 } }
+    ],
+    "source": { "status": "draft", "prototype": "捷運路網成形後，既有公車專用道的存廢引發交通政策辯論。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "2016 年臺北市拆除忠孝西路公車專用道", "refs": [{ "title": "中央社：柯文哲：拆忠孝西路公車專用道", "url": "https://www.cna.com.tw/news/firstnews/201412245003.aspx", "quote": "柯文哲：拆忠孝西路公車專用道", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-tl-forum",
+    "phase": "term",
+    "title": "雙城論壇",
+    "scenario": "對岸城市邀你參加一年一度的城市交流論壇。中央的態度曖昧，你的支持者意見分歧。",
+    "tags": ["天龍市", "兩岸"],
+    "issue": "economy",
+    "conditions": { "flags": ["city-tianlong"] },
+    "weight": 2,
+    "options": [
+      { "id": "attend", "label": "出席，強調城市交流不涉政治", "outcome": "交流很熱絡，一部分支持者說你「被統戰」。", "effects": { "business": 5, "media": 5, "party": -3 } },
+      { "id": "conditions", "label": "出席，但公開表明對等尊嚴的條件", "outcome": "對方臉色不太好看，論壇照開，兩邊的支持者都勉強接受。", "effects": { "integrity": 3, "media": 3 }, "skill": "negotiate" },
+      { "id": "decline", "label": "婉拒", "outcome": "一部分人鼓掌，工商團體說你斷了城市的生意。", "effects": { "business": -5, "party": 3 } }
+    ],
+    "source": { "status": "draft", "prototype": "城市間的兩岸交流論壇，常因政治立場與對等原則引發爭議。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "臺北市與上海市每年舉辦的雙城論壇", "refs": [{ "title": "公視新聞網：雙城論壇蔣萬安喊「多對話少對峙」 獨派團體穿維尼裝場外抗議", "url": "https://news.pts.org.tw/article/729332", "quote": "獨派團體穿維尼裝場外抗議", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-xl-dust",
+    "phase": "term",
+    "title": "樂園粉塵爆炸",
+    "scenario": "一座水上樂園的派對活動中，舞台噴灑的彩色粉塵引發爆炸，數百名年輕人嚴重燒燙傷。全國的燒燙傷病床都滿了。",
+    "tags": ["新龍市", "公安"],
+    "issue": "safety",
+    "conditions": { "flags": ["city-xinlong"] },
+    "weight": 3,
+    "options": [
+      { "id": "all-in", "label": "全市府動員，市長親自坐鎮醫療協調", "outcome": "你一週沒有回家。病床調度做得很好，記者說你「很撐」。", "effects": { "approval": 6, "achievement": 4, "team": -6 }, "skill": "admin" },
+      { "id": "blame", "label": "強調活動主辦方與場地才是責任歸屬", "outcome": "法律上說得通，家屬們聽了很不舒服。", "effects": { "approval": -6, "integrity": -2 } },
+      { "id": "ban", "label": "宣布全面禁止粉塵類活動，並清查所有娛樂場所", "outcome": "禁令很快，業者抗議說你一竿子打翻一船人。", "effects": { "achievement": 3, "business": -4, "approval": 2 }, "skill": "confront" }
+    ],
+    "source": { "status": "draft", "prototype": "大型娛樂場所的公安意外造成重大傷亡，考驗地方政府的醫療調度與公安稽查。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "2015 年新北八仙樂園粉塵爆炸事件", "refs": [{ "title": "中央社：八仙塵爆釀15死 呂忠吉判刑5年定讞", "url": "https://www.cna.com.tw/news/firstnews/201812125005.aspx", "quote": "八仙塵爆釀15死 呂忠吉判刑5年定讞", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-xl-garbage",
+    "phase": "term",
+    "title": "河邊的垃圾山",
+    "scenario": "河岸邊一片私有地被非法棄置了十萬噸廢棄物，堆成一座山。地主早就跑了，下雨時的滲出水流進河裡。",
+    "tags": ["新龍市", "環境"],
+    "issue": "environment",
+    "conditions": { "flags": ["city-xinlong"] },
+    "weight": 3,
+    "options": [
+      { "id": "clear", "label": "市府先代為清除，再向地主求償", "outcome": "清了兩年、花了好幾億。求償的官司還在打。", "effects": { "achievement": 6, "treasury": -8, "approval": 2 } },
+      { "id": "park", "label": "就地覆土，改造成公園", "outcome": "公園很漂亮。環保團體提醒你，底下的東西還在。", "effects": { "approval": 3, "treasury": -3, "integrity": -3 } },
+      { "id": "central", "label": "要求中央出錢處理", "outcome": "中央說這是地方權責。垃圾山繼續長高。", "effects": { "approval": -2, "party": 2 }, "skill": "confront" }
+    ],
+    "source": { "status": "draft", "prototype": "非法棄置的廢棄物堆積成山，清理責任與經費在地方與中央之間拉扯。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "新北五股垃圾山（非法棄置廢棄物）清理爭議", "refs": [{ "title": "公視新聞網：新北整頓五股垃圾山 掀雙北垃圾大戰", "url": "https://news.pts.org.tw/article/479291", "quote": "新北整頓五股垃圾山 掀雙北垃圾大戰", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-ap-airportmrt",
+    "phase": "term",
+    "title": "延宕十年的機場捷運",
+    "scenario": "機場捷運延了十年還沒通車，又被驗出三十多項缺失。旅客、議員和中央都在等你表態。",
+    "tags": ["飛機城", "交通"],
+    "issue": "transit",
+    "conditions": { "flags": ["city-airplane"] },
+    "weight": 3,
+    "options": [
+      { "id": "fix-first", "label": "缺失全部改善完才通車", "outcome": "又延了半年。通車那天，什麼問題都沒有，但已經沒人記得要感謝你。", "effects": { "achievement": 4, "approval": -2, "integrity": 2 }, "skill": "admin" },
+      { "id": "open", "label": "先通車，邊營運邊改善", "outcome": "通車典禮很風光，第一個月故障了四次。", "effects": { "approval": 3, "media": 4 }, "delayed": { "afterTurns": 2, "effects": { "approval": -5 }, "text": "機場捷運通車後頻傳故障，旅客趕不上飛機的新聞登上國際媒體。" } },
+      { "id": "blame", "label": "強調是中央主導的工程，市府權責有限", "outcome": "權責說明很清楚，市民覺得你在推卸。", "effects": { "approval": -3, "party": 2 } }
+    ],
+    "source": { "status": "draft", "prototype": "跨縣市的大型軌道工程延宕多年，通車時程與安全改善在中央與地方之間牽扯不清。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "桃園機場捷運多年延宕，2017 年通車", "refs": [{ "title": "中央社：機場捷運通車時程變更6次 始末報你知", "url": "https://www.cna.com.tw/news/firstnews/201603040457.aspx", "quote": "機場捷運通車時程變更6次", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-ap-firefighters",
+    "phase": "term",
+    "title": "消防員殉職",
+    "scenario": "一場工廠大火中，六名消防員沒能走出火場。消防員工會說：人力不足、裝備老舊、而且工廠的化學品資訊根本沒有通報。",
+    "tags": ["飛機城", "公安"],
+    "issue": "safety",
+    "conditions": { "flags": ["city-airplane"] },
+    "weight": 3,
+    "options": [
+      { "id": "reform", "label": "增聘消防人力、汰換裝備，並強制工廠申報化學品", "outcome": "預算很大，工廠團體抗議申報太麻煩。下一場火，消防員知道裡面有什麼了。", "effects": { "achievement": 6, "treasury": -7, "business": -4 }, "skill": "admin" },
+      { "id": "memorial", "label": "舉辦隆重的公祭，市長親自致詞", "outcome": "公祭很感人。消防員工會說：「我們要的不是致詞。」", "effects": { "approval": 2, "media": 4 } },
+      { "id": "investigate", "label": "追究工廠責任，究責到底", "outcome": "工廠負責人被起訴了，消防體系的問題還在。", "effects": { "integrity": 3, "approval": 2, "business": -3 }, "skill": "confront" }
+    ],
+    "source": { "status": "draft", "prototype": "工廠火災造成消防員殉職，凸顯消防人力、裝備與危險物品申報制度的問題。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "2018 年桃園敬鵬工廠大火，多名消防員殉職", "refs": [{ "title": "公視新聞網：敬鵬大火6消防員殉職 董座等6人被起訴", "url": "https://news.pts.org.tw/article/423403", "quote": "敬鵬大火6消防員殉職 董座等6人被起訴", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-mm-airflag",
+    "phase": "term",
+    "title": "校園裡的空污旗",
+    "scenario": "家長團體要求每所學校依空氣品質升起顏色不同的旗子。這樣一來，每天都會提醒大家：空氣很糟。",
+    "tags": ["媽媽市", "空汙"],
+    "issue": "environment",
+    "conditions": { "flags": ["city-mama"] },
+    "weight": 3,
+    "options": [
+      { "id": "flags", "label": "全市學校實施空污旗", "outcome": "家長們很支持，紫爆旗一升起，新聞就來了。電廠和工業區壓力很大。", "effects": { "approval": 3, "integrity": 2, "business": -3, "media": 4 } },
+      { "id": "app", "label": "改用手機 App 通知，不升旗", "outcome": "比較低調，家長群組說你在「掩蓋問題」。", "effects": { "approval": -1, "business": 2 } },
+      { "id": "action", "label": "升旗之外，空品不良日強制工業區減產", "outcome": "空氣好了一點，工業區說你在扼殺經濟。", "effects": { "achievement": 4, "business": -6, "approval": 2 }, "skill": "confront" }
+    ],
+    "source": { "status": "real", "prototype": "地方政府以校園空品旗幟提醒學童空汙狀況，引發公共健康與產業的拉扯。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "2016 年起臺中市學校依空品懸掛空污旗", "refs": [] }
+  },
+  {
+    "id": "t-gd-council-boycott",
+    "phase": "term",
+    "title": "拒進議會",
+    "scenario": "新任議長被爆出靠買票當選，檢察官已經起訴。議長要你照常進議會備詢。",
+    "tags": ["古都市", "議會"],
+    "issue": "local",
+    "conditions": { "flags": ["city-gudu"] },
+    "weight": 3,
+    "options": [
+      { "id": "boycott", "label": "拒絕進入議會，直到議長下台", "outcome": "公民團體大力支持你，議會凍結了你一半的預算。", "effects": { "integrity": 6, "approval": 3, "council": -15 }, "skill": "confront" },
+      { "id": "attend", "label": "照常備詢，司法歸司法", "outcome": "府會運作正常，有人說你向賄選低頭。", "effects": { "council": 4, "integrity": -3 } },
+      { "id": "partial", "label": "只派局處長備詢，市長不出席", "outcome": "折衷的做法，兩邊都不太滿意。", "effects": { "council": -5, "integrity": 1 }, "skill": "negotiate" }
+    ],
+    "source": { "status": "draft", "prototype": "地方議長選舉賄選案後，市長以拒絕進入議會表達立場，府會關係陷入僵局。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "2015 年臺南議長賄選案後，市長拒絕進入議會備詢約七個月", "refs": [{ "title": "公視新聞網：賴清德拒入議會 監院今通過彈劾", "url": "https://news.pts.org.tw/article/303205", "quote": "賴清德拒入議會 監院今通過彈劾", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-gg-oldbuilding",
+    "phase": "term",
+    "title": "老大樓的大火",
+    "scenario": "一棟四十年的老舊商住大樓深夜起火，死傷慘重。調查發現，大樓裡有上百戶違規隔間，住的多是弱勢長者。",
+    "tags": ["港都市", "公安", "居住"],
+    "issue": "safety",
+    "conditions": { "flags": ["city-gangdu"] },
+    "weight": 3,
+    "options": [
+      { "id": "inspect", "label": "全面清查老舊大樓與違規隔間", "outcome": "清查出上千處違規，很多弱勢住戶不知道要搬去哪裡。", "effects": { "achievement": 5, "approval": -2, "team": -3 }, "skill": "admin" },
+      { "id": "rehouse", "label": "清查同時提供弱勢住戶安置與租金補助", "outcome": "清查做得慢一點，但沒有人被趕到街上。", "effects": { "achievement": 4, "treasury": -6, "integrity": 3 } },
+      { "id": "owners", "label": "要求管委會與屋主自行改善", "outcome": "大部分大樓沒有管委會，改善報告收不到幾份。", "effects": { "approval": -4 } }
+    ],
+    "source": { "status": "draft", "prototype": "老舊大樓違規隔間與消防設施不足，造成重大火災傷亡，凸顯都市弱勢居住安全問題。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "2021 年高雄城中城大樓火災", "refs": [{ "title": "中央社：高雄城中城大火46死 台灣死傷第2多單一建築物火災", "url": "https://www.cna.com.tw/news/firstnews/202110140355.aspx", "quote": "高雄城中城大火46死 台灣死傷第2多單一建築物火災", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-predecessor-cases",
+    "phase": "term",
+    "title": "清查前朝大案",
+    "scenario": "你上任後，幕僚整理了前任留下的五個大型 BOT 案，每一個都有疑點。清查會得罪很多人，也會讓你上很多新聞。",
+    "tags": ["工程", "前朝"],
+    "issue": "economy",
+    "conditions": { "notFlags": ["bg-incumbent"] },
+    "weight": 2,
+    "options": [
+      { "id": "probe", "label": "成立專案小組，全面清查並公開", "outcome": "連續一年天天上新聞，前任和他的黨把你當成頭號敵人。", "effects": { "integrity": 5, "media": 8, "party": -3, "business": -5 }, "skill": "confront" },
+      { "id": "renegotiate", "label": "低調重新議約，不公開追究", "outcome": "契約條件改善了一些，沒有人知道是你做的。", "effects": { "treasury": 5, "achievement": 2 }, "skill": "negotiate" },
+      { "id": "let-go", "label": "向前看，不翻舊帳", "outcome": "府會關係很平順，那些契約繼續照走。", "effects": { "council": 4, "integrity": -3 } }
+    ],
+    "source": { "status": "draft", "prototype": "新任首長清查前任留下的大型 BOT 案與契約疑點，常成為上任初期的政治焦點。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "2014 年臺北市新任市長清查前朝大巨蛋、雙子星等「五大案」", "refs": [{ "title": "公視新聞網：北市5大案結案 被質疑雷聲大雨點小", "url": "https://news.pts.org.tw/article/299355", "quote": "北市5大案結案 被質疑雷聲大雨點小", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-recall",
+    "phase": "term",
+    "title": "罷免連署過關",
+    "scenario": "不滿你的市民發起罷免，連署竟然過了門檻。罷免投票訂在一個月後。",
+    "tags": ["罷免", "民意"],
+    "issue": "local",
+    "conditions": { "max": { "approval": 40 } },
+    "weight": 4,
+    "options": [
+      { "id": "campaign", "label": "全力拚場，到處說明", "outcome": "你像回到選舉一樣天天掃街，市政幾乎停擺。", "effects": { "approval": 4, "achievement": -4, "team": -4 }, "skill": "grassroots" },
+      { "id": "boycott", "label": "呼籲支持者不要去投票，讓投票率不過門檻", "outcome": "策略很有效，也很難看。", "effects": { "party": 3, "integrity": -4 } },
+      { "id": "apologize", "label": "公開道歉，承諾改正", "outcome": "道歉很誠懇，有人說「太晚了」。", "effects": { "approval": 3, "integrity": 3 } }
+    ],
+    "source": { "status": "draft", "prototype": "地方首長遭罷免連署並進入投票，是台灣地方政治中罕見但真實發生的情況。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "2020 年高雄市長罷免案，為首例直轄市長遭罷免", "refs": [{ "title": "中央社：罷韓開票結果 同意票93萬9090 投票率42%", "url": "https://www.cna.com.tw/news/firstnews/202006065007.aspx", "quote": "罷韓開票結果 同意票93萬9090", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-vaccine",
+    "phase": "term",
+    "title": "地方自購疫苗",
+    "scenario": "疫情嚴峻，中央的疫苗遲遲不夠。有企業說可以幫市府從國外買疫苗，但中央說採購權在它。",
+    "tags": ["防疫", "中央"],
+    "issue": "safety",
+    "options": [
+      { "id": "buy", "label": "宣布市府自行採購", "outcome": "支持者歡呼，中央說你在搞政治，疫苗卡在海關。", "effects": { "approval": 4, "media": 6, "party": -3 }, "skill": "confront" },
+      { "id": "cooperate", "label": "配合中央，全力爭取分配量", "outcome": "分配量增加了一點，有人說你「太軟」。", "effects": { "party": 3, "achievement": 2 }, "skill": "negotiate" },
+      { "id": "logistics", "label": "不搶採購，把力氣花在接種站與物流", "outcome": "接種率全國第一，沒有人記得你買了什麼，只記得打得很快。", "effects": { "achievement": 5, "team": -3 }, "skill": "admin" }
+    ],
+    "source": { "status": "draft", "prototype": "疫情期間地方政府與中央在疫苗採購權上的爭議。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "2021 年地方政府自行洽購疫苗爭議", "refs": [{ "title": "公視新聞網：江啟臣聯合四個執政縣市申請採購BNT疫苗 台中、新北、台東不跟進", "url": "https://news.pts.org.tw/article/535343", "quote": "江啟臣聯合四個執政縣市申請採購BNT疫苗", "accessed": "2026-10-23" }] }
+  },
+  {
     "id": "i-ribbon-cutting",
     "phase": "incumbency",
     "title": "選前通車",
@@ -1016,7 +2163,7 @@
       { "id": "schedule", "label": "照原定時程，選後再通車", "outcome": "工程處長鬆了一口氣。選後剪綵的會是誰，還不知道。", "effects": { "achievement": 4, "integrity": 3 } },
       { "id": "preview", "label": "辦「搶先試乘」活動，市長帶隊", "outcome": "沒正式通車，但照片一樣好看。", "effects": { "approval": 17, "treasury": -2 }, "perk": true }
     ],
-    "source": { "status": "placeholder", "prototype": "現任首長於選前舉辦公共工程通車、啟用或動土典禮，時程安排常引發選舉考量的質疑。", "adaptation": "情境為虛構。", "refs": [] }
+    "source": { "status": "draft", "prototype": "現任首長於選前舉辦公共工程通車、啟用或動土典禮，時程安排常引發選舉考量的質疑。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：新北環狀捷運線改善中 仍盼春節能試乘", "url": "https://news.pts.org.tw/article/463071", "quote": "新北環狀捷運線改善中 仍盼春節能試乘", "accessed": "2026-10-23" }, { "title": "中央社：台中捷運綠線12/19正式通車 盧秀燕宣布11/16起1個月免費搭", "url": "https://www.cna.com.tw/news/firstnews/202011100061.aspx", "quote": "台中捷運綠線12/19正式通車", "accessed": "2026-10-23" }], "realCase": "捷運新路線在選前試營運或通車的時程爭議（如 2020 年新北環狀線、臺中捷運綠線）" }
   },
   {
     "id": "i-city-ads",
@@ -1029,7 +2176,7 @@
       { "id": "policy-only", "label": "刪掉市長畫面，只講政策資訊", "outcome": "廣告很專業，觀眾記得的是那隻吉祥物。", "effects": { "approval": 2, "treasury": -3, "integrity": 2 } },
       { "id": "cancel", "label": "不拍，經費轉做公園維護", "outcome": "公園的草很整齊。沒有人知道是誰剪的。", "effects": { "achievement": 3 } }
     ],
-    "source": { "status": "placeholder", "prototype": "地方政府以公帑製作市政宣導或置入行銷，首長頻繁出鏡，常被質疑變相競選廣告。", "adaptation": "數字與情境為虛構。", "refs": [] }
+    "source": { "status": "draft", "prototype": "地方政府以公帑製作市政宣導或置入行銷，首長頻繁出鏡，常被質疑變相競選廣告。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：政府資金置入 新聞淪為廣告行銷", "url": "https://news.pts.org.tw/article/155339", "quote": "政府資金置入 新聞淪為廣告行銷", "accessed": "2026-10-23" }, { "title": "監察院：預算法早已規定，政策宣導應標示「廣告」及揭示機關名稱，且立法院101年已要求相關經費預算應專項編列，但迄109年均未落實，監察院要求行政院督促主計總處澈底檢討", "url": "https://www.cy.gov.tw/News_Content.aspx?n=125&s=22097", "quote": "政策宣導應標示「廣告」", "accessed": "2026-10-23" }], "realCase": "2010 年監察院糾正政府以公務預算進行置入性行銷" }
   },
   {
     "id": "i-senior-bonus",
@@ -1042,7 +2189,7 @@
       { "id": "same", "label": "照往年標準發放", "outcome": "沒有人抱怨，也沒有人特別記得。", "effects": {} },
       { "id": "care", "label": "改把經費投入長照據點", "outcome": "長照據點多了 12 處。部分長輩打電話罵「敬老金變少了」。", "effects": { "approval": -3, "achievement": 6 } }
     ],
-    "source": { "status": "placeholder", "prototype": "地方政府於選舉年調整敬老金或節慶禮金，引發福利政策與選舉考量的討論。", "adaptation": "金額與情境為虛構。", "refs": [] }
+    "source": { "status": "draft", "prototype": "地方政府於選舉年調整敬老金或節慶禮金，引發福利政策與選舉考量的討論。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：百億孝為先？逢選舉開支票？全台22縣市敬老金大調查", "url": "https://news.pts.org.tw/project/old-age-allowance/", "quote": "逢選舉開支票", "accessed": "2026-10-23" }], "realCase": "各縣市於選舉年調整重陽敬老金" }
   },
   {
     "id": "i-li-chiefs",
@@ -1055,7 +2202,7 @@
       { "id": "need-based", "label": "依實際需求審核，公開排序", "outcome": "制度很公平。沒分到的里長，記得很清楚。", "effects": { "achievement": 4, "party": -4, "integrity": 3 } },
       { "id": "decline", "label": "婉拒，預算已經定案", "outcome": "會長笑著說「了解」。你不太確定那是什麼意思。", "effects": { "party": -6 } }
     ],
-    "source": { "status": "placeholder", "prototype": "里鄰建設或小型工程經費的分配，常被視為首長經營基層的工具。", "adaptation": "情境為虛構。", "refs": [] }
+    "source": { "status": "real", "prototype": "里鄰建設或小型工程經費的分配，常被視為首長經營基層的工具。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [], "realCase": "里長小型工程與里鄰建設服務經費的分配" }
   },
   {
     "id": "i-new-year",
@@ -1068,7 +2215,7 @@
       { "id": "artists", "label": "交給藝人，市長在台下看", "outcome": "網友說你「很低調」。你的幕僚說你「很浪費」。", "effects": { "integrity": 2 } },
       { "id": "downsize", "label": "縮小規模，省下的錢補助社區活動", "outcome": "社區活動辦得很溫馨，參加人數 312 人。", "effects": { "approval": -2, "achievement": 3, "treasury": 3 } }
     ],
-    "source": { "status": "placeholder", "prototype": "首長於市府主辦的大型活動中高度曝光，被視為現任者的宣傳優勢。", "adaptation": "情境為虛構。", "refs": [] }
+    "source": { "status": "draft", "prototype": "首長於市府主辦的大型活動中高度曝光，被視為現任者的宣傳優勢。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：市府辦跨年 花費四百萬吸引十萬人", "url": "https://news.pts.org.tw/article/104612", "quote": "市府辦跨年 花費四百萬吸引十萬人", "accessed": "2026-10-23" }, { "title": "公視新聞網：國中小校長聲明:節省跨年挹注教育", "url": "https://news.pts.org.tw/article/258274", "quote": "節省跨年挹注教育", "accessed": "2026-10-23" }], "realCase": "各直轄市跨年晚會由市長上台倒數" }
   },
   {
     "id": "i-disaster-visit",
@@ -1082,6 +2229,54 @@
       { "id": "reform", "label": "藉機推動老舊建物消防安檢", "outcome": "安檢讓很多房東不高興，但下一場火可能不會發生。", "effects": { "achievement": 6, "approval": -2, "council": -3 } }
     ],
     "source": { "status": "placeholder", "prototype": "首長親自出席災後慰問與發放，兼具行政職責與媒體曝光。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "i-subsidy-rush",
+    "phase": "incumbency",
+    "title": "選前加速發放",
+    "scenario": "社會局報告：今年的各項補助有一半還沒發。如果加快行政流程，可以在選前全部發完。",
+    "tags": ["現任資源", "福利"],
+    "options": [
+      { "id": "rush", "label": "全部加速，選前發完，附上市長賀卡", "outcome": "補助在選前一個月全部入帳，每一封都有你的簽名。", "effects": { "approval": 14, "integrity": -3, "team": -3 }, "perk": true },
+      { "id": "normal", "label": "照正常流程發放", "outcome": "一半在選前、一半在選後。社會局的人準時下班了。", "effects": { "integrity": 2 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "現任首長於選前加速發放各類補助並附上首長署名信函，常被質疑以公帑助選。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "i-unfinished-ribbon",
+    "phase": "incumbency",
+    "title": "還沒完工的剪綵",
+    "scenario": "新的運動中心只完成了七成，但選前兩週剛好可以辦「階段性啟用典禮」。",
+    "tags": ["現任資源", "工程"],
+    "options": [
+      { "id": "ceremony", "label": "辦盛大的階段性啟用典禮", "outcome": "典禮很熱鬧，民眾參觀時發現游泳池還沒放水。", "effects": { "approval": 13, "media": 6, "treasury": -3, "integrity": -2 }, "perk": true },
+      { "id": "wait", "label": "完工再啟用，選前不辦活動", "outcome": "工程團隊很感激你沒有逼他們趕工。", "effects": { "achievement": 2, "integrity": 2 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "未完工的公共建設在選前舉辦「階段性啟用」或「部分通車」典禮，是常見的選舉操作。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "i-temp-hires",
+    "phase": "incumbency",
+    "title": "選前的臨時人力",
+    "scenario": "幾個局處提出需求：要在選前進用數百名臨時人員，名單裡有不少是里長和樁腳推薦的。",
+    "tags": ["現任資源", "人事"],
+    "options": [
+      { "id": "hire", "label": "全部核准", "outcome": "臨時人員上工了，他們的家人在選舉時都很支持你。", "effects": { "party": 8, "approval": 8, "treasury": -5, "integrity": -5 }, "perk": true },
+      { "id": "open", "label": "改成公開甄選", "outcome": "甄選很公平，樁腳推薦的人大多沒考上。", "effects": { "integrity": 3, "party": -4, "team": 2 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "地方政府在選前大量進用臨時人員，常被質疑酬庸樁腳、綁票。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "i-officials-tv",
+    "phase": "incumbency",
+    "title": "局處長上節目",
+    "scenario": "新聞處安排局處長們輪流上談話節目「說明市政」，節目時段是買的。",
+    "tags": ["現任資源", "媒體"],
+    "options": [
+      { "id": "buy", "label": "照買，每集都提到市長的名字", "outcome": "局處長們講得很賣力。每一集的結尾都是你的施政口號。", "effects": { "media": 8, "approval": 9, "treasury": -4, "integrity": -3 }, "perk": true },
+      { "id": "press", "label": "改開記者會，不買節目", "outcome": "記者會的出席率很低，但沒有人說你置入行銷。", "effects": { "integrity": 2, "media": 2 } }
+    ],
+    "source": { "status": "draft", "prototype": "政府以公帑購買節目時段進行政策宣導，若過度聚焦首長個人，常被批評為置入性行銷。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：政府資金置入 新聞淪為廣告行銷", "url": "https://news.pts.org.tw/article/155339", "quote": "政府資金置入 新聞淪為廣告行銷", "accessed": "2026-10-23" }, { "title": "監察院：預算法早已規定，政策宣導應標示「廣告」及揭示機關名稱，且立法院101年已要求相關經費預算應專項編列，但迄109年均未落實，監察院要求行政院督促主計總處澈底檢討", "url": "https://www.cy.gov.tw/News_Content.aspx?n=125&s=22097", "quote": "政策宣導應標示「廣告」", "accessed": "2026-10-23" }], "realCase": "2010 年監察院糾正政府以公務預算進行置入性行銷" }
   },
   {
     "id": "r-abuse-ads",
@@ -1170,5 +2365,44 @@
       { "id": "counter", "label": "翻出對手的舊帳反擊", "outcome": "辯論會變成互相爆料大會。收視率很高。", "effects": { "approval": 1, "integrity": -5, "media": 5 } }
     ],
     "source": { "status": "placeholder", "prototype": "候選人涉及司法案件時，往往成為選戰攻防與辯論會的焦點。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "r-opponent-gaffe",
+    "phase": "reelection",
+    "title": "對手的失言",
+    "scenario": "選前十天，對手在造勢台上說錯了一句話，影片正在瘋傳。你的幕僚說：「這是天上掉下來的禮物。」",
+    "tags": ["選戰"],
+    "options": [
+      { "id": "pile-on", "label": "全力放大，買廣告重播那段影片", "outcome": "影片播了一整週。有人覺得你很小氣。", "effects": { "approval": 4, "integrity": -4, "media": 5 }, "funds": -800, "skill": "confront" },
+      { "id": "high-road", "label": "公開表示「大家都會說錯話」", "outcome": "記者說你很有風度，你的支持者說你太軟。", "effects": { "integrity": 4, "approval": 1 } },
+      { "id": "silent", "label": "不評論，讓媒體自己處理", "outcome": "媒體自己處理得很好。", "effects": { "media": -2 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "選戰末期候選人失言，對手陣營放大攻擊或保持風度，是常見的選戰抉擇。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "r-poll-war",
+    "phase": "reelection",
+    "title": "民調大戰",
+    "scenario": "投票前兩週，三家民調結果互相矛盾：一家說你領先十趴，一家說你落後五趴。",
+    "tags": ["選戰", "民調"],
+    "options": [
+      { "id": "publish", "label": "大打領先的那份民調", "outcome": "支持者士氣高昂，有些人覺得你穩贏，投票日就不出門了。", "effects": { "approval": 2, "party": -2, "integrity": -2 } },
+      { "id": "underdog", "label": "主打落後的那份，喊「告急」催票", "outcome": "支持者衝出來了。對手說你在演苦情戲。", "effects": { "party": 5, "approval": 2 }, "skill": "organize" },
+      { "id": "ignore", "label": "不談民調，只談政策", "outcome": "很有原則。新聞沒有人報。", "effects": { "integrity": 2, "media": -2 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "選前民調結果分歧時，候選人常選擇性公布或「告急」催票。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "r-last-promise",
+    "phase": "reelection",
+    "title": "最後一個政見",
+    "scenario": "選前最後一場記者會，幕僚建議你丟出一個「震撼彈政見」，例如全市免費營養午餐。",
+    "tags": ["選戰", "政見"],
+    "options": [
+      { "id": "bomb", "label": "宣布震撼彈政見", "outcome": "新聞全部被你洗版。財政局長在電視前嘆了一口氣。", "effects": { "approval": 6, "integrity": -4 }, "setFlags": ["promise-cash"] },
+      { "id": "costed", "label": "宣布小一點的政見，附上財源", "outcome": "很踏實，新聞只給了你三十秒。", "effects": { "approval": 2, "integrity": 3 }, "skill": "policy" },
+      { "id": "record", "label": "不給新政見，請選民看四年成績單", "outcome": "你的支持者點頭，猶豫的選民聳肩。", "effects": { "achievement": 1 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "選前最後階段丟出大型福利政見，是常見的選戰策略，其財源常受質疑。", "adaptation": "情境為虛構。", "refs": [] }
   }
 ]

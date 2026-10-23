@@ -102,6 +102,27 @@ def main() -> int:
     for b in bgs:
         out.append(f"- **{b['name']}**：" + " ／ ".join(b["origins"]))
 
+    cities = load("cities.json")
+    issue_names = {"housing": "居住", "transit": "交通", "environment": "環境", "economy": "經濟產業",
+                   "welfare": "福利照顧", "culture": "文化觀光", "local": "地方人情", "safety": "公共安全"}
+    out += ["", "## B4. 城市（選民結構）", "",
+            "議題倍率：選項的民調效果乘上這個倍率（未列出者為 1）。選舉權重倍率：勝選模型中該數值權重乘上這個倍率。", "",
+            "| 城市 | 選民族群 | 開局調整 | 選舉權重倍率 | 議題倍率 | 專屬事件 |", "|---|---|---|---|---|---|"]
+    for c in cities:
+        groups = "、".join(f"{g['name']} {g['share']}%" for g in c["voterGroups"])
+        vm = "、".join(f"{STAT_LABELS.get(k, k)} ×{v}" for k, v in c["voteMods"].items())
+        iw = "、".join(f"{issue_names[k]} ×{v}" for k, v in sorted(c["issueWeights"].items(), key=lambda x: -x[1]))
+        own = "、".join(e["title"] for e in events if f"city-{c['id']}" in (e.get("conditions") or {}).get("flags", []))
+        out.append(f"| {c['name']} | {groups} | {delta(c['startDelta'])} | {vm} | {iw} | {own} |")
+    out += ["", "城市變化（同一事件在不同城市有不同結果）：", ""]
+    for e in events:
+        for o in e["options"]:
+            for v in o.get("variants", []):
+                cf = [f for f in v["when"].get("flags", []) if f.startswith("city-")]
+                if cf:
+                    name = next(c["name"] for c in cities if f"city-{c['id']}" == cf[0])
+                    out.append(f"- **{e['title']}／{o['label']}**〔{name}〕：{esc(v['outcome'])}（額外 {delta(v.get('effects'))}）")
+
     out += ["", "## C. 突發事件（自動觸發，不是選項）", "",
             "| 優先 | 名稱 | 好壞 | 觸發條件 | 階段 | 衝擊 | 經費 | 餘波 | 設定旗標 | 可重複 |",
             "|---|---|---|---|---|---|---|---|---|---|"]
@@ -132,6 +153,8 @@ def main() -> int:
             if e.get("drawOptions"):
                 meta.append(f"選項池，每次抽 {e['drawOptions']} 個")
             meta.append(f"來源：{e['source']['status']}，{len(e['source']['refs'])} 筆引用")
+            if e["source"].get("realCase"):
+                meta.append(f"真實原型：{e['source']['realCase']}")
             out += [f"**{e['title']}**（`{e['id']}`）— {'；'.join(meta)}", "", f"> {esc(e['scenario'])}", "",
                     "| 選項 | 效果 | 經費 | 條件／標記 |", "|---|---|---|---|"]
             for o in e["options"]:

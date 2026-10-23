@@ -4,41 +4,94 @@
     "name": "天龍市",
     "mayorTitle": "天龍市長",
     "tagline": "首都級的房價、首都級的媒體關注，以及首都級的自我感覺。",
-    "weight": 1
+    "weight": 1,
+    "voters": "全國媒體密度最高，選民對形象與議題很敏感；地方組織和紅白帖在這裡最不管用。",
+    "voterGroups": [{ "name": "青年租屋族", "share": 28 }, { "name": "白領通勤族", "share": 27 }, { "name": "中產家庭", "share": 25 }, { "name": "退休公教", "share": 20 }],
+    "startDelta": { "treasury": 10, "media": 5, "party": -3 },
+    "voteMods": { "media": 1.4, "party": 0.7, "achievement": 1.1 },
+    "issueWeights": { "housing": 1.5, "transit": 1.2, "culture": 1.1, "welfare": 0.9, "economy": 0.9, "local": 0.6 },
+    "issueNotes": {
+      "housing": "天龍市的租屋族特別在意這件事，留言區炸開了。",
+      "local": "天龍市的選民不太吃這一套，有人說你在作秀。"
+    }
   },
   {
     "id": "xinlong",
     "name": "新龍市",
     "mayorTitle": "新龍市長",
     "tagline": "人口最多、幅員最廣，每天早上有一半的人在通勤去天龍市的路上。",
-    "weight": 1
+    "weight": 1,
+    "voters": "跨區通勤族是最大的選民群；新興重劃區與老市區、山海區的需求差很多。",
+    "voterGroups": [{ "name": "跨區通勤族", "share": 35 }, { "name": "老市區長輩", "share": 25 }, { "name": "重劃區新住民", "share": 20 }, { "name": "山海區居民", "share": 20 }],
+    "startDelta": { "treasury": -5 },
+    "voteMods": { "achievement": 1.1, "party": 1.1 },
+    "issueWeights": { "transit": 1.5, "housing": 1.2, "safety": 1.1, "welfare": 1.1, "culture": 0.8, "environment": 0.9 },
+    "issueNotes": {
+      "transit": "新龍市每天有上百萬人在通勤，這件事一下子就傳遍了各個捷運站。"
+    }
   },
   {
     "id": "airplane",
     "name": "飛機城",
     "mayorTitle": "飛機城市長",
     "tagline": "航空城喊了二十年，土地徵收的抗議布條也掛了二十年。",
-    "weight": 1
+    "weight": 1,
+    "voters": "人口快速移入的工業城市，產業工人與新住民多，客家庄與眷村也有各自的投票傾向。",
+    "voterGroups": [{ "name": "產業工人", "share": 30 }, { "name": "移入新住民", "share": 25 }, { "name": "眷村與老城區", "share": 25 }, { "name": "客家庄", "share": 20 }],
+    "startDelta": { "business": 5, "achievement": 3 },
+    "voteMods": { "achievement": 1.2 },
+    "issueWeights": { "economy": 1.5, "safety": 1.2, "transit": 1.1, "environment": 1.1, "culture": 0.8 },
+    "issueNotes": {
+      "economy": "飛機城的工廠和工人都在看你怎麼做，這件事在工業區傳得很快。",
+      "culture": "飛機城的選民比較在意工作和薪水，對這件事反應冷淡。"
+    }
   },
   {
     "id": "mama",
     "name": "媽媽市",
     "mayorTitle": "媽媽市長",
     "tagline": "交通、產業、地方組織樣樣都大，連市長的暱稱都很親切。",
-    "weight": 1
+    "weight": 1,
+    "voters": "地方派系與宮廟網絡的動員力全國最強；家長與中小企業主也是關鍵選民。",
+    "voterGroups": [{ "name": "宮廟與地方派系", "share": 25 }, { "name": "家長與家庭", "share": 25 }, { "name": "中小企業主", "share": 25 }, { "name": "年輕上班族", "share": 25 }],
+    "startDelta": { "party": 3, "council": -3 },
+    "voteMods": { "party": 1.4, "media": 0.8 },
+    "issueWeights": { "local": 1.5, "environment": 1.3, "transit": 1.2, "housing": 0.9 },
+    "issueNotes": {
+      "local": "在媽媽市，宮廟主委和派系大老一句話，比十支廣告還有用。",
+      "environment": "媽媽市的家長最怕空汙，這件事在家長群組裡被轉了好幾輪。"
+    }
   },
   {
     "id": "gudu",
     "name": "古都市",
     "mayorTitle": "古都市長",
     "tagline": "每一條巷子都是古蹟，每一塊空地都有人想蓋大樓。",
-    "weight": 1
+    "weight": 1,
+    "voters": "長者比例高、農漁民與老城區店家多；文史社群聲量不大，但很能影響輿論。",
+    "voterGroups": [{ "name": "長者", "share": 30 }, { "name": "農漁民", "share": 20 }, { "name": "科學園區上班族", "share": 20 }, { "name": "老城區店家", "share": 15 }, { "name": "文史與藝文社群", "share": 15 }],
+    "startDelta": { "treasury": -5, "integrity": 3 },
+    "voteMods": { "party": 1.2, "achievement": 1.1, "media": 0.9 },
+    "issueWeights": { "culture": 1.6, "welfare": 1.2, "local": 1.2, "safety": 1.2, "housing": 0.8, "transit": 0.9 },
+    "issueNotes": {
+      "culture": "古都市的人對老房子和老街有很深的感情，這件事一下子就成了全市的話題。",
+      "housing": "古都市的房價壓力沒那麼大，選民對這件事反應平淡。"
+    }
   },
   {
     "id": "gangdu",
     "name": "港都市",
     "mayorTitle": "港都市長",
     "tagline": "港口、重工業與大型活動，這座城市最擅長的就是「拚」。",
-    "weight": 1
+    "weight": 1,
+    "voters": "重工業與港口勞工是傳統票倉；年輕人外流嚴重，長者與中小商家很在意經濟。",
+    "voterGroups": [{ "name": "重工業與港口勞工", "share": 30 }, { "name": "長者", "share": 25 }, { "name": "中小商家", "share": 25 }, { "name": "年輕族群", "share": 20 }],
+    "startDelta": { "treasury": -10, "party": 2 },
+    "voteMods": { "party": 1.2 },
+    "issueWeights": { "economy": 1.5, "safety": 1.3, "environment": 1.2, "culture": 1.1, "housing": 0.8 },
+    "issueNotes": {
+      "economy": "港都市的人最在意「有沒有工作、能不能賺錢」，這件事直接影響你的民調。",
+      "safety": "港都市經歷過重大公安意外，市民對這種事特別敏感。"
+    }
   }
 ]

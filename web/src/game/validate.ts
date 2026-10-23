@@ -61,7 +61,8 @@ export function validateEvents(events: GameEvent[], opts: ValidationOptions = {}
     }
 
     const src = e.source;
-    if (src.status !== "placeholder" && src.refs.length === 0) {
+    if (src.status === "real" && !src.realCase?.trim()) errors.push(`${at}：改編自真實事件，但沒有記錄原型（realCase）`);
+    if ((src.status === "draft" || src.status === "verified") && src.refs.length === 0) {
       errors.push(`${at}：非 placeholder 事件必須附來源`);
     }
     for (const r of src.refs) {

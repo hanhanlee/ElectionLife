@@ -3,7 +3,7 @@
 // 平衡的目標是好玩、引人反思（「這真的是我們想要候選人做的事嗎？」），不是吻合史實；
 // 中選會數字只是參考，用來讓難度的方向合理。
 
-import type { Skill, StatDelta, StatKey, Stats } from "./types";
+import type { Issue, Skill, StatDelta, StatKey, Stats } from "./types";
 
 export const MODEL_VERSION = "2026.10-draft";
 
@@ -56,13 +56,13 @@ export const VOTE_BIAS = -0.4;
  * 連任選舉的對手基準，與第一次投票分開：第二階段經過 8 回合任期，數值與危機的累積和競選期不同。
  * 一樣對所有角色一視同仁。
  */
-export const REELECTION_BIAS = 0.3;
+export const REELECTION_BIAS = 0.2;
 
 /**
  * 選民疲乏：每多動用一次現任資源，該次的民調加分乘上此係數（第 n 次為 PERK_DECAY^(n-1)）。
  * 避免「每次都動用」變成必勝公式。
  */
-export const PERK_DECAY = 0.5;
+export const PERK_DECAY = 0.65;
 
 /**
  * 民調邊際效益遞減：民調超過 50 後，選項帶來的民調加分打折（80 時剩七成、100 時剩一半），
@@ -137,6 +137,21 @@ export const SKILL_EFFECTS: Record<Skill, StatDelta> = {
   deal: { business: 3, council: 2 },
   confront: { approval: 3, media: 2 },
 };
+
+/** 事件標籤對應的議題：沒有明確設定 issue 的事件，用第一個符合的標籤推斷 */
+export const ISSUE_TAGS: Record<string, Issue> = {
+  居住: "housing", 都更: "housing", 政見: "housing",
+  交通: "transit", 通勤: "transit", 行人: "transit",
+  環保: "environment", 空汙: "environment", 環境: "environment", 鄰避: "environment", 動保: "environment",
+  財政: "economy", 經濟: "economy", 產業: "economy", 企業: "economy", 工程: "economy", 土地: "economy", 土地徵收: "economy", 稅: "economy",
+  福利: "welfare", 長照: "welfare", 育兒: "welfare", 托育: "welfare", 兒少: "welfare", 教育: "welfare", 特教: "welfare", 移工: "welfare",
+  文化: "culture", 文化資產: "culture", 觀光: "culture", 城市行銷: "culture", 大型活動: "culture",
+  地方: "local", 地方經營: "local", 派系: "local", 違建: "local", 宗教: "local",
+  防災: "safety", 公安: "safety", 衛生: "safety", 防疫: "safety", 安全: "safety", 基礎建設: "safety",
+};
+
+/** 議題倍率偏離 1 達到這個程度時，結果文字補上城市的敘述 */
+export const ISSUE_NOTE_THRESHOLD = 0.3;
 
 /** 隨機擾動幅度（logit，均勻分布 ±此值），代表對手實力、時事與投票率等不可控因素 */
 export const VOTE_NOISE = 1.0;

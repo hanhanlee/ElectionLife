@@ -10,6 +10,8 @@ import {
   CAMPAIGN_UPKEEP,
   MOBILIZATION_CAP,
   MOBILIZATION_WEIGHT,
+  ISSUE_NOTE_THRESHOLD,
+  ISSUE_TAGS,
   REELECTION_BIAS,
   SKILL_EFFECTS,
   payout,
@@ -35,6 +37,7 @@ import {
   type GameState,
   type Notice,
   type Party,
+  type Issue,
   type Phase,
   type Profile,
   type StatDelta,
@@ -43,7 +46,7 @@ import {
   type Trait,
 } from "./types";
 
-export const STATE_VERSION = 11;
+export const STATE_VERSION = 12;
 
 /**
  * 兩個階段，各 12 回合：
@@ -222,6 +225,7 @@ export function newGame(
   setup?: ProfileSetup,
 ): GameState {
   let stats = addDelta(addDelta({ ...START_STATS }, party.startDelta), background.startDelta);
+  if (setup) stats = addDelta(stats, setup.city.startDelta);
   const flags = [...party.flags, ...background.flags];
   if (setup) {
     for (const t of setup.traits) stats = addDelta(stats, t.startDelta);
@@ -250,6 +254,9 @@ export function newGame(
     notices: [],
     crisisLog: [],
     traitSkills,
+    cityMods: setup
+      ? { voteMods: setup.city.voteMods, issueWeights: setup.city.issueWeights, issueNotes: setup.city.issueNotes }
+      : undefined,
     finished: false,
   };
   return withNextEvent(withPayout(base), events);
@@ -283,12 +290,38 @@ function sumDelta(a: StatDelta, b?: StatDelta, sign = 1): StatDelta {
   return out;
 }
 
+/** 事件的議題：明確設定的 issue，否則用標籤推斷 */
+export function eventIssue(event: GameEvent): Issue | undefined {
+  return event.issue ?? event.tags.map((t) => ISSUE_TAGS[t]).find(Boolean);
+}
+
+/**
+ * 城市的選民結構：選民越在意這個議題，選項的民調效果（加分或扣分）越大，
+ * 差距明顯時補上城市的敘述。
+ */
+function withCityIssue(state: GameState, event: GameEvent | undefined, r: ReturnType<typeof resolveTraits>) {
+  const issue = event && eventIssue(event);
+  const weight = issue ? state.cityMods?.issueWeights[issue] ?? 1 : 1;
+  if (!issue || weight === 1 || !r.effects.approval) return r;
+  const note = Math.abs(weight - 1) >= ISSUE_NOTE_THRESHOLD ? state.cityMods?.issueNotes[issue] : undefined;
+  return {
+    ...r,
+    outcome: note ? r.outcome + note : r.outcome,
+    effects: { ...r.effects, approval: Math.round(r.effects.approval * weight) },
+  };
+}
+
+/** 資質與城市如何改變這個選項（見 resolveTraits 與 withCityIssue） */
+export function resolveOption(state: GameState, option: GameOption, event?: GameEvent) {
+  return withCityIssue(state, event, resolveTraits(state, option));
+}
+
 /**
  * 資質如何改變這個選項：
  * - 有符合的手寫變化（variants）就用它：換掉結果文字、加上額外效果
  * - 否則套用一般能力規則：擅長加分、不擅長扣分，並補上資質的敘述
  */
-export function resolveOption(state: GameState, option: GameOption) {
+function resolveTraits(state: GameState, option: GameOption) {
   const variant = option.variants?.find((v) => meetsCondition(state, v.when));
   if (variant) {
     const involved = [...(variant.when.flags ?? []), ...(variant.when.anyFlags ?? [])]
@@ -357,7 +390,7 @@ export function choose(
 
   let stats = state.stats;
   if (availability === "unlockable") stats = addDelta(stats, option.unlockCost!);
-  const resolved = resolveOption(state, option);
+  const resolved = resolveOption(state, option, event);
   const effects = withStatScaling(state, option.perk ? withPerkDecay(state, events, resolved.effects) : resolved.effects);
   stats = addDelta(stats, effects);
 
@@ -533,9 +566,10 @@ export function baseProbability(stats: Stats): number {
 }
 
 export function runElection(state: GameState, which: "first" | "final" = "final"): ElectionResult {
+  const voteMods = state.cityMods?.voteMods ?? {};
   const contributions = ALL_STATS.map((stat) => ({
     stat,
-    value: (VOTE_WEIGHTS[stat] * (state.stats[stat] - 50)) / 10,
+    value: (VOTE_WEIGHTS[stat] * (voteMods[stat] ?? 1) * (state.stats[stat] - 50)) / 10,
   })).sort((a, b) => Math.abs(b.value) - Math.abs(a.value));
 
   const mobilization = Math.min(state.funds, MOBILIZATION_CAP);
