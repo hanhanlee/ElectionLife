@@ -849,3 +849,21 @@ describe("對手", () => {
     }
   });
 });
+
+describe("事件隨機性", () => {
+  it("沒有條件限制的選戰與任期事件不會一直出現（單一事件出現率 < 25%）", () => {
+    const N = 800;
+    const seen: Record<string, number> = {};
+    let reachedTerm = 0;
+    for (let seed = 1; seed <= N; seed++) {
+      const s = playRandom(seed * 7919);
+      if (s.deck.some((id) => EVENTS.find((e) => e.id === id)!.phase === "term")) reachedTerm++;
+      for (const id of s.deck) seen[id] = (seen[id] ?? 0) + 1;
+    }
+    const open = EVENTS.filter((e) => (e.phase === "campaign" || e.phase === "term") && !e.conditions && e.id !== "c-strategy");
+    for (const e of open) {
+      const rate = (seen[e.id] ?? 0) / (e.phase === "term" ? reachedTerm : N);
+      expect(rate, `${e.title} 出現率 ${(rate * 100).toFixed(0)}%`).toBeLessThan(0.25);
+    }
+  });
+});
