@@ -1,0 +1,68 @@
+[
+  {
+    "id": "dynasty",
+    "name": "政治世家",
+    "origin": "你出生在政治世家，從小就在競選總部的辦公桌下寫功課。",
+    "line": "「靠爸」兩個字，是對手最愛貼在你身上的標籤。",
+    "startDelta": { "party": 8, "media": 5, "business": 5, "approval": -3 },
+    "funds": 500,
+    "affinity": ["legislator", "councilor"]
+  },
+  {
+    "id": "tycoon-family",
+    "name": "財團家庭",
+    "origin": "你家的公司名字，市民每天都會在建案廣告上看到。",
+    "line": "家族企業與市府標案之間的關係，是你揮之不去的政治包袱。",
+    "startDelta": { "business": 15, "integrity": -5, "approval": -3 },
+    "funds": 1500,
+    "affinity": ["outsider", "official"]
+  },
+  {
+    "id": "local-clan",
+    "name": "地方宗族",
+    "origin": "你從小就在宮廟與服務處長大，全市里長有一半認識你。",
+    "line": "家族企業與地方建設的關係，也是你揮之不去的政治包袱。",
+    "startDelta": { "party": 6, "business": 8, "integrity": -3 },
+    "funds": 500,
+    "affinity": ["councilor", "incumbent"]
+  },
+  {
+    "id": "celebrity-family",
+    "name": "明星家庭",
+    "origin": "你是在電視機前長大的星二代，路人看到你都會喊出你爸媽的名字。",
+    "line": "家族的八卦新聞，隨時可能變成你的選戰新聞。",
+    "startDelta": { "media": 12, "approval": 2, "team": -3 },
+    "affinity": ["outsider"]
+  },
+  {
+    "id": "activist-network",
+    "name": "社運網絡",
+    "origin": "你是從街頭走進政治的，抗議現場的麥克風比議會的麥克風更熟悉。",
+    "line": "當年一起上街的夥伴，正盯著你會不會變成自己反對過的人。",
+    "startDelta": { "integrity": 6, "media": 4, "business": -8, "party": -3 },
+    "affinity": ["outsider", "councilor"],
+    "partyAffinity": ["yellow", "white"]
+  },
+  {
+    "id": "family-conflict",
+    "name": "家族利益衝突",
+    "line": "你的親戚在市府標案名單上出現過不只一次，這件事遲早會被翻出來。",
+    "startDelta": { "business": 6, "integrity": -6 },
+    "affinity": ["incumbent", "official"]
+  },
+  {
+    "id": "old-controversy",
+    "name": "歷史爭議",
+    "line": "你多年前的一段爭議發言，每到選舉就會被重新剪輯一次。",
+    "startDelta": { "approval": -4, "media": 5 }
+  },
+  {
+    "id": "lone-wolf",
+    "name": "無資源孤軍",
+    "origin": "你沒有家族、沒有金主、沒有派系，一切都得靠自己。",
+    "line": "這是你最大的弱點，也可能是你唯一的賣點。",
+    "startDelta": { "party": -5, "business": -10, "integrity": 4 },
+    "affinity": ["outsider"],
+    "partyAffinity": ["independent", "minor"]
+  }
+]

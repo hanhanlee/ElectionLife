@@ -10,6 +10,38 @@
     "incumbents_won": 13,
     "incumbent_win_rate": 0.722
   },
+  "challengers": {
+    "blue": {
+      "candidates": 120,
+      "won": 48,
+      "win_rate": 0.4
+    },
+    "green": {
+      "candidates": 112,
+      "won": 37,
+      "win_rate": 0.33
+    },
+    "independent": {
+      "candidates": 242,
+      "won": 10,
+      "win_rate": 0.041
+    },
+    "minor": {
+      "candidates": 47,
+      "won": 3,
+      "win_rate": 0.064
+    },
+    "white": {
+      "candidates": 3,
+      "won": 1,
+      "win_rate": 0.333
+    },
+    "yellow": {
+      "candidates": 3,
+      "won": 0,
+      "win_rate": 0.0
+    }
+  },
   "source_title": "中央選舉委員會 選舉資料庫",
   "source_url": "https://db.cec.gov.tw/",
   "retrieved_at": "2026-10-23"

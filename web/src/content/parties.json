@@ -1,0 +1,75 @@
+[
+  {
+    "id": "blue",
+    "name": "藍黨",
+    "reference": "參考百年老黨的結構特性：地方派系與基層組織深厚、歷史包袱較重。",
+    "description": "老字號大黨，地方上到處都有你的人。",
+    "advantages": ["基層組織與地方派系動員力強", "議會席次多，府會關係好處理"],
+    "baggage": ["派系會來收人情帳", "老黨形象，年輕選民有距離"],
+    "startDelta": { "party": 12, "council": 5, "approval": -2, "integrity": -3, "business": 15 },
+    "funding": 800,
+    "flags": ["party-blue", "party-major"],
+    "weight": 3
+  },
+  {
+    "id": "green",
+    "name": "綠黨",
+    "reference": "參考另一個大黨的結構特性：組織動員力強、與中央執政高度連動。",
+    "description": "另一個大黨，選戰機器運轉成熟。",
+    "advantages": ["組織動員與選戰經驗豐富", "容易爭取中央資源與部會支持"],
+    "baggage": ["中央施政的好壞都會算到你頭上", "黨內派系協調不輕鬆"],
+    "startDelta": { "party": 10, "council": 3, "approval": -2, "integrity": -2, "business": 10 },
+    "funding": 750,
+    "flags": ["party-green", "party-major"],
+    "weight": 3
+  },
+  {
+    "id": "white",
+    "name": "白黨",
+    "reference": "參考新興第三勢力的結構特性：以個人品牌與中間選民為主，組織較薄弱。",
+    "description": "新興第三勢力，聲量大、組織小。",
+    "advantages": ["中間與年輕選民好感度高", "網路聲量與話題性強"],
+    "baggage": ["基層組織與議會席次薄弱", "高度依賴明星人物，黨的風波會連帶影響你"],
+    "startDelta": { "party": -10, "council": -10, "approval": 3, "business": 0 },
+    "funding": 400,
+    "flags": ["party-white", "party-third"],
+    "weight": 2
+  },
+  {
+    "id": "yellow",
+    "name": "黃黨",
+    "reference": "參考由社會運動延伸的理念型政黨：議題形象鮮明、規模小。",
+    "description": "理念型小黨，從社會運動走進政治。",
+    "advantages": ["議題倡議形象鮮明，原則分數高", "年輕支持者熱情"],
+    "baggage": ["組織與資源有限", "和大黨合作時，支持者會質疑你背離理念"],
+    "startDelta": { "party": -22, "council": -10, "integrity": 8, "approval": 0, "business": -10 },
+    "funding": 400,
+    "flags": ["party-yellow", "party-third"],
+    "weight": 1
+  },
+  {
+    "id": "minor",
+    "name": "其他小黨",
+    "reference": "參考各類小型政黨：議題單一或地方性強，資源與知名度極低。",
+    "description": "你的黨，選民大多叫不出名字。",
+    "advantages": ["沒有大黨的歷史包袱", "議題鮮明，容易被記得"],
+    "baggage": ["資源、組織、知名度都極低", "議會幾乎沒有盟友"],
+    "startDelta": { "party": -21, "council": -12, "integrity": 6, "approval": -1, "business": -5 },
+    "funding": 250,
+    "flags": ["party-minor", "party-third"],
+    "weight": 1
+  },
+  {
+    "id": "independent",
+    "name": "無黨籍",
+    "reference": "參考無黨籍候選人：不受黨紀約束，但沒有組織支援。",
+    "description": "不靠任何政黨，自己出來選。",
+    "advantages": ["不受黨紀約束，形象清新", "兩大黨的選民都可能投給你"],
+    "baggage": ["沒有組織動員", "議會沒有黨團，預算很難護航"],
+    "startDelta": { "party": -30, "council": -12, "integrity": 5, "approval": 3, "business": -5 },
+    "funding": 0,
+    "fundraising": 2,
+    "flags": ["party-independent"],
+    "weight": 2
+  }
+]

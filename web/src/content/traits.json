@@ -1,0 +1,141 @@
+[
+  {
+    "id": "debater",
+    "name": "辯論鬼才",
+    "category": "communication",
+    "strength": "在辯論台上拆解對手",
+    "startDelta": { "approval": 2, "media": 4 },
+    "affinity": ["legislator", "councilor"],
+    "skills": [{ "skill": "debate", "level": 1, "line": "對手的論點，被你三句話拆光。" }]
+  },
+  {
+    "id": "grassroots",
+    "name": "草根魅力",
+    "category": "communication",
+    "strength": "握手、拜票",
+    "startDelta": { "approval": 3, "party": 2 },
+    "affinity": ["councilor", "incumbent"],
+    "skills": [{ "skill": "grassroots", "level": 1, "line": "阿伯阿姨搶著跟你合照，還有人塞了一袋橘子給你。" }]
+  },
+  {
+    "id": "photogenic",
+    "name": "明星外型",
+    "category": "communication",
+    "strength": "站在鏡頭前",
+    "startDelta": { "media": 8 },
+    "affinity": ["outsider"],
+    "skills": [{ "skill": "media", "level": 1, "line": "鏡頭很愛你，畫面被轉傳了好幾萬次。" }]
+  },
+  {
+    "id": "poor-speaker",
+    "name": "政策表達不佳",
+    "category": "communication",
+    "weakness": "政策辯論",
+    "startDelta": { "approval": -3, "media": -2 },
+    "affinity": ["official"],
+    "skills": [{ "skill": "debate", "level": -1, "line": "你一開口就卡住，台下開始滑手機。" }, { "skill": "media", "level": -1, "line": "你在鏡頭前顯得很僵硬，剪出來的畫面很尷尬。" }]
+  },
+  {
+    "id": "policy-wonk",
+    "name": "政策學霸",
+    "category": "policy",
+    "strength": "把政策講到小數點",
+    "startDelta": { "achievement": 3, "integrity": 2 },
+    "affinity": ["official", "outsider"],
+    "skills": [{ "skill": "policy", "level": 1, "line": "你連細節數字都背得出來，記者問不倒你。" }]
+  },
+  {
+    "id": "veteran-admin",
+    "name": "行政老手",
+    "category": "policy",
+    "strength": "把公文和預算跑完",
+    "startDelta": { "team": 8, "achievement": 2 },
+    "affinity": ["official", "incumbent"],
+    "skills": [{ "skill": "admin", "level": 1, "line": "公文流程你比誰都熟，事情推得特別快。" }]
+  },
+  {
+    "id": "indecisive",
+    "name": "決策遲緩",
+    "category": "policy",
+    "weakness": "當機立斷",
+    "startDelta": { "team": -6 },
+    "skills": [{ "skill": "admin", "level": -1, "line": "你猶豫了太久，最好的時機已經過去。" }]
+  },
+  {
+    "id": "unprepared",
+    "name": "政策準備不足",
+    "category": "policy",
+    "weakness": "面對記者追問政策細節",
+    "startDelta": { "achievement": -3, "approval": -2 },
+    "affinity": ["outsider", "councilor"],
+    "skills": [{ "skill": "policy", "level": -1, "line": "記者一追問細節，你就開始答非所問。" }]
+  },
+  {
+    "id": "organizer",
+    "name": "組織天才",
+    "category": "organization",
+    "strength": "把一群志工變成一支部隊",
+    "startDelta": { "party": 6, "team": 4 },
+    "affinity": ["legislator", "councilor"],
+    "skills": [{ "skill": "organize", "level": 1, "line": "你的動員名單一通電話就全員到齊。" }]
+  },
+  {
+    "id": "fixer",
+    "name": "地方協調高手",
+    "category": "organization",
+    "strength": "協調地方事務",
+    "startDelta": { "council": 6, "party": 3 },
+    "affinity": ["councilor", "incumbent"],
+    "skills": [{ "skill": "negotiate", "level": 1, "line": "你私下喬了幾通電話，事情就順了。" }]
+  },
+  {
+    "id": "faction-shadow",
+    "name": "派系包袱",
+    "category": "organization",
+    "weakness": "擺脫派系大老的影子",
+    "startDelta": { "party": 4, "council": 2, "integrity": -4 },
+    "affinity": ["legislator", "councilor"],
+    "skills": [{ "skill": "organize", "level": 1, "line": "派系大老的人馬全數到場——當然，人情也記上了。" }, { "skill": "negotiate", "level": -1, "line": "對方知道你背後是誰，談判桌上一步也不讓。" }]
+  },
+  {
+    "id": "gaffe-prone",
+    "name": "容易失言",
+    "category": "organization",
+    "weakness": "管住自己的嘴",
+    "startDelta": { "approval": -3, "media": 4 },
+    "affinity": ["outsider"],
+    "skills": [{ "skill": "debate", "level": -1, "line": "你脫稿的一句話，比整場活動更有名。" }, { "skill": "grassroots", "level": -1, "line": "你跟攤販閒聊時隨口一句玩笑，被拍下來傳遍了。" }]
+  },
+  {
+    "id": "principled",
+    "name": "守原則",
+    "category": "personality",
+    "line": "答應過的事你從不打折，也因此常常不懂得變通。",
+    "startDelta": { "integrity": 8, "business": -5 },
+    "skills": [{ "skill": "deal", "level": -1, "line": "你答應得很勉強，對方看得出來。" }]
+  },
+  {
+    "id": "opportunist",
+    "name": "投機靈活",
+    "category": "personality",
+    "line": "你很會看風向，只是支持者常搞不清楚你到底站在哪一邊。",
+    "startDelta": { "business": 5, "integrity": -5, "approval": 2 },
+    "skills": [{ "skill": "deal", "level": 1, "line": "交換條件談得很漂亮，你自己都快信了。" }]
+  },
+  {
+    "id": "overconfident",
+    "name": "過度自信",
+    "category": "personality",
+    "line": "你相信自己什麼都做得到，很少聽進別人的勸。",
+    "startDelta": { "approval": 2, "team": -4 },
+    "skills": [{ "skill": "confront", "level": 1, "line": "你氣勢十足，對手先退了一步。" }, { "skill": "policy", "level": -1, "line": "你覺得細節不重要，結果被抓到好幾個漏洞。" }]
+  },
+  {
+    "id": "conflict-averse",
+    "name": "迴避衝突",
+    "category": "personality",
+    "line": "你討厭跟人撕破臉，能拖的事就先拖著。",
+    "startDelta": { "council": 4, "team": -3 },
+    "skills": [{ "skill": "confront", "level": -1, "line": "你說到一半就軟了下來，氣勢全沒了。" }, { "skill": "negotiate", "level": 1, "line": "你耐著性子聽完每個人的意見，大家都覺得被尊重。" }]
+  }
+]

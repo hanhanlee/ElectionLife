@@ -106,6 +106,46 @@
   overflow: hidden;
 }
 
+.meterLow {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.meterLow > div {
+  height: 100%;
+  background: var(--warn);
+}
+
+.stat b {
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.hints {
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+.hints summary {
+  cursor: pointer;
+}
+
+.crisis,
+.crisisGood {
+  border-radius: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--warn);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.crisisGood {
+  border-color: var(--accent);
+}
+
 .meter > div {
   height: 100%;
   background: var(--accent);
@@ -126,9 +166,155 @@
   font-size: 0.9375rem;
 }
 
+.reflect {
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.choiceRow {
+  display: flex;
+  gap: 8px;
+}
+
+.choice,
+.choiceActive {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--background);
+  cursor: pointer;
+}
+
+.choiceActive {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-fg);
+  font-weight: 600;
+}
+
+.reflectSummary {
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.share {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px dashed var(--accent);
+}
+
+.traits {
+  list-style: none;
+  margin-top: 6px;
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+.baggage {
+  color: var(--warn);
+}
+
 .list {
   padding-left: 1.25rem;
   display: flex;
   flex-direction: column;
   gap: 6px;
+}
+
+.funds {
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.quiet {
+  align-self: center;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 0.8125rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag {
+  font-size: 0.8125rem;
+  padding: 2px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+.intro {
+  font-size: 1.0625rem;
+  line-height: 1.9;
+}
+
+.slotGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.slot,
+.slotLocked {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  min-height: 64px;
+}
+
+.slotLocked {
+  border-color: var(--accent);
+  animation: slot-pop 0.35s ease-out;
+}
+
+.slotLabel {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.slotValue {
+  font-weight: 600;
+  color: var(--muted);
+  filter: blur(0.6px);
+}
+
+.slotValueLocked {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+@keyframes slot-pop {
+  0% {
+    transform: scale(0.94);
+  }
+  60% {
+    transform: scale(1.04);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slotLocked {
+    animation: none;
+  }
 }

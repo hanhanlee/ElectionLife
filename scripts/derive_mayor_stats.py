@@ -55,6 +55,32 @@ def summarize(subject: str, session: int, theme: str, path: Path) -> dict:
     }
 
 
+# 遊戲中的虛構政黨顏色，對應現實政黨（只用於彙總史實勝率）
+PARTY_GROUPS = {
+    "中國國民黨": "blue",
+    "民主進步黨": "green",
+    "台灣民眾黨": "white",
+    "時代力量": "yellow",
+    "無黨籍及未經政黨推薦": "independent",
+}
+
+
+def challenger_stats() -> dict:
+    """非現任挑戰者依政黨分組的當選率"""
+    groups: dict[str, dict] = {}
+    for path in RAW.glob("tickets/*/*.json"):
+        for rows in json.loads(path.read_text(encoding="utf-8")).values():
+            for r in rows:
+                if r["is_current"] == "Y":
+                    continue
+                g = groups.setdefault(PARTY_GROUPS.get(r["party_name"], "minor"), {"candidates": 0, "won": 0})
+                g["candidates"] += 1
+                g["won"] += r["is_victor"] == "*"
+    for g in groups.values():
+        g["win_rate"] = round(g["won"] / g["candidates"], 3)
+    return dict(sorted(groups.items()))
+
+
 def main() -> int:
     sys.stdout.reconfigure(encoding="utf-8")
     manifest = {m["file"]: m for m in json.loads((RAW / "manifest.json").read_text(encoding="utf-8")) if "file" in m}
@@ -99,6 +125,7 @@ def main() -> int:
         "period": f"{min(years)}–{max(years)}",
         "overall": result["overall"],
         "direct_municipality": result["by_office"]["直轄市長"],
+        "challengers": challenger_stats(),
         "source_title": "中央選舉委員會 選舉資料庫",
         "source_url": "https://db.cec.gov.tw/",
         "retrieved_at": max(e["retrieved_at"] for e in elections)[:10],

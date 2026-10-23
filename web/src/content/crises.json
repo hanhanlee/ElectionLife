@@ -1,0 +1,384 @@
+[
+  {
+    "id": "x-vote-buying",
+    "title": "賄選案爆發",
+    "text": "檢調查獲你的樁腳發放「走路工」的帳冊，上面有你競選總部的電話。",
+    "tone": "bad",
+    "when": {
+      "flags": [
+        "vote-buying"
+      ]
+    },
+    "phases": [
+      "campaign",
+      "eve"
+    ],
+    "effects": {
+      "approval": -18,
+      "integrity": -10,
+      "party": -6,
+      "media": 12
+    },
+    "funds": -1000,
+    "setFlags": [
+      "investigated"
+    ],
+    "priority": 0
+  },
+  {
+    "id": "x-investigation",
+    "title": "檢調搜索市府",
+    "text": "清晨六點，檢調人員搬著紙箱走進市府，你的辦公室也在搜索範圍內。你的名字掛在每一家媒體的跑馬燈上，律師費從今天開始算。",
+    "tone": "bad",
+    "when": {
+      "max": {
+        "integrity": 50
+      }
+    },
+    "phases": [
+      "term",
+      "incumbency",
+      "reelection"
+    ],
+    "effects": {
+      "approval": -20,
+      "team": -12,
+      "party": -10,
+      "media": 15
+    },
+    "funds": -1500,
+    "setFlags": [
+      "investigated"
+    ],
+    "aftermath": {
+      "turns": 3,
+      "effects": {
+        "approval": -3,
+        "team": -2
+      },
+      "text": "司法案件的餘波：每週都有新的偵查內容見報。"
+    },
+    "priority": 1
+  },
+  {
+    "id": "x-collusion",
+    "title": "官商勾結疑雲",
+    "text": "調查報導整理出你和幾家建商、企業之間的往來圖，標題是「誰在養這位政治人物？」",
+    "tone": "bad",
+    "when": {
+      "min": {
+        "business": 70
+      }
+    },
+    "effects": {
+      "approval": -10,
+      "integrity": -6,
+      "media": 10,
+      "business": -5
+    },
+    "setFlags": [
+      "collusion"
+    ],
+    "priority": 1
+  },
+  {
+    "id": "x-campaign-scandal",
+    "title": "競選總部爆出醜聞",
+    "text": "你的競選總幹事被拍到收受不明款項。記者在總部門口站崗三天，幾位大額捐款人要求退款。",
+    "tone": "bad",
+    "when": {
+      "max": {
+        "integrity": 50
+      }
+    },
+    "phases": [
+      "launch",
+      "platform",
+      "campaign",
+      "eve"
+    ],
+    "effects": {
+      "approval": -14,
+      "party": -6,
+      "media": 10
+    },
+    "funds": -1000,
+    "setFlags": [
+      "scandal"
+    ],
+    "priority": 2
+  },
+  {
+    "id": "x-fiscal-crisis",
+    "title": "財政警報",
+    "text": "市府債務逼近法定上限。主計處宣布所有新計畫暫停，連路燈維修都要排隊。",
+    "tone": "bad",
+    "when": {
+      "max": {
+        "treasury": 22
+      }
+    },
+    "phases": [
+      "term",
+      "incumbency",
+      "reelection"
+    ],
+    "effects": {
+      "achievement": -8,
+      "approval": -8,
+      "team": -5
+    },
+    "setFlags": [
+      "fiscal-crisis"
+    ],
+    "aftermath": {
+      "turns": 2,
+      "effects": {
+        "achievement": -3
+      },
+      "text": "財政緊縮的餘波：工程一件件延期。"
+    },
+    "repeat": true,
+    "priority": 3
+  },
+  {
+    "id": "x-protest",
+    "title": "市民上街抗議",
+    "text": "上萬名市民聚集在市府前廣場，標語上寫著你的名字。幾位議員也上台發言了。",
+    "tone": "bad",
+    "when": {
+      "max": {
+        "approval": 45
+      }
+    },
+    "phases": [
+      "term",
+      "incumbency"
+    ],
+    "effects": {
+      "approval": -6,
+      "council": -8,
+      "team": -4,
+      "media": 8
+    },
+    "setFlags": [
+      "protested"
+    ],
+    "repeat": true,
+    "priority": 4
+  },
+  {
+    "id": "x-budget-freeze",
+    "title": "總預算遭凍結",
+    "text": "議會以「府會關係破裂」為由，凍結市府三成總預算。局處長們開始研究哪些業務要先停。",
+    "tone": "bad",
+    "when": {
+      "max": {
+        "council": 32
+      }
+    },
+    "phases": [
+      "term",
+      "incumbency"
+    ],
+    "effects": {
+      "achievement": -10,
+      "team": -6,
+      "approval": -3
+    },
+    "aftermath": {
+      "turns": 2,
+      "effects": {
+        "achievement": -3
+      },
+      "text": "預算凍結的餘波：新學期的營養午餐補助發不出來。"
+    },
+    "repeat": true,
+    "priority": 5
+  },
+  {
+    "id": "x-team-exodus",
+    "title": "局處長集體請辭",
+    "text": "三位局處長同一天遞出辭呈，理由都是「生涯規劃」。媒體幫他們整理了真正的理由。",
+    "tone": "bad",
+    "when": {
+      "max": {
+        "team": 42
+      }
+    },
+    "phases": [
+      "term",
+      "incumbency"
+    ],
+    "effects": {
+      "achievement": -8,
+      "approval": -5,
+      "media": 6
+    },
+    "repeat": true,
+    "priority": 6
+  },
+  {
+    "id": "x-party-revolt",
+    "title": "黨內逼宮",
+    "text": "黨內大老在電視上說「我們應該檢討提名」。下一場選舉，黨部的撥款和動員都會打折。",
+    "tone": "bad",
+    "when": {
+      "max": {
+        "party": 20
+      },
+      "notFlags": [
+        "party-independent"
+      ]
+    },
+    "phases": [
+      "term",
+      "incumbency"
+    ],
+    "effects": {
+      "party": -8,
+      "approval": -5
+    },
+    "repeat": true,
+    "priority": 7
+  },
+  {
+    "id": "x-campaign-abandoned",
+    "title": "黨部輔選放空",
+    "text": "投票前兩週，黨部的宣傳車突然都去幫議員候選人跑行程了。",
+    "tone": "bad",
+    "when": {
+      "max": {
+        "party": 20
+      },
+      "notFlags": [
+        "party-independent"
+      ]
+    },
+    "phases": [
+      "platform",
+      "campaign",
+      "eve"
+    ],
+    "effects": {
+      "approval": -6,
+      "party": -4
+    },
+    "priority": 8
+  },
+  {
+    "id": "x-stagnation",
+    "title": "「市長到底做了什麼？」",
+    "text": "一支網路影片盤點了你上任以來的建設：清單很短，留言很長，觀看次數破百萬。",
+    "tone": "bad",
+    "when": {
+      "max": {
+        "achievement": 18
+      }
+    },
+    "phases": [
+      "incumbency"
+    ],
+    "effects": {
+      "approval": -10,
+      "media": 6
+    },
+    "repeat": true,
+    "priority": 9
+  },
+  {
+    "id": "x-forgotten",
+    "title": "沒人記得你是誰",
+    "text": "街頭訪問：十個路人裡有七個叫不出你的名字，兩個叫錯。",
+    "tone": "bad",
+    "when": {
+      "max": {
+        "media": 24
+      }
+    },
+    "effects": {
+      "approval": -6
+    },
+    "repeat": true,
+    "priority": 10
+  },
+  {
+    "id": "x-overexposure",
+    "title": "過度曝光",
+    "text": "你連續 30 天上新聞頭條。網友開始做「今天市長又出現在哪裡」的迷因。",
+    "tone": "bad",
+    "when": {
+      "min": {
+        "media": 70
+      }
+    },
+    "effects": {
+      "approval": -8,
+      "media": -20
+    },
+    "priority": 11
+  },
+  {
+    "id": "x-award",
+    "title": "國際城市獎",
+    "text": "你的城市拿下一座國際城市治理獎。頒獎典禮在國外，你決定派副市長去領。",
+    "tone": "good",
+    "when": {
+      "min": {
+        "achievement": 45
+      }
+    },
+    "phases": [
+      "term",
+      "incumbency"
+    ],
+    "effects": {
+      "approval": 6,
+      "media": 8,
+      "team": 3
+    },
+    "priority": 20
+  },
+  {
+    "id": "x-civic-praise",
+    "title": "公民團體公開肯定",
+    "text": "長期監督市府的公民團體，罕見地發表聲明肯定你的作為。小額捐款湧進你的帳戶。",
+    "tone": "good",
+    "when": {
+      "min": {
+        "integrity": 80,
+        "media": 30
+      }
+    },
+    "phases": [
+      "term",
+      "incumbency"
+    ],
+    "effects": {
+      "approval": 5,
+      "team": 4
+    },
+    "funds": 500,
+    "priority": 21
+  },
+  {
+    "id": "x-surplus",
+    "title": "財政盈餘",
+    "text": "年度結算有盈餘。議員們已經想好要怎麼花了。",
+    "tone": "good",
+    "when": {
+      "min": {
+        "treasury": 65
+      }
+    },
+    "phases": [
+      "term",
+      "incumbency"
+    ],
+    "effects": {
+      "council": 5,
+      "approval": 3
+    },
+    "priority": 22
+  }
+]

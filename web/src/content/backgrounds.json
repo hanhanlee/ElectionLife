@@ -1,0 +1,60 @@
+[
+  {
+    "id": "incumbent",
+    "name": "尋求連任的現任市長",
+    "description": "你已經當了四年市長。這次選舉，選民要為你的第一任打分數。",
+    "origins": ["四年前你第一次當選市長，現在市府裡每一扇門你都認得。", "你已經當了四年市長，連計程車司機都會在紅燈時跟你抱怨市政。"],
+    "advantages": ["知名度最高，有政績可以講", "市府資源與曝光都在你手上"],
+    "baggage": ["四年前的政見，對手會一條一條對帳", "任內所有爛攤子都算你的"],
+    "startDelta": { "approval": 6, "achievement": 15, "council": 5, "business": 15 },
+    "flags": ["bg-incumbent"],
+    "weight": 2,
+    "incumbent": true,
+    "rareFor": ["party-third", "party-independent"]
+  },
+  {
+    "id": "legislator",
+    "name": "任期中轉戰的立法委員",
+    "description": "立委做到一半，你決定挑戰市長。",
+    "origins": ["你在立法院質詢過無數部長，電視上常看到你拍桌的畫面。", "你當了兩屆立委，熟悉每一筆中央補助的流向。"],
+    "advantages": ["知名度高，有質詢與法案成績", "熟悉中央預算與部會"],
+    "baggage": ["當選就要辭職，原選區得補選", "被批評「落跑立委」"],
+    "startDelta": { "approval": 3, "party": 3, "business": 10 },
+    "flags": ["bg-legislator"],
+    "weight": 3
+  },
+  {
+    "id": "councilor",
+    "name": "挑戰市長的市議員",
+    "description": "你在議會質詢市府好幾屆了，這次換你上台。",
+    "origins": ["你在議會質詢了三屆，選區裡的大小事都會先找你。", "你從里長一路做到議員，地方上的紅白帖從來沒有缺席過。"],
+    "advantages": ["熟悉市政與議會生態", "地方基層關係深"],
+    "baggage": ["全市知名度不夠", "只被選區選民認識"],
+    "startDelta": { "approval": -3, "council": 5, "party": 2, "business": 8 },
+    "flags": ["bg-councilor"],
+    "weight": 2
+  },
+  {
+    "id": "official",
+    "name": "卸任的副市長或政務官",
+    "description": "你在行政體系做過首長，這次第一次自己參選。",
+    "origins": ["你當過副市長，市府的預算書你閉著眼睛都能翻。", "你是政務官出身，習慣用簡報說話，不習慣用麥克風。"],
+    "advantages": ["行政經驗豐富，政見講得出細節", "有前長官或團隊的人脈"],
+    "baggage": ["第一次選舉，選戰經驗少", "前長官的政績和爭議都會跟著你"],
+    "startDelta": { "approval": 1, "achievement": 5, "business": 8 },
+    "flags": ["bg-official"],
+    "weight": 2
+  },
+  {
+    "id": "outsider",
+    "name": "政治素人",
+    "description": "醫師、教授、企業家或網紅，你從沒選過任何公職。",
+    "origins": ["你原本是醫師，某天在臉書上罵了市府一篇長文，就這樣被拱出來參選。", "你在企業界打滾了二十年，第一次發現選舉比併購案還難。"],
+    "advantages": ["沒有政治包袱，形象清新", "容易吸引對政治冷感的選民"],
+    "baggage": ["沒有行政與議會經驗", "組織和人脈幾乎從零開始"],
+    "startDelta": { "approval": 1, "integrity": 5, "party": 0, "council": -5, "business": -10 },
+    "fundraising": 2.5,
+    "flags": ["bg-outsider"],
+    "weight": 2
+  }
+]

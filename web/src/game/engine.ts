@@ -1,30 +1,83 @@
 // 回合引擎：純函式，不碰 DOM 與儲存，方便測試與重現。
 
 import { mulberry32 } from "./rng";
-import { INCUMBENCY_BONUS, START_STATS, VOTE_BIAS, VOTE_NOISE, VOTE_WEIGHTS } from "./model";
+import {
+  approvalGainMultiplier,
+  BIG_ROUND,
+  LOAN_AMOUNT,
+  LOAN_INTEREST,
+  STAGE_LENGTH,
+  CAMPAIGN_UPKEEP,
+  MOBILIZATION_CAP,
+  MOBILIZATION_WEIGHT,
+  REELECTION_BIAS,
+  SKILL_EFFECTS,
+  payout,
+  CRISIS_COOLDOWN,
+  MEDIA_DECAY,
+  MEDIA_FLOOR,
+  PERK_DECAY,
+  START_STATS,
+  teamMultiplier,
+  VOTE_BIAS,
+  VOTE_NOISE,
+  VOTE_WEIGHTS,
+} from "./model";
 import {
   ALL_STATS,
+  type Background,
+  type Burden,
+  type City,
   type Condition,
+  type Crisis,
   type GameEvent,
   type GameOption,
   type GameState,
+  type Notice,
+  type Party,
   type Phase,
+  type Profile,
   type StatDelta,
   type StatKey,
   type Stats,
+  type Trait,
 } from "./types";
 
-export const STATE_VERSION = 1;
+export const STATE_VERSION = 11;
 
-/** 12 回合：2 競選、9 任期、1 連任選戰 */
+/**
+ * 兩個階段，各 12 回合：
+ * - 第一階段（競選）：參選、政見、9 回合選戰、選前之夜 → 第一次投票，落選則遊戲結束
+ * - 第二階段（任期與連任）：8 回合任期、3 回合現任限定、連任選戰 → 第二次投票
+ */
 export const TURN_PLAN: Phase[] = [
-  "campaign",
-  "campaign",
-  ...Array<Phase>(9).fill("term"),
+  "launch",
+  "platform",
+  ...Array<Phase>(9).fill("campaign"),
+  "eve",
+  ...Array<Phase>(8).fill("term"),
+  ...Array<Phase>(3).fill("incumbency"),
   "reelection",
 ];
 
+/** 完成這麼多回合後舉行第一次投票 */
+export const FIRST_ELECTION_TURN = STAGE_LENGTH;
+
+/** 這個回合所在階段的結束回合（不含） */
+export const stageEnd = (turn: number) => (turn < STAGE_LENGTH ? STAGE_LENGTH : TURN_PLAN.length);
+
+const FIRST_ELECTION_SALT = 0xf1257;
+const FINAL_ELECTION_SALT = 0xe1ec;
+const OPTION_DRAW_SALT = 0x0b7;
+
 const clamp = (n: number) => Math.max(0, Math.min(100, n));
+
+/** 這些階段的回合要付競選總部開銷 */
+const UPKEEP_PHASES: Phase[] = ["launch", "platform", "campaign", "eve", "incumbency", "reelection"];
+
+function diff(after: Stats, before: Stats): Stats {
+  return Object.fromEntries(ALL_STATS.map((k) => [k, after[k] - before[k]])) as Stats;
+}
 
 function zeroStats(): Stats {
   return Object.fromEntries(ALL_STATS.map((k) => [k, 0])) as Stats;
@@ -38,9 +91,10 @@ function addDelta(stats: Stats, delta: StatDelta, sign = 1): Stats {
   return next;
 }
 
-export function meetsCondition(state: GameState, cond?: Condition): boolean {
+export function meetsCondition(state: Pick<GameState, "flags" | "stats">, cond?: Condition): boolean {
   if (!cond) return true;
   if (cond.flags?.some((f) => !state.flags.includes(f))) return false;
+  if (cond.anyFlags && !cond.anyFlags.some((f) => state.flags.includes(f))) return false;
   if (cond.notFlags?.some((f) => state.flags.includes(f))) return false;
   for (const k of ALL_STATS) {
     if (cond.min?.[k] !== undefined && state.stats[k] < cond.min[k]!) return false;
@@ -51,45 +105,154 @@ export function meetsCondition(state: GameState, cond?: Condition): boolean {
 
 export type Availability = "open" | "unlockable" | "locked";
 
+/** 經費不足以支付這個選項 */
+export function lacksFunds(state: GameState, option: GameOption): boolean {
+  return (option.funds ?? 0) < 0 && state.funds + option.funds! < 0;
+}
+
 export function optionAvailability(state: GameState, option: GameOption): Availability {
+  if (lacksFunds(state, option)) return "locked";
   if (meetsCondition(state, option.requires)) return "open";
   return option.unlockCost ? "unlockable" : "locked";
+}
+
+/** 每 3 回合入帳：黨部撥款、政治獻金、小額捐款 */
+function withPayout(state: GameState): GameState {
+  const p = payout(state.stats, state.income);
+  const fmt = (n: number) => `${n.toLocaleString()} 萬`;
+  const text = `黨部撥款：${fmt(p.party)}｜政治獻金：${fmt(p.donations)}｜小額捐款：${fmt(p.small)}`;
+  return {
+    ...state,
+    funds: state.funds + p.party + p.donations + p.small,
+    payouts: [...state.payouts, { turn: state.turn, ...p }],
+    notices: [...state.notices, { kind: "funds", tone: "good", text }],
+  };
+}
+
+/** 可以申請個人貸款：整局一次，且這個階段還有回合可以分期還 */
+export function canTakeLoan(state: GameState): boolean {
+  return !state.finished && !state.loanTaken && stageEnd(state.turn) - state.turn >= 2;
+}
+
+/** 申請個人貸款：拿到固定金額，之後每回合結束扣一期，在階段結束前還清 */
+export function takeLoan(state: GameState): GameState {
+  if (!canTakeLoan(state)) throw new Error("不能再貸款");
+  const total = Math.round(LOAN_AMOUNT * (1 + LOAN_INTEREST));
+  const turns = stageEnd(state.turn) - state.turn;
+  const installment = Math.ceil(total / turns / 10) * 10;
+  return {
+    ...state,
+    funds: state.funds + LOAN_AMOUNT,
+    loanTaken: true,
+    loan: { principal: LOAN_AMOUNT, total, remaining: total, installment, dueBy: stageEnd(state.turn) },
+  };
 }
 
 function turnRng(seed: number, turn: number, salt = 0) {
   return mulberry32((seed ^ Math.imul(turn + 1, 0x9e3779b9) ^ salt) >>> 0);
 }
 
-function drawEvent(state: GameState, events: GameEvent[], turn: number): string {
+/** 依權重抽一個 */
+function weightedPick<T>(items: T[], weight: (t: T) => number, r: number): T {
+  const total = items.reduce((s, t) => s + weight(t), 0);
+  let x = r * total;
+  for (const t of items) {
+    x -= weight(t);
+    if (x < 0) return t;
+  }
+  return items[items.length - 1];
+}
+
+function drawEvent(state: GameState, events: GameEvent[], turn: number): GameEvent {
   const phase = TURN_PLAN[turn];
   const unused = events.filter((e) => e.phase === phase && !state.deck.includes(e.id));
   const eligible = unused.filter((e) => meetsCondition(state, e.conditions));
   const pool = eligible.length > 0 ? eligible : unused;
   if (pool.length === 0) throw new Error(`事件池不足：phase=${phase}, turn=${turn}`);
-
-  const total = pool.reduce((s, e) => s + (e.weight ?? 1), 0);
-  let r = turnRng(state.seed, turn)() * total;
-  for (const e of pool) {
-    r -= e.weight ?? 1;
-    if (r < 0) return e.id;
-  }
-  return pool[pool.length - 1].id;
+  return weightedPick(pool, (e) => e.weight ?? 1, turnRng(state.seed, turn)());
 }
 
-export function newGame(events: GameEvent[], seed: number): GameState {
+/** 不花經費、沒有數值門檻、也不動用公家資源的選項：保證玩家永遠有一條乾淨的路可走 */
+const isFree = (o: GameOption) => !o.requires && (o.funds ?? 0) >= 0 && !o.perk;
+
+/**
+ * 選項池事件：從符合條件的選項中不重複抽出 drawOptions 個，並保持原本順序。
+ * 若抽到的全都要花錢或有門檻，把最後一個換成免費選項，避免玩家卡住。
+ */
+function drawOptions(state: GameState, event: GameEvent, turn: number): string[] {
+  const visible = event.options.filter((o) => meetsCondition(state, o.appearsIf));
+  if (!event.drawOptions || visible.length <= event.drawOptions) return visible.map((o) => o.id);
+
+  const rng = turnRng(state.seed, turn, OPTION_DRAW_SALT);
+  const picked = new Set<string>();
+  let rest = visible;
+  while (picked.size < event.drawOptions) {
+    const o = weightedPick(rest, (x) => x.weight ?? 1, rng());
+    picked.add(o.id);
+    rest = rest.filter((x) => x !== o);
+  }
+  if (!visible.some((o) => picked.has(o.id) && isFree(o))) {
+    const free = rest.filter(isFree);
+    if (free.length > 0) {
+      picked.delete([...picked].at(-1)!);
+      picked.add(weightedPick(free, (x) => x.weight ?? 1, rng()).id);
+    }
+  }
+  return visible.filter((o) => picked.has(o.id)).map((o) => o.id);
+}
+
+function withNextEvent(state: GameState, events: GameEvent[]): GameState {
+  const event = drawEvent(state, events, state.turn);
+  return { ...state, deck: [...state.deck, event.id], offered: drawOptions(state, event, state.turn) };
+}
+
+/** 開局人設：抽出的資質與包袱（由 profile.ts 的 drawProfile 產生） */
+export interface ProfileSetup {
+  profile: Profile;
+  city: City;
+  traits: Trait[];
+  burden: Burden;
+}
+
+export function newGame(
+  events: GameEvent[],
+  seed: number,
+  party: Party,
+  background: Background,
+  setup?: ProfileSetup,
+): GameState {
+  let stats = addDelta(addDelta({ ...START_STATS }, party.startDelta), background.startDelta);
+  const flags = [...party.flags, ...background.flags];
+  if (setup) {
+    for (const t of setup.traits) stats = addDelta(stats, t.startDelta);
+    stats = addDelta(stats, setup.burden.startDelta);
+    flags.push(...setup.traits.map((t) => `trait-${t.id}`), `burden-${setup.burden.id}`, `city-${setup.city.id}`);
+  }
+  const traitSkills = (setup?.traits ?? []).flatMap((t) => (t.skills ?? []).map((s) => ({ ...s, trait: t.id })));
   const base: GameState = {
     version: STATE_VERSION,
     seed,
+    character: { party: party.id, background: background.id, profile: setup?.profile },
+    funds: setup?.burden.funds ?? 0,
+    income: {
+      party: party.funding,
+      fundraising: Math.max(party.fundraising ?? 1, background.fundraising ?? 1),
+    },
+    payouts: [],
+    loanTaken: false,
     turn: 0,
-    stats: { ...START_STATS },
-    flags: [],
+    stats,
+    flags,
     deck: [],
+    offered: [],
     history: [],
     pending: [],
     notices: [],
+    crisisLog: [],
+    traitSkills,
     finished: false,
   };
-  return { ...base, deck: [drawEvent(base, events, 0)] };
+  return withNextEvent(withPayout(base), events);
 }
 
 export function currentEvent(state: GameState, events: GameEvent[]): GameEvent | undefined {
@@ -97,50 +260,258 @@ export function currentEvent(state: GameState, events: GameEvent[]): GameEvent |
   return events.find((e) => e.id === state.deck[state.turn]);
 }
 
-export function choose(state: GameState, events: GameEvent[], optionId: string): GameState {
+/** 目前事件實際提供給玩家的選項 */
+export function offeredOptions(state: GameState, event: GameEvent): GameOption[] {
+  return event.options.filter((o) => state.offered.includes(o.id));
+}
+
+export function isPerk(events: GameEvent[], eventId: string, optionId: string): boolean {
+  return !!events.find((e) => e.id === eventId)?.options.find((o) => o.id === optionId)?.perk;
+}
+
+/** 選民疲乏：依先前動用現任資源的次數，遞減本次的民調加分 */
+function withPerkDecay(state: GameState, events: GameEvent[], effects: StatDelta): StatDelta {
+  const used = state.history.filter((h) => isPerk(events, h.eventId, h.optionId)).length;
+  if (!effects.approval || effects.approval <= 0) return effects;
+  return { ...effects, approval: Math.round(effects.approval * PERK_DECAY ** used) };
+}
+
+function sumDelta(a: StatDelta, b?: StatDelta, sign = 1): StatDelta {
+  if (!b) return a;
+  const out: StatDelta = { ...a };
+  for (const k of ALL_STATS) if (b[k] !== undefined) out[k] = (out[k] ?? 0) + sign * b[k]!;
+  return out;
+}
+
+/**
+ * 資質如何改變這個選項：
+ * - 有符合的手寫變化（variants）就用它：換掉結果文字、加上額外效果
+ * - 否則套用一般能力規則：擅長加分、不擅長扣分，並補上資質的敘述
+ */
+export function resolveOption(state: GameState, option: GameOption) {
+  const variant = option.variants?.find((v) => meetsCondition(state, v.when));
+  if (variant) {
+    const involved = [...(variant.when.flags ?? []), ...(variant.when.anyFlags ?? [])]
+      .filter((f) => f.startsWith("trait-") && state.flags.includes(f))
+      .map((f) => f.slice("trait-".length));
+    return {
+      outcome: variant.outcome,
+      effects: sumDelta(option.effects, variant.effects),
+      delayed: variant.delayed ?? option.delayed,
+      traitsInvolved: involved,
+    };
+  }
+  const related = option.skill ? state.traitSkills.filter((s) => s.skill === option.skill) : [];
+  const level = related.reduce((n, s) => n + s.level, 0);
+  if (!option.skill || level === 0) {
+    return { outcome: option.outcome, effects: option.effects, delayed: option.delayed, traitsInvolved: [] };
+  }
+  return {
+    outcome: [option.outcome, ...related.map((s) => s.line)].join(""),
+    effects: sumDelta(option.effects, SKILL_EFFECTS[option.skill], Math.sign(level)),
+    delayed: option.delayed,
+    traitsInvolved: related.map((s) => s.trait),
+  };
+}
+
+/** 行政團隊決定施政成果能實現多少；民調越高越難再漲 */
+function withStatScaling(state: GameState, effects: StatDelta): StatDelta {
+  const scaled = { ...effects };
+  if (scaled.achievement && scaled.achievement > 0) {
+    scaled.achievement = Math.round(scaled.achievement * teamMultiplier(state.stats.team));
+  }
+  if (scaled.approval && scaled.approval > 0) {
+    scaled.approval = Math.round(scaled.approval * approvalGainMultiplier(state.stats.approval));
+  }
+  return scaled;
+}
+
+/** 突發事件是否可以發生：沒發生過，或可重複且已過冷卻期 */
+function crisisReady(state: GameState, crisis: Crisis): boolean {
+  const last = state.crisisLog.filter((l) => l.id === crisis.id).at(-1);
+  if (!last) return true;
+  return !!crisis.repeat && state.turn - last.turn >= CRISIS_COOLDOWN;
+}
+
+/** 回合結束後檢查突發事件：依優先順序，觸發第一個符合條件且可以發生的 */
+export function checkCrisis(state: GameState, crises: Crisis[], phase: Phase): Crisis | undefined {
+  return [...crises]
+    .sort((a, b) => a.priority - b.priority)
+    .find((c) => crisisReady(state, c) && (!c.phases || c.phases.includes(phase)) && meetsCondition(state, c.when));
+}
+
+export function choose(
+  state: GameState,
+  events: GameEvent[],
+  optionId: string,
+  crises: Crisis[] = [],
+  parties: Party[] = [],
+): GameState {
   const event = currentEvent(state, events);
   if (!event) throw new Error("遊戲已結束或事件不存在");
   const option = event.options.find((o) => o.id === optionId);
-  if (!option) throw new Error(`選項不存在：${optionId}`);
+  if (!option || !state.offered.includes(optionId)) throw new Error(`選項不存在：${optionId}`);
 
   const availability = optionAvailability(state, option);
   if (availability === "locked") throw new Error(`選項未解鎖：${optionId}`);
 
   let stats = state.stats;
   if (availability === "unlockable") stats = addDelta(stats, option.unlockCost!);
-  stats = addDelta(stats, option.effects);
+  const resolved = resolveOption(state, option);
+  const effects = withStatScaling(state, option.perk ? withPerkDecay(state, events, resolved.effects) : resolved.effects);
+  stats = addDelta(stats, effects);
 
-  const flags = [...new Set([...state.flags, ...(option.setFlags ?? [])])];
+  let flags = [...new Set([...state.flags, ...(option.setFlags ?? [])])];
+  let { character, income } = state;
+  if (option.switchParty && option.switchParty !== character.party) {
+    const next = parties.find((p) => p.id === option.switchParty);
+    if (!next) throw new Error(`找不到政黨：${option.switchParty}`);
+    flags = [...flags.filter((f) => !f.startsWith("party-")), ...next.flags];
+    income = { party: next.funding, fundraising: Math.max(income.fundraising, next.fundraising ?? 1) };
+    character = { ...character, party: next.id, formerParty: character.formerParty ?? character.party };
+  }
   const turn = state.turn + 1;
+  let funds = state.funds + (option.funds ?? 0);
+  const optionDelta = diff(stats, state.stats);
 
   let pending = [...state.pending];
-  if (option.delayed) {
-    pending.push({ ...option.delayed, dueTurn: turn + option.delayed.afterTurns, fromEventId: event.id });
+  if (resolved.delayed) {
+    pending.push({ ...resolved.delayed, dueTurn: turn + resolved.delayed.afterTurns, fromEventId: event.id });
   }
 
   // 結算到期的延遲後果
-  const notices: string[] = [];
+  const notices: Notice[] = [];
   for (const p of pending.filter((p) => p.dueTurn <= turn && turn < TURN_PLAN.length)) {
+    const before = stats;
     stats = addDelta(stats, p.effects);
-    notices.push(p.text);
+    notices.push({ kind: "delayed", tone: "bad", text: p.text, effects: diff(stats, before) });
   }
   pending = pending.filter((p) => !(p.dueTurn <= turn && turn < TURN_PLAN.length));
+
+  // 媒體聲量退燒
+  if (stats.media > MEDIA_FLOOR) stats = { ...stats, media: Math.max(MEDIA_FLOOR, stats.media - MEDIA_DECAY) };
+
+  // 競選總部開銷：付不出來文宣就停擺
+  if (UPKEEP_PHASES.includes(TURN_PLAN[state.turn])) {
+    if (funds >= CAMPAIGN_UPKEEP) {
+      funds -= CAMPAIGN_UPKEEP;
+    } else {
+      const before = stats;
+      funds = 0;
+      stats = addDelta(stats, { team: -2 });
+      notices.push({
+        kind: "delayed",
+        tone: "bad",
+        text: "競選總部付不出開銷：只能靠志工撐著。",
+        effects: diff(stats, before),
+      });
+    }
+  }
+
+  // 貸款還款：每回合扣一期；付不出來就逾期上新聞，階段結束還沒還清就違約
+  let loan = state.loan;
+  if (loan && loan.remaining > 0) {
+    // 本期應繳：至少一期；之前漏繳的要補上，讓剩下的回合每期都繳得完；最後一回合繳清
+    const turnsAfter = Math.max(0, loan.dueBy - turn);
+    const due = Math.min(loan.remaining, Math.max(loan.installment, loan.remaining - loan.installment * turnsAfter));
+    const paid = Math.min(due, funds);
+    funds -= paid;
+    loan = { ...loan, remaining: loan.remaining - paid };
+    if (paid < due) {
+      const before = stats;
+      stats = addDelta(stats, { approval: -4, media: 5 });
+      notices.push({
+        kind: "delayed",
+        tone: "bad",
+        text: `貸款還款逾期：這期只還了 ${paid.toLocaleString()} 萬，銀行催收的消息上了新聞。`,
+        effects: diff(stats, before),
+        funds: -paid || undefined,
+      });
+    } else {
+      notices.push({
+        kind: "funds",
+        tone: "bad",
+        text: `個人貸款還款：${paid.toLocaleString()} 萬（還剩 ${loan.remaining.toLocaleString()} 萬）`,
+      });
+    }
+    if (turn >= loan.dueBy && loan.remaining > 0) {
+      const before = stats;
+      stats = addDelta(stats, { approval: -10, integrity: -5 });
+      notices.push({
+        kind: "crisis",
+        tone: "bad",
+        title: "貸款違約",
+        text: `還款期限到了，還欠銀行 ${loan.remaining.toLocaleString()} 萬。你的房子被假扣押，對手說「連自己的錢都管不好」。`,
+        effects: diff(stats, before),
+      });
+      loan = { ...loan, remaining: 0 };
+    }
+  }
+
+  // 突發事件
+  let crisisLog = state.crisisLog;
+  const crisis = checkCrisis({ ...state, stats, flags }, crises, TURN_PLAN[state.turn]);
+  if (crisis) {
+    const before = stats;
+    stats = addDelta(stats, crisis.effects);
+    const paid = Math.max(-funds, crisis.funds ?? 0);
+    funds += paid;
+    flags = [...new Set([...flags, ...(crisis.setFlags ?? [])])];
+    crisisLog = [...crisisLog, { id: crisis.id, turn: state.turn }];
+    notices.push({
+      kind: "crisis",
+      tone: crisis.tone,
+      title: crisis.title,
+      text: crisis.text,
+      effects: diff(stats, before),
+      funds: paid || undefined,
+    });
+    if (crisis.aftermath) {
+      for (let i = 1; i <= crisis.aftermath.turns; i++) {
+        pending.push({ ...crisis.aftermath, afterTurns: i, dueTurn: turn + i, fromEventId: crisis.id });
+      }
+    }
+  }
 
   const delta = zeroStats();
   for (const k of ALL_STATS) delta[k] = stats[k] - state.stats[k];
 
-  const next: GameState = {
+  let next: GameState = {
     ...state,
+    character,
+    income,
     turn,
+    funds,
     stats,
     flags,
     pending,
     notices,
-    history: [...state.history, { turn: state.turn, eventId: event.id, optionId, delta }],
+    crisisLog,
+    loan,
+    offered: [],
+    history: [
+      ...state.history,
+      {
+        turn: state.turn,
+        eventId: event.id,
+        optionId,
+        offered: state.offered,
+        delta,
+        optionDelta,
+        outcome: resolved.outcome,
+        traitsInvolved: resolved.traitsInvolved.length ? resolved.traitsInvolved : undefined,
+      },
+    ],
   };
 
+  if (turn === FIRST_ELECTION_TURN) {
+    const { won, probability, mobilization } = runElection(next, "first");
+    next = { ...next, funds: next.funds - mobilization, firstElection: { won, probability, mobilization } };
+    if (!won) return { ...next, finished: true };
+  }
   if (turn >= TURN_PLAN.length) return { ...next, finished: true };
-  return { ...next, deck: [...state.deck, drawEvent(next, events, turn)] };
+  if (turn % BIG_ROUND === 0) next = withPayout(next);
+  return withNextEvent(next, events);
 }
 
 export interface ElectionResult {
@@ -148,26 +519,38 @@ export interface ElectionResult {
   probability: number;
   /** 各數值對得票的貢獻（logit），由大到小 */
   contributions: { stat: StatKey; value: number }[];
-  /** 現任優勢的貢獻（logit） */
-  incumbency: number;
+  /** 投入選前動員的經費（萬元）與其貢獻（logit） */
+  mobilization: number;
+  mobilizationValue: number;
 }
 
 const sigmoid = (x: number) => 1 / (1 + Math.exp(-x));
 
-export function runElection(state: GameState): ElectionResult {
+/** 數值換算的連任／當選機率，不含隨機擾動（設定畫面估算難度用） */
+export function baseProbability(stats: Stats): number {
+  const logit = VOTE_BIAS + ALL_STATS.reduce((s, k) => s + (VOTE_WEIGHTS[k] * (stats[k] - 50)) / 10, 0);
+  return sigmoid(logit);
+}
+
+export function runElection(state: GameState, which: "first" | "final" = "final"): ElectionResult {
   const contributions = ALL_STATS.map((stat) => ({
     stat,
     value: (VOTE_WEIGHTS[stat] * (state.stats[stat] - 50)) / 10,
   })).sort((a, b) => Math.abs(b.value) - Math.abs(a.value));
 
-  const logit = VOTE_BIAS + INCUMBENCY_BONUS + contributions.reduce((s, c) => s + c.value, 0);
-  const rng = turnRng(state.seed, TURN_PLAN.length, 0xe1ec);
+  const mobilization = Math.min(state.funds, MOBILIZATION_CAP);
+  const mobilizationValue = (MOBILIZATION_WEIGHT * mobilization) / 1000;
+  const bias = which === "first" ? VOTE_BIAS : REELECTION_BIAS;
+  const logit = bias + mobilizationValue + contributions.reduce((s, c) => s + c.value, 0);
+  const salt = which === "first" ? FIRST_ELECTION_SALT : FINAL_ELECTION_SALT;
+  const rng = turnRng(state.seed, TURN_PLAN.length, salt);
   const noise = (rng() * 2 - 1) * VOTE_NOISE;
   return {
     won: sigmoid(logit + noise) >= 0.5,
     probability: sigmoid(logit),
     contributions,
-    incumbency: INCUMBENCY_BONUS,
+    mobilization,
+    mobilizationValue,
   };
 }
 

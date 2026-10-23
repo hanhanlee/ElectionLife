@@ -1,0 +1,44 @@
+[
+  {
+    "id": "tianlong",
+    "name": "天龍市",
+    "mayorTitle": "天龍市長",
+    "tagline": "首都級的房價、首都級的媒體關注，以及首都級的自我感覺。",
+    "weight": 1
+  },
+  {
+    "id": "xinlong",
+    "name": "新龍市",
+    "mayorTitle": "新龍市長",
+    "tagline": "人口最多、幅員最廣，每天早上有一半的人在通勤去天龍市的路上。",
+    "weight": 1
+  },
+  {
+    "id": "airplane",
+    "name": "飛機城",
+    "mayorTitle": "飛機城市長",
+    "tagline": "航空城喊了二十年，土地徵收的抗議布條也掛了二十年。",
+    "weight": 1
+  },
+  {
+    "id": "mama",
+    "name": "媽媽市",
+    "mayorTitle": "媽媽市長",
+    "tagline": "交通、產業、地方組織樣樣都大，連市長的暱稱都很親切。",
+    "weight": 1
+  },
+  {
+    "id": "gudu",
+    "name": "古都市",
+    "mayorTitle": "古都市長",
+    "tagline": "每一條巷子都是古蹟，每一塊空地都有人想蓋大樓。",
+    "weight": 1
+  },
+  {
+    "id": "gangdu",
+    "name": "港都市",
+    "mayorTitle": "港都市長",
+    "tagline": "港口、重工業與大型活動，這座城市最擅長的就是「拚」。",
+    "weight": 1
+  }
+]

@@ -1,16 +1,99 @@
 [
   {
-    "id": "c-housing-promise",
-    "phase": "campaign",
-    "title": "社宅政見",
-    "scenario": "辯論會上主持人問：「年輕人買不起房，你要怎麼辦？」幕僚在台下比出一個數字。",
-    "tags": ["居住", "政見"],
+    "id": "l-incumbent",
+    "phase": "launch",
+    "title": "四年成績單",
+    "scenario": "對手陣營做了一張大海報：你四年前的 20 條政見，旁邊打勾或打叉。打叉的比較多。",
+    "tags": ["參選", "政見兌現"],
+    "conditions": { "flags": ["bg-incumbent"] },
     "options": [
-      { "id": "big", "label": "喊出「任內 5 萬戶」", "outcome": "全場掌聲。工務局長在家看直播，默默打開計算機。", "effects": { "approval": 8, "integrity": -5 }, "setFlags": ["promise-housing-big"] },
-      { "id": "modest", "label": "承諾「8 千戶，附完工時程表」", "outcome": "很務實，但新聞標題是「XX 沒魄力」。", "effects": { "approval": 2, "integrity": 3 }, "setFlags": ["promise-housing-modest"] },
-      { "id": "dodge", "label": "改談「多元居住政策」", "outcome": "沒人聽懂，也沒人記得。安全下莊。", "effects": { "approval": -1 } }
+      { "id": "highlight", "label": "砸錢投放施政成果懶人包，海報上的叉叉不回應", "outcome": "支持者轉發了你的成果懶人包。中間選民轉發了那張海報。", "effects": { "approval": 3, "integrity": -2 }, "funds": -800 },
+      { "id": "own", "label": "逐條說明，承認落差並提出下一步", "outcome": "記者說這是少見的誠實。你的幕僚說這是少見的自殺。", "effects": { "approval": -1, "integrity": 5 } },
+      { "id": "bigger", "label": "宣布一個更大的新建設計畫轉移焦點", "outcome": "話題轉走了，新的承諾也加上去了。", "effects": { "approval": 5, "integrity": -3 }, "setFlags": ["promise-mrt"] },
+      { "id": "office", "label": "以市長身分密集出席市政活動，天天上新聞", "outcome": "每一則新聞標題都是「市長」。對手只能當「候選人」。", "effects": { "approval": 14, "integrity": -2, "media": 8 }, "perk": true }
     ],
-    "source": { "status": "placeholder", "prototype": "多位直轄市長候選人曾提出具體社宅戶數政見，任內實際完工量與承諾有落差。", "adaptation": "數字與情境為虛構。", "refs": [] }
+    "source": { "status": "placeholder", "prototype": "現任首長尋求連任時，前一屆政見的兌現程度常成為選戰攻防焦點。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "l-legislator",
+    "phase": "launch",
+    "title": "要不要辭立委？",
+    "scenario": "你宣布參選市長。記者第一個問題：「當選了，立委選區的補選要花幾千萬，你怎麼看？」",
+    "tags": ["參選", "立委轉戰"],
+    "conditions": { "flags": ["bg-legislator"] },
+    "options": [
+      { "id": "keep", "label": "帶職參選，當選再辭", "outcome": "很務實。「落跑立委」這個詞開始在對手的文宣上出現。", "effects": { "approval": -2, "party": 3 } },
+      { "id": "resign", "label": "立刻辭職，背水一戰", "outcome": "很有魄力。你的立委辦公室助理們開始找新工作。", "effects": { "approval": 4, "party": -2, "integrity": 3 } },
+      { "id": "record", "label": "花錢把四年的質詢剪成影片，全網投放", "outcome": "你把四年的質詢剪成一支三分鐘影片，觀看次數不錯。", "effects": { "approval": 3, "media": 4 }, "funds": -500, "skill": "debate" }
+    ],
+    "source": { "status": "placeholder", "prototype": "立委於任期中轉戰縣市長，當選後辭職導致補選，常被質疑浪費公帑。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "l-councilor",
+    "phase": "launch",
+    "title": "全市知名度 12%",
+    "scenario": "民調顯示：你的選區有七成選民認識你，但全市只有 12%。",
+    "tags": ["參選", "知名度"],
+    "conditions": { "flags": ["bg-councilor"] },
+    "options": [
+      { "id": "expose", "label": "在議會爆料市府弊案，衝高聲量", "outcome": "你上了所有電視台。市府說你「為選舉抹黑」。", "effects": { "approval": 6, "council": -4, "integrity": -2, "media": 8 }, "skill": "confront" },
+      { "id": "elders", "label": "請黨內大老輪流站台", "outcome": "大老們很給面子。你在照片裡站在第二排。", "effects": { "party": 6, "approval": 2 } },
+      { "id": "ground", "label": "走遍每一個里，從基層做起", "outcome": "你的鞋底磨壞了三雙。知名度慢慢爬到 25%。", "effects": { "approval": 3, "party": 3 }, "skill": "grassroots" }
+    ],
+    "source": { "status": "placeholder", "prototype": "市議員挑戰縣市長時，常面臨全市知名度不足的問題。", "adaptation": "數字與情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "l-official",
+    "phase": "launch",
+    "title": "前長官的光環",
+    "scenario": "你曾是前任市府團隊的副市長。前長官的支持度有起有落，記者問：「你會延續他的路線嗎？」",
+    "tags": ["參選", "政務官"],
+    "conditions": { "flags": ["bg-official"] },
+    "options": [
+      { "id": "continue", "label": "全面延續，請前長官站台", "outcome": "前長官的支持者全數歸隊，他的反對者也一起記住你了。", "effects": { "party": 6, "approval": 1, "integrity": -1 } },
+      { "id": "own-path", "label": "強調自己的專業，和前長官保持距離", "outcome": "前長官的人覺得你忘恩負義。中間選民覺得你有主見。", "effects": { "approval": 3, "party": -4 } },
+      { "id": "details", "label": "用行政經驗講細節，政見附預算表", "outcome": "你的政見是所有候選人中最厚的。讀完的人不多。", "effects": { "achievement": 2, "approval": 1, "integrity": 2 }, "skill": "policy" }
+    ],
+    "source": { "status": "placeholder", "prototype": "卸任副首長或政務官參選，常被視為前任團隊的延續，前任的政績與爭議也會被一併檢視。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "l-outsider",
+    "phase": "launch",
+    "title": "素人參選",
+    "scenario": "你從來沒選過任何公職。兩個政黨都派人來談合作，網友則說「千萬不要變成他們」。",
+    "tags": ["參選", "素人"],
+    "conditions": { "flags": ["bg-outsider"] },
+    "options": [
+      { "id": "ally", "label": "接受一個政黨的支持，換取組織", "outcome": "你有了樁腳和宣傳車，也有了一堆要拜的碼頭。", "effects": { "party": 12, "integrity": -4, "business": 5 } },
+      { "id": "pure", "label": "堅持不接受政黨，自組團隊", "outcome": "團隊很有熱情，平均年齡 29 歲，沒人跑過選舉。", "effects": { "integrity": 5, "approval": 3, "party": -4 } },
+      { "id": "crowd", "label": "網路小額募款，一天破千萬", "outcome": "你證明了網路的力量。對手開始調查你的捐款名單。", "effects": { "approval": 5, "media": 8 }, "funds": 1500, "skill": "media" }
+    ],
+    "source": { "status": "placeholder", "prototype": "政治素人參選縣市長，需在政黨合作與獨立形象之間取捨。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "p-platform",
+    "phase": "platform",
+    "title": "主打政見",
+    "scenario": "競選總部的白板上寫滿了政見。幕僚說：「選民只記得住一個。我們主打哪一個？」",
+    "tags": ["政見"],
+    "drawOptions": 3,
+    "options": [
+      { "id": "housing-big", "label": "「四年興建 2 萬戶社宅，只租不售」", "outcome": "年輕人很買單。你的財政幕僚默默算了一下土地在哪裡。", "effects": { "approval": 7, "integrity": -2 }, "setFlags": ["promise-housing-big"] },
+      { "id": "housing-modest", "label": "「公辦都更結合社宅」，附逐年時程表", "outcome": "很務實。標題寫的是「XX 社宅政見保守」。", "effects": { "approval": 3, "integrity": 3 }, "setFlags": ["promise-housing-modest"] },
+      { "id": "mrt", "label": "捷運路網：「三環三線，鄭重許諾」", "outcome": "地圖畫得很漂亮。有幾條線經過的地方還是農田。", "effects": { "approval": 6 }, "setFlags": ["promise-mrt"] },
+      { "id": "childcare", "label": "育兒津貼：3 歲以下每月 3 千", "outcome": "年輕爸媽轉發了你的政見。主計處轉發了一張試算表。", "effects": { "approval": 7, "integrity": -1 }, "setFlags": ["promise-cash"] },
+      { "id": "senior", "label": "敬老卡擴大：搭計程車、看病都能用", "outcome": "長輩們很高興。這筆預算每年都會長大。", "effects": { "approval": 6 }, "setFlags": ["promise-senior"] },
+      { "id": "economy", "label": "全力拚經濟、降低失業率", "outcome": "很有力的口號。記者問細節，你說「會讓專業的來」。", "effects": { "approval": 5, "integrity": -1 } },
+      { "id": "flood", "label": "全流域治水，打造安全城市", "outcome": "不性感，但淹過水的里都記住了你。", "effects": { "approval": 3, "integrity": 2 }, "setFlags": ["promise-flood"] },
+      { "id": "air", "label": "空污改善：達到國家標準", "outcome": "家長團體很支持。電廠在中央管，這點你沒提。", "effects": { "approval": 5 }, "setFlags": ["promise-air"] },
+      { "id": "transparency", "label": "公開透明：市政會議直播、資訊全公開", "outcome": "公民團體給你按讚。局處長們開始練習在鏡頭前講話。", "effects": { "approval": 3, "integrity": 5 } },
+      { "id": "beyond-camps", "label": "「不分藍綠，政策由市民作主」", "outcome": "厭倦兩大黨的選民開始注意你。兩大黨也開始注意你了。", "effects": { "approval": 6, "party": -3, "integrity": 2 }, "appearsIf": { "anyFlags": ["party-third", "party-independent", "bg-outsider"] }, "weight": 2 },
+      { "id": "debt", "label": "砍債務：利息減半，財政紀律", "outcome": "你拿著一張市債曲線圖巡迴演講，觀眾比你預期的多。", "effects": { "approval": 4, "integrity": 3 }, "appearsIf": { "notFlags": ["bg-incumbent"] } },
+      { "id": "continue", "label": "延續施政：選前密集剪綵「大家都看到了」", "outcome": "你一週剪了九條綵帶。效果不錯，畢竟那些建設是真的。", "effects": { "approval": 15, "achievement": 2 }, "appearsIf": { "flags": ["bg-incumbent"] }, "weight": 6, "perk": true },
+      { "id": "tourism", "label": "國際觀光城市：擠進全球前十", "outcome": "觀光業者很興奮。全球前十的另外九個城市不知道你是誰。", "effects": { "approval": 4, "integrity": -2 }, "setFlags": ["promise-tourism"] },
+      { "id": "renewal", "label": "公辦都更：改善老舊社區", "outcome": "老社區的住戶很期待。建商也很期待，原因不太一樣。", "effects": { "approval": 4 }, "setFlags": ["promise-renewal"] }
+    ],
+    "source": { "status": "draft", "prototype": "選項取材自 2010–2022 年直轄市長選舉公報中候選人實際提出的政見類型。各屆最常見的主題是軌道建設、觀光、育兒與長照，2022 年起居住正義大幅增加。", "adaptation": "改寫為遊戲選項，數字與城市名稱已虛構化；效果數值為遊戲設計，不代表該政見的實際得票效果。", "refs": [{ "title": "2014 桃園市長選舉公報：社會住宅", "url": "https://bulletin.cec.gov.tw/01%E9%81%B8%E8%88%89%E5%85%AC%E5%A0%B1/03%E7%9B%B4%E8%BD%84%E5%B8%82%E9%95%B7/103%E5%B9%B4/03%E6%A1%83%E5%9C%92%E5%B8%82%E5%B8%82%E9%95%B7.pdf", "quote": "四年內興建2萬戶社會住宅，只租不售。", "accessed": "2026-10-23" }, { "title": "2022 臺北市長選舉公報：公辦都更與社宅", "url": "https://bulletin.cec.gov.tw/01%E9%81%B8%E8%88%89%E5%85%AC%E5%A0%B1/03%E7%9B%B4%E8%BD%84%E5%B8%82%E9%95%B7/111%E5%B9%B4/%E8%87%BA%E5%8C%97%E5%B8%82%E5%B8%82%E9%95%B7.pdf", "quote": "推動非營利公辦都更，並將社會住宅融入公辦都更", "accessed": "2026-10-23" }, { "title": "2010 新北市長選舉公報：捷運", "url": "https://bulletin.cec.gov.tw/01%E9%81%B8%E8%88%89%E5%85%AC%E5%A0%B1/03%E7%9B%B4%E8%BD%84%E5%B8%82%E9%95%B7/099%E5%B9%B4/02%E6%96%B0%E5%8C%97%E5%B8%82%E5%B8%82%E9%95%B7.pdf", "quote": "全力推動三環三線的捷運建設，是我對新北市市民的鄭重許諾。", "accessed": "2026-10-23" }, { "title": "2014 桃園市長選舉公報：育兒津貼", "url": "https://bulletin.cec.gov.tw/01%E9%81%B8%E8%88%89%E5%85%AC%E5%A0%B1/03%E7%9B%B4%E8%BD%84%E5%B8%82%E9%95%B7/103%E5%B9%B4/03%E6%A1%83%E5%9C%92%E5%B8%82%E5%B8%82%E9%95%B7.pdf", "quote": "發放育兒津貼，3歲以下每月3千元，生育補助每胎3萬元。", "accessed": "2026-10-23" }, { "title": "2018 臺中市長選舉公報：敬老", "url": "https://bulletin.cec.gov.tw/01%E9%81%B8%E8%88%89%E5%85%AC%E5%A0%B1/03%E7%9B%B4%E8%BD%84%E5%B8%82%E9%95%B7/107%E5%B9%B4/%E8%87%BA%E4%B8%AD%E5%B8%82%E5%B8%82%E9%95%B7.pdf", "quote": "擴大敬老愛心卡使用範圍至計程車、看病掛號及國民運動中心等", "accessed": "2026-10-23" }, { "title": "2010 高雄市長選舉公報：拼經濟", "url": "https://bulletin.cec.gov.tw/01%E9%81%B8%E8%88%89%E5%85%AC%E5%A0%B1/03%E7%9B%B4%E8%BD%84%E5%B8%82%E9%95%B7/099%E5%B9%B4/05%E9%AB%98%E9%9B%84%E5%B8%82%E5%B8%82%E9%95%B7.pdf", "quote": "全力拼經濟、降低失業率", "accessed": "2026-10-23" }, { "title": "2018 高雄市長選舉公報：治水", "url": "https://bulletin.cec.gov.tw/01%E9%81%B8%E8%88%89%E5%85%AC%E5%A0%B1/03%E7%9B%B4%E8%BD%84%E5%B8%82%E9%95%B7/107%E5%B9%B4/%E9%AB%98%E9%9B%84%E5%B8%82%E5%B8%82%E9%95%B7.pdf", "quote": "全流域治水面對全球極端氣候，強化排水基礎建設，加強防災打造安全都市。", "accessed": "2026-10-23" }, { "title": "2018 臺中市長選舉公報：空污", "url": "https://bulletin.cec.gov.tw/01%E9%81%B8%E8%88%89%E5%85%AC%E5%A0%B1/03%E7%9B%B4%E8%BD%84%E5%B8%82%E9%95%B7/107%E5%B9%B4/%E8%87%BA%E4%B8%AD%E5%B8%82%E5%B8%82%E9%95%B7.pdf", "quote": "台中空氣品質達成國家標準每立方米15微克。", "accessed": "2026-10-23" }, { "title": "2018 臺南市長選舉公報：公開透明", "url": "https://bulletin.cec.gov.tw/01%E9%81%B8%E8%88%89%E5%85%AC%E5%A0%B1/03%E7%9B%B4%E8%BD%84%E5%B8%82%E9%95%B7/107%E5%B9%B4/%E8%87%BA%E5%8D%97%E5%B8%82%E5%B8%82%E9%95%B7.pdf", "quote": "定期直播報告市政且回應市民提問，徹底公開市政會議及政府資訊", "accessed": "2026-10-23" }, { "title": "2014 臺北市長選舉公報：不分藍綠", "url": "https://bulletin.cec.gov.tw/01%E9%81%B8%E8%88%89%E5%85%AC%E5%A0%B1/03%E7%9B%B4%E8%BD%84%E5%B8%82%E9%95%B7/103%E5%B9%B4/01%E8%87%BA%E5%8C%97%E5%B8%82%E5%B8%82%E9%95%B7.pdf", "quote": "不分藍綠，一切政策由市民作主，從人民需求和最大公益出發。", "accessed": "2026-10-23" }, { "title": "2018 高雄市長選舉公報：債務", "url": "https://bulletin.cec.gov.tw/01%E9%81%B8%E8%88%89%E5%85%AC%E5%A0%B1/03%E7%9B%B4%E8%BD%84%E5%B8%82%E9%95%B7/107%E5%B9%B4/%E9%AB%98%E9%9B%84%E5%B8%82%E5%B8%82%E9%95%B7.pdf", "quote": "想辦法將現在每年近百億利息砍半，謹慎控管財務條件", "accessed": "2026-10-23" }, { "title": "2014 臺中市長選舉公報：延續施政", "url": "https://bulletin.cec.gov.tw/01%E9%81%B8%E8%88%89%E5%85%AC%E5%A0%B1/03%E7%9B%B4%E8%BD%84%E5%B8%82%E9%95%B7/103%E5%B9%B4/04%E8%87%BA%E4%B8%AD%E5%B8%82%E5%B8%82%E9%95%B7.pdf", "quote": "為了延續我們的宏觀志業", "accessed": "2026-10-23" }, { "title": "2010 臺北市長選舉公報：觀光", "url": "https://bulletin.cec.gov.tw/01%E9%81%B8%E8%88%89%E5%85%AC%E5%A0%B1/03%E7%9B%B4%E8%BD%84%E5%B8%82%E9%95%B7/099%E5%B9%B4/01%E8%87%BA%E5%8C%97%E5%B8%82%E5%B8%82%E9%95%B7.pdf", "quote": "打造台北成為全球前十名的國際觀光城市", "accessed": "2026-10-23" }, { "title": "2010 新北市長選舉公報：公辦都更", "url": "https://bulletin.cec.gov.tw/01%E9%81%B8%E8%88%89%E5%85%AC%E5%A0%B1/03%E7%9B%B4%E8%BD%84%E5%B8%82%E9%95%B7/099%E5%B9%B4/02%E6%96%B0%E5%8C%97%E5%B8%82%E5%B8%82%E9%95%B7.pdf", "quote": "透過「公辦都更」改善老舊社區居住品質", "accessed": "2026-10-23" }] }
   },
   {
     "id": "c-cash-handout",
@@ -31,12 +114,296 @@
     "title": "黨內初選",
     "scenario": "黨中央希望你在初選讓步給資深議員，條件是「下次一定挺你」。",
     "tags": ["政黨"],
+    "conditions": { "flags": ["party-major"] },
     "options": [
       { "id": "fight", "label": "堅持參選到底", "outcome": "你贏了初選，也贏得幾位一輩子的敵人。", "effects": { "party": -12, "approval": 5 } },
-      { "id": "deal", "label": "談條件，換取黨部全力輔選", "outcome": "樁腳名單送到你桌上，附帶一份人事建議。", "effects": { "party": 12, "integrity": -5 }, "setFlags": ["party-deal"] },
-      { "id": "indie", "label": "退黨，以無黨籍參選", "outcome": "網路聲量暴衝，組織動員歸零。", "effects": { "party": -25, "approval": 8 }, "setFlags": ["independent"] }
+      { "id": "deal", "label": "談條件，換取黨部全力輔選", "outcome": "樁腳名單送到你桌上，附帶一份人事建議。", "effects": { "party": 12, "integrity": -5 }, "setFlags": ["party-deal"], "funds": 1500 },
+      { "id": "indie", "label": "退黨，以無黨籍參選", "outcome": "網路聲量暴衝，組織動員歸零。", "effects": { "party": -25, "approval": 8 }, "switchParty": "independent" }
     ],
     "source": { "status": "placeholder", "prototype": "直轄市長選舉曾發生黨內初選爭議與脫黨參選。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "c-strategy",
+    "phase": "campaign",
+    "title": "選戰策略",
+    "scenario": "投票前一個月，總幹事把剩下的資源攤在桌上：「最後衝刺，押在哪裡？」",
+    "tags": ["選戰", "策略"],
+    "drawOptions": 3,
+    "weight": 4,
+    "options": [
+      { "id": "attack-record", "label": "買廣告攻擊現任的施政爛帳", "outcome": "對手的負面新聞變多了，你的也一樣。", "effects": { "approval": 5, "integrity": -2 }, "appearsIf": { "notFlags": ["bg-incumbent"] }, "funds": -800 },
+      { "id": "tout-record", "label": "用市府預算印「四年施政成果」手冊，挨家挨戶發送", "outcome": "手冊印得很精美，封面是你的笑臉。對手說這叫「公費助選」。", "effects": { "approval": 14, "integrity": -3, "treasury": -3 }, "appearsIf": { "flags": ["bg-incumbent"] }, "weight": 6, "perk": true },
+      { "id": "party-machine", "label": "出錢讓黨部全力動員，母雞帶小雞", "outcome": "議員候選人跟你聯合掃街。他們的海報比你的大。", "effects": { "party": 8, "approval": 2, "integrity": -1 }, "appearsIf": { "anyFlags": ["party-major"] }, "weight": 2, "funds": -800, "skill": "organize" },
+      { "id": "factions", "label": "和地方派系結盟，分配副市長名額", "outcome": "派系大老在造勢台上舉起你的手。你欠下的人情也一起被舉起來了。", "effects": { "party": 8, "council": 3, "integrity": -5, "business": 10 }, "appearsIf": { "flags": ["party-blue"] }, "weight": 2, "skill": "deal" },
+      { "id": "central", "label": "請中央部會首長來站台、宣布補助", "outcome": "部長帶來了一張大支票模型。對手說這是「行政不中立」。", "effects": { "party": 5, "approval": 3, "integrity": -2 }, "appearsIf": { "anyFlags": ["party-green", "bg-official", "bg-legislator"] } },
+      { "id": "online", "label": "砸錢經營網路聲量與直播", "outcome": "你的直播同時在線破十萬。投票那天他們會不會出門，是另一個問題。", "effects": { "approval": 6, "party": -1, "media": 10 }, "appearsIf": { "anyFlags": ["party-white", "party-yellow", "party-independent", "bg-outsider"] }, "weight": 2, "funds": -800, "skill": "media" },
+      { "id": "door-to-door", "label": "租宣傳車掃街拜票，一個里一個里走", "outcome": "你握了三萬隻手。腳底的水泡也是。", "effects": { "approval": 4, "party": 2 }, "appearsIf": { "anyFlags": ["bg-councilor", "bg-legislator"] }, "funds": -400, "skill": "grassroots" },
+      { "id": "rally", "label": "辦一場十萬人造勢晚會", "outcome": "現場很熱血，便當很多，清潔隊加班到凌晨三點。", "effects": { "party": 4, "approval": 2, "media": 4 }, "funds": -2500, "skill": "organize" },
+      { "id": "debate", "label": "主打辯論會，用政策細節決勝", "outcome": "你在辯論會上贏了。收視率輸給了同時段的偶像劇。", "effects": { "approval": 3, "integrity": 3, "media": 3 }, "skill": "debate" },
+      { "id": "negative", "label": "推出攻擊對手的負面廣告", "outcome": "有效。你媽打電話問你那支廣告是怎麼回事。", "effects": { "approval": 6, "integrity": -6, "media": 5 }, "funds": -1500 },
+      { "id": "coalition", "label": "與大黨談合作，換取對方禮讓", "outcome": "大黨答應不推人。他們的支持者要你承諾的事情，清單很長。", "effects": { "party": 10, "integrity": -4 }, "appearsIf": { "anyFlags": ["party-third", "party-independent"] }, "skill": "deal" },
+      { "id": "no-donation", "label": "宣布「不收企業政治獻金」", "outcome": "形象分數大增。廣告預算大減。", "effects": { "integrity": 6, "approval": 3, "party": -2, "business": -8 }, "appearsIf": { "anyFlags": ["bg-outsider", "party-third", "party-independent"] } },
+      { "id": "dinner", "label": "辦一場募款餐會", "outcome": "一桌十萬，坐滿八十桌。你記住了每一位大桌的名字，他們也記住了你。", "effects": { "party": 2, "integrity": -1, "business": 5 }, "funds": 1200 },
+      { "id": "corporate", "label": "接受企業大額政治獻金", "outcome": "錢一次到位。捐款名單要等選後才會公開。", "effects": { "integrity": -6, "business": 12 }, "funds": 2500, "delayed": { "afterTurns": 6, "effects": { "integrity": -3, "media": 5 }, "text": "政治獻金名單公開：最大的捐款人，剛好拿到市府的大型標案。" } }
+    ],
+    "source": { "status": "draft", "prototype": "選戰策略取材自歷屆選舉常見的操作：中央資源站台、地方派系結盟、網路動員、負面選舉，以及第三勢力與大黨的合作。", "adaptation": "情境為虛構；效果數值為遊戲設計。", "refs": [{ "title": "2010 臺中市長選舉公報：向中央爭取", "url": "https://bulletin.cec.gov.tw/01%E9%81%B8%E8%88%89%E5%85%AC%E5%A0%B1/03%E7%9B%B4%E8%BD%84%E5%B8%82%E9%95%B7/099%E5%B9%B4/03%E8%87%BA%E4%B8%AD%E5%B8%82%E5%B8%82%E9%95%B7.pdf", "quote": "向中央積極爭取在短時間內", "accessed": "2026-10-23" }, { "title": "2018 桃園市長選舉公報：打破藍綠", "url": "https://bulletin.cec.gov.tw/01%E9%81%B8%E8%88%89%E5%85%AC%E5%A0%B1/03%E7%9B%B4%E8%BD%84%E5%B8%82%E9%95%B7/107%E5%B9%B4/%E6%A1%83%E5%9C%92%E5%B8%82%E5%B8%82%E9%95%B7.pdf", "quote": "打破藍綠意識形態的牢籠", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "c-tv-debate",
+    "phase": "campaign",
+    "title": "電視辯論會",
+    "scenario": "三家電視台聯播的辯論會。你的辯論教練只給一個建議：「選一個路線，走到底。」",
+    "tags": ["選戰", "辯論"],
+    "options": [
+      { "id": "policy", "label": "主打政策細節與數字", "outcome": "你講得很清楚，事實查核中心給你最高分。收視率輸給對手的金句。", "effects": { "approval": 3, "integrity": 3 }, "skill": "policy", "variants": [{ "when": { "flags": ["trait-policy-wonk"] }, "outcome": "你把財源、時程、績效指標一項項攤開。事實查核中心給你全場最高分，連對手陣營的幕僚都在抄筆記。", "effects": { "approval": 4, "integrity": 2 } }, { "when": { "flags": ["trait-poor-speaker"] }, "outcome": "你的政策很紮實，但講得像在念說明書。觀眾記住的是對手的金句。", "effects": { "approval": -3 } }, { "when": { "flags": ["trait-unprepared"] }, "outcome": "對手追問一個數字，你答成了另一題。這段答非所問被剪成迷因。", "effects": { "approval": -6, "media": 5 } }] },
+      { "id": "attack", "label": "火力全開攻擊對手", "outcome": "全場最有梗的是你。你也收到了三張律師函。", "effects": { "approval": 4, "integrity": -4, "media": 5 }, "skill": "debate", "variants": [{ "when": { "flags": ["trait-gaffe-prone"] }, "outcome": "你火力全開，卻在最後一分鐘說錯一句話。那句話成了今晚唯一的新聞，對手的團隊在後台擊掌。", "effects": { "approval": -6, "media": 4 } }, { "when": { "flags": ["trait-debater"] }, "outcome": "你抓住對手一個口誤窮追猛打，主持人都忍不住笑了。這段十秒鐘的畫面，明天會出現在每一個新聞台。", "effects": { "approval": 5, "media": 4 } }, { "when": { "flags": ["trait-conflict-averse"] }, "outcome": "你原本準備了一整頁的攻擊稿，上台後卻只念了一半。對手鬆了一口氣。", "effects": { "approval": -3 } }] },
+      { "id": "emotion", "label": "走溫情路線，講家人與成長故事", "outcome": "你說到父親時哽咽了。剪輯片段被分享了二十萬次。", "effects": { "approval": 3, "media": 4 }, "skill": "media" },
+      { "id": "ambush", "label": "即興抓住對手的語病，窮追猛打", "outcome": "你一句接一句，對手完全接不住。辯論結束時，全場在喊你的名字。", "effects": { "approval": 6, "media": 6, "integrity": -1 }, "appearsIf": { "flags": ["trait-debater"] } }
+    ],
+    "source": { "status": "placeholder", "prototype": "電視辯論會是候選人展現政策能力與話術的重要場合。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "c-poll-behind",
+    "phase": "campaign",
+    "title": "民調落後",
+    "scenario": "最新民調你落後 6 個百分點。支持者開始焦慮，記者問你「是不是要換策略」。",
+    "tags": ["選戰", "民調"],
+    "options": [
+      { "id": "internal", "label": "公布一份對自己有利的內部民調", "outcome": "支持者士氣回來了。民調專家說你的抽樣「很有創意」。", "effects": { "approval": 3, "integrity": -4 } },
+      { "id": "strategic", "label": "呼籲同陣營選民「集中選票、棄保」", "outcome": "第三勢力的支持者很不爽，但有些人真的轉向了。", "effects": { "approval": 4, "party": -2, "integrity": -1 }, "skill": "deal" },
+      { "id": "steady", "label": "不理會民調，照原計畫走", "outcome": "你的團隊繼續掃街。少數人說你有定力，多數人說你沒反應。", "effects": { "integrity": 1, "team": 2 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "選戰後期，候選人常以公布內部民調或呼籲棄保因應民調落後。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "c-endorsement",
+    "phase": "campaign",
+    "title": "大咖站台",
+    "scenario": "幕僚列出可以請來站台的人選。每一個都有代價。",
+    "tags": ["選戰", "站台"],
+    "options": [
+      { "id": "party-leader", "label": "包下場地，請黨主席與黨內大老站台", "outcome": "黨的支持者全數歸隊。你在台上站在第三排。", "effects": { "party": 8, "approval": 2 }, "funds": -500, "appearsIf": { "notFlags": ["party-independent"] } },
+      { "id": "celebrity", "label": "花錢請高人氣藝人與網紅站台", "outcome": "現場來了三萬人，一半是來看藝人的。", "effects": { "media": 10, "approval": 3 }, "funds": -1200 },
+      { "id": "alone", "label": "不請任何人，自己扛", "outcome": "你的造勢晚會很樸素。媒體說「至少他很真實」。", "effects": { "integrity": 2 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "選戰期間，政黨領袖、藝人與網紅站台是常見的催票手段。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "c-smear",
+    "phase": "campaign",
+    "title": "對手抹黑",
+    "scenario": "網路上流傳一份「你的祕密帳戶」截圖。是假的，但已經被分享了五萬次。",
+    "tags": ["選戰", "假訊息"],
+    "options": [
+      { "id": "sue", "label": "請律師提告，並報請事實查核", "outcome": "查核中心確認是假的。澄清文的分享數是謠言的十分之一。", "effects": { "integrity": 1, "media": 3 }, "funds": -300 },
+      { "id": "clarify", "label": "親自拍影片澄清", "outcome": "你的影片很誠懇，有些人相信了，有些人說「越描越黑」。", "effects": { "approval": 2, "media": 2 }, "skill": "media" },
+      { "id": "counter", "label": "以牙還牙，放出對手的黑料", "outcome": "選戰變成爆料大戰。你贏了這一回合，也賠上了一些東西。", "effects": { "approval": 3, "integrity": -6, "media": 5 }, "skill": "confront" }
+    ],
+    "source": { "status": "placeholder", "prototype": "選戰期間的假訊息與抹黑，常需候選人在澄清、提告與反擊之間抉擇。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "c-temples",
+    "phase": "campaign",
+    "title": "宮廟與紅白帖",
+    "scenario": "選前三個月，地方樁腳排好了行程：37 間宮廟、52 場紅白帖、19 場里民旅遊。",
+    "tags": ["選戰", "地方"],
+    "options": [
+      { "id": "all", "label": "全部跑完，香油錢、紅包白包自己出", "outcome": "你的膝蓋跪壞了，但每個主委都記住了你。", "effects": { "party": 5, "business": 3, "approval": 2, "team": -3 }, "funds": -400, "skill": "grassroots" },
+      { "id": "key", "label": "只跑幾個重要的", "outcome": "你錯過的那幾場，主人都在問你去哪了。", "effects": { "party": 2 }, "skill": "grassroots" },
+      { "id": "skip", "label": "不跑，把時間拿去準備政策", "outcome": "你的政策白皮書很完整。樁腳們有點冷淡。", "effects": { "party": -3, "integrity": 1, "team": 2 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "台灣選舉中，出席宮廟活動與婚喪喜慶被視為地方經營的重要一環。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "c-developer",
+    "phase": "campaign",
+    "title": "建商的支票",
+    "scenario": "一位建商透過朋友傳話：願意捐兩千萬，「不求回報，只是欣賞你」。",
+    "tags": ["選戰", "政治獻金"],
+    "options": [
+      { "id": "accept", "label": "收下", "outcome": "錢到位了。他公司的都更案，剛好在你當選後要審。", "effects": { "business": 12, "integrity": -6 }, "funds": 2000 },
+      { "id": "disclose", "label": "收下，但公開捐款並承諾利益迴避", "outcome": "金額少了一半，他說「這樣就好」。記者說你「很聰明」。", "effects": { "business": 5, "integrity": 1, "media": 2 }, "funds": 1000 },
+      { "id": "refuse", "label": "婉拒", "outcome": "他笑著說「我懂」。你不太確定他懂了什麼。", "effects": { "business": -5, "integrity": 3 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "建商與企業的政治獻金，與候選人當選後的審議案件之間，常有利益衝突的疑慮。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "c-youth",
+    "phase": "campaign",
+    "title": "年輕選民",
+    "scenario": "數據顯示，20 到 35 歲選民對你的認識最少，投票率也最低。",
+    "tags": ["選戰", "青年"],
+    "options": [
+      { "id": "memes", "label": "花錢請團隊做迷因和短影音", "outcome": "你的跳舞影片紅了。你媽說她不想再看到。", "effects": { "media": 8, "approval": 2 }, "funds": -300, "skill": "media" },
+      { "id": "policy", "label": "推出青年版政見：租屋、托育、就業", "outcome": "政見很紮實。年輕人說「看起來不錯，但我要上班」。", "effects": { "approval": 3, "integrity": 1 }, "skill": "policy" },
+      { "id": "ignore", "label": "專攻長輩票，年輕人本來就不太投", "outcome": "長輩們很支持。網路上開始有人做「XX 不懂年輕人」的圖。", "effects": { "party": 2, "media": -2 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "年輕選民的投票率與政治參與，常是選戰策略的取捨點。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "c-vote-buying",
+    "phase": "campaign",
+    "title": "樁腳的「走路工」",
+    "scenario": "一位資深樁腳私下說：「對手那邊每票五百，我們不給，票就跑了。」",
+    "tags": ["選戰", "賄選"],
+    "options": [
+      { "id": "pay", "label": "默許，撥一筆錢交給樁腳處理", "outcome": "你不知道細節，也不想知道。票好像真的穩了。", "effects": { "approval": 5, "party": 5, "integrity": -15 }, "funds": -1000, "setFlags": ["vote-buying"], "legalRisk": "涉及賄選，違反選罷法" },
+      { "id": "refuse", "label": "嚴正拒絕", "outcome": "樁腳摸摸鼻子走了。下週他的里，投票率掉了一截。", "effects": { "party": -5, "integrity": 3 } },
+      { "id": "report", "label": "向檢調檢舉對手陣營", "outcome": "檢調開始查了。地方上說你「不懂規矩」。", "effects": { "integrity": 6, "party": -8, "media": 5 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "賄選（俗稱走路工）至今仍是地方選舉中查緝的重點。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "c-ads",
+    "phase": "campaign",
+    "title": "廣告戰",
+    "scenario": "對手在三家電視台買了黃金時段。你的廣告預算要怎麼花？",
+    "tags": ["選戰", "廣告"],
+    "options": [
+      { "id": "tv", "label": "砸錢買電視黃金時段", "outcome": "全台灣都看到了你的臉。你的帳戶也看到了它的底。", "effects": { "approval": 5, "media": 8 }, "funds": -2000 },
+      { "id": "online", "label": "網路精準投放", "outcome": "觸及率很漂亮。長輩們沒看到。", "effects": { "media": 6, "approval": 2 }, "funds": -600 },
+      { "id": "none", "label": "不買廣告，靠口碑", "outcome": "省下了錢。你的知名度也省下來了。", "effects": { "media": -3 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "競選廣告是候選人最主要的經費支出之一。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "c-motorcade",
+    "phase": "campaign",
+    "title": "週末掃街",
+    "scenario": "週末的行程空出來了。總幹事問：車隊還是走路？",
+    "tags": ["選戰", "掃街"],
+    "options": [
+      { "id": "motorcade", "label": "百台車隊大遊行", "outcome": "鞭炮放了一整條街。交通黑了三個小時。", "effects": { "media": 5, "party": 3, "approval": 1 }, "funds": -1000, "skill": "organize" },
+      { "id": "walk", "label": "徒步掃市場，一攤一攤握手", "outcome": "你握了三千隻手。豬肉攤老闆說他會投你。", "effects": { "approval": 3, "team": -2 }, "variants": [{ "when": { "flags": ["trait-gaffe-prone"] }, "outcome": "你在菜市場跟攤販開了一個玩笑，被路人拍下來。影片標題是「候選人嘲笑市場阿姨」。", "effects": { "approval": -6, "media": 6 } }, { "when": { "flags": ["trait-grassroots"] }, "outcome": "你一攤一攤握手，叫得出每個老闆的名字。豬肉攤老闆直接拿起麥克風幫你拉票。", "effects": { "approval": 4, "party": 3 } }, { "when": { "flags": ["trait-photogenic"] }, "outcome": "你一出現，整條市場的手機都舉起來了。握手的人不多，自拍的人很多。", "effects": { "media": 6 } }, { "when": { "flags": ["trait-poor-speaker"] }, "outcome": "你很認真地跟每個人握手，只是一開口就不知道要說什麼。阿姨們說你「很老實」。", "effects": { "approval": -1 } }] },
+      { "id": "rest", "label": "讓團隊休息一天", "outcome": "大家睡飽了。下週的士氣好多了。", "effects": { "team": 4 } },
+      { "id": "hawker", "label": "直接走進菜市場，跟攤販一起叫賣", "outcome": "你幫水果攤叫賣了半小時，賣光了一整車芭樂。這是本週最多人分享的選舉影片。", "effects": { "approval": 5, "media": 4, "team": -1 }, "appearsIf": { "flags": ["trait-grassroots"] } }
+    ],
+    "source": { "status": "placeholder", "prototype": "車隊掃街與徒步拜票是選前週末的固定行程。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "c-family",
+    "phase": "campaign",
+    "title": "家人被起底",
+    "scenario": "一家週刊挖出你弟弟十年前的酒駕紀錄，封面標題寫著你的名字。",
+    "tags": ["選戰", "家人"],
+    "options": [
+      { "id": "lawyer", "label": "請律師發聲明，要求更正", "outcome": "週刊登了一則很小的更正。封面還是在那裡。", "effects": { "integrity": 1 }, "funds": -300 },
+      { "id": "apologize", "label": "代家人公開道歉", "outcome": "有人說你有擔當，有人說「關你什麼事」。", "effects": { "approval": -2, "integrity": 3, "media": 3 } },
+      { "id": "ignore", "label": "不回應", "outcome": "新聞撐了三天。你的家族群組撐了一個月。", "effects": { "approval": -3, "team": -2 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "候選人家屬的過往常在選戰中被挖出，成為攻擊題材。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "c-factcheck",
+    "phase": "campaign",
+    "title": "政見被事實查核",
+    "scenario": "事實查核中心發布報告：你政見裡的一個數字「錯誤」。",
+    "tags": ["選戰", "事實查核"],
+    "options": [
+      { "id": "fix", "label": "承認錯誤，修正政見", "outcome": "數字對了，標題寫著「XX 政見灌水」。", "effects": { "integrity": 4, "approval": -2 }, "skill": "policy" },
+      { "id": "insist", "label": "堅持數字沒錯，「口徑不同」", "outcome": "支持者相信你，查核中心又發了一篇。", "effects": { "integrity": -4, "approval": 1 } },
+      { "id": "attack", "label": "質疑查核中心的立場", "outcome": "你的支持者開始攻擊查核中心。這件事本身成了新聞。", "effects": { "integrity": -6, "media": 4, "party": 3 }, "skill": "confront" }
+    ],
+    "source": { "status": "placeholder", "prototype": "事實查核機構對候選人政見與言論的查核，已成為選戰的一部分。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "c-volunteers",
+    "phase": "campaign",
+    "title": "團隊人手",
+    "scenario": "競選總部的人手不夠，文宣發不完，電話沒人接。",
+    "tags": ["選戰", "團隊"],
+    "options": [
+      { "id": "hire", "label": "花錢請專業選戰團隊", "outcome": "專業團隊效率很高，也很貴。", "effects": { "team": 8 }, "funds": -1000 },
+      { "id": "volunteers", "label": "公開招募志工", "outcome": "來了兩百位志工，平均年齡 22 歲，熱情滿分。", "effects": { "team": 4, "media": 2 }, "skill": "organize" },
+      { "id": "push", "label": "現有的人再撐一下", "outcome": "大家撐住了。有兩位幕僚累到住院。", "effects": { "team": -4, "approval": 1 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "競選團隊的組成與人力，是選戰執行力的關鍵。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "c-business-forum",
+    "phase": "campaign",
+    "title": "工商團體座談",
+    "scenario": "工商協進會邀你去座談。台下坐滿了企業主，他們想聽「對企業友善」的承諾。",
+    "tags": ["選戰", "產業"],
+    "options": [
+      { "id": "deregulate", "label": "承諾減稅與法規鬆綁", "outcome": "掌聲很熱烈，會後有人遞來名片和「心意」。", "effects": { "business": 8, "approval": 1, "integrity": -2 }, "skill": "deal" },
+      { "id": "labor", "label": "談勞工權益與企業社會責任", "outcome": "掌聲很稀落。勞工團體轉發了你的演講。", "effects": { "business": -5, "approval": 3, "integrity": 2 }, "skill": "policy" },
+      { "id": "skip", "label": "推掉，不去", "outcome": "工商團體有點不高興。", "effects": { "business": -3 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "候選人與工商團體的互動，涉及產業政策與政治獻金的交換疑慮。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "c-incumbent-event",
+    "phase": "campaign",
+    "title": "市政活動還是造勢晚會？",
+    "scenario": "市府主辦的大型市民活動剛好在選前兩週。你是市長，也是候選人。",
+    "tags": ["選戰", "現任資源"],
+    "conditions": { "flags": ["bg-incumbent"] },
+    "weight": 2,
+    "options": [
+      { "id": "city", "label": "以市府名義辦活動，市長上台致詞", "outcome": "活動很成功，舞台背板是市府的，台下喊的是你的名字。", "effects": { "approval": 8, "media": 6, "treasury": -5, "integrity": -2 }, "perk": true },
+      { "id": "campaign", "label": "請假，自己花錢辦造勢", "outcome": "行政中立做到了。你的競選經費少了一截。", "effects": { "approval": 4, "integrity": 2 }, "funds": -800 },
+      { "id": "work", "label": "選前專心市政，不辦活動", "outcome": "你的對手到處跑，你在市府開會。", "effects": { "achievement": 3, "team": 2 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "現任首長以公帑舉辦市政活動並高度曝光，常被質疑行政不中立。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "c-incumbent-budget",
+    "phase": "campaign",
+    "title": "選前追加預算",
+    "scenario": "選前一個月，你可以動用第二預備金。里長們已經列好了想要的建設。",
+    "tags": ["選戰", "現任資源"],
+    "conditions": { "flags": ["bg-incumbent"] },
+    "weight": 2,
+    "options": [
+      { "id": "pork", "label": "追加里鄰建設，各里雨露均霑", "outcome": "全市多了一百座涼亭。里長們都在幫你拉票。", "effects": { "approval": 6, "party": 4, "business": 4, "treasury": -8 }, "perk": true },
+      { "id": "normal", "label": "按原預算執行", "outcome": "里長們有點失望。財政局長鬆了一口氣。", "effects": { "integrity": 2 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "現任首長於選前追加地方建設預算，常被批評為綁樁。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "c-neutrality",
+    "phase": "campaign",
+    "title": "現任的行政不中立",
+    "scenario": "現任市長每天以「市政活動」為名在全市剪綵，花的都是市府預算。你的造勢晚會卻要自己付錢。",
+    "tags": ["選戰", "現任資源"],
+    "conditions": { "notFlags": ["bg-incumbent"] },
+    "weight": 2,
+    "options": [
+      { "id": "report", "label": "向監察院檢舉行政不中立", "outcome": "檢舉成案了，結果會在選後出爐。", "effects": { "integrity": 2, "media": 4 } },
+      { "id": "crash", "label": "租直播車到剪綵現場「踢館」", "outcome": "你的直播很熱鬧，市府的保全很緊張。", "effects": { "media": 6, "approval": 2 }, "funds": -200 },
+      { "id": "ignore", "label": "不理會，專心自己的選戰", "outcome": "現任市長的曝光是你的三倍。", "effects": { "approval": -2, "team": 2 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "挑戰者常批評現任者以公帑辦活動、變相競選，形成不對等的競爭。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "c-policy-interview",
+    "phase": "campaign",
+    "title": "深度政策專訪",
+    "scenario": "一位以「追問到底」聞名的主持人邀你上節目，一小時現場直播，不給題綱。",
+    "tags": ["選戰", "專訪", "政策"],
+    "weight": 2,
+    "options": [
+      { "id": "accept", "label": "接受專訪，現場直播", "outcome": "訪問中規中矩，沒有失分，也沒有亮點。", "effects": { "approval": 2 }, "skill": "policy", "variants": [{ "when": { "flags": ["trait-policy-wonk"] }, "outcome": "你把財源、時程、績效指標一項項攤開。主持人最後說，這是他訪過最紮實的候選人。", "effects": { "approval": 4, "integrity": 2, "media": 4 } }, { "when": { "flags": ["trait-unprepared"] }, "outcome": "主持人追問財源，你答成了另一題，再追問，你又答成了第三題。那十五秒被剪成迷因，觀看次數破百萬。", "effects": { "approval": -8, "media": 6 } }, { "when": { "anyFlags": ["trait-debater", "trait-photogenic"] }, "outcome": "你說得很漂亮，金句一句接一句，節目的收視率創新高。只是有幾個數字，你說得比實際的大一點。", "effects": { "approval": 4, "media": 5 }, "delayed": { "afterTurns": 3, "effects": { "approval": -5, "integrity": -3, "media": 4 }, "text": "事實查核報告出爐：你在專訪中引用的三個數字，有兩個是錯的。" } }, { "when": { "flags": ["trait-poor-speaker"] }, "outcome": "你準備得很充分，但講得很乾。收視率只有對手上節目時的一半。", "effects": { "approval": -1, "integrity": 2 } }, { "when": { "flags": ["trait-overconfident"] }, "outcome": "你自信滿滿地說「這個很簡單」，主持人請你算給大家看。你算錯了。", "effects": { "approval": -5, "media": 4 } }] },
+      { "id": "written", "label": "只接受書面專訪", "outcome": "你的回答很完整，但沒有人會截圖書面專訪。", "effects": { "integrity": 1, "media": -2 } },
+      { "id": "variety", "label": "婉拒，改上綜藝節目", "outcome": "你在綜藝節目上玩了一輪遊戲，觀眾覺得你很親切。政策？那是什麼？", "effects": { "media": 5, "approval": 2, "integrity": -1 }, "skill": "media" },
+      { "id": "spreadsheet", "label": "帶著自己做的政策試算表上節目", "outcome": "你在直播中把試算表投影出來，逐格解釋。主持人投降了，網友開始幫你的試算表做迷因——這次是好的那種。", "effects": { "approval": 6, "integrity": 3, "media": 5 }, "appearsIf": { "flags": ["trait-policy-wonk"] } }
+    ],
+    "source": { "status": "placeholder", "prototype": "候選人接受深度政策專訪時，政策準備程度與臨場表達常直接影響選民觀感，也常成為事實查核的對象。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "e-eve",
+    "phase": "eve",
+    "title": "選前之夜",
+    "scenario": "投票前一晚。這是你最後一次站上舞台的機會。",
+    "tags": ["選戰", "選前之夜"],
+    "options": [
+      { "id": "rally", "label": "十萬人選前之夜大造勢", "outcome": "全場揮舞著旗子。你的聲音啞了，經費也見底了。", "effects": { "approval": 5, "party": 5, "media": 6 }, "funds": -3000, "skill": "organize" },
+      { "id": "sweep", "label": "出動宣傳車徹夜掃街催票", "outcome": "你走到凌晨兩點，每一個路口都有人跟你說加油。", "effects": { "approval": 3, "team": -3 }, "funds": -500, "skill": "grassroots" },
+      { "id": "video", "label": "發一支感性告白影片", "outcome": "影片在投票日早上被轉傳到每一個家族群組。", "effects": { "media": 8, "approval": 2 }, "skill": "media" },
+      { "id": "abandon", "label": "放話「棄保」，呼籲對手陣營的選民轉投", "outcome": "選前最後一刻，有人轉向了，也有人覺得你很難看。", "effects": { "approval": 4, "integrity": -5 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "選前之夜是台灣選舉的傳統，候選人在投票前一晚舉辦最後的大型造勢。", "adaptation": "情境為虛構。", "refs": [] }
   },
   {
     "id": "t-typhoon-flood",
@@ -45,9 +412,10 @@
     "scenario": "颱風夜，低窪地區淹到膝蓋。抽水站有三座故障，記者已經在現場連線。",
     "tags": ["防災", "基礎建設"],
     "options": [
-      { "id": "boots", "label": "穿雨鞋到現場視察", "outcome": "畫面很好。抽水站還是壞的。", "effects": { "approval": 6 } },
-      { "id": "fix", "label": "坐鎮應變中心，隔天提抽水站更新預算", "outcome": "沒有畫面。但三年後同樣的雨，這裡沒淹。", "effects": { "approval": -4, "treasury": -8, "achievement": 10 } },
-      { "id": "blame", "label": "說是「百年一遇的雨量」", "outcome": "氣象專家指出這是今年第三次百年一遇。", "effects": { "approval": -6, "integrity": -3 } }
+      { "id": "boots", "label": "穿雨鞋到現場視察", "outcome": "畫面很好。抽水站還是壞的。", "effects": { "approval": 6, "media": 6 }, "skill": "media" },
+      { "id": "fix", "label": "坐鎮應變中心，隔天提抽水站更新預算", "outcome": "沒有畫面。但三年後同樣的雨，這裡沒淹。", "effects": { "approval": -4, "treasury": -8, "achievement": 10 }, "requires": { "min": { "treasury": 20 } }, "skill": "admin" },
+      { "id": "blame", "label": "說是「百年一遇的雨量」", "outcome": "氣象專家指出這是今年第三次百年一遇。", "effects": { "approval": -6, "integrity": -3 } },
+      { "id": "smart-pump", "label": "啟動任內建好的智慧抽水系統", "outcome": "抽水站全數正常運轉。這次的雨，你的城市沒淹。", "effects": { "achievement": 4, "approval": 5, "media": 4 }, "appearsIf": { "min": { "achievement": 50 } } }
     ],
     "source": { "status": "placeholder", "prototype": "多個直轄市曾因豪雨積淹水，引發抽水站維護與首長應變表現的討論。", "adaptation": "情境為虛構。", "refs": [] }
   },
@@ -58,8 +426,8 @@
     "scenario": "上一任留下的大型場館工程延宕多年，廠商要求追加 40 億。",
     "tags": ["工程", "財政"],
     "options": [
-      { "id": "pay", "label": "追加預算，趕在選前完工剪綵", "outcome": "剪綵很風光。審計報告在選後才出來。", "effects": { "approval": 6, "treasury": -18 }, "delayed": { "afterTurns": 4, "effects": { "approval": -6, "integrity": -4 }, "text": "審計報告指出場館追加預算程序有瑕疵。" } },
-      { "id": "audit", "label": "暫停工程，全面查帳", "outcome": "工地圍籬長出了青苔，也長出了一篇篇評論。", "effects": { "approval": -6, "integrity": 6, "achievement": 4 } },
+      { "id": "pay", "label": "追加預算，趕在選前完工剪綵", "outcome": "剪綵很風光。審計報告在選後才出來。", "effects": { "approval": 6, "treasury": -18, "business": 6 }, "delayed": { "afterTurns": 4, "effects": { "approval": -6, "integrity": -4 }, "text": "審計報告指出場館追加預算程序有瑕疵。" }, "requires": { "min": { "treasury": 30 } } },
+      { "id": "audit", "label": "暫停工程，全面查帳", "outcome": "工地圍籬長出了青苔，也長出了一篇篇評論。", "effects": { "approval": -6, "integrity": 6, "achievement": 4, "business": -6 } },
       { "id": "renegotiate", "label": "重新議約，分期完工", "outcome": "沒人滿意，但也沒人能抓到把柄。", "effects": { "treasury": -8, "council": 4, "achievement": 3 } }
     ],
     "source": { "status": "placeholder", "prototype": "國內曾有大型公共場館 BOT 案延宕多年、追加預算與契約爭議。", "adaptation": "金額與情境為虛構。", "refs": [] }
@@ -75,7 +443,7 @@
     "options": [
       { "id": "redefine", "label": "把「規劃中」和「已動工」都算進去", "outcome": "數字變成 3 萬 8 千戶。數學老師哭了。", "effects": { "approval": 2, "integrity": -8 } },
       { "id": "admit", "label": "公開道歉並調整目標", "outcome": "誠實的代價是一週的頭版。", "effects": { "approval": -8, "integrity": 8 } },
-      { "id": "rush", "label": "砸錢加速發包", "outcome": "進度上來了，市庫下去了。", "effects": { "treasury": -15, "achievement": 8 } }
+      { "id": "rush", "label": "砸錢加速發包", "outcome": "進度上來了，市庫下去了。", "effects": { "treasury": -15, "achievement": 8 }, "requires": { "min": { "treasury": 25 } } }
     ],
     "source": { "status": "placeholder", "prototype": "社宅政見的兌現進度常成為議會質詢焦點，「戶數」的計算口徑也曾引發爭議。", "adaptation": "數字為虛構。", "refs": [] }
   },
@@ -88,7 +456,7 @@
     "conditions": { "flags": ["promise-cash"] },
     "weight": 3,
     "options": [
-      { "id": "pay", "label": "照發，承諾就是承諾", "outcome": "市民很開心。坑洞也很開心，它們可以多活一年。", "effects": { "approval": 5, "treasury": -15, "achievement": -5 } },
+      { "id": "pay", "label": "照發，承諾就是承諾", "outcome": "市民很開心。坑洞也很開心，它們可以多活一年。", "effects": { "approval": 5, "treasury": -15, "achievement": -5 }, "requires": { "min": { "treasury": 20 } } },
       { "id": "debt", "label": "發行公債支應", "outcome": "問題解決了，交給下一任。", "effects": { "approval": 4, "treasury": -5 }, "delayed": { "afterTurns": 20, "effects": { "treasury": -20 }, "text": "下一任市長接手時，市債利息創新高。" } },
       { "id": "break", "label": "宣布延後發放", "outcome": "「跳票」兩個字在網路上待了整整一個月。", "effects": { "approval": -12, "treasury": 5 } }
     ],
@@ -101,9 +469,10 @@
     "scenario": "議會揚言凍結你的旗艦計畫預算。議長辦公室傳話：有幾位議員的地方建設還沒排進去。",
     "tags": ["議會", "預算"],
     "options": [
-      { "id": "pork", "label": "把議員的建設案排進去", "outcome": "預算順利過關。某條產業道路鋪了三層柏油。", "effects": { "council": 12, "treasury": -8, "integrity": -6 } },
-      { "id": "public", "label": "開記者會公開議會卡預算", "outcome": "市民站你這邊。議員們記住你了。", "effects": { "approval": 5, "council": -15 } },
-      { "id": "negotiate", "label": "逐一拜會，修改計畫內容", "outcome": "計畫縮水三成，但活下來了。", "effects": { "council": 5, "achievement": 3 } }
+      { "id": "pork", "label": "把議員的建設案排進去", "outcome": "預算順利過關。某條產業道路鋪了三層柏油。", "effects": { "council": 12, "treasury": -8, "integrity": -6 }, "skill": "deal" },
+      { "id": "public", "label": "開記者會公開議會卡預算", "outcome": "市民站你這邊。議員們記住你了。", "effects": { "approval": 5, "council": -15, "media": 5 }, "skill": "confront" },
+      { "id": "negotiate", "label": "逐一拜會，修改計畫內容", "outcome": "計畫縮水三成，但活下來了。", "effects": { "council": 5, "achievement": 3 }, "skill": "negotiate" },
+      { "id": "speaker", "label": "請議長出面協調", "outcome": "議長一通電話，預算就過了。你們的交情值這個價。", "effects": { "council": 2, "achievement": 4 }, "appearsIf": { "min": { "council": 65 } } }
     ],
     "source": { "status": "placeholder", "prototype": "地方議會審查預算時的凍結、刪減與府會協商。", "adaptation": "情境為虛構。", "refs": [] }
   },
@@ -114,9 +483,9 @@
     "scenario": "交通局長出缺。黨部推薦一位輔選有功的前議員，學界推薦一位你沒見過的教授。",
     "tags": ["人事"],
     "options": [
-      { "id": "loyal", "label": "任命輔選功臣", "outcome": "黨部很滿意。他上任第一天問「號誌是誰管的」。", "effects": { "party": 10, "achievement": -5, "integrity": -4 } },
-      { "id": "expert", "label": "任命專業教授", "outcome": "政策很漂亮，就是沒人會跟議會打交道。", "effects": { "achievement": 6, "party": -6, "council": -4 } },
-      { "id": "promote", "label": "內升資深文官", "outcome": "穩。穩到沒有任何新聞。", "effects": { "achievement": 2 } }
+      { "id": "loyal", "label": "任命輔選功臣", "outcome": "黨部很滿意。他上任第一天問「號誌是誰管的」。", "effects": { "party": 10, "achievement": -5, "integrity": -4, "team": -6 } },
+      { "id": "expert", "label": "任命專業教授", "outcome": "政策很漂亮，就是沒人會跟議會打交道。", "effects": { "achievement": 6, "party": -6, "council": -4, "team": 6 } },
+      { "id": "promote", "label": "內升資深文官", "outcome": "穩。穩到沒有任何新聞。", "effects": { "achievement": 2, "team": 2 } }
     ],
     "source": { "status": "placeholder", "prototype": "市府一級主管任命常引發專業與酬庸之爭。", "adaptation": "情境為虛構。", "refs": [] }
   },
@@ -127,9 +496,9 @@
     "scenario": "觀光局提案辦國際級燈會，預算 8 億，預估帶來 500 萬人次。",
     "tags": ["城市行銷", "財政"],
     "options": [
-      { "id": "go", "label": "辦！還要加無人機秀", "outcome": "IG 被洗版三週。燈籠的後續處理費另計。", "effects": { "approval": 8, "treasury": -12 } },
+      { "id": "go", "label": "辦！還要加無人機秀", "outcome": "IG 被洗版三週。燈籠的後續處理費另計。", "effects": { "approval": 8, "treasury": -12, "media": 8 }, "requires": { "min": { "treasury": 25 } } },
       { "id": "small", "label": "縮小規模，經費轉去修人行道", "outcome": "人行道很平。沒有人會為人行道打卡。", "effects": { "approval": -2, "achievement": 6, "treasury": -4 } },
-      { "id": "sponsor", "label": "找企業冠名贊助", "outcome": "燈會很成功，主燈上是一個很大的建商 logo。", "effects": { "approval": 4, "integrity": -4 } }
+      { "id": "sponsor", "label": "找企業冠名贊助", "outcome": "燈會很成功，主燈上是一個很大的建商 logo。", "effects": { "approval": 4, "integrity": -4, "media": 4, "business": 8 } }
     ],
     "source": { "status": "placeholder", "prototype": "各縣市大型城市行銷活動的效益與經費爭議。", "adaptation": "數字為虛構。", "refs": [] }
   },
@@ -140,9 +509,9 @@
     "scenario": "一處都更案只剩一戶不同意。建商請求市府代為拆除，抗議團體已在現場紮營。",
     "tags": ["都更", "人權"],
     "options": [
-      { "id": "demolish", "label": "依法強制拆除", "outcome": "工程繼續了。那張被抬走的照片也繼續流傳。", "effects": { "achievement": 4, "approval": -8, "integrity": -5 } },
-      { "id": "mediate", "label": "暫緩，市府介入協調", "outcome": "協調了八個月。建商很生氣，住戶有點感動。", "effects": { "achievement": -3, "integrity": 5 } },
-      { "id": "reform", "label": "推動都更程序修法", "outcome": "修法需要時間，你的任期不太夠。", "effects": { "achievement": 5, "council": -5 } }
+      { "id": "demolish", "label": "依法強制拆除", "outcome": "工程繼續了。那張被抬走的照片也繼續流傳。", "effects": { "achievement": 4, "approval": -8, "integrity": -5, "business": 6 } },
+      { "id": "mediate", "label": "暫緩，市府介入協調", "outcome": "協調了八個月。建商很生氣，住戶有點感動。", "effects": { "achievement": -3, "integrity": 5 }, "skill": "negotiate" },
+      { "id": "reform", "label": "推動都更程序修法", "outcome": "修法需要時間，你的任期不太夠。", "effects": { "achievement": 5, "council": -5 }, "requires": { "min": { "council": 40 } } }
     ],
     "source": { "status": "placeholder", "prototype": "都市更新強制拆除爭議引發程序正義與修法討論。", "adaptation": "情境為虛構。", "refs": [] }
   },
@@ -153,9 +522,10 @@
     "scenario": "週刊爆料：一筆市府標案的得標廠商，老闆是你競選總部的大金主。",
     "tags": ["弊案", "媒體"],
     "options": [
-      { "id": "investigate", "label": "主動移送政風、暫停合約", "outcome": "金主不接你電話了。", "effects": { "integrity": 6, "party": -5, "approval": 2 } },
-      { "id": "deny", "label": "強調「完全依法辦理」", "outcome": "新聞撐了三天，被一則藝人緋聞蓋過。", "effects": { "approval": -3, "integrity": -4 } },
-      { "id": "attack", "label": "反控週刊是對手的打手", "outcome": "支持者更團結了。中間選民更遠了。", "effects": { "party": 6, "approval": -5 } }
+      { "id": "investigate", "label": "主動移送政風、暫停合約", "outcome": "金主不接你電話了。", "effects": { "integrity": 6, "party": -5, "approval": 2, "business": -6 } },
+      { "id": "deny", "label": "強調「完全依法辦理」", "outcome": "新聞撐了三天，被一則藝人緋聞蓋過。", "effects": { "approval": -3, "integrity": -4, "media": 3 } },
+      { "id": "attack", "label": "反控週刊是對手的打手", "outcome": "支持者更團結了。中間選民更遠了。", "effects": { "party": 6, "approval": -5, "media": 4 }, "skill": "confront" },
+      { "id": "open-data", "label": "標案資料全部上網公開，請公民團體檢視", "outcome": "你的團隊連夜整理資料。查到最後，問題比想像中小。", "effects": { "integrity": 5, "approval": 3, "team": -2 }, "appearsIf": { "min": { "team": 60 } } }
     ],
     "source": { "status": "placeholder", "prototype": "地方政府標案與政治獻金關係的媒體爆料。", "adaptation": "情境為虛構，不對應特定案件。", "refs": [] }
   },
@@ -166,7 +536,7 @@
     "scenario": "交通局要把主幹道的一個車道改成公車專用道。開車族已經在臉書社團集結。",
     "tags": ["交通"],
     "options": [
-      { "id": "push", "label": "照計畫推動", "outcome": "半年後公車快了 12 分鐘。前半年你的粉專留言很精彩。", "effects": { "approval": -6, "achievement": 8 } },
+      { "id": "push", "label": "照計畫推動", "outcome": "半年後公車快了 12 分鐘。前半年你的粉專留言很精彩。", "effects": { "approval": -6, "achievement": 8 }, "requires": { "min": { "council": 35 } }, "skill": "admin" },
       { "id": "pilot", "label": "先試辦三個月", "outcome": "試辦期剛好跨過選舉。", "effects": { "achievement": 3 } },
       { "id": "drop", "label": "宣布「聽見民意」撤案", "outcome": "開車族滿意。公車族本來就不太發文。", "effects": { "approval": 3, "achievement": -3 } }
     ],
@@ -179,11 +549,584 @@
     "scenario": "這週有 37 張喜帖、22 張訃聞、一場市政預算的說明會，時間全部撞在一起。",
     "tags": ["地方經營"],
     "options": [
-      { "id": "all", "label": "排滿行程，跑完所有紅白場", "outcome": "你握了 1,800 隻手。預算說明會由副市長代打。", "effects": { "approval": 5, "party": 4, "achievement": -4 } },
+      { "id": "all", "label": "跑完所有紅白場，紅包白包自己出", "outcome": "你握了 1,800 隻手。預算說明會由副市長代打。", "effects": { "approval": 5, "party": 4, "achievement": -4, "media": 3, "team": -2 }, "funds": -500 },
       { "id": "budget", "label": "出席預算說明會", "outcome": "說明會很成功。3 位里長說你「變了」。", "effects": { "achievement": 4, "party": -3, "approval": -2 } },
-      { "id": "proxy", "label": "派機要秘書帶花籃出席", "outcome": "花店老闆成為你最堅定的支持者。", "effects": { "treasury": -1, "approval": 1 } }
+      { "id": "proxy", "label": "派機要秘書帶花籃出席", "outcome": "花店老闆成為你最堅定的支持者。", "effects": { "treasury": -1, "approval": 1 }, "funds": -50 }
     ],
     "source": { "status": "placeholder", "prototype": "政治人物投入大量時間出席婚喪喜慶，被視為地方經營的一環。", "adaptation": "數字為虛構。", "refs": [] }
+  },
+  {
+    "id": "t-party-blue",
+    "phase": "term",
+    "title": "派系的人事帳單",
+    "scenario": "選前結盟的地方派系來敲門：說好的副市長，人選他們已經決定了。",
+    "tags": ["政黨", "派系"],
+    "conditions": { "flags": ["party-blue"] },
+    "weight": 3,
+    "options": [
+      { "id": "pay", "label": "照約定任命", "outcome": "派系很滿意。新副市長第一週就請了三位親戚當機要。", "effects": { "party": 8, "integrity": -5, "achievement": -2, "business": 6 } },
+      { "id": "partial", "label": "給一個次要的局處長位置", "outcome": "派系勉強接受，說「我們會記得」。", "effects": { "party": 2, "integrity": -1 }, "skill": "negotiate" },
+      { "id": "refuse", "label": "拒絕，用專業人選", "outcome": "專業人選很好。下次選舉，派系的樁腳可能放空。", "effects": { "party": -10, "integrity": 4, "achievement": 2 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "地方派系與政黨合作輔選後，常以人事安排作為交換。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "t-party-green",
+    "phase": "term",
+    "title": "中央施政連坐",
+    "scenario": "中央推出一項不受歡迎的政策，你的民調跟著中央一起下滑。黨中央希望你公開力挺。",
+    "tags": ["政黨", "中央"],
+    "conditions": { "flags": ["party-green"] },
+    "weight": 3,
+    "options": [
+      { "id": "support", "label": "公開力挺中央", "outcome": "黨中央很滿意。市民覺得你是中央的傳聲筒。", "effects": { "party": 6, "approval": -6 } },
+      { "id": "distance", "label": "公開表示「市府有不同看法」", "outcome": "民調回升了一點。黨內有人說你「只顧自己」。", "effects": { "approval": 4, "party": -8 } },
+      { "id": "quiet", "label": "低調，不表態", "outcome": "兩邊都不滿意，但也沒有人特別生氣。", "effects": { "approval": -2 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "地方首長與中央執政黨同黨時，中央施政的評價常影響地方選情。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "t-party-white",
+    "phase": "term",
+    "title": "議會只有兩席",
+    "scenario": "你的黨在議會只有兩席。旗艦計畫的預算要過，得找大黨議員幫忙。",
+    "tags": ["政黨", "議會"],
+    "conditions": { "flags": ["party-white"] },
+    "weight": 3,
+    "options": [
+      { "id": "deal", "label": "和大黨議員交換條件", "outcome": "預算過了。你的支持者說你「變成你最討厭的樣子」。", "effects": { "council": 10, "integrity": -4, "approval": -2 }, "skill": "deal" },
+      { "id": "pressure", "label": "開直播點名卡預算的議員", "outcome": "網友湧進議員臉書留言。議員們決定讓你的預算再等一下。", "effects": { "approval": 5, "council": -8 }, "skill": "confront" },
+      { "id": "piecemeal", "label": "拆成小案，各個擊破", "outcome": "花了很多時間，也花了一些預算。", "effects": { "council": 4, "treasury": -4 }, "skill": "negotiate" }
+    ],
+    "source": { "status": "placeholder", "prototype": "第三勢力首長在議會席次少，預算審議需與大黨協商。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "t-party-yellow",
+    "phase": "term",
+    "title": "支持者的抗議",
+    "scenario": "為了讓預算過關，你和大黨議員交換了條件。黨的支持者在臉書痛罵你背叛理念。",
+    "tags": ["政黨", "理念"],
+    "conditions": { "flags": ["party-yellow"] },
+    "weight": 3,
+    "options": [
+      { "id": "explain", "label": "寫長文說明不得不妥協的理由", "outcome": "長文很誠懇，按讚數普通，分享數很高，大多是罵你的。", "effects": { "integrity": 1, "approval": -2 } },
+      { "id": "withdraw", "label": "撤回交換，堅守立場", "outcome": "理念保住了。預算沒過。", "effects": { "integrity": 5, "council": -8, "achievement": -3 } },
+      { "id": "ignore", "label": "不回應，繼續做事", "outcome": "支持者慢慢散了一些。", "effects": { "approval": -3, "party": -4 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "理念型小黨與大黨合作時，常面臨支持者對路線的質疑。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "t-party-minor",
+    "phase": "term",
+    "title": "沒人認識你的黨",
+    "scenario": "媒體都叫你「X 市長」，沒人提你的黨。黨主席希望你每次受訪都戴黨徽。",
+    "tags": ["政黨"],
+    "conditions": { "flags": ["party-minor"] },
+    "weight": 3,
+    "options": [
+      { "id": "promote", "label": "全力拉抬黨的知名度", "outcome": "黨的知名度上升了 3%。你的民調下降了 3%。", "effects": { "party": 6, "approval": -3 } },
+      { "id": "distance", "label": "保持距離，專注市政", "outcome": "黨主席很失望，但你的形象更像「無黨籍」了。", "effects": { "party": -6, "approval": 2 } },
+      { "id": "appoint", "label": "安排黨員進入市府", "outcome": "黨員們很開心。媒體開始數市府裡有幾個你的黨員。", "effects": { "party": 5, "integrity": -3 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "小黨候選人當選後，在政黨形象與個人形象之間的取捨。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "t-party-independent",
+    "phase": "term",
+    "title": "兩大黨都來拉攏",
+    "scenario": "你在議會沒有黨團。兩個大黨都派人來談：加入我們，預算就好過。",
+    "tags": ["政黨", "議會"],
+    "conditions": { "flags": ["party-independent"] },
+    "weight": 3,
+    "options": [
+      { "id": "join", "label": "加入其中一黨", "outcome": "預算順了。當初投給你的中間選民覺得被騙了。", "effects": { "party": 15, "council": 8, "integrity": -5, "approval": -4 } },
+      { "id": "neutral", "label": "維持無黨，議題式合作", "outcome": "每一案都要重新談。很累，但你還是你。", "effects": { "council": 3, "integrity": 2 }, "skill": "negotiate" },
+      { "id": "refuse", "label": "公開拒絕，訴諸民意", "outcome": "民意站在你這邊，議會站在另一邊。", "effects": { "approval": 3, "council": -6 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "無黨籍首長缺乏議會黨團支持，常面臨政黨拉攏。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "t-bg-legislator",
+    "phase": "term",
+    "title": "原選區補選",
+    "scenario": "你辭去立委後，原選區要補選。黨部希望你全力輔選，不然會被說「拍拍屁股走人」。",
+    "tags": ["出身", "補選"],
+    "conditions": { "flags": ["bg-legislator"] },
+    "weight": 2,
+    "options": [
+      { "id": "campaign", "label": "請假全力輔選", "outcome": "補選贏了。市政會議延期了兩次。", "effects": { "party": 6, "achievement": -3 } },
+      { "id": "focus", "label": "專心市政，只拍一支站台影片", "outcome": "黨部不太高興。補選結果和你沒什麼關係了。", "effects": { "party": -5, "achievement": 3 } },
+      { "id": "aide", "label": "推自己的前辦公室主任參選", "outcome": "你的人脈延續了。對手說這叫「世襲」。", "effects": { "party": 3, "integrity": -3 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "立委轉任縣市長後，原選區補選常被視為新任首長的延伸戰場。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "t-bg-councilor",
+    "phase": "term",
+    "title": "老同事的質詢",
+    "scenario": "以前和你同期的議員，現在每次質詢都把你修理得很慘。",
+    "tags": ["出身", "議會"],
+    "conditions": { "flags": ["bg-councilor"] },
+    "weight": 2,
+    "options": [
+      { "id": "dinner", "label": "私下約吃飯，敘舊搓圓仔", "outcome": "下次質詢溫和多了。他的選區多了一座停車場。", "effects": { "council": 8, "integrity": -3 }, "skill": "negotiate" },
+      { "id": "confront", "label": "在質詢台上硬碰硬", "outcome": "畫面很精彩，你們兩個都上了熱搜。", "effects": { "approval": 3, "council": -6 }, "skill": "confront" },
+      { "id": "adopt", "label": "採納他的建議，公開感謝", "outcome": "他愣住了。你的政策也真的變好了一點。", "effects": { "council": 4, "achievement": 2, "approval": -1 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "議員出身的首長與議會舊識之間的府會互動。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "t-bg-official",
+    "phase": "term",
+    "title": "前長官的舊帳",
+    "scenario": "媒體翻出你當副市長時經手的一件採購案，現在出了問題。",
+    "tags": ["出身", "爭議"],
+    "conditions": { "flags": ["bg-official"] },
+    "weight": 2,
+    "options": [
+      { "id": "blame", "label": "強調是前長官拍板的決定", "outcome": "前長官打電話給你，語氣很平靜。那比大吼可怕。", "effects": { "approval": 3, "party": -5, "integrity": -2 } },
+      { "id": "own", "label": "扛起責任，公開說明", "outcome": "你的民調掉了，但記者說你「有肩膀」。", "effects": { "integrity": 4, "approval": -4 } },
+      { "id": "documents", "label": "公開當年所有會議紀錄", "outcome": "紀錄很完整，證明大家都有責任。所有人都不高興。", "effects": { "integrity": 3, "approval": -1, "achievement": 1 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "前政務官參選後，任內經手的政策或採購案常被重新檢視。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "t-bg-outsider",
+    "phase": "term",
+    "title": "公文看不懂",
+    "scenario": "第一次主持市政會議，局處長講的術語你一半聽不懂。有人建議你找一位政壇老手當副市長。",
+    "tags": ["出身", "行政"],
+    "conditions": { "flags": ["bg-outsider"] },
+    "weight": 2,
+    "options": [
+      { "id": "veteran", "label": "找政壇老手當副市長", "outcome": "市政順了。你的支持者發現市府裡都是熟面孔。", "effects": { "council": 8, "party": 4, "integrity": -3 } },
+      { "id": "own-team", "label": "堅持用自己的團隊", "outcome": "團隊學得很快。前三個月的公文也退得很快。", "effects": { "integrity": 3, "council": -5, "achievement": -2, "approval": 2 } },
+      { "id": "livestream", "label": "每天直播「市長學市政」", "outcome": "觀眾很喜歡看你學習。局處長不太喜歡被直播。", "effects": { "approval": 5, "achievement": -1 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "政治素人首長上任初期，需在專業團隊與政治經驗之間取得平衡。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "t-bg-incumbent",
+    "phase": "term",
+    "title": "跛腳的開始",
+    "scenario": "第二任才過一半，黨內幾位接班人已經開始卡位，局處長開始看下一任的臉色。",
+    "tags": ["出身", "接班"],
+    "conditions": { "flags": ["bg-incumbent"] },
+    "weight": 2,
+    "options": [
+      { "id": "anoint", "label": "指定接班人", "outcome": "接班人很感激。其他人很不服。", "effects": { "party": 5, "council": -3 } },
+      { "id": "primary", "label": "讓黨內初選公平競爭", "outcome": "很民主。初選打得頭破血流。", "effects": { "integrity": 3, "party": -2 } },
+      { "id": "legacy", "label": "不管接班，專心做長期建設", "outcome": "沒有連任壓力的你，終於可以做那些「不會有選票」的事了。", "effects": { "achievement": 6, "party": -4 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "連任的縣市長第二任期無法再連任，常面臨黨內接班卡位與行政跛腳。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "t-expo-deficit",
+    "phase": "term",
+    "title": "博覽會的帳單",
+    "scenario": "前任辦的國際博覽會結算出爐：門票收入比預算少了三成多，市府得舉債補洞。議會要求你給個交代。",
+    "tags": ["財政", "大型活動"],
+    "options": [
+      { "id": "borrow", "label": "舉債補足，「城市行銷是長期投資」", "outcome": "帳面平了。市債多了一筆，議員多了一個質詢題目。", "effects": { "treasury": -12, "council": -2 } },
+      { "id": "cut", "label": "刪減其他局處預算來補", "outcome": "博覽會的洞補上了，社福和教育的洞變大了。", "effects": { "achievement": -5, "team": -4 } },
+      { "id": "probe", "label": "公開檢討，追究決策責任", "outcome": "報告寫得很誠實，前任團隊和黨內前輩都不太高興。", "effects": { "integrity": 5, "media": 6, "party": -5, "team": -2 } }
+    ],
+    "source": { "status": "draft", "prototype": "直轄市辦理國際博覽會後，歲入決算大幅短收，需舉債支應，並遭監察院調查。", "adaptation": "城市與金額已虛構化。", "refs": [{ "title": "臺中市政府：近三年監察院糾正案與調查報告之說明與檢討（2022）", "url": "https://www.rdec.taichung.gov.tw/media/785392/1110413-4-市政府針對近三年監察院對臺中市提出糾正案-糾舉案-調查報告案之說明與檢討專.pdf", "quote": "經舉借債務17 億5,635 萬餘元支應", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-mrt-defect",
+    "phase": "term",
+    "title": "試營運出包",
+    "scenario": "新捷運線試營運第三週，一節車廂的聯接器軸心斷了。還好沒人受傷，但影片已經在網路上流傳。",
+    "tags": ["交通", "安全"],
+    "conditions": { "anyFlags": ["promise-mrt", "perk-rush"] },
+    "weight": 2,
+    "options": [
+      { "id": "halt", "label": "立即停駛，全線總體檢", "outcome": "通勤族怨聲載道，但你睡得著。", "effects": { "approval": -5, "integrity": 4, "achievement": -2 }, "skill": "admin" },
+      { "id": "quiet", "label": "照常營運，低調處理", "outcome": "新聞兩天就過去了。工程師們的群組沒有過去。", "effects": { "integrity": -6, "approval": 1 }, "delayed": { "afterTurns": 2, "effects": { "approval": -6, "media": 8 }, "text": "內部檢修紀錄外流：捷運公司早知道零件有問題。" } },
+      { "id": "explain", "label": "市長親自召開記者會，逐項說明", "outcome": "你把技術報告講得很清楚，連工程師都點頭。", "effects": { "media": 8, "approval": 2, "integrity": 2 }, "requires": { "min": { "team": 45 } }, "skill": "policy" }
+    ],
+    "source": { "status": "draft", "prototype": "捷運新路線試營運期間發生電聯車零件斷裂，監察院立案調查。", "adaptation": "情境已虛構化。", "refs": [{ "title": "臺中市政府：近三年監察院糾正案與調查報告之說明與檢討（2022）", "url": "https://www.rdec.taichung.gov.tw/media/785392/1110413-4-市政府針對近三年監察院對臺中市提出糾正案-糾舉案-調查報告案之說明與檢討專.pdf", "quote": "電聯車車廂間半永久聯接器牽引裝置軸心斷裂案", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-farm-factory",
+    "phase": "term",
+    "title": "農地工廠大火",
+    "scenario": "一間農地上的違章工廠半夜起火，消防員受傷。調查發現，這樣的工廠全市還有上千家。",
+    "tags": ["公安", "產業"],
+    "options": [
+      { "id": "crackdown", "label": "全面稽查，違規者斷水斷電", "outcome": "工安大幅改善。幾千個工廠老闆和他們的員工都記住了你。", "effects": { "achievement": 6, "party": -6, "approval": -2, "business": -6 }, "requires": { "min": { "team": 40 } }, "skill": "admin" },
+      { "id": "legalize", "label": "輔導就地合法化", "outcome": "工廠老闆們很感激。環保團體說你在幫違法者漂白。", "effects": { "party": 6, "integrity": -5, "council": 3, "business": 8 } },
+      { "id": "one", "label": "只處理起火的那一家", "outcome": "事情暫時平息。下一場火在哪裡，沒人知道。", "effects": { "approval": -3 } }
+    ],
+    "source": { "status": "draft", "prototype": "農地違章工廠火災造成傷亡後，地方政府的稽查與輔導政策受到檢討。", "adaptation": "情境已虛構化。", "refs": [{ "title": "臺中市政府：近三年監察院糾正案與調查報告之說明與檢討（2022）", "url": "https://www.rdec.taichung.gov.tw/media/785392/1110413-4-市政府針對近三年監察院對臺中市提出糾正案-糾舉案-調查報告案之說明與檢討專.pdf", "quote": "農地違章工廠火災案檢討", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-land-value",
+    "phase": "term",
+    "title": "公告地價",
+    "scenario": "公告地價要重新評定了。地主們希望調降，財政局希望調升，選舉還有兩年。",
+    "tags": ["財政", "稅"],
+    "options": [
+      { "id": "cut", "label": "大幅調降兩成", "outcome": "地主們很開心。市庫的地價稅收入也跟著打了八折。", "effects": { "approval": 6, "treasury": -10, "integrity": -2, "business": 8 }, "requires": { "min": { "treasury": 30 } } },
+      { "id": "market", "label": "照市價合理調整", "outcome": "財政健全了一點。你的服務處電話響個不停。", "effects": { "treasury": 8, "approval": -6, "integrity": 2 } },
+      { "id": "hold", "label": "維持不變", "outcome": "沒人特別高興，也沒人特別生氣。", "effects": { "treasury": 1 } }
+    ],
+    "source": { "status": "draft", "prototype": "直轄市公告地價大幅調降，監察院就其對稅收與公平性的影響進行調查。", "adaptation": "比例與情境已虛構化。", "refs": [{ "title": "臺中市政府：近三年監察院糾正案與調查報告之說明與檢討（2022）", "url": "https://www.rdec.taichung.gov.tw/media/785392/1110413-4-市政府針對近三年監察院對臺中市提出糾正案-糾舉案-調查報告案之說明與檢討專.pdf", "quote": "公告地價調降20.06%案", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-childcare-abuse",
+    "phase": "term",
+    "title": "托嬰中心事件",
+    "scenario": "一段監視器畫面流出：托嬰中心的保母搖晃嬰兒。家長們湧進市議會。",
+    "tags": ["托育", "兒少"],
+    "options": [
+      { "id": "raid", "label": "全市托嬰中心無預警稽查", "outcome": "社會局連續加班一個月。家長們稍微放心了。", "effects": { "achievement": 5, "approval": 3, "team": -4 }, "requires": { "min": { "team": 40 } }, "skill": "admin" },
+      { "id": "publish", "label": "公布所有違規業者名單", "outcome": "家長很支持。業者公會說要提告。", "effects": { "media": 6, "approval": 4, "council": -3 } },
+      { "id": "routine", "label": "交由社會局依法處理", "outcome": "程序都對，但家長覺得你不在乎。", "effects": { "approval": -4 } }
+    ],
+    "source": { "status": "draft", "prototype": "托育機構虐童事件後，監察院調查地方政府的托育安全機制。", "adaptation": "情境已虛構化。", "refs": [{ "title": "臺中市政府：近三年監察院糾正案與調查報告之說明與檢討（2022）", "url": "https://www.rdec.taichung.gov.tw/media/785392/1110413-4-市政府針對近三年監察院對臺中市提出糾正案-糾舉案-調查報告案之說明與檢討專.pdf", "quote": "本市托育安全機制檢討及預防", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-temple",
+    "phase": "term",
+    "title": "違章宮廟",
+    "scenario": "一座香火鼎盛的宮廟被檢舉是違章建築，已經存在二十年。廟方主委是地方上很有分量的人。",
+    "tags": ["違建", "地方"],
+    "options": [
+      { "id": "demolish", "label": "依法拆除", "outcome": "法治的勝利。廟方說「神明會看著」。", "effects": { "integrity": 5, "party": -8, "approval": -3 } },
+      { "id": "legalize", "label": "協助補辦執照就地合法", "outcome": "信眾很感激，主委在選舉時會幫你。", "effects": { "party": 6, "integrity": -4, "council": 3, "business": 3 }, "skill": "deal" },
+      { "id": "shelve", "label": "先擱置，之後再說", "outcome": "檢舉人又檢舉了一次，這次附上了你的名字。", "effects": { "integrity": -2, "media": 3 } }
+    ],
+    "source": { "status": "draft", "prototype": "宮廟違章建築長期未處理，地方政府在依法拆除與地方情感之間的處置受到監察院調查。", "adaptation": "情境已虛構化。", "refs": [{ "title": "臺中市政府：近三年監察院糾正案與調查報告之說明與檢討（2022）", "url": "https://www.rdec.taichung.gov.tw/media/785392/1110413-4-市政府針對近三年監察院對臺中市提出糾正案-糾舉案-調查報告案之說明與檢討專.pdf", "quote": "「瑞和宮」違章建築案", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-metro-hiring",
+    "phase": "term",
+    "title": "公營公司招考風波",
+    "scenario": "市府轉投資的捷運公司招考新進人員，錄取名單裡有好幾位議員和里長的親戚。",
+    "tags": ["人事", "酬庸"],
+    "options": [
+      { "id": "redo", "label": "全部重考，引進外部監督", "outcome": "考試公平了。幾位議員打電話來「關心」。", "effects": { "integrity": 4, "team": 3, "party": -3, "council": -3 } },
+      { "id": "keep", "label": "維持結果，強調「依法辦理」", "outcome": "風波慢慢平息。年輕人在網路上說「果然要靠關係」。", "effects": { "integrity": -5, "party": 3, "approval": -2, "business": 4 } },
+      { "id": "review", "label": "請公司內部檢討", "outcome": "公司交了一份報告，結論是「沒有問題」。", "effects": { "media": -2 } }
+    ],
+    "source": { "status": "draft", "prototype": "市府轉投資公司辦理新進人員招考，相關作業規定與流程遭監察院糾正。", "adaptation": "情境已虛構化。", "refs": [{ "title": "臺中市政府：近三年監察院糾正案與調查報告之說明與檢討（2022）", "url": "https://www.rdec.taichung.gov.tw/media/785392/1110413-4-市政府針對近三年監察院對臺中市提出糾正案-糾舉案-調查報告案之說明與檢討專.pdf", "quote": "臺中捷運股份有限公司辦理107 年第2 次新進人員考試甄選案", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-special-ed",
+    "phase": "term",
+    "title": "被拒絕的孩子",
+    "scenario": "一所國小以「沒有資源」為由，拒絕一位自閉症孩子入學。家長在臉書上的長文被分享了三萬次。",
+    "tags": ["教育", "特教"],
+    "options": [
+      { "id": "fund", "label": "增設特教資源班與助理員", "outcome": "孩子入學了，全市也多了 30 個資源班。", "effects": { "treasury": -5, "achievement": 4, "integrity": 3 }, "requires": { "min": { "treasury": 20 } } },
+      { "id": "order", "label": "要求學校立刻接收", "outcome": "孩子入學了。老師們說他們還是沒有資源。", "effects": { "approval": 2, "team": -3 } },
+      { "id": "transfer", "label": "協助轉介到其他學校", "outcome": "問題換了一個地方發生。", "effects": { "integrity": -4, "approval": -2 } }
+    ],
+    "source": { "status": "draft", "prototype": "國小拒絕自閉症學生入學，監察院就特殊教育資源與受教權提出糾正。", "adaptation": "情境已虛構化。", "refs": [{ "title": "臺中市政府：近三年監察院糾正案與調查報告之說明與檢討（2022）", "url": "https://www.rdec.taichung.gov.tw/media/785392/1110413-4-市政府針對近三年監察院對臺中市提出糾正案-糾舉案-調查報告案之說明與檢討專.pdf", "quote": "本市太平區東汴國民小學拒絕自閉症學生入學案", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-shelter",
+    "phase": "term",
+    "title": "收容所爆滿",
+    "scenario": "零撲殺政策上路後，市立收容所的籠子已經一籠三犬。獸醫說他們撐不下去了。",
+    "tags": ["動保"],
+    "options": [
+      { "id": "expand", "label": "擴建收容所、增聘獸醫", "outcome": "空間夠了。下一個問題是：誰來付以後每年的飼料錢？", "effects": { "treasury": -8, "achievement": 3, "team": 2 }, "requires": { "min": { "treasury": 25 } } },
+      { "id": "outsource", "label": "把狗送到民間狗場", "outcome": "籠子空了。狗去了哪裡，沒人追蹤。", "effects": { "integrity": -5, "treasury": 2 }, "delayed": { "afterTurns": 2, "effects": { "approval": -6, "media": 8 }, "text": "動保團體踢爆：市府委託的民間狗場環境惡劣。" } },
+      { "id": "tnr", "label": "推動絕育與認養，治本但慢", "outcome": "效果要好幾年才看得到。收容所的籠子明天還是滿的。", "effects": { "achievement": 3, "approval": -1, "team": -2 } }
+    ],
+    "source": { "status": "draft", "prototype": "零撲殺政策實施後，公立收容所超收，大量犬隻被送往民間私人狗場。", "adaptation": "情境已虛構化。", "refs": [{ "title": "報導者：零撲殺上路6年專題", "url": "https://www.twreporter.org/topics/6-years-after-no-kill-policy-adopted", "quote": "公立收容所大量將狗送到民間的私人狗場", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-pedestrian",
+    "phase": "term",
+    "title": "還路於民",
+    "scenario": "兩萬多人上街遊行，抗議行人地獄。訴求很簡單：人行道要能走。",
+    "tags": ["交通", "行人"],
+    "options": [
+      { "id": "sidewalk", "label": "拓寬人行道，縮減汽車道", "outcome": "走路的人很開心。開車的人塞在路上罵你。", "effects": { "approval": -4, "achievement": 6, "council": -3 }, "skill": "admin" },
+      { "id": "enforce", "label": "全面取締違規停車", "outcome": "人行道清空了，罰單開了十萬張。", "effects": { "approval": -5, "achievement": 3, "integrity": 2, "treasury": 3 } },
+      { "id": "campaign", "label": "辦交通安全宣導活動", "outcome": "宣導影片很可愛，路口還是一樣危險。", "effects": { "media": 4 } }
+    ],
+    "source": { "status": "draft", "prototype": "2023 年路權團體發起還路於民大遊行，訴求改善行人環境與零死亡願景。", "adaptation": "情境已虛構化。", "refs": [{ "title": "中央社：還路於民遊行推零死亡願景等5訴求（2023-08-21）", "url": "https://www.cna.com.tw/news/ahel/202308215001.aspx", "quote": "根據主辦單位估計，參加遊行人數約2萬5000人", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-dengue",
+    "phase": "term",
+    "title": "登革熱大流行",
+    "scenario": "確診病例一週破千。疾管署派人進駐，媒體每天報累計數字。",
+    "tags": ["防疫"],
+    "options": [
+      { "id": "command", "label": "開設一級指揮中心，全局處動員", "outcome": "疫情慢慢壓下來了。局處長們三個月沒放假。", "effects": { "achievement": 6, "team": -5, "treasury": -4 }, "requires": { "min": { "team": 35 } }, "skill": "admin" },
+      { "id": "boots", "label": "市長天天穿雨鞋巡視病媒蚊", "outcome": "你的雨鞋照片成了防疫代言。病例數字還在漲。", "effects": { "media": 10, "approval": 3, "team": -2 }, "skill": "media" },
+      { "id": "fine", "label": "積水容器一律開罰", "outcome": "罰單開了很多張。孳生源也真的少了。", "effects": { "approval": -4, "achievement": 4, "treasury": 2 } }
+    ],
+    "source": { "status": "draft", "prototype": "2023 年臺南登革熱疫情確診逾兩萬人，市府開設一級指揮中心並動員各局處。", "adaptation": "情境已虛構化。", "refs": [{ "title": "公視新聞網：天氣回暖登革熱疫情恐再起 台南市府提早啟動防治（2024-03-12）", "url": "https://news.pts.org.tw/article/684942", "quote": "2023年台南登革熱疫情嚴重，共有2萬1529人確診病例", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-incinerator",
+    "phase": "term",
+    "title": "焚化廠的鄰居",
+    "scenario": "垃圾焚化廠要延役二十年。周邊四個里的居民拉布條：「要燒可以，回饋金拿來。」",
+    "tags": ["環境", "鄰避"],
+    "options": [
+      { "id": "pay", "label": "加碼回饋金", "outcome": "居民收下了錢。其他里開始問他們的回饋在哪。", "effects": { "treasury": -6, "approval": 2, "party": 3, "business": 2 } },
+      { "id": "committee", "label": "成立居民監督委員會，排放數據即時公開", "outcome": "居民半信半疑，但願意坐下來談。", "effects": { "integrity": 3, "team": -2, "council": 2 }, "skill": "negotiate" },
+      { "id": "as-planned", "label": "照原計畫延役", "outcome": "垃圾有地方燒了。抗議布條也掛了一整年。", "effects": { "approval": -4, "achievement": 2 } }
+    ],
+    "source": { "status": "draft", "prototype": "焚化廠設置或延役時，周邊居民常以回饋金與監督機制作為協商條件。", "adaptation": "情境已虛構化。", "refs": [{ "title": "公視新聞網（2021-12-28）", "url": "https://news.pts.org.tw/article/560641", "quote": "台東焚化廠明年試燒 規劃回饋金補貼", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "t-viral-mayor",
+    "phase": "term",
+    "title": "市長網紅化",
+    "scenario": "你的一支短影音爆紅了，追蹤人數一週破百萬。新聞處建議：打鐵趁熱。",
+    "tags": ["媒體"],
+    "conditions": { "min": { "media": 50 } },
+    "options": [
+      { "id": "daily", "label": "每天拍短影音，市長親自上陣", "outcome": "你成了全國最紅的市長。局處長們開始學跳舞。", "effects": { "media": 12, "approval": 3, "team": -4 }, "skill": "media" },
+      { "id": "officials", "label": "讓局處長輪流上鏡講政策", "outcome": "流量掉了一半，但市民第一次認識了交通局長。", "effects": { "media": 4, "team": 4 } },
+      { "id": "focus", "label": "減少曝光，專心做事", "outcome": "追蹤人數慢慢掉。施政報告的進度慢慢跟上。", "effects": { "media": -8, "achievement": 3 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "社群媒體時代，地方首長經營個人網路聲量成為常態，也引發「重行銷輕施政」的討論。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "t-burnout",
+    "phase": "term",
+    "title": "公務員過勞",
+    "scenario": "市府的加班時數創新高。一位科長在辦公室昏倒，同仁在 PTT 上發文：「市長只在乎上新聞。」",
+    "tags": ["人事", "行政"],
+    "conditions": { "max": { "team": 50 } },
+    "weight": 2,
+    "options": [
+      { "id": "hire", "label": "編預算增聘人力", "outcome": "人手多了，大家終於能準時下班一天。", "effects": { "treasury": -6, "team": 8 }, "requires": { "min": { "treasury": 20 } } },
+      { "id": "trim", "label": "砍掉一些形象活動，減少業務量", "outcome": "公務員鬆了一口氣。你的曝光也少了。", "effects": { "team": 5, "media": -5 } },
+      { "id": "rally", "label": "親自探望、喊話「再撐一下」", "outcome": "探望的照片很溫馨。加班還是一樣多。", "effects": { "team": -4, "media": 3 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "地方政府業務量增加、人力不足，公務員過勞與離職問題時有所聞。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "t-member-funds",
+    "phase": "term",
+    "title": "議員建議款",
+    "scenario": "總預算審查前夕，議員們提醒你：每人每年的「地方建設建議款」，今年可別少。",
+    "tags": ["議會", "預算"],
+    "options": [
+      { "id": "keep", "label": "照舊保留，每人額度不變", "outcome": "預算順利三讀。各地多了許多涼亭和路燈。", "effects": { "council": 10, "integrity": -4, "treasury": -4, "business": 4 } },
+      { "id": "abolish", "label": "宣布廢除建議款", "outcome": "公民團體大力讚揚。議會準備好好「審查」你的預算。", "effects": { "integrity": 5, "council": -12, "media": 6 } },
+      { "id": "open", "label": "改成公開審查、上網公告", "outcome": "議員們不太情願，但很難公開反對。", "effects": { "council": -3, "integrity": 3, "team": -2 }, "skill": "negotiate" }
+    ],
+    "source": { "status": "placeholder", "prototype": "地方議員以「建議款」指定地方小型工程，長期被質疑為選舉綁樁。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "t-donor-favor",
+    "phase": "term",
+    "title": "金主的請託",
+    "scenario": "選前捐了大筆政治獻金的建商來拜訪，希望他的都更案能多拿一點容積獎勵。「下次選舉，我們一樣挺你。」",
+    "tags": ["政治獻金", "都更"],
+    "options": [
+      { "id": "help", "label": "請都發局「從寬審查」", "outcome": "建案順利通過。下次選舉的經費，你不用擔心了。", "effects": { "integrity": -8, "achievement": 2, "business": 12 }, "funds": 2000, "skill": "deal" },
+      { "id": "law", "label": "依法審查，不給特殊待遇", "outcome": "建商笑著離開。下次選舉，他的支票可能開給別人。", "effects": { "integrity": 3, "party": -2, "business": -5 } },
+      { "id": "disclose", "label": "公開往來紀錄，並退還有疑慮的捐款", "outcome": "公民團體叫好。幾位捐款人打電話來說「以後不方便了」。", "effects": { "integrity": 5, "media": 4, "party": -3, "business": -10 }, "funds": -500 }
+    ],
+    "source": { "status": "placeholder", "prototype": "政治獻金捐款人與市府行政處分之間的利益衝突，常是選後爭議的焦點。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "t-midterm-campaign",
+    "phase": "term",
+    "title": "議員選舉輔選",
+    "scenario": "同黨的議員候選人們要選舉了。黨部希望你這位市長「出錢出力」，母雞帶小雞。",
+    "tags": ["政黨", "輔選"],
+    "conditions": { "notFlags": ["party-independent"] },
+    "options": [
+      { "id": "fund", "label": "撥出競選經費，全力輔選", "outcome": "同黨議員當選了好幾席。你在議會多了很多朋友。", "effects": { "party": 10, "council": 4 }, "funds": -1500 },
+      { "id": "appear", "label": "只站台，不出錢", "outcome": "候選人們很感謝，但私下說你「小氣」。", "effects": { "party": 3 }, "skill": "grassroots" },
+      { "id": "skip", "label": "專心市政，不參與", "outcome": "黨部很不滿意。下次你需要黨的時候，他們也會很忙。", "effects": { "party": -8, "achievement": 2 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "縣市長與同黨議員候選人之間的輔選關係，常以經費與站台交換議會支持。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "t-fundraising",
+    "phase": "term",
+    "title": "連任的錢從哪來",
+    "scenario": "競選總幹事算了一下：下一場選舉，至少還要一億。帳戶裡的錢，離這個數字很遠。",
+    "tags": ["募款"],
+    "options": [
+      { "id": "gala", "label": "辦大型募款餐會", "outcome": "席開百桌。你在每一桌都敬了酒，隔天的市政會議請假了。", "effects": { "integrity": -2, "team": -2, "business": 6 }, "funds": 1500 },
+      { "id": "small", "label": "小額網路募款", "outcome": "三萬人各捐了幾百塊。你在臉書上一一回覆感謝。", "effects": { "media": 3 }, "funds": 600 },
+      { "id": "frugal", "label": "不募了，用省錢的方式選", "outcome": "你的團隊開始研究怎麼用一半的預算打選戰。", "effects": { "integrity": 2 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "候選人的競選經費主要來自政黨補助、政治獻金與募款活動。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "t-indicted",
+    "phase": "term",
+    "title": "偵查中的市長",
+    "scenario": "檢調搜索後，你被列為被告。黨內有人建議你請假，支持者則要你硬起來。",
+    "tags": ["司法", "後續"],
+    "conditions": { "flags": ["investigated"] },
+    "weight": 6,
+    "options": [
+      { "id": "suspend", "label": "請假停職，由副市長代理", "outcome": "市政沒有停擺，但大家都在等你的起訴書。", "effects": { "approval": 3, "integrity": 3, "team": -6, "achievement": -4 } },
+      { "id": "persecution", "label": "召開記者會：「這是政治追殺」", "outcome": "支持者團結了。中間選民覺得你在轉移焦點。", "effects": { "party": 6, "approval": -4, "integrity": -4, "media": 6 }, "skill": "confront" },
+      { "id": "cooperate", "label": "請律師配合調查，公開所有相關資料", "outcome": "律師費又多了一筆，但記者說你「至少很坦蕩」。", "effects": { "integrity": 6, "approval": 2, "media": 4 }, "funds": -500 }
+    ],
+    "source": { "status": "placeholder", "prototype": "首長在任內遭檢調搜索或起訴後，在請假、反擊與配合調查之間的選擇。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "t-austerity",
+    "phase": "term",
+    "title": "財政緊縮方案",
+    "scenario": "財政局長端出三個方案，每一個都會有人罵。不選的話，下個月公務員的薪水會晚發。",
+    "tags": ["財政", "後續"],
+    "conditions": { "flags": ["fiscal-crisis"] },
+    "weight": 8,
+    "options": [
+      { "id": "cut-welfare", "label": "刪減社福補助", "outcome": "市庫喘了一口氣。社福團體在市府前靜坐。", "effects": { "treasury": 12, "approval": -8, "integrity": -2 } },
+      { "id": "fees", "label": "調漲停車費與各項規費", "outcome": "每個開車的人都多付了一點錢，也都多罵了你一點。", "effects": { "treasury": 10, "approval": -6 } },
+      { "id": "sell-land", "label": "標售精華區市有地", "outcome": "一次賣了幾十億。建商很開心，下一代少了一塊地。", "effects": { "treasury": 15, "achievement": -3, "integrity": -3, "business": 8 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "地方政府財政吃緊時，常以刪減支出、調漲規費或標售公有土地因應。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "t-after-protest",
+    "phase": "term",
+    "title": "抗議之後",
+    "scenario": "抗議群眾還沒散去。你的幕僚分成兩派：一派說要談，一派說不能示弱。",
+    "tags": ["民意", "後續"],
+    "conditions": { "flags": ["protested"] },
+    "weight": 6,
+    "options": [
+      { "id": "meet", "label": "邀請抗議代表到市府對談", "outcome": "對談直播了三個小時。問題沒解決，但氣氛緩和了。", "effects": { "approval": 4, "team": -2, "integrity": 2 }, "skill": "negotiate" },
+      { "id": "police", "label": "依法驅離", "outcome": "廣場清空了。驅離的畫面在網路上傳了一整週。", "effects": { "approval": -5, "integrity": -4, "council": 2, "media": 5 }, "skill": "confront" },
+      { "id": "concede", "label": "撤回引發爭議的政策", "outcome": "抗議者散去了。原本支持那個政策的人覺得被你出賣。", "effects": { "approval": 5, "achievement": -4, "party": -3 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "大型陳抗發生後，首長在對話、驅離與讓步之間的處置。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "i-ribbon-cutting",
+    "phase": "incumbency",
+    "title": "選前通車",
+    "scenario": "捷運支線原定明年三月通車。工程處說：「趕一下，十一月也可以。只是有些測試要縮短。」",
+    "tags": ["現任資源", "工程"],
+    "options": [
+      { "id": "rush", "label": "提前通車，市長親自剪綵", "outcome": "首班車上擠滿了記者。你的笑容登上每一家晚報。", "effects": { "approval": 22, "achievement": 2, "media": 8 }, "perk": true, "setFlags": ["perk-rush"], "delayed": { "afterTurns": 1, "effects": { "approval": 7, "integrity": -3 }, "text": "通車第二週，號誌系統當機，列車停駛三小時。" } },
+      { "id": "schedule", "label": "照原定時程，選後再通車", "outcome": "工程處長鬆了一口氣。選後剪綵的會是誰，還不知道。", "effects": { "achievement": 4, "integrity": 3 } },
+      { "id": "preview", "label": "辦「搶先試乘」活動，市長帶隊", "outcome": "沒正式通車，但照片一樣好看。", "effects": { "approval": 17, "treasury": -2 }, "perk": true }
+    ],
+    "source": { "status": "placeholder", "prototype": "現任首長於選前舉辦公共工程通車、啟用或動土典禮，時程安排常引發選舉考量的質疑。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "i-city-ads",
+    "phase": "incumbency",
+    "title": "市政宣導廣告",
+    "scenario": "新聞處提案：用市府預算拍一支「城市在進步」形象廣告。腳本裡，市長出現了 47 秒。",
+    "tags": ["現任資源", "媒體"],
+    "options": [
+      { "id": "air", "label": "照腳本播出，全台電視聯播", "outcome": "你的臉在捷運站、公車、YouTube 前置廣告裡無所不在。", "effects": { "approval": 20, "treasury": -6, "integrity": -5, "media": 10 }, "perk": true, "setFlags": ["perk-ads"] },
+      { "id": "policy-only", "label": "刪掉市長畫面，只講政策資訊", "outcome": "廣告很專業，觀眾記得的是那隻吉祥物。", "effects": { "approval": 2, "treasury": -3, "integrity": 2 } },
+      { "id": "cancel", "label": "不拍，經費轉做公園維護", "outcome": "公園的草很整齊。沒有人知道是誰剪的。", "effects": { "achievement": 3 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "地方政府以公帑製作市政宣導或置入行銷，首長頻繁出鏡，常被質疑變相競選廣告。", "adaptation": "數字與情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "i-senior-bonus",
+    "phase": "incumbency",
+    "title": "重陽敬老金",
+    "scenario": "重陽節快到了，剛好在投票前一個月。社會局問：今年敬老金照舊，還是……？",
+    "tags": ["現任資源", "福利", "財政"],
+    "options": [
+      { "id": "raise", "label": "宣布加碼，而且改成市長親筆賀卡隨金發送", "outcome": "長輩們收到了錢，也收到了一張有你簽名的卡片。", "effects": { "approval": 21, "treasury": -10 }, "perk": true, "requires": { "min": { "treasury": 25 } } },
+      { "id": "same", "label": "照往年標準發放", "outcome": "沒有人抱怨，也沒有人特別記得。", "effects": {} },
+      { "id": "care", "label": "改把經費投入長照據點", "outcome": "長照據點多了 12 處。部分長輩打電話罵「敬老金變少了」。", "effects": { "approval": -3, "achievement": 6 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "地方政府於選舉年調整敬老金或節慶禮金，引發福利政策與選舉考量的討論。", "adaptation": "金額與情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "i-li-chiefs",
+    "phase": "incumbency",
+    "title": "里長的請託",
+    "scenario": "里長聯誼會希望追加「里鄰建設經費」。會長暗示：「大家都很願意幫市長說話。」",
+    "tags": ["現任資源", "地方經營"],
+    "options": [
+      { "id": "grant", "label": "全面追加，每里平均分配", "outcome": "各里的活動中心換了新冷氣，里長們的 LINE 群組開始轉發你的政績。", "effects": { "approval": 16, "party": 8, "treasury": -6, "integrity": -4, "business": 4 }, "perk": true, "setFlags": ["perk-li-chiefs"] },
+      { "id": "need-based", "label": "依實際需求審核，公開排序", "outcome": "制度很公平。沒分到的里長，記得很清楚。", "effects": { "achievement": 4, "party": -4, "integrity": 3 } },
+      { "id": "decline", "label": "婉拒，預算已經定案", "outcome": "會長笑著說「了解」。你不太確定那是什麼意思。", "effects": { "party": -6 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "里鄰建設或小型工程經費的分配，常被視為首長經營基層的工具。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "i-new-year",
+    "phase": "incumbency",
+    "title": "跨年晚會",
+    "scenario": "跨年晚會的直播收視率是全國第一。導播問：倒數的時候，市長要不要上台？",
+    "tags": ["現任資源", "城市行銷"],
+    "options": [
+      { "id": "countdown", "label": "上台帶全場倒數，還要講一段話", "outcome": "全國最多人看的十秒鐘，主角是你。", "effects": { "approval": 19, "treasury": -3, "media": 10 }, "perk": true },
+      { "id": "artists", "label": "交給藝人，市長在台下看", "outcome": "網友說你「很低調」。你的幕僚說你「很浪費」。", "effects": { "integrity": 2 } },
+      { "id": "downsize", "label": "縮小規模，省下的錢補助社區活動", "outcome": "社區活動辦得很溫馨，參加人數 312 人。", "effects": { "approval": -2, "achievement": 3, "treasury": 3 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "首長於市府主辦的大型活動中高度曝光，被視為現任者的宣傳優勢。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "i-disaster-visit",
+    "phase": "incumbency",
+    "title": "災後慰問",
+    "scenario": "一場火災造成數十戶受災。社會局的慰問金已經核准，問題是：誰去發？",
+    "tags": ["現任資源", "防災"],
+    "options": [
+      { "id": "personal", "label": "市長親自逐戶發放，帶著攝影團隊", "outcome": "畫面很感人。受災戶等了兩天，就為了等市長行程。", "effects": { "approval": 18, "integrity": -3, "media": 6 }, "perk": true },
+      { "id": "fast", "label": "社會局當天直接匯款", "outcome": "錢很快到了。沒有新聞。", "effects": { "achievement": 3, "integrity": 2 } },
+      { "id": "reform", "label": "藉機推動老舊建物消防安檢", "outcome": "安檢讓很多房東不高興，但下一場火可能不會發生。", "effects": { "achievement": 6, "approval": -2, "council": -3 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "首長親自出席災後慰問與發放，兼具行政職責與媒體曝光。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "r-abuse-ads",
+    "phase": "reelection",
+    "title": "對手踢爆：廣告是誰付的？",
+    "scenario": "對手陣營算出市府形象廣告裡你出現的秒數，換算成廣告費，開記者會說這是「用市民的錢幫自己打選戰」。",
+    "tags": ["選戰", "現任資源", "反撲"],
+    "conditions": { "flags": ["perk-ads"] },
+    "weight": 4,
+    "options": [
+      { "id": "pull", "label": "立刻下架廣告並道歉", "outcome": "止血了，但「心虛」兩個字被剪成懶人包。", "effects": { "approval": -6, "integrity": 3 } },
+      { "id": "defend", "label": "堅稱是「依法辦理的市政宣導」", "outcome": "監察院表示會研究。新聞跑了一整週。", "effects": { "approval": -10, "integrity": -3 } },
+      { "id": "counter", "label": "翻出對手執政時的類似廣告", "outcome": "觀眾的結論是：大家都一樣。", "effects": { "approval": -4, "integrity": -4, "party": 3 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "選戰期間，現任首長以公帑製作的宣導廣告常遭對手指控為變相競選。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "r-abuse-li-chiefs",
+    "phase": "reelection",
+    "title": "對手踢爆：里長樁腳",
+    "scenario": "一段錄音流出：某位里長在社區聚會上說「市長給我們經費，大家要知道感恩」。",
+    "tags": ["選戰", "現任資源", "反撲"],
+    "conditions": { "flags": ["perk-li-chiefs"] },
+    "weight": 4,
+    "options": [
+      { "id": "distance", "label": "切割：經費分配完全依規定", "outcome": "里長們覺得被出賣，動員突然變得很安靜。", "effects": { "approval": -4, "party": -8 } },
+      { "id": "audit", "label": "請政風全面清查里鄰經費", "outcome": "查了才發現有三個里重複核撥。你的誠實被做成了標題。", "effects": { "approval": -7, "integrity": 5 } },
+      { "id": "ignore", "label": "不回應，讓新聞自己退燒", "outcome": "新聞沒有退燒，它變成了辯論會的第一題。", "effects": { "approval": -9 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "基層經費分配與選舉動員的關聯，常在選戰中成為攻防焦點。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "r-abuse-rush",
+    "phase": "reelection",
+    "title": "對手踢爆：趕工通車",
+    "scenario": "工程顧問公司的內部信件流出：「為配合市長行程，部分測試項目延後至通車後補做。」",
+    "tags": ["選戰", "現任資源", "反撲"],
+    "conditions": { "flags": ["perk-rush"] },
+    "weight": 4,
+    "options": [
+      { "id": "suspend", "label": "宣布停駛，補完所有測試", "outcome": "通勤族很生氣，但沒有人受傷。", "effects": { "approval": -7, "integrity": 4, "achievement": -2 } },
+      { "id": "insist", "label": "強調「安全無虞」，照常營運", "outcome": "你搭了一整週的首班車證明安全。", "effects": { "approval": -5, "integrity": -4 } },
+      { "id": "blame", "label": "把責任推給顧問公司", "outcome": "顧問公司公布了更多信件。", "effects": { "approval": -9, "integrity": -3 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "公共工程為配合選前通車而壓縮測試期程的爭議。", "adaptation": "情境為虛構。", "refs": [] }
   },
   {
     "id": "r-final-push",
@@ -192,9 +1135,10 @@
     "scenario": "連任選戰最後七天，民調顯示你和對手在誤差範圍內。",
     "tags": ["選戰"],
     "options": [
-      { "id": "rally", "label": "動員所有樁腳辦造勢晚會", "outcome": "場面很大，便當很多。", "effects": { "party": 6, "treasury": -5 } },
-      { "id": "record", "label": "發布四年施政成績單", "outcome": "一份很詳細的 PDF，下載次數 312 次。", "effects": { "achievement": 2, "approval": 2 } },
-      { "id": "negative", "label": "推出攻擊對手的廣告", "outcome": "有效。你自己都覺得有點不舒服。", "effects": { "approval": 5, "integrity": -8 } }
+      { "id": "rally", "label": "動員所有樁腳辦造勢晚會", "outcome": "場面很大，便當很多。", "effects": { "party": 6, "treasury": -5 }, "funds": -2000, "skill": "organize" },
+      { "id": "record", "label": "發布四年施政成績單", "outcome": "一份很詳細的 PDF，下載次數 312 次。", "effects": { "achievement": 2, "approval": 2 }, "skill": "policy" },
+      { "id": "negative", "label": "推出攻擊對手的廣告", "outcome": "有效。你自己都覺得有點不舒服。", "effects": { "approval": 5, "integrity": -8 }, "funds": -1500 },
+      { "id": "endorse", "label": "公民團體聯署背書", "outcome": "長期批評你的團體都站出來了，這比任何廣告都有說服力。", "effects": { "approval": 7, "media": 5 }, "appearsIf": { "min": { "integrity": 80 } } }
     ],
     "source": { "status": "placeholder", "prototype": "選戰末期的造勢動員、政績宣傳與負面選舉。", "adaptation": "情境為虛構。", "refs": [] }
   },
@@ -205,10 +1149,26 @@
     "scenario": "對手拿出你四年前的政見影片，問你：「這些做到了嗎？」",
     "tags": ["選戰", "承諾"],
     "options": [
-      { "id": "own", "label": "坦承落差，說明原因", "outcome": "評論員說這是本屆最誠實的一分鐘。", "effects": { "integrity": 6, "approval": -2 } },
-      { "id": "pivot", "label": "轉談對手的黑歷史", "outcome": "全場嘩然。主持人敲了三次鈴。", "effects": { "approval": 3, "integrity": -5 } },
-      { "id": "numbers", "label": "端出各種數據（口徑你決定）", "outcome": "沒人能當場反駁，事實查核在兩天後才出來。", "effects": { "approval": 4, "integrity": -3 } }
+      { "id": "own", "label": "坦承落差，說明原因", "outcome": "評論員說這是本屆最誠實的一分鐘。", "effects": { "integrity": 6, "approval": -2 }, "skill": "policy" },
+      { "id": "pivot", "label": "轉談對手的黑歷史", "outcome": "全場嘩然。主持人敲了三次鈴。", "effects": { "approval": 3, "integrity": -5 }, "skill": "confront" },
+      { "id": "numbers", "label": "端出各種數據（口徑你決定）", "outcome": "沒人能當場反駁，事實查核在兩天後才出來。", "effects": { "approval": 4, "integrity": -3 }, "skill": "debate" },
+      { "id": "scorecard", "label": "拿出逐條政見兌現表，附上佐證連結", "outcome": "對手準備的攻擊稿，一半用不上了。", "effects": { "approval": 6, "integrity": 2 }, "appearsIf": { "min": { "achievement": 55 } } }
     ],
     "source": { "status": "placeholder", "prototype": "連任選舉辯論中的政見兌現檢驗。", "adaptation": "情境為虛構。", "refs": [] }
+  },
+  {
+    "id": "r-scandal-debate",
+    "phase": "reelection",
+    "title": "辯論會的第一題",
+    "scenario": "主持人的第一個問題就是你的司法案件。對手在旁邊微笑。",
+    "tags": ["選戰", "司法", "後續"],
+    "conditions": { "anyFlags": ["investigated", "scandal"] },
+    "weight": 6,
+    "options": [
+      { "id": "apologize", "label": "正面道歉，說明已經改正的地方", "outcome": "你的誠懇讓一部分人回心轉意，但案子還是案子。", "effects": { "approval": 2, "integrity": 3 } },
+      { "id": "deny", "label": "堅稱清白，「司法會還我公道」", "outcome": "支持者鼓掌。中間選民轉台。", "effects": { "approval": -3, "integrity": -3, "party": 4 } },
+      { "id": "counter", "label": "翻出對手的舊帳反擊", "outcome": "辯論會變成互相爆料大會。收視率很高。", "effects": { "approval": 1, "integrity": -5, "media": 5 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "候選人涉及司法案件時，往往成為選戰攻防與辯論會的焦點。", "adaptation": "情境為虛構。", "refs": [] }
   }
 ]
