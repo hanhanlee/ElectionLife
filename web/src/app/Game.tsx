@@ -10,6 +10,7 @@ import {
   CRISES,
   EVENTS,
   HISTORY,
+  LEGENDS,
   PARTIES,
   partyById,
   profileSetup,
@@ -31,7 +32,7 @@ import {
   TURN_PLAN,
 } from "@/game/engine";
 import { difficultyLabel, estimateFirstWinRate } from "@/game/difficulty";
-import { composeIntro, drawCharacter, type DrawnCharacter } from "@/game/profile";
+import { composeIntro, describeOpponent, drawCharacter, type DrawnCharacter } from "@/game/profile";
 import RollingScreen from "./RollingScreen";
 import ResultBanner from "./ResultBanner";
 import { buildEpilogue } from "@/game/epilogue";
@@ -54,10 +55,12 @@ import {
   ISSUE_LABELS,
   STAT_HINTS,
   STAT_LABELS,
+  TRAIT_TIER_LABELS,
   VISIBLE_STATS,
   type CampaignScale,
   type Condition,
   type Notice,
+  type Opponent,
   type GameState,
   type Issue,
   type Phase,
@@ -99,7 +102,7 @@ function characterLabel(state: GameState): string {
   return `${city}${partyName}・${backgroundById(background).name}`;
 }
 
-const CHARACTER_CONTENT = { cities: CITIES, parties: PARTIES, backgrounds: BACKGROUNDS, traits: TRAITS, burdens: BURDENS };
+const CHARACTER_CONTENT = { cities: CITIES, parties: PARTIES, backgrounds: BACKGROUNDS, traits: TRAITS, burdens: BURDENS, legends: LEGENDS };
 
 export default function Game() {
   const [game, setGame] = useState<GameState | null>(null);
@@ -184,7 +187,9 @@ export default function Game() {
   return (
     <main className={styles.main}>
       <p className={styles.turn}>
-        {characterLabel(game)}　<span className={styles.funds}>💰 競選經費 {formatFunds(game.funds)}</span>
+        {characterLabel(game)}
+        {game.opponent && `　對手：${game.opponent.name}（${partyById(game.opponent.party).name}）`}　
+        <span className={styles.funds}>💰 競選經費 {formatFunds(game.funds)}</span>
         {game.loan && game.loan.remaining > 0 && (
           <span className={styles.funds}>
             ｜貸款還剩 {formatFunds(game.loan.remaining)}，每回合還 {formatFunds(game.loan.installment)}
@@ -299,10 +304,8 @@ function CharacterReveal({ character, onStart }: { character: DrawnCharacter; on
     [party, background, profile],
   );
   const intro = composeIntro(profile, background, party, TRAITS, BURDENS, city);
-  const tags = [
-    ...profile.traits.map((id) => TRAITS.find((t) => t.id === id)!.name),
-    BURDENS.find((b) => b.id === profile.burden)!.name,
-  ];
+  const traits = profile.traits.map((id) => TRAITS.find((t) => t.id === id)!);
+  const burdenName = BURDENS.find((b) => b.id === profile.burden)!.name;
   const challengers = HISTORY.challengers[party.id as keyof typeof HISTORY.challengers];
 
   return (
@@ -312,16 +315,27 @@ function CharacterReveal({ character, onStart }: { character: DrawnCharacter; on
       </p>
       <h1 className={styles.title}>你的身分：{background.name}</h1>
       <section className={styles.card}>
+        <CardLabel label="你的人設" hint="抽到的資質（顏色代表品質）與先天包袱，決定你擅長什麼、背著什麼" />
         <div className={styles.tags}>
-          {tags.map((t) => (
-            <span key={t} className={styles.tag}>
-              {t}
+          {traits.map((t) => (
+            <span key={t.id} className={styles.tierTag} data-tier={t.tier} title={`${TRAIT_TIER_LABELS[t.tier]}資質`}>
+              {t.name}
             </span>
           ))}
+          <span className={styles.tag}>{burdenName}</span>
         </div>
+        <p className={styles.tierLegend}>
+          {(["negative", "common", "rare", "epic"] as const).map((k) => (
+            <span key={k} data-tier={k}>
+              {TRAIT_TIER_LABELS[k]}
+            </span>
+          ))}
+        </p>
         <p className={styles.intro}>{intro}</p>
       </section>
+      {profile.rivals && <OpponentCard opponent={profile.rivals.first} heading="你的對手" />}
       <section className={styles.card}>
+        <CardLabel label="競選城市" hint="選民結構與他們在意的議題，會放大或縮小你每個選擇的效果" />
         <h2>{city.name}</h2>
         <p>{city.tagline}</p>
         <p>{city.voters}</p>
@@ -344,6 +358,7 @@ function CharacterReveal({ character, onStart }: { character: DrawnCharacter; on
         </p>
       </section>
       <section className={styles.card}>
+        <CardLabel label="所屬政黨" hint="決定黨部撥款、起始支持，以及你要一起背的政黨包袱" />
         <h2>{party.name}</h2>
         <p>{party.description}</p>
         <TraitList advantages={party.advantages} baggage={party.baggage} />
@@ -355,6 +370,7 @@ function CharacterReveal({ character, onStart }: { character: DrawnCharacter; on
         </p>
       </section>
       <section className={styles.card}>
+        <CardLabel label="出身背景" hint="你參選前的身分，影響起始數值與募得到的錢" />
         <h2>{background.name}</h2>
         <p>{background.description}</p>
         <TraitList advantages={background.advantages} baggage={background.baggage} />
@@ -367,6 +383,7 @@ function CharacterReveal({ character, onStart }: { character: DrawnCharacter; on
         </p>
       </section>
       <section className={styles.card}>
+        <CardLabel label="預估難度" hint="用這組人設與對手模擬出來的當選率" />
         <h2>難度：{difficultyLabel(winRate)}</h2>
         <p>以隨機玩法模擬 300 次競選，當選率約 <strong>{Math.round(winRate * 100)}%</strong>。</p>
         <p>
@@ -388,21 +405,38 @@ function FirstElectionNotice({ state }: { state: GameState }) {
   const incumbent = state.flags.includes("bg-incumbent");
   const pct = Math.round(probability * 100);
   const spent = mobilization > 0 ? `投票前投入選前動員 ${formatFunds(mobilization)}。` : "你沒有剩下任何經費做選前動員。";
+  const rival = state.character.profile?.rivals?.first;
+  const vs = rival ? `對上${rival.name}，` : "";
   if (!won) {
     return (
       <p className={styles.notice}>
-        🗳 {spent}開票結果：{incumbent ? "連任失敗" : "落選"}。（模型估計勝率 {pct}%）
+        🗳 {spent}開票結果：{vs}
+        {incumbent ? "連任失敗" : "落選"}。（模型估計勝率 {pct}%）
       </p>
     );
   }
+  const next = state.opponent;
+  const rematch = state.flags.includes("opp-rematch");
   return (
-    <p className={styles.notice}>
-      🗳 {spent}開票結果：
-      {incumbent
-        ? "連任成功！第二階段：第二任開始了，這次沒有連任壓力，最後要交棒給接班人。"
-        : "當選！第二階段：任期開始了，那些承諾都是你的了。四年後，你要挑戰連任。"}
-      （模型估計勝率 {pct}%）
-    </p>
+    <>
+      <p className={styles.notice}>
+        🗳 {spent}開票結果：{vs}
+        {incumbent
+          ? "連任成功！第二階段：第二任開始了，這次沒有連任壓力，最後要交棒給接班人。"
+          : "當選！第二階段：任期開始了，那些承諾都是你的了。四年後，你要挑戰連任。"}
+        （模型估計勝率 {pct}%）
+      </p>
+      {next && (
+        <>
+          <p className={styles.notice}>
+            {rematch
+              ? `你贏得不多。${next.name}在敗選感言說：「四年後，我會再回來。」下一場選舉的對手，還是同一個人。`
+              : `你贏得很漂亮，${rival?.name ?? "對手"}暫時退出了政壇。四年後，一位新的挑戰者已經在準備了。`}
+          </p>
+          <OpponentCard opponent={next} heading={rematch ? "捲土重來的對手" : "下一場選舉的對手"} />
+        </>
+      )}
+    </>
   );
 }
 
@@ -441,6 +475,44 @@ function StatBar({ stats }: { stats: Stats }) {
 
 function formatFunds(n: number): string {
   return `${n.toLocaleString()} 萬`;
+}
+
+/** 卡片最上面的小字：這張卡在描述什麼，以及它對遊戲的影響 */
+function CardLabel({ label, hint, children }: { label: string; hint: string; children?: React.ReactNode }) {
+  return (
+    <p className={styles.cardLabel}>
+      <span className={styles.cardLabelName}>{label}</span>
+      {children}
+      <span className={styles.cardLabelHint}>{hint}</span>
+    </p>
+  );
+}
+
+/** 對手卡片：身分、資質（依品質上色）與介紹 */
+function OpponentCard({ opponent, heading }: { opponent: Opponent; heading: string }) {
+  const party = partyById(opponent.party);
+  const traits = opponent.traits.map((id) => TRAITS.find((t) => t.id === id)!);
+  const level =
+    opponent.strength >= 0.3 ? "很強" : opponent.strength >= 0.15 ? "強" : opponent.strength >= 0 ? "普通" : "較弱";
+  return (
+    <section className={styles.card}>
+      <CardLabel label={heading} hint="這場選舉要打敗的人；對手的資質會變成選戰中的事件">
+        {opponent.legend && <span className={styles.legendBadge}>⭐ 傳奇對手</span>}
+      </CardLabel>
+      <h2>{opponent.name}</h2>
+      <p className={styles.turn}>
+        {party.name}・{opponent.title}・實力{level}
+      </p>
+      <div className={styles.tags}>
+        {traits.map((t) => (
+          <span key={t.id} className={styles.tierTag} data-tier={t.tier} title={`${TRAIT_TIER_LABELS[t.tier]}資質`}>
+            {t.name}
+          </span>
+        ))}
+      </div>
+      <p className={styles.intro}>{describeOpponent(opponent, party.name, TRAITS, LEGENDS)}</p>
+    </section>
+  );
 }
 
 const SCALE_ORDER: CampaignScale[] = ["lean", "standard", "full"];
@@ -715,6 +787,7 @@ function EndScreen({ state, onRestart }: { state: GameState; onRestart: () => vo
         result={s.election.won ? winText : loseText}
         character={characterLabel(state)}
         vote={Math.round(s.election.probability * 100)}
+        opponent={state.opponent && `對手：${state.opponent.name}（${partyById(state.opponent.party).name}）`}
       />
 
       <section className={styles.card}>
@@ -764,6 +837,13 @@ function EndScreen({ state, onRestart }: { state: GameState; onRestart: () => vo
         <h2>為什麼是這個結果？</h2>
         <p>模型估計的勝選機率：{Math.round(s.election.probability * 100)}%</p>
         <ul className={styles.list}>
+          {state.opponent && (
+            <li>
+              對手{state.opponent.name}：{s.election.opponentStrength >= 0 ? "扣分" : "加分"}{" "}
+              {Math.abs(s.election.opponentStrength).toFixed(2)}
+              <small> — 對手資質越好越難打；對手是現任市長再扣 0.15，捲土重來的對手再扣 0.05。</small>
+            </li>
+          )}
           <li>
             選前動員：投入 {formatFunds(s.election.mobilization)}，加分 {s.election.mobilizationValue.toFixed(2)}
             <small> — 投票前剩下的競選經費會自動投入動員，最多 3,000 萬。</small>

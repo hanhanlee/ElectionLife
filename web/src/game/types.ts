@@ -228,10 +228,21 @@ export interface Party extends CharacterTrait {
 export type TraitCategory = "communication" | "policy" | "organization" | "personality";
 
 /** 個人資質：與出身分離，可正可負；以標籤顯示，細部效果到結局才揭露 */
+/** 資質品質：負面（紅）、普通（綠）、優秀（藍）、卓越（紫）；越好越難抽到 */
+export type TraitTier = "negative" | "common" | "rare" | "epic";
+
+export const TRAIT_TIER_LABELS: Record<TraitTier, string> = {
+  negative: "負面",
+  common: "普通",
+  rare: "優秀",
+  epic: "卓越",
+};
+
 export interface Trait {
   id: string;
   name: string;
   category: TraitCategory;
+  tier: TraitTier;
   /** 人物介紹：「你最擅長___」 */
   strength?: string;
   /** 人物介紹：「但___一直是你的弱點」 */
@@ -311,6 +322,38 @@ export interface Profile {
   burden: string;
   /** 出身開場句的索引（包袱沒有開場句時使用） */
   origin: number;
+  /** 兩個階段的對手：第一階段的對手，以及連任選舉時（對手沒有捲土重來時）的新挑戰者 */
+  rivals?: { first: Opponent; second: Opponent };
+}
+
+/** 傳奇對手：以台灣歷史知名政治人物為原型，只用綽號影射 */
+export interface Legend {
+  id: string;
+  nickname: string;
+  /** 角色卡上的身分描述 */
+  title: string;
+  party: PartyId;
+  traits: string[];
+  burden?: string;
+  intro: string;
+  /** 只出現在這位對手面前的招牌事件 */
+  signature: string;
+  /** 原型（只寫在文件，不顯示在遊戲裡） */
+  inspiredBy: string;
+}
+
+export interface Opponent {
+  /** 虛構姓名，或傳奇對手的綽號 */
+  name: string;
+  legend?: string;
+  party: PartyId;
+  /** 身分描述，例如「現任立法委員」 */
+  title: string;
+  incumbent: boolean;
+  traits: string[];
+  burden?: string;
+  /** 對手強度（logit），從玩家的勝選機率中扣除 */
+  strength: number;
 }
 
 export interface Background extends CharacterTrait {
@@ -436,6 +479,8 @@ export interface GameState {
   traitSkills: (TraitSkill & { trait: string })[];
   /** 城市的選民結構（由 newGame 從城市資料複製，讓引擎不必查內容檔） */
   cityMods?: { voteMods: StatDelta; issueWeights: Partial<Record<Issue, number>>; issueNotes: Partial<Record<Issue, string>> };
+  /** 目前這一階段的對手 */
+  opponent?: Opponent;
   /** 競選期結束後的第一次投票結果；落選則遊戲提前結束 */
   firstElection?: ElectionSnapshot;
   finished: boolean;

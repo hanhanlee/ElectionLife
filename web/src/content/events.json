@@ -1017,6 +1017,390 @@
     "source": { "status": "draft", "prototype": "民代助理費的使用與「回捐」問題，常在選戰中被前助理或對手揭露。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "2022 年新竹市長選舉前揭露的立委助理費爭議，後遭起訴", "refs": [{ "title": "中央社：高虹安涉詐領助理費46萬元 依貪污罪起訴", "url": "https://www.cna.com.tw/news/asoc/202308145002.aspx", "quote": "高虹安涉詐領助理費46萬元 依貪污罪起訴", "accessed": "2026-10-23" }] }
   },
   {
+    "id": "o-sig-populist-wave",
+    "phase": "campaign",
+    "title": "對手掀起旋風",
+    "scenario": "對手的一場造勢湧進十萬人，「發大財」三個字貼滿了大街小巷。你的幕僚說：「這不是選舉，這是一場情緒。」",
+    "tags": ["對手", "傳奇對手"],
+    "issue": "economy",
+    "conditions": { "flags": ["opp-legend-populist-wave"] },
+    "weight": 12,
+    "options": [
+      { "id": "bigger", "label": "砸錢包下運動場，辦一場更大的造勢", "outcome": "人數沒輸，但記者還是只拍對手那邊。", "effects": { "approval": 3, "party": 4, "media": 4 }, "funds": -1500 },
+      { "id": "numbers", "label": "逐條拆解對手政見的財源", "outcome": "你的試算表很完整，看完的人說「好有道理」，然後去參加對手的造勢。", "effects": { "integrity": 3, "approval": 1 }, "skill": "policy" },
+      { "id": "underdog", "label": "說自己才是被看衰的一方", "outcome": "兩邊都在搶「被看衰」的位置，網友說這是史上最卑微的選戰。", "effects": { "approval": 2, "media": 3 } }
+    ],
+    "source": { "status": "real", "prototype": "素人候選人以簡單口號與大型造勢掀起選舉旋風。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [], "realCase": "2018 年高雄市長選舉的「韓流」造勢" }
+  },
+  {
+    "id": "o-sig-flower-mom",
+    "phase": "campaign",
+    "title": "菜市場的阿嬤網",
+    "scenario": "對手在每一個傳統市場都有固定的阿嬤樁腳。你去掃街，阿嬤們很客氣地收下文宣，然後說：「我們都投花媽啦。」",
+    "tags": ["對手", "傳奇對手"],
+    "issue": "local",
+    "conditions": { "flags": ["opp-legend-flower-mom"] },
+    "weight": 12,
+    "options": [
+      { "id": "sweep", "label": "一個市場一個市場去掃，連掃三週", "outcome": "腳底磨出了水泡，有幾攤阿嬤開始叫你的名字。", "effects": { "approval": 3, "team": -3 }, "skill": "grassroots" },
+      { "id": "youth", "label": "放棄市場，改攻年輕族群", "outcome": "年輕人按讚很踴躍，投票率一向不高。", "effects": { "media": 4, "approval": 1 }, "skill": "media" },
+      { "id": "party", "label": "請黨部找里長一里一里拜託", "outcome": "里長們很給面子，阿嬤們也很給面子，但票不一定給你。", "effects": { "party": 3, "integrity": -1 } }
+    ],
+    "source": { "status": "real", "prototype": "長期執政者在基層市場建立的綿密人際網絡。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [], "realCase": "高雄市長陳菊長期經營的基層網絡" }
+  },
+  {
+    "id": "o-sig-white-coat",
+    "phase": "campaign",
+    "title": "對手直播失言",
+    "scenario": "對手在直播時脫口說了一句冒犯某個族群的話，影片一小時內被轉了十萬次。對手的支持者說「這就是直」。",
+    "tags": ["對手", "傳奇對手"],
+    "issue": "local",
+    "conditions": { "flags": ["opp-legend-white-coat"] },
+    "weight": 12,
+    "options": [
+      { "id": "attack", "label": "連開三場記者會，猛打失言", "outcome": "新聞連播三天。有人開始說你「只會打對手」。", "effects": { "approval": 4, "media": 5, "integrity": -3 }, "skill": "confront" },
+      { "id": "restraint", "label": "只回應一句「選舉要尊重每個人」", "outcome": "不夠辣，沒上頭條，但很多中間選民記住了你。", "effects": { "integrity": 3, "approval": 1 } },
+      { "id": "meme", "label": "把失言做成梗圖反擊", "outcome": "梗圖很好笑，被冒犯的那群人覺得你也在消費他們。", "effects": { "media": 6, "approval": -1, "integrity": -2 } }
+    ],
+    "source": { "status": "real", "prototype": "醫師出身的素人候選人以直言著稱，失言屢次成為選戰焦點。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [], "realCase": "臺北市長任內與選戰中的失言爭議" }
+  },
+  {
+    "id": "o-sig-jogging-mayor",
+    "phase": "campaign",
+    "title": "對手的晨跑廣告",
+    "scenario": "對手每天清晨在河濱晨跑，被拍得像運動飲料廣告。你的民調團隊說：「對手的形象分數，比你高二十分。」",
+    "tags": ["對手", "傳奇對手"],
+    "issue": "local",
+    "conditions": { "flags": ["opp-legend-jogging-mayor"] },
+    "weight": 12,
+    "options": [
+      { "id": "ad", "label": "花錢拍一支自己的運動形象廣告", "outcome": "你跑得很喘，廣告剪得很努力。網友說「好像在看彩排」。", "effects": { "media": 4, "approval": 1 }, "funds": -800 },
+      { "id": "slow", "label": "質疑對手做事太慢、什麼都要再研議", "outcome": "這句話打中了很多人，對手的支持者說你在嫉妒。", "effects": { "approval": 3, "integrity": -1 }, "skill": "debate" },
+      { "id": "policy", "label": "不比形象，只比政策", "outcome": "你的政策記者會很扎實，觀看次數是晨跑影片的十分之一。", "effects": { "integrity": 2, "achievement": 1 } }
+    ],
+    "source": { "status": "real", "prototype": "形象清新的候選人以個人形象建立優勢。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [], "realCase": "臺北市長任內的晨跑形象" }
+  },
+  {
+    "id": "o-sig-son-of-taiwan",
+    "phase": "campaign",
+    "title": "扁帽工廠",
+    "scenario": "對手推出一整套競選周邊：帽子、T恤、公仔、手機殼。支持者排隊搶購，還倒貼了競選經費。",
+    "tags": ["對手", "傳奇對手"],
+    "issue": "culture",
+    "conditions": { "flags": ["opp-legend-son-of-taiwan"] },
+    "weight": 12,
+    "options": [
+      { "id": "merch", "label": "出錢做自己的競選周邊商品", "outcome": "你的公仔長得有點怪，倒是成了網路話題。", "effects": { "media": 4, "approval": 1 }, "funds": -600 },
+      { "id": "criticize", "label": "批評選舉變成商品秀", "outcome": "說得很有道理，年輕人說你「好老派」。", "effects": { "integrity": 2, "approval": -1 } },
+      { "id": "dinner", "label": "改辦小額募款餐會", "outcome": "一桌一桌敬酒，募到的錢不多，但每個人都記得你。", "effects": { "party": 2, "approval": 1 }, "funds": 600, "skill": "grassroots" }
+    ],
+    "source": { "status": "real", "prototype": "候選人以大量競選周邊商品經營品牌，形成選舉文化現象。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [], "realCase": "1994 年臺北市長選舉的「扁帽工廠」" }
+  },
+  {
+    "id": "o-sig-humor-diplomat",
+    "phase": "campaign",
+    "title": "國際級盛會",
+    "scenario": "對手宣布：當選後要辦一場國際博覽會，「讓全世界看見這座城市」。記者會上，對手用三種語言講了三個笑話。",
+    "tags": ["對手", "傳奇對手"],
+    "issue": "culture",
+    "conditions": { "flags": ["opp-legend-humor-diplomat"] },
+    "weight": 12,
+    "options": [
+      { "id": "bigger", "label": "宣布要辦更大的國際賽事", "outcome": "支票越開越大，財政局長在電視前面嘆了一口氣。", "effects": { "approval": 3, "media": 4, "integrity": -2 } },
+      { "id": "bill", "label": "公開算出博覽會的帳單", "outcome": "數字很驚人，但「看見世界」聽起來比帳單浪漫。", "effects": { "integrity": 3, "approval": 1 }, "skill": "policy" },
+      { "id": "local", "label": "主打「先把巷口顧好」", "outcome": "很接地氣，也很沒有新聞性。", "effects": { "approval": 2 } }
+    ],
+    "source": { "status": "real", "prototype": "以大型國際活動作為城市行銷與選戰主軸。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [], "realCase": "臺中市長任內的大型國際活動" }
+  },
+  {
+    "id": "o-sig-island-walker",
+    "phase": "campaign",
+    "title": "三天跑完每一個里",
+    "scenario": "對手宣布要在三天內跑完全市每一個里。第一天就跑了一百個，地方報紙全版都是握手照。",
+    "tags": ["對手", "傳奇對手"],
+    "issue": "local",
+    "conditions": { "flags": ["opp-legend-island-walker"] },
+    "weight": 12,
+    "options": [
+      { "id": "race", "label": "你也跑，跑得比對手多", "outcome": "兩邊比賽跑行程，最後兩個人都在車上睡著。", "effects": { "approval": 3, "team": -4 }, "skill": "grassroots" },
+      { "id": "depth", "label": "說「跑完不等於做完」，改辦深度座談", "outcome": "很有內容，報紙只登了一小格。", "effects": { "integrity": 2, "achievement": 1 } },
+      { "id": "bigname", "label": "請黨內大咖來站台", "outcome": "大咖來了一個小時，對手又跑了二十個里。", "effects": { "party": 3, "media": 2 } }
+    ],
+    "source": { "status": "real", "prototype": "以密集走訪基層建立勤政形象。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [], "realCase": "前省長走遍全台鄉鎮的基層經營" }
+  },
+  {
+    "id": "o-sig-stubborn-mayor",
+    "phase": "campaign",
+    "title": "絕不妥協的宣言",
+    "scenario": "對手在政見會上宣布：「當選後，絕不和腐敗的議會妥協，必要時我一步也不踏進議會。」掌聲震天。",
+    "tags": ["對手", "傳奇對手"],
+    "issue": "local",
+    "conditions": { "flags": ["opp-legend-stubborn-mayor"] },
+    "weight": 12,
+    "options": [
+      { "id": "same", "label": "表態你也不妥協", "outcome": "兩個人都很硬，議員們開始盤算選後要怎麼對付贏的那一個。", "effects": { "approval": 3, "council": -5 } },
+      { "id": "cooperate", "label": "承諾府會合作、公開協商", "outcome": "聽起來比較軟，但議員們私下打電話來表示支持。", "effects": { "council": 5, "approval": -1 }, "skill": "negotiate" },
+      { "id": "expose", "label": "公開對手過去和議會衝突的代價", "outcome": "你列出那幾年卡住的預算，有人覺得有道理，有人覺得你在幫議會說話。", "effects": { "integrity": 1, "approval": 1 } }
+    ],
+    "source": { "status": "real", "prototype": "首長與議會強硬對抗，作為清廉與改革的象徵。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [], "realCase": "臺南市長拒進議會事件" }
+  },
+  {
+    "id": "o-sig-lawyer-debater",
+    "phase": "campaign",
+    "title": "辯論會上的致命一擊",
+    "scenario": "辯論會上，對手拿出你十年前和今天說的兩段話，並排播放。兩段話的立場完全相反。",
+    "tags": ["對手", "傳奇對手"],
+    "issue": "local",
+    "conditions": { "flags": ["opp-legend-lawyer-debater"] },
+    "weight": 12,
+    "options": [
+      { "id": "admit", "label": "承認自己改變了想法，並說明原因", "outcome": "這是整場辯論最安靜的一刻。很多人說，這是他們第一次聽到政治人物認錯。", "effects": { "integrity": 5, "approval": 1 } },
+      { "id": "counter", "label": "反擊對手才是立場最多變的人", "outcome": "你也準備了對手的影片。辯論變成了互放影片大會。", "effects": { "approval": 2, "media": 4, "integrity": -2 }, "skill": "debate" },
+      { "id": "dodge", "label": "說「那是斷章取義」", "outcome": "觀眾不太買單，主持人追問了兩次。", "effects": { "approval": -3, "integrity": -2 } }
+    ],
+    "source": { "status": "real", "prototype": "辯論高手以對照影片揭露對手立場轉變。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [], "realCase": "律師出身市長的辯論風格" }
+  },
+  {
+    "id": "o-sig-princeling",
+    "phase": "campaign",
+    "title": "「一直玩」的廣告",
+    "scenario": "對手推出一支想討好年輕人的競選廣告：一群年輕人在城市裡一直玩、一直玩。網友看完只留了兩個字：「好尬。」",
+    "tags": ["對手", "傳奇對手"],
+    "issue": "local",
+    "conditions": { "flags": ["opp-legend-princeling"] },
+    "weight": 12,
+    "options": [
+      { "id": "mock", "label": "跟著嘲諷，發一篇酸文", "outcome": "按讚數很高。你的幕僚提醒你：「我們的廣告，下週也要上了。」", "effects": { "approval": 2, "media": 4, "integrity": -2 } },
+      { "id": "parody", "label": "花錢拍一支反諷影片", "outcome": "反諷影片比原版還紅，對手陣營說你「只會耍嘴皮」。", "effects": { "media": 6, "approval": 2 }, "funds": -500 },
+      { "id": "ignore", "label": "不評論別人的廣告，專心講政見", "outcome": "沒有人注意到你，但也沒有人笑你。", "effects": { "integrity": 2 } }
+    ],
+    "source": { "status": "real", "prototype": "權貴形象的候選人推出試圖親近年輕人的廣告，反而引發嘲諷。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [], "realCase": "2014 年臺北市長選舉的競選廣告爭議" }
+  },
+  {
+    "id": "o-sig-swallow-mayor",
+    "phase": "campaign",
+    "title": "空污牌",
+    "scenario": "對手在每所國小校門口發口罩，說：「我要讓孩子吸到乾淨的空氣。」家長群組一片感動。",
+    "tags": ["對手", "傳奇對手"],
+    "issue": "environment",
+    "conditions": { "flags": ["opp-legend-swallow-mayor"] },
+    "weight": 12,
+    "options": [
+      { "id": "same", "label": "你也主打空污，承諾更多", "outcome": "兩邊都在比誰更愛孩子，電廠的煙囪一樣在冒煙。", "effects": { "approval": 3, "integrity": -1 } },
+      { "id": "timeline", "label": "提出具體的減煤時程與預算", "outcome": "時程表很清楚，家長說「看不太懂，但好像很認真」。", "effects": { "integrity": 3, "achievement": 2 }, "skill": "policy" },
+      { "id": "question", "label": "質疑對手只會喊口號", "outcome": "對手溫和地回應：「我們一起努力。」你看起來像在吵架。", "effects": { "approval": -2, "media": 3 } }
+    ],
+    "source": { "status": "real", "prototype": "候選人以空污議題作為選戰主軸，形象溫和穩健。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [], "realCase": "2018 年臺中市長選舉的空污議題" }
+  },
+  {
+    "id": "o-sig-fireball",
+    "phase": "campaign",
+    "title": "衝衝衝",
+    "scenario": "對手一口氣宣布十項大建設：捷運、大橋、運動中心。口號只有三個字：「衝衝衝！」",
+    "tags": ["對手", "傳奇對手"],
+    "issue": "transit",
+    "conditions": { "flags": ["opp-legend-fireball"] },
+    "weight": 12,
+    "options": [
+      { "id": "more", "label": "宣布十二項大建設", "outcome": "你的建設比對手多兩項，財源都寫「爭取中央補助」。", "effects": { "approval": 3, "integrity": -3 } },
+      { "id": "finish", "label": "只提三項「做得完」的建設", "outcome": "務實很好，但聽起來比較小。", "effects": { "integrity": 3, "achievement": 1 }, "skill": "policy" },
+      { "id": "record", "label": "翻出對手過去宣布但沒做完的建設", "outcome": "清單很長，對手說「那是中央卡我」。", "effects": { "approval": 2, "media": 3 }, "skill": "confront" }
+    ],
+    "source": { "status": "real", "prototype": "候選人以密集宣布大型建設展現執行力。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [], "realCase": "蘇貞昌的「衝衝衝」選戰風格" }
+  },
+  {
+    "id": "o-sig-detective-mayor",
+    "phase": "campaign",
+    "title": "「我會努力」",
+    "scenario": "記者問對手：同婚、核電、兩岸，你的立場是什麼？對手的回答都一樣：「我會努力。」民調反而越來越穩。",
+    "tags": ["對手", "傳奇對手"],
+    "issue": "local",
+    "conditions": { "flags": ["opp-legend-detective-mayor"] },
+    "weight": 12,
+    "options": [
+      { "id": "press", "label": "逼對手正面表態", "outcome": "對手第五次說「我會努力」。你被說成咄咄逼人。", "effects": { "approval": -1, "media": 4 }, "skill": "confront" },
+      { "id": "clear", "label": "你先把自己的立場講清楚", "outcome": "你得罪了一些人，也讓另一些人第一次決定支持你。", "effects": { "integrity": 5, "approval": -2 } },
+      { "id": "vague", "label": "你也開始模糊", "outcome": "兩個候選人都很模糊，選民說：「那我投給比較不會出錯的。」", "effects": { "integrity": -3, "approval": 1 } }
+    ],
+    "source": { "status": "real", "prototype": "候選人以模糊回應避開爭議議題，維持穩定支持。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [], "realCase": "新北市長選舉中的模糊表態" }
+  },
+  {
+    "id": "o-sig-iron-lady",
+    "phase": "campaign",
+    "title": "家族的鐵票",
+    "scenario": "對手的家族在各鄉鎮都有人當議員、鄉長。你去拜訪地方，每一位里長都說：「這個我要先問一下大家長。」",
+    "tags": ["對手", "傳奇對手"],
+    "issue": "local",
+    "conditions": { "flags": ["opp-legend-iron-lady"] },
+    "weight": 12,
+    "options": [
+      { "id": "poach", "label": "挖角對手家族裡不得志的成員", "outcome": "有一位表弟答應幫你，隔天就被家族叫回去吃飯了。", "effects": { "party": 2, "integrity": -2 }, "skill": "deal" },
+      { "id": "break", "label": "主打「打破家族政治」", "outcome": "年輕人很支持，地方長輩說你不懂人情。", "effects": { "approval": 3, "party": -2 } },
+      { "id": "deal", "label": "和家族大家長談合作", "outcome": "談成了一半。代價是幾個人事位子。", "effects": { "party": 5, "integrity": -4 } }
+    ],
+    "source": { "status": "real", "prototype": "地方家族長期掌握各級民意代表與首長職位。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [], "realCase": "高雄縣「余家班」的地方政治版圖" }
+  },
+  {
+    "id": "o-sig-temple-boss",
+    "phase": "campaign",
+    "title": "神轎前面的位子",
+    "scenario": "大型遶境要起駕了。對手站在神轎正前方，廟方說你的位子「在後面一點」。",
+    "tags": ["對手", "傳奇對手"],
+    "issue": "local",
+    "conditions": { "flags": ["opp-legend-temple-boss"] },
+    "weight": 12,
+    "options": [
+      { "id": "donate", "label": "捐一筆香油錢換到前排", "outcome": "你站到前排了，旁邊的人小聲說：「這個位子很貴喔。」", "effects": { "party": 3, "approval": 2, "integrity": -2 }, "funds": -800 },
+      { "id": "back", "label": "站在後面，跟著信徒一起走", "outcome": "你走了八個小時，腳很痛。有幾位信徒說你很誠心。", "effects": { "approval": 2, "team": -2 }, "skill": "grassroots" },
+      { "id": "skip", "label": "不去遶境，改去其他小廟", "outcome": "小廟的主委很感動，大廟的主委記住了你沒來。", "effects": { "integrity": 1, "party": -2 } }
+    ],
+    "source": { "status": "real", "prototype": "宮廟與地方派系在選舉中的動員力量。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [], "realCase": "大甲媽祖遶境與鎮瀾宮的地方影響力" }
+  },
+  {
+    "id": "o-sig-scholar-mayor",
+    "phase": "campaign",
+    "title": "三百頁的白皮書",
+    "scenario": "對手發表了三百頁的政策白皮書。可是在台語政見發表會上，對手講到一半卡住了，台下有人笑出聲。",
+    "tags": ["對手", "傳奇對手"],
+    "issue": "local",
+    "conditions": { "flags": ["opp-legend-scholar-mayor"] },
+    "weight": 12,
+    "options": [
+      { "id": "whitepaper", "label": "你也出一本白皮書", "outcome": "兩本白皮書加起來六百頁，選民一頁都沒看。", "effects": { "integrity": 2, "achievement": 2 }, "skill": "policy" },
+      { "id": "taiwanese", "label": "辦一場全台語的政見會", "outcome": "你講得很順，長輩們拍手拍得很用力。", "effects": { "approval": 3, "party": 1 }, "skill": "grassroots" },
+      { "id": "mock", "label": "嘲笑對手的台語", "outcome": "有人笑了，也有人覺得你在嘲笑他們家不會講台語的孩子。", "effects": { "approval": -2, "media": 3, "integrity": -2 } }
+    ],
+    "source": { "status": "real", "prototype": "學者型候選人政策論述完整，但在基層溝通上遇到困難。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [], "realCase": "學者出身臺北市長的選戰形象" }
+  },
+  {
+    "id": "o-debate-pressure",
+    "phase": "campaign",
+    "title": "對手是辯論高手",
+    "scenario": "電視台邀請辯論。對手是出了名的辯論高手，你的幕僚建議：「能少辦一場就少辦一場。」",
+    "tags": ["對手"],
+    "issue": "local",
+    "conditions": { "anyFlags": ["opp-trait-debater", "opp-trait-born-politician", "opp-trait-policy-wonk"] },
+    "weight": 4,
+    "options": [
+      { "id": "three", "label": "接受三場辯論", "outcome": "你被打得很慘，但每一場都撐完了。觀眾說你很有勇氣。", "effects": { "integrity": 3, "approval": -1 }, "skill": "debate" },
+      { "id": "one", "label": "只辦一場", "outcome": "一場剛好，雙方都沒有大失分。", "effects": { "approval": 1 } },
+      { "id": "none", "label": "以行程衝突為由拒絕辯論", "outcome": "辯論會放了一張空椅子。對手對著它講了兩小時。", "effects": { "approval": -3, "integrity": -3 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "面對擅長辯論的對手，候選人在辯論場次上的取捨。", "adaptation": "情境為虛構；效果數值為遊戲設計。", "refs": [] }
+  },
+  {
+    "id": "o-rally-war",
+    "phase": "campaign",
+    "title": "造勢拚場",
+    "scenario": "對手宣布週末在市中心的廣場辦造勢，號稱五萬人。你的競選總部原本也訂了同一天。",
+    "tags": ["對手"],
+    "issue": "local",
+    "conditions": { "anyFlags": ["opp-trait-machine-boss", "opp-trait-organizer", "opp-trait-grassroots"] },
+    "weight": 4,
+    "options": [
+      { "id": "clash", "label": "同一天拚場，包下對面的廣場", "outcome": "兩邊的音響互相干擾，新聞空拍圖比人數。你的人比較少一點。", "effects": { "party": 4, "approval": 2, "team": -2 }, "funds": -1500 },
+      { "id": "sweep", "label": "避開，改去對手沒去的區掃街", "outcome": "沒有空拍圖，但你握了三千隻手。", "effects": { "approval": 2, "team": -1 }, "skill": "grassroots" },
+      { "id": "bus", "label": "拍下對手動員的遊覽車，公開嘲諷", "outcome": "影片很紅，對手說你看不起長輩。", "effects": { "media": 4, "integrity": -2 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "對手以強大組織動員舉辦大型造勢。", "adaptation": "情境為虛構；效果數值為遊戲設計。", "refs": [] }
+  },
+  {
+    "id": "o-meme-war",
+    "phase": "campaign",
+    "title": "你被做成迷因",
+    "scenario": "對手陣營的網路小編把你的一張表情截圖做成迷因，一天內傳遍所有群組。",
+    "tags": ["對手"],
+    "issue": "local",
+    "conditions": { "anyFlags": ["opp-trait-meme-lord", "opp-trait-photogenic", "opp-trait-born-politician"] },
+    "weight": 4,
+    "options": [
+      { "id": "self", "label": "自己轉發，順便自嘲", "outcome": "網友說你很有梗。迷因的熱度變成你的。", "effects": { "media": 5, "approval": 2 }, "skill": "media" },
+      { "id": "clarify", "label": "發聲明澄清那張照片的前後文", "outcome": "聲明很完整，迷因又多了一張「認真澄清」的版本。", "effects": { "integrity": 2, "approval": -1 } },
+      { "id": "troll", "label": "花錢找網軍反擊", "outcome": "網軍很努力，被記者抓到同一批帳號在三天前賣面膜。", "effects": { "media": 3, "integrity": -5 }, "funds": -800, "legalRisk": "網軍" }
+    ],
+    "source": { "status": "placeholder", "prototype": "選戰中的網路迷因攻防。", "adaptation": "情境為虛構；效果數值為遊戲設計。", "refs": [] }
+  },
+  {
+    "id": "o-donor-poach",
+    "phase": "campaign",
+    "title": "金主被挖角",
+    "scenario": "你的幾位主要金主，被對手約去吃了一頓飯之後，就不太接你的電話了。",
+    "tags": ["對手"],
+    "issue": "economy",
+    "conditions": { "anyFlags": ["opp-trait-connected", "opp-trait-opportunist", "opp-trait-faction-shadow"] },
+    "weight": 4,
+    "options": [
+      { "id": "promise", "label": "加碼承諾金主「選後一定照顧」", "outcome": "電話又通了，承諾也記在某個人的筆記本上。", "effects": { "business": 5, "integrity": -4 }, "funds": 1000 },
+      { "id": "small", "label": "放棄大金主，改推小額募款", "outcome": "募到的錢少很多，但沒有人可以說你被誰綁住。", "effects": { "integrity": 4, "business": -3 }, "skill": "grassroots" },
+      { "id": "expose", "label": "公開對手的金主名單", "outcome": "名單很有看頭，對手說你「侵犯個資」。", "effects": { "approval": 2, "media": 4, "business": -2 }, "skill": "confront" }
+    ],
+    "source": { "status": "placeholder", "prototype": "選戰中的政治獻金與金主爭奪。", "adaptation": "情境為虛構；效果數值為遊戲設計。", "refs": [] }
+  },
+  {
+    "id": "o-promise-race",
+    "phase": "campaign",
+    "title": "對手開出天價政見",
+    "scenario": "對手宣布：當選後每位長輩每年發一萬元，每個新生兒發十萬元。你的財政顧問算了一下：「這要多一百億。」",
+    "tags": ["對手"],
+    "issue": "welfare",
+    "conditions": { "anyFlags": ["opp-trait-grandiose", "opp-trait-born-politician"] },
+    "weight": 4,
+    "options": [
+      { "id": "match", "label": "跟進，發得比對手多", "outcome": "支票開完了，你的政見表變成了一張價目表。", "effects": { "approval": 4, "integrity": -4 } },
+      { "id": "math", "label": "公開算出對手政見的財源缺口", "outcome": "你的試算很精準。長輩說：「你是不是不想給我們錢？」", "effects": { "integrity": 3, "approval": -1 }, "skill": "policy" },
+      { "id": "ignore", "label": "不跟、不罵，繼續講自己的政見", "outcome": "你的政見很穩，只是沒有那麼大聲。", "effects": { "integrity": 1 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "候選人以大額現金福利政見競逐選票。", "adaptation": "情境為虛構；效果數值為遊戲設計。", "refs": [] }
+  },
+  {
+    "id": "o-gaffe-chance",
+    "phase": "campaign",
+    "title": "對手說錯話了",
+    "scenario": "對手在一場座談上說錯了一句話，冒犯了在場的一群人。你的幕僚興奮地說：「這可以打一週！」",
+    "tags": ["對手"],
+    "issue": "local",
+    "conditions": { "anyFlags": ["opp-trait-gaffe-prone", "opp-trait-aloof", "opp-trait-unprepared", "opp-trait-rusty-taiwanese", "opp-trait-poor-speaker"] },
+    "weight": 4,
+    "options": [
+      { "id": "hammer", "label": "連打一週", "outcome": "新聞每天都有你的名字，但都在講對手的事。", "effects": { "approval": 3, "media": 4, "integrity": -3 }, "skill": "confront" },
+      { "id": "once", "label": "點到為止，回應一次就好", "outcome": "你的回應很得體，中間選民的好感多了一點。", "effects": { "approval": 1, "integrity": 2 } },
+      { "id": "defend", "label": "公開說「每個人都會說錯話」", "outcome": "對手陣營愣住了。你的支持者有點不爽，其他人覺得你很有風度。", "effects": { "integrity": 4, "party": -2 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "面對對手失言時的攻防選擇，反映候選人如何看待選戰中的趁勢攻擊。", "adaptation": "情境為虛構；效果數值為遊戲設計。", "refs": [] }
+  },
+  {
+    "id": "o-clean-attack",
+    "phase": "campaign",
+    "title": "對手打清廉牌",
+    "scenario": "對手公布了自己的財產與政治獻金明細，要求你也在三天內公開。",
+    "tags": ["對手"],
+    "issue": "local",
+    "conditions": { "anyFlags": ["opp-trait-clean-image", "opp-trait-principled"] },
+    "weight": 4,
+    "options": [
+      { "id": "disclose", "label": "全部公開", "outcome": "帳目很乾淨，只是有幾筆金主的名字讓人多看了兩眼。", "effects": { "integrity": 4, "business": -3 } },
+      { "id": "partial", "label": "只公開法定必須公開的部分", "outcome": "合法，但看起來像在藏什麼。", "effects": { "approval": -2 } },
+      { "id": "refuse", "label": "拒絕，說「這是對手的作秀」", "outcome": "對手每天在記者會上倒數，倒數到投票日。", "effects": { "approval": -4, "integrity": -3, "media": 3 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "候選人以財務透明作為選戰訴求。", "adaptation": "情境為虛構；效果數值為遊戲設計。", "refs": [] }
+  },
+  {
+    "id": "o-record-attack",
+    "phase": "campaign",
+    "title": "對手的政績對照表",
+    "scenario": "對手做了一張對照表：左邊是對手過去的施政成果，右邊是你的。你那一欄有點空。",
+    "tags": ["對手"],
+    "issue": "local",
+    "conditions": { "anyFlags": ["opp-trait-veteran-admin", "opp-trait-budget-hawk", "opp-trait-executor"] },
+    "weight": 4,
+    "options": [
+      { "id": "plan", "label": "拿出你的施政計畫與時程", "outcome": "計畫很具體，對手說「計畫誰都會寫」。", "effects": { "integrity": 2, "achievement": 1 }, "skill": "policy" },
+      { "id": "new", "label": "主打「換人做做看」", "outcome": "這句話對厭倦舊面孔的選民很有效。", "effects": { "approval": 3 } },
+      { "id": "attack", "label": "挖出對手政績裡的灌水數字", "outcome": "你找到兩個灌水的數字，對手找到你三個。", "effects": { "media": 4, "integrity": -1 }, "skill": "confront" }
+    ],
+    "source": { "status": "placeholder", "prototype": "選戰中以施政紀錄對照挑戰者的經驗不足。", "adaptation": "情境為虛構；效果數值為遊戲設計。", "refs": [] }
+  },
+  {
     "id": "e-eve",
     "phase": "eve",
     "title": "選前之夜",
@@ -2916,5 +3300,21 @@
       { "id": "hint", "label": "暗示支持者「不要太早放心」", "outcome": "你沒有和組頭談任何條件，但你說的話剛好讓盤口動了。", "effects": { "party": 3, "integrity": -6 }, "setFlags": ["scandal"] }
     ],
     "source": { "status": "draft", "prototype": "選舉期間地下賭盤盛行，賭盤與候選人陣營的關係常受檢調關注。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "選舉期間檢警查緝賄選、地下賭盤與暴力案件", "refs": [{ "title": "公視新聞網：選舉涉賄、地下賭盤及暴力案件 涉案人數高達8千6百多人", "url": "https://news.pts.org.tw/article/611385", "quote": "選舉涉賄、地下賭盤及暴力案件 涉案人數高達8千6百多人", "accessed": "2026-10-23" }] }
+  },
+  {
+    "id": "r-rematch",
+    "phase": "reelection",
+    "title": "上次的帳",
+    "scenario": "四年前以些微差距輸給你的人又回來了。這一次對手準備得更充分，手上還拿著你四年來沒兌現的政見清單。",
+    "tags": ["對手", "連任"],
+    "issue": "local",
+    "conditions": { "flags": ["opp-rematch"] },
+    "weight": 12,
+    "options": [
+      { "id": "answer", "label": "逐條回應每一項政見的進度", "outcome": "有幾項確實沒做到，你都承認了。觀眾覺得你很誠實。", "effects": { "integrity": 5, "approval": 1 } },
+      { "id": "sore", "label": "說對手是「輸不起」", "outcome": "支持者很爽，中間選民覺得兩個人都很幼稚。", "effects": { "approval": 2, "integrity": -3 }, "skill": "confront" },
+      { "id": "record", "label": "拿出四年的施政成果", "outcome": "成果很多，清單上沒做到的那幾項也很明顯。", "effects": { "achievement": 2, "approval": 2 }, "skill": "policy" }
+    ],
+    "source": { "status": "placeholder", "prototype": "落選者四年後捲土重來，以前次選舉的政見兌現程度作為攻擊主軸。", "adaptation": "情境為虛構；效果數值為遊戲設計。", "refs": [] }
   }
 ]

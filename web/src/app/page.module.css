@@ -476,3 +476,75 @@
   color: var(--warn);
   font-weight: 600;
 }
+
+/* 資質品質：負面紅、普通綠、優秀藍、卓越紫 */
+.tierTag {
+  font-size: 0.8125rem;
+  padding: 2px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--tier);
+  color: var(--tier);
+}
+
+.tierTag[data-tier="epic"] {
+  background: color-mix(in srgb, var(--tier) 14%, transparent);
+  font-weight: 700;
+}
+
+.slotLocked[data-tier] {
+  border-color: var(--tier);
+}
+
+.slotLocked[data-tier] .slotValueLocked {
+  color: var(--tier);
+}
+
+.slotLocked[data-tier="epic"] {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--tier) 35%, transparent);
+}
+
+.tierLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.tierLegend span::before {
+  content: "●";
+  margin-right: 3px;
+  color: var(--tier);
+}
+
+.legendBadge {
+  margin-left: 8px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--tier-epic);
+  border: 1px solid var(--tier-epic);
+}
+
+/* 卡片標頭：這張卡在描述什麼 */
+.cardLabel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px;
+  margin-bottom: -4px;
+}
+
+.cardLabelName {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+}
+
+.cardLabelHint {
+  flex-basis: 100%;
+  font-size: 0.75rem;
+  color: var(--muted);
+}

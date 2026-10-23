@@ -7,6 +7,10 @@
   --accent-fg: #ffffff;
   --border: #e3dfd6;
   --warn: #9a3412;
+  --tier-negative: #dc2626;
+  --tier-common: #16a34a;
+  --tier-rare: #2563eb;
+  --tier-epic: #9333ea;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,6 +23,10 @@
     --accent-fg: #1c1b19;
     --border: #34312c;
     --warn: #fdba74;
+    --tier-negative: #f87171;
+    --tier-common: #4ade80;
+    --tier-rare: #60a5fa;
+    --tier-epic: #c084fc;
   }
 }
 
@@ -51,3 +59,9 @@ button {
 a {
   color: var(--accent);
 }
+
+/* 資質品質的顏色：元件以 data-tier 標示，樣式裡用 var(--tier) */
+[data-tier="negative"] { --tier: var(--tier-negative); }
+[data-tier="common"] { --tier: var(--tier-common); }
+[data-tier="rare"] { --tier: var(--tier-rare); }
+[data-tier="epic"] { --tier: var(--tier-epic); }

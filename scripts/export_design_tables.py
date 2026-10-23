@@ -88,11 +88,13 @@ def main() -> int:
 
     cat_names = {"communication": "溝通與形象", "policy": "政策與行政", "organization": "組織與人際", "personality": "政治人格"}
     out += ["", "## B2. 個人資質（每人 1 個政治人格 + 2 個不同類別的能力資質）", "",
-            "| 資質 | 類別 | 人物介紹用語 | 起始調整 | 能力（+擅長／−不擅長） | 易抽到的出身 |", "|---|---|---|---|---|---|"]
+            "品質決定顏色與抽中機率：負面（紅）1、普通（綠）1.2、優秀（藍）0.8、卓越（紫）0.3。", "",
+            "| 資質 | 品質 | 類別 | 人物介紹用語 | 起始調整 | 能力（+擅長／−不擅長） | 易抽到的出身 |", "|---|---|---|---|---|---|---|"]
+    tier_names = {"negative": "負面", "common": "普通", "rare": "優秀", "epic": "卓越"}
     for t in traits:
         phrase = t.get("strength") and f"擅長：{t['strength']}" or t.get("weakness") and f"弱點：{t['weakness']}" or t.get("line", "")
         sk = "、".join(f"{s['skill']}{'+' if s['level'] > 0 else '−'}" for s in t.get("skills", []))
-        out.append(f"| {t['name']} | {cat_names[t['category']]} | {esc(phrase)} | {delta(t['startDelta'])} | {sk} | {', '.join(t.get('affinity', []))} |")
+        out.append(f"| {t['name']} | {tier_names[t['tier']]} | {cat_names[t['category']]} | {esc(phrase)} | {delta(t['startDelta'])} | {sk} | {', '.join(t.get('affinity', []))} |")
     out += ["", "## B3. 先天包袱（每人 1 個）", "",
             "| 包袱 | 開場句 | 包袱句 | 起始調整 | 開局經費 | 易抽到的出身／政黨 |", "|---|---|---|---|---|---|"]
     for b in burdens:
@@ -123,6 +125,15 @@ def main() -> int:
                     name = next(c["name"] for c in cities if f"city-{c['id']}" == cf[0])
                     out.append(f"- **{e['title']}／{o['label']}**〔{name}〕：{esc(v['outcome'])}（額外 {delta(v.get('effects'))}）")
 
+    legends = load("legends.json")
+    tname = {t["id"]: t["name"] for t in traits}
+    out += ["", "## B5. 傳奇對手（約 20% 的局會遇到，政黨不會和玩家相同）", "",
+            "遊戲裡只顯示綽號與身分；「原型」只寫在文件。", "",
+            "| 綽號 | 身分 | 政黨 | 資質 | 招牌事件 | 原型 |", "|---|---|---|---|---|---|"]
+    pname = {p["id"]: p["name"] for p in parties}
+    for l in legends:
+        sig = next(e["title"] for e in events if e["id"] == l["signature"])
+        out.append(f"| {l['nickname']} | {esc(l['title'])} | {pname[l['party']]} | {'、'.join(tname[t] for t in l['traits'])} | {sig} | {esc(l['inspiredBy'])} |")
     out += ["", "## C. 突發事件（自動觸發，不是選項）", "",
             "| 優先 | 名稱 | 好壞 | 觸發條件 | 階段 | 衝擊 | 經費 | 餘波 | 設定旗標 | 可重複 |",
             "|---|---|---|---|---|---|---|---|---|---|"]

@@ -11,6 +11,9 @@ import {
   ARREARS_SCANDAL_AFTER,
   CAMPAIGN_SCALES,
   OFFICE_UPKEEP,
+  OPPONENT_INCUMBENT_STRENGTH,
+  REMATCH_STRENGTH,
+  REMATCH_THRESHOLD,
   scaleCost,
   MOBILIZATION_CAP,
   MOBILIZATION_WEIGHT,
@@ -40,6 +43,7 @@ import {
   type GameOption,
   type GameState,
   type Notice,
+  type Opponent,
   type Party,
   type Issue,
   type Phase,
@@ -51,7 +55,7 @@ import {
   type CampaignScale,
 } from "./types";
 
-export const STATE_VERSION = 13;
+export const STATE_VERSION = 14;
 
 /**
  * 兩個階段，各 12 回合：
@@ -237,6 +241,8 @@ export function newGame(
     stats = addDelta(stats, setup.burden.startDelta);
     flags.push(...setup.traits.map((t) => `trait-${t.id}`), `burden-${setup.burden.id}`, `city-${setup.city.id}`);
   }
+  const opponent = setup?.profile.rivals?.first;
+  if (opponent) flags.push(...opponentFlags(opponent));
   const traitSkills = (setup?.traits ?? []).flatMap((t) => (t.skills ?? []).map((s) => ({ ...s, trait: t.id })));
   const base: GameState = {
     version: STATE_VERSION,
@@ -266,6 +272,7 @@ export function newGame(
     cityMods: setup
       ? { voteMods: setup.city.voteMods, issueWeights: setup.city.issueWeights, issueNotes: setup.city.issueNotes }
       : undefined,
+    opponent,
     finished: false,
   };
   return withNextEvent(withPayout(base), events);
@@ -597,6 +604,7 @@ export function choose(
     const { won, probability, mobilization } = runElection(next, "first");
     next = { ...next, funds: next.funds - mobilization, firstElection: { won, probability, mobilization } };
     if (!won) return { ...next, finished: true };
+    next = withSecondOpponent(next, probability);
   }
   if (turn >= TURN_PLAN.length) return { ...next, finished: true };
   if (turn % BIG_ROUND === 0) next = withPayout(next);
@@ -611,6 +619,8 @@ export interface ElectionResult {
   /** 投入選前動員的經費（萬元）與其貢獻（logit） */
   mobilization: number;
   mobilizationValue: number;
+  /** 對手強度（logit，已從勝選機率扣除） */
+  opponentStrength: number;
 }
 
 const sigmoid = (x: number) => 1 / (1 + Math.exp(-x));
@@ -631,7 +641,8 @@ export function runElection(state: GameState, which: "first" | "final" = "final"
   const mobilization = Math.min(state.funds, MOBILIZATION_CAP);
   const mobilizationValue = (MOBILIZATION_WEIGHT * mobilization) / 1000;
   const bias = which === "first" ? VOTE_BIAS : REELECTION_BIAS;
-  const logit = bias + mobilizationValue + contributions.reduce((s, c) => s + c.value, 0);
+  const opponentStrength = state.opponent?.strength ?? 0;
+  const logit = bias - opponentStrength + mobilizationValue + contributions.reduce((s, c) => s + c.value, 0);
   const salt = which === "first" ? FIRST_ELECTION_SALT : FINAL_ELECTION_SALT;
   const rng = turnRng(state.seed, TURN_PLAN.length, salt);
   const noise = (rng() * 2 - 1) * VOTE_NOISE;
@@ -641,6 +652,7 @@ export function runElection(state: GameState, which: "first" | "final" = "final"
     contributions,
     mobilization,
     mobilizationValue,
+    opponentStrength,
   };
 }
 
@@ -666,4 +678,30 @@ export function nextPayout(state: GameState): { inTurns: number; estimate: numbe
   const inTurns = BIG_ROUND - (state.turn % BIG_ROUND);
   const p = payout(state.stats, state.income);
   return { inTurns, estimate: p.party + p.donations + p.small };
+}
+
+/** 對手的旗標：讓對手的招牌事件與「對手出招」事件只在遇到對應對手時出現 */
+export function opponentFlags(o: Opponent): string[] {
+  return [
+    ...(o.legend ? [`opp-legend-${o.legend}`] : []),
+    ...o.traits.map((t) => `opp-trait-${t}`),
+    `opp-party-${o.party}`,
+    ...(o.incumbent ? ["opp-incumbent"] : []),
+  ];
+}
+
+/**
+ * 第一次投票後決定連任選舉的對手：贏得不多（模型勝率 ≤ REMATCH_THRESHOLD），
+ * 原本的對手捲土重來（更有準備）；贏很多就換一位新的挑戰者。
+ */
+function withSecondOpponent(state: GameState, probability: number): GameState {
+  const first = state.opponent;
+  const second = state.character.profile?.rivals?.second;
+  if (!first || !second) return state;
+  const rematch = probability <= REMATCH_THRESHOLD;
+  const opponent: Opponent = rematch
+    ? { ...first, incumbent: false, strength: first.strength - (first.incumbent ? OPPONENT_INCUMBENT_STRENGTH : 0) + REMATCH_STRENGTH }
+    : second;
+  const flags = [...state.flags.filter((f) => !f.startsWith("opp-")), ...opponentFlags(opponent), ...(rematch ? ["opp-rematch"] : [])];
+  return { ...state, opponent, flags };
 }

@@ -1,5 +1,5 @@
 import type { ProfileSetup } from "@/game/engine";
-import type { Background, Burden, City, Crisis, GameEvent, Party, Profile, Trait } from "@/game/types";
+import type { Background, Burden, City, Crisis, GameEvent, Legend, Party, Profile, Trait } from "@/game/types";
 import backgrounds from "./backgrounds.json";
 import burdens from "./burdens.json";
 import cities from "./cities.json";
@@ -7,6 +7,7 @@ import crises from "./crises.json";
 import raw from "./events.json";
 // 由 scripts/derive_mayor_stats.py 產生，請勿手動修改
 import history from "./history.json";
+import legends from "./legends.json";
 import parties from "./parties.json";
 import traits from "./traits.json";
 
@@ -18,6 +19,7 @@ export const CRISES = crises as Crisis[];
 export const TRAITS = traits as Trait[];
 export const BURDENS = burdens as Burden[];
 export const CITIES = cities as City[];
+export const LEGENDS = legends as Legend[];
 export const cityById = (id: string) => CITIES.find((c) => c.id === id)!;
 
 /** 把抽出的人設 id 轉成引擎需要的資料 */

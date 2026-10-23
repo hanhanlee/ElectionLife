@@ -8,6 +8,8 @@ interface Props {
   result: string;
   character: string;
   vote: number;
+  /** 例如「對手：王志明（綠黨）」 */
+  opponent?: string;
 }
 
 function Fireworks() {
@@ -80,7 +82,7 @@ function FallenFlag() {
   );
 }
 
-export default function ResultBanner({ won, result, character, vote }: Props) {
+export default function ResultBanner({ won, result, character, vote, opponent }: Props) {
   return (
     <section className={won ? styles.bannerWin : styles.bannerLose} aria-label={`開票結果：${result}`}>
       <svg className={styles.bannerArt} viewBox="0 0 400 220" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
@@ -98,7 +100,9 @@ export default function ResultBanner({ won, result, character, vote }: Props) {
       </svg>
       <p className={styles.bannerLabel}>{character}</p>
       <p className={won ? styles.bannerSash : styles.bannerStamp}>{result}</p>
-      <p className={styles.bannerVote}>模型估計勝選機率 {vote}%</p>
+      <p className={styles.bannerVote}>
+        {opponent && `${opponent}｜`}模型估計勝選機率 {vote}%
+      </p>
     </section>
   );
 }

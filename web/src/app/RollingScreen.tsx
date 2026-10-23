@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { BACKGROUNDS, BURDENS, CITIES, PARTIES, TRAITS } from "@/content";
 import type { DrawnCharacter } from "@/game/profile";
+import { TRAIT_TIER_LABELS, type TraitTier } from "@/game/types";
 import styles from "./page.module.css";
 
 const TICK_MS = 70;
@@ -22,16 +23,23 @@ interface Slot {
   label: string;
   pool: string[];
   value: string;
+  /** 資質的品質，定格後依品質上色 */
+  tier?: TraitTier;
 }
 
 function slotsFor(c: DrawnCharacter): Slot[] {
-  const traitName = (id: string) => TRAITS.find((t) => t.id === id)!.name;
+  const trait = (id: string) => TRAITS.find((t) => t.id === id)!;
   const traitPool = TRAITS.map((t) => t.name);
   return [
     { label: "城市", pool: CITIES.map((x) => x.name), value: c.city.name },
     { label: "政黨", pool: PARTIES.map((x) => x.name), value: c.party.name },
     { label: "出身", pool: BACKGROUNDS.map((x) => x.name), value: c.background.name },
-    ...c.profile.traits.map((id, i) => ({ label: `資質 ${i + 1}`, pool: traitPool, value: traitName(id) })),
+    ...c.profile.traits.map((id, i) => ({
+      label: `資質 ${i + 1}`,
+      pool: traitPool,
+      value: trait(id).name,
+      tier: trait(id).tier,
+    })),
     { label: "先天包袱", pool: BURDENS.map((x) => x.name), value: BURDENS.find((b) => b.id === c.profile.burden)!.name },
   ];
 }
@@ -66,8 +74,11 @@ export default function RollingScreen({ character, onDone }: { character: DrawnC
           // 還沒定格的格子，用 tick 輪流閃過候選值
           const spinning = s.pool[(tick * 7 + i * 13) % s.pool.length];
           return (
-            <div key={s.label} className={done ? styles.slotLocked : styles.slot}>
-              <span className={styles.slotLabel}>{s.label}</span>
+            <div key={s.label} className={done ? styles.slotLocked : styles.slot} data-tier={done ? s.tier : undefined}>
+              <span className={styles.slotLabel}>
+                {s.label}
+                {done && s.tier && `・${TRAIT_TIER_LABELS[s.tier]}`}
+              </span>
               <span className={done ? styles.slotValueLocked : styles.slotValue}>{done ? s.value : spinning}</span>
             </div>
           );

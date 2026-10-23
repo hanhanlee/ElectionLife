@@ -1,0 +1,169 @@
+[
+  {
+    "id": "populist-wave",
+    "nickname": "庶民旋風",
+    "title": "被黨內看衰的市場總經理",
+    "party": "blue",
+    "traits": ["born-politician", "grandiose", "indomitable"],
+    "burden": "lone-wolf",
+    "intro": "原本是黨內沒人看好的邊緣人，一場又一場的造勢，把整座城市的情緒點燃。口號簡單到每個人都記得，政見大到沒有人算得出要花多少錢。",
+    "signature": "o-sig-populist-wave",
+    "inspiredBy": "2018 年高雄市長選舉的韓國瑜"
+  },
+  {
+    "id": "flower-mom",
+    "nickname": "花媽",
+    "title": "社運出身的資深政治人物",
+    "party": "green",
+    "traits": ["grassroots", "machine-boss", "principled"],
+    "burden": "activist-network",
+    "intro": "從街頭運動一路走進政府，菜市場的阿嬤都把花媽當自己人。動員起來，一個電話就是一整條街。",
+    "signature": "o-sig-flower-mom",
+    "inspiredBy": "長期執政的高雄市長陳菊"
+  },
+  {
+    "id": "white-coat",
+    "nickname": "白袍素人",
+    "title": "醫師出身的政治素人",
+    "party": "white",
+    "traits": ["policy-wonk", "gaffe-prone", "meme-lord"],
+    "burden": "lone-wolf",
+    "intro": "講話直、數字背得滾瓜爛熟，語錄每週都上熱搜。支持者說這叫真性情，反對者說這叫口無遮攔。",
+    "signature": "o-sig-white-coat",
+    "inspiredBy": "2014 年起的臺北市長柯文哲"
+  },
+  {
+    "id": "jogging-mayor",
+    "nickname": "慢跑市長",
+    "title": "形象清新的前部長",
+    "party": "blue",
+    "traits": ["photogenic", "clean-image", "indecisive"],
+    "intro": "每天清晨慢跑的照片是最好的文宣，形象乾淨到對手找不到破綻。唯一的批評是：什麼事都要再研議一下。",
+    "signature": "o-sig-jogging-mayor",
+    "inspiredBy": "1998 年起的臺北市長馬英九"
+  },
+  {
+    "id": "son-of-taiwan",
+    "nickname": "臺灣之子",
+    "title": "三級貧戶出身的律師",
+    "party": "green",
+    "traits": ["executor", "debater", "grassroots"],
+    "intro": "從三級貧戶的孩子一路考上律師，選戰口號喊得響、行政手腕又快又狠。周邊商品賣得比政見還好。",
+    "signature": "o-sig-son-of-taiwan",
+    "inspiredBy": "1994 年起的臺北市長陳水扁"
+  },
+  {
+    "id": "humor-diplomat",
+    "nickname": "幽默外交官",
+    "title": "前外交官、擅長辦國際盛會",
+    "party": "blue",
+    "traits": ["debater", "connected", "grandiose"],
+    "intro": "英文流利、笑話一個接一個，最愛辦國際級的大型活動。城市的知名度衝得很快，帳單也是。",
+    "signature": "o-sig-humor-diplomat",
+    "inspiredBy": "1997 年起的臺中市長胡志強"
+  },
+  {
+    "id": "island-walker",
+    "nickname": "走透透省長",
+    "title": "走遍全台鄉鎮的前省長",
+    "party": "minor",
+    "traits": ["grassroots", "veteran-admin", "indomitable"],
+    "intro": "當年跑遍每一個鄉鎮，地方人士到現在還記得握手的溫度。輸了很多次，每一次都再站起來。",
+    "signature": "o-sig-island-walker",
+    "inspiredBy": "前臺灣省長宋楚瑜"
+  },
+  {
+    "id": "stubborn-mayor",
+    "nickname": "硬頸市長",
+    "title": "醫師出身、和議會硬碰硬的政治人物",
+    "party": "green",
+    "traits": ["principled", "veteran-admin", "clean-image"],
+    "intro": "認定的事絕不退讓，連議會都可以不進。支持者說這叫有骨氣，議員說這叫目中無人。",
+    "signature": "o-sig-stubborn-mayor",
+    "inspiredBy": "2010 年起的臺南市長賴清德"
+  },
+  {
+    "id": "lawyer-debater",
+    "nickname": "律師辯論家",
+    "title": "美麗島辯護律師出身",
+    "party": "green",
+    "traits": ["debater", "opportunist", "policy-wonk"],
+    "intro": "律師出身，辯論場上從來沒有輸過。立場轉得很快，對手常常還沒反應過來，論點就已經換了。",
+    "signature": "o-sig-lawyer-debater",
+    "inspiredBy": "1998 年起的高雄市長謝長廷"
+  },
+  {
+    "id": "princeling",
+    "nickname": "世家公子",
+    "title": "政治世家第二代",
+    "party": "blue",
+    "traits": ["connected", "faction-shadow", "aloof"],
+    "burden": "dynasty",
+    "intro": "家族大老一通電話就能叫來半個黨部，但一開口就讓人感覺離菜市場很遠。最出名的是一支想討好年輕人、卻讓人看得直搖頭的廣告。",
+    "signature": "o-sig-princeling",
+    "inspiredBy": "2014 年臺北市長選舉的連勝文"
+  },
+  {
+    "id": "swallow-mayor",
+    "nickname": "燕子市長",
+    "title": "長年耕耘地方的資深民代",
+    "party": "blue",
+    "traits": ["grassroots", "conflict-averse", "clean-image"],
+    "intro": "說話溫和、從不吵架，阿姨們都覺得很親切。主打空污議題，民調一路穩穩的。",
+    "signature": "o-sig-swallow-mayor",
+    "inspiredBy": "2018 年起的臺中市長盧秀燕"
+  },
+  {
+    "id": "fireball",
+    "nickname": "電火球",
+    "title": "做過縣長與行政院長的老將",
+    "party": "green",
+    "traits": ["executor", "overconfident", "debater"],
+    "intro": "頭頂發亮、行程滿檔，口號永遠是「衝衝衝」。宣布建設的速度，比工程完工快得多。",
+    "signature": "o-sig-fireball",
+    "inspiredBy": "前臺北縣長、行政院長蘇貞昌"
+  },
+  {
+    "id": "detective-mayor",
+    "nickname": "刑警市長",
+    "title": "警界出身的前副市長",
+    "party": "blue",
+    "traits": ["veteran-admin", "conflict-averse", "indomitable"],
+    "intro": "刑警出身，辦案三十年，行政穩健。被問到敏感議題時永遠只有一句「我會努力」，越問越模糊，民調反而越穩。",
+    "signature": "o-sig-detective-mayor",
+    "inspiredBy": "2018 年起的新北市長侯友宜"
+  },
+  {
+    "id": "iron-lady",
+    "nickname": "鐵娘子",
+    "title": "地方家族的大家長",
+    "party": "green",
+    "traits": ["machine-boss", "principled", "grassroots"],
+    "burden": "local-clan",
+    "intro": "整個家族在各鄉鎮都有人當議員、鄉長，說一不二。鐵票從來不會跑掉。",
+    "signature": "o-sig-iron-lady",
+    "inspiredBy": "高雄縣長余陳月瑛與「余家班」"
+  },
+  {
+    "id": "temple-boss",
+    "nickname": "宮廟大老",
+    "title": "宮廟董事長兼地方議長",
+    "party": "independent",
+    "traits": ["machine-boss", "connected", "faction-shadow"],
+    "burden": "local-clan",
+    "intro": "遶境時走在神轎最前面，派系的人情帳本記得清清楚楚。不隸屬任何政黨，但每個政黨都要來拜碼頭。",
+    "signature": "o-sig-temple-boss",
+    "inspiredBy": "鎮瀾宮董事長顏清標"
+  },
+  {
+    "id": "scholar-mayor",
+    "nickname": "學者市長",
+    "title": "大學教授出身的部長",
+    "party": "blue",
+    "traits": ["policy-wonk", "indecisive", "rusty-taiwanese"],
+    "burden": "dynasty",
+    "intro": "政策白皮書寫得比誰都厚，但台語政見發表會上常常卡住。做事謹慎，謹慎到有時候什麼都沒做。",
+    "signature": "o-sig-scholar-mayor",
+    "inspiredBy": "2006 年起的臺北市長郝龍斌"
+  }
+]

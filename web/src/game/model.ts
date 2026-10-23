@@ -3,7 +3,7 @@
 // 平衡的目標是好玩、引人反思（「這真的是我們想要候選人做的事嗎？」），不是吻合史實；
 // 中選會數字只是參考，用來讓難度的方向合理。
 
-import type { Issue, Skill, StatDelta, StatKey, Stats, CampaignScale, SpendingItems } from "./types";
+import type { Issue, Skill, StatDelta, StatKey, Stats, CampaignScale, SpendingItems, TraitTier } from "./types";
 
 export const MODEL_VERSION = "2026.10-draft";
 
@@ -50,13 +50,13 @@ export const WEIGHT_NOTES: Partial<Record<StatKey, string>> = {
  * - 現任有優勢但不保證連任：約 55–90%（史實參考：縣市長以上現任連任率約 73%）
  * - 大黨挑戰者約 35–45%；小黨與無黨籍挑戰者很難贏，約 10%（史實參考 4–6%）
  */
-export const VOTE_BIAS = -0.4;
+export const VOTE_BIAS = -0.32;
 
 /**
  * 連任選舉的對手基準，與第一次投票分開：第二階段經過 8 回合任期，數值與危機的累積和競選期不同。
  * 一樣對所有角色一視同仁。
  */
-export const REELECTION_BIAS = 0.2;
+export const REELECTION_BIAS = 0.27;
 
 /**
  * 選民疲乏：每多動用一次現任資源，該次的民調加分乘上此係數（第 n 次為 PERK_DECAY^(n-1)）。
@@ -189,3 +189,14 @@ export const ISSUE_NOTE_THRESHOLD = 0.3;
 
 /** 隨機擾動幅度（logit，均勻分布 ±此值），代表對手實力、時事與投票率等不可控因素 */
 export const VOTE_NOISE = 1.0;
+
+/** 對手強度：每個資質依品質加減（logit），現任市長對手另外加分，捲土重來的對手更有準備 */
+export const OPPONENT_TIER_STRENGTH: Record<TraitTier, number> = { negative: -0.12, common: 0, rare: 0.1, epic: 0.2 };
+export const OPPONENT_INCUMBENT_STRENGTH = 0.15;
+export const REMATCH_STRENGTH = 0.05;
+/** 遇到傳奇對手的機率 */
+export const LEGEND_CHANCE = 0.2;
+/** 挑戰者時，對手是現任市長的機率 */
+export const OPPONENT_INCUMBENT_CHANCE = 0.3;
+/** 第一次投票的模型勝率不超過這個值（贏得不多）時，對手四年後捲土重來 */
+export const REMATCH_THRESHOLD = 0.6;

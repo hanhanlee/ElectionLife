@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { BACKGROUNDS, BURDENS, CITIES, CRISES, EVENTS, HISTORY as history, PARTIES, profileSetup, TRAITS } from "@/content";
-import { composeIntro, drawCharacter, drawProfile } from "./profile";
+import { BACKGROUNDS, BURDENS, CITIES, CRISES, EVENTS, HISTORY as history, LEGENDS, PARTIES, profileSetup, TRAITS } from "@/content";
+import { composeIntro, describeOpponent, drawCharacter, drawProfile } from "./profile";
 import {
   choose,
   currentEvent,
@@ -14,6 +14,7 @@ import {
   resolveOption,
   takeLoan,
   setScale,
+  runElection,
 } from "./engine";
 import { CAMPAIGN_SCALES, LOAN_AMOUNT, LOAN_INTEREST, OFFICE_UPKEEP, payout, scaleCost, SKILL_EFFECTS, STAGE_LENGTH } from "./model";
 import { summarize } from "./endings";
@@ -44,7 +45,7 @@ function playRandom(seed: number, opts: PlayOptions = {}): GameState {
   const rand = mulberry32(seed);
   const party = opts.party ?? PARTIES[Math.floor(rand() * PARTIES.length)];
   const background = opts.background ?? BACKGROUNDS[Math.floor(rand() * BACKGROUNDS.length)];
-  let s = newGame(EVENTS, seed, party, background, profileSetup(drawProfile(seed, background, party, TRAITS, BURDENS, CITIES[seed % CITIES.length])));
+  let s = newGame(EVENTS, seed, party, background, profileSetup(drawProfile(seed, background, party, TRAITS, BURDENS, CITIES[seed % CITIES.length], LEGENDS)));
   while (!s.finished) {
     const e = currentEvent(s, EVENTS)!;
     let open = offeredOptions(s, e).filter((o) => optionAvailability(s, o) !== "locked");
@@ -465,7 +466,7 @@ describe("人設與人物介紹", () => {
 
   it("全隨機開局：城市、政黨、出身都抽得到，同一個 seed 結果相同", () => {
     const seen = { city: new Set<string>(), party: new Set<string>(), bg: new Set<string>() };
-    const content = { cities: CITIES, parties: PARTIES, backgrounds: BACKGROUNDS, traits: TRAITS, burdens: BURDENS };
+    const content = { cities: CITIES, parties: PARTIES, backgrounds: BACKGROUNDS, traits: TRAITS, burdens: BURDENS, legends: LEGENDS };
     for (let seed = 0; seed < 3000; seed++) {
       const c = drawCharacter(seed, content);
       seen.city.add(c.city.id);
@@ -574,7 +575,7 @@ describe("資質影響事件結果", () => {
 });
 
 describe("耐玩度與城市差異", () => {
-  const content = { cities: CITIES, parties: PARTIES, backgrounds: BACKGROUNDS, traits: TRAITS, burdens: BURDENS };
+  const content = { cities: CITIES, parties: PARTIES, backgrounds: BACKGROUNDS, traits: TRAITS, burdens: BURDENS, legends: LEGENDS };
   /** 用全隨機開局（和實際遊戲一樣）玩一局 */
   function playDrawn(seed: number): GameState {
     const c = drawCharacter(seed, content);
@@ -745,5 +746,106 @@ describe("競選規模與開銷", () => {
     const termTurns = s.history.filter((h) => TURN_PLAN[h.turn] === "term").length;
     expect(s.spending.office).toBeLessThanOrEqual(termTurns * OFFICE_UPKEEP);
     expect(termTurns).toBeGreaterThan(0);
+  });
+});
+
+describe("資質品質", () => {
+  it("每個資質都有品質，每一類都有負面與卓越資質", () => {
+    for (const t of TRAITS) expect(["negative", "common", "rare", "epic"]).toContain(t.tier);
+    for (const cat of ["communication", "policy", "organization", "personality"]) {
+      const tiers = TRAITS.filter((t) => t.category === cat).map((t) => t.tier);
+      expect(tiers).toContain("negative");
+      expect(tiers).toContain("epic");
+    }
+  });
+
+  it("卓越資質很稀有，負面與普通最常見", () => {
+    const count: Record<string, number> = { negative: 0, common: 0, rare: 0, epic: 0 };
+    let anyEpic = 0;
+    const N = 3000;
+    for (let seed = 1; seed <= N; seed++) {
+      const c = drawCharacter(seed, { cities: CITIES, parties: PARTIES, backgrounds: BACKGROUNDS, traits: TRAITS, burdens: BURDENS });
+      const tiers = c.profile.traits.map((id) => TRAITS.find((t) => t.id === id)!.tier);
+      for (const t of tiers) count[t]++;
+      if (tiers.includes("epic")) anyEpic++;
+    }
+    const total = N * 3;
+    const share = (k: string) => count[k] / total;
+    console.log(
+      `資質品質：負面 ${(share("negative") * 100).toFixed(1)}%、普通 ${(share("common") * 100).toFixed(1)}%、` +
+        `優秀 ${(share("rare") * 100).toFixed(1)}%、卓越 ${(share("epic") * 100).toFixed(1)}%；至少一個卓越的角色 ${((anyEpic / N) * 100).toFixed(1)}%`,
+    );
+    expect(share("epic")).toBeLessThan(0.08);
+    expect(share("epic")).toBeGreaterThan(0.02);
+    expect(share("negative") + share("common")).toBeGreaterThan(0.55);
+  });
+});
+
+describe("對手", () => {
+  const content = { cities: CITIES, parties: PARTIES, backgrounds: BACKGROUNDS, traits: TRAITS, burdens: BURDENS, legends: LEGENDS };
+
+  it("每個角色都有兩個階段的對手，同一個 seed 抽到同一組；傳奇對手不會和玩家同黨", () => {
+    let legends = 0;
+    for (let seed = 1; seed <= 1000; seed++) {
+      const c = drawCharacter(seed, content);
+      const { first, second } = c.profile.rivals!;
+      if (seed <= 20) expect(drawCharacter(seed, content).profile.rivals).toEqual(c.profile.rivals);
+      for (const o of [first, second]) {
+        if (o.legend) {
+          expect(o.party).not.toBe(c.party.id);
+          legends++;
+        }
+        expect(o.traits).toHaveLength(3);
+      }
+      expect(second.incumbent).toBe(false);
+      if (c.background.id === "incumbent") expect(first.incumbent).toBe(false);
+    }
+    expect(legends / 2000).toBeGreaterThan(0.14);
+    expect(legends / 2000).toBeLessThan(0.24);
+  });
+
+  it("傳奇對手的資料完整：資質存在、招牌事件存在且只對這位對手出現", () => {
+    for (const l of LEGENDS) {
+      for (const t of l.traits) expect(TRAITS.some((x) => x.id === t)).toBe(true);
+      const sig = EVENTS.find((e) => e.id === l.signature)!;
+      expect(sig).toBeDefined();
+      expect(sig.conditions?.flags).toContain(`opp-legend-${l.id}`);
+    }
+  });
+
+  it("對手越強，勝選機率越低", () => {
+    const g = newGame(EVENTS, 9, PARTIES[0], BACKGROUNDS[1]);
+    const weak = runElection({ ...g, opponent: { name: "甲", party: "green", title: "", incumbent: false, traits: [], strength: -0.3 } }, "first");
+    const strong = runElection({ ...g, opponent: { name: "乙", party: "green", title: "", incumbent: false, traits: [], strength: 0.4 } }, "first");
+    expect(weak.probability).toBeGreaterThan(strong.probability);
+  });
+
+  it("贏得不多時對手捲土重來，贏很多則換人", () => {
+    let rematch = 0, fresh = 0;
+    for (let seed = 1; seed <= 300; seed++) {
+      const s = playRandom(seed);
+      if (!s.firstElection?.won || !s.character.profile?.rivals) continue;
+      const { first, second } = s.character.profile.rivals;
+      if (s.firstElection.probability <= 0.6) {
+        expect(s.flags).toContain("opp-rematch");
+        expect(s.opponent!.name).toBe(first.name);
+        rematch++;
+      } else {
+        expect(s.opponent).toEqual(second);
+        fresh++;
+      }
+    }
+    expect(rematch).toBeGreaterThan(0);
+    expect(fresh).toBeGreaterThan(0);
+  });
+
+  it("隨機對手的介紹用第三人稱，不會出現「你」", () => {
+    for (let seed = 1; seed <= 300; seed++) {
+      const o = drawCharacter(seed, content).profile.rivals!.first;
+      if (o.legend) continue;
+      const text = describeOpponent(o, "某黨", TRAITS, LEGENDS);
+      expect(text).toContain(o.name);
+      expect(text).not.toContain("你");
+    }
   });
 });
