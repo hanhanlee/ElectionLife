@@ -1,3 +1,6 @@
 # 原始 PDF 體積大，以 manifest 記錄來源，可用 scripts 重抓
 data/raw/**/*.pdf
 __pycache__/
+# 選舉公報全文含候選人地址與電話：只留在本機供 check_quotes.py 比對，不進 repo
+# 需要時用 scripts/fetch_bulletins.py 依 manifest 重抓
+data/raw/cec_bulletin/**/*.txt
