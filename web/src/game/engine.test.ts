@@ -725,6 +725,17 @@ describe("競選規模與開銷", () => {
     expect(newGame(EVENTS, 1, PARTIES.find((p) => p.id === "minor")!, BACKGROUNDS[1]).scale).toBe("lean");
   });
 
+  it("競選規模只能在第一階段第 1、7 回合與第二階段第 7 回合調整", () => {
+    let s = newGame(EVENTS, 3, PARTIES[0], BACKGROUNDS[1]);
+    expect(setScale(s, "full").scale).toBe("full");
+    s = choose(s, EVENTS, pickFree(s), [], PARTIES, ARCS);
+    expect(s.turn).toBe(1);
+    expect(setScale(s, "full").scale).toBe(s.scale);
+    expect(setScale({ ...s, turn: 6 }, "full").scale).toBe("full");
+    expect(setScale({ ...s, turn: 18 }, "full").scale).toBe("full");
+    expect(setScale({ ...s, turn: 20 }, "full").scale).toBe(s.scale);
+  });
+
   it("每個競選回合依規模扣人事、廣告、活動，並記錄在支出裡", () => {
     let s = setScale(newGame(EVENTS, 3, PARTIES[0], BACKGROUNDS[1]), "standard");
     s = { ...s, funds: 5000 };

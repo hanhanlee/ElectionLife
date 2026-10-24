@@ -19,6 +19,7 @@ import {
   TRAITS,
 } from "@/content";
 import {
+  canSetScale,
   canTakeLoan,
   choose,
   chooseFate,
@@ -29,6 +30,7 @@ import {
   isCampaignTurn,
   lacksFunds,
   nextPayout,
+  nextScaleTurn,
   setScale,
   optionAvailability,
   takeLoan,
@@ -214,26 +216,24 @@ export default function Game() {
 
   return (
     <main className={styles.main}>
-      <p className={styles.turn}>
-        {characterLabel(game)}
-        {game.opponent && `　對手：${game.opponent.name}（${partyById(game.opponent.party).name}）`}　
-        <span className={styles.funds}>💰 競選經費 {formatFunds(game.funds)}</span>
-        {game.loan && game.loan.remaining > 0 && (
-          <span className={styles.funds}>
-            ｜貸款還剩 {formatFunds(game.loan.remaining)}，每回合還 {formatFunds(game.loan.installment)}
-          </span>
-        )}
-      </p>
+      {/* 手機優先：頂端只放「我是誰、第幾回合、有多少錢」與數值，這一回合要做的決定緊接在後 */}
+      <header className={styles.gameHeader}>
+        <p className={styles.turnLine}>
+          <strong>
+            {stageLabel(game, shownTurn)} 第 {(shownTurn % STAGE_LENGTH) + 1} / {STAGE_LENGTH} 回合
+          </strong>
+          <span>{phaseLabel(game, TURN_PLAN[shownTurn])}</span>
+          <span className={styles.funds}>💰 {formatFunds(game.funds)}</span>
+        </p>
+        <p className={styles.whoLine}>
+          {characterLabel(game)}
+          {game.opponent && `｜對手：${game.opponent.name}（${partyById(game.opponent.party).name}）`}
+        </p>
+      </header>
       <StatBar stats={game.stats} />
       <ActiveFates state={game} />
-      <p className={styles.turn}>
-        {stageLabel(game, shownTurn)} 第 {(shownTurn % STAGE_LENGTH) + 1} / {STAGE_LENGTH} 回合 ·{" "}
-        {phaseLabel(game, TURN_PLAN[shownTurn])}
-      </p>
-      {!outcome && <BudgetPanel state={game} onScale={(scale) => setGame(setScale(game, scale))} />}
-      {!outcome && Object.keys(game.arcs).length > 0 && <LedgerPanel state={game} />}
+      {!outcome && !fate && canSetScale(game) && <ScalePicker state={game} onScale={(scale) => setGame(setScale(game, scale))} />}
       {!outcome && !fate && game.turn > 0 && <StaffReportCard state={game} />}
-      {!outcome && !fate && canTakeLoan(game) && <LoanOffer state={game} onTake={() => setGame(takeLoan(game))} />}
 
       {outcome ? (
         <section className={styles.card}>
@@ -302,6 +302,10 @@ export default function Game() {
           </section>
         )
       )}
+      {!outcome && <BudgetSummary state={game} />}
+      {!outcome && Object.keys(game.arcs).length > 0 && <LedgerPanel state={game} />}
+      {!outcome && !fate && canTakeLoan(game) && <LoanOffer state={game} onTake={() => setGame(takeLoan(game))} />}
+      <StatHints />
       {!game.finished && <WithdrawButton onConfirm={withdraw} />}
     </main>
   );
@@ -352,9 +356,11 @@ function FateScreen({ state, onPick }: { state: GameState; onPick: (card: FateCa
           </button>
         ))}
       </div>
-      <button className={styles.primary} disabled={!chosen} onClick={() => chosen && onPick(chosen)}>
-        {chosen ? `就選「${chosen.title}」` : "先選一張牌"}
-      </button>
+      <div className={styles.stickyAction}>
+        <button className={styles.primary} disabled={!chosen} onClick={() => chosen && onPick(chosen)}>
+          {chosen ? `就選「${chosen.title}」` : "先選一張牌"}
+        </button>
+      </div>
     </section>
   );
 }
@@ -528,7 +534,9 @@ function CharacterReveal({ character, onStart }: { character: DrawnCharacter; on
           </small>
         </p>
       </section>
-      <button className={styles.primary} onClick={onStart}>開始參選</button>
+      <div className={styles.stickyAction}>
+        <button className={styles.primary} onClick={onStart}>開始參選</button>
+      </div>
     </main>
   );
 }
@@ -588,6 +596,14 @@ function StatBar({ stats }: { stats: Stats }) {
           </div>
         ))}
       </div>
+    </>
+  );
+}
+
+/** 每個數值的用途（放在畫面下方，需要時再展開） */
+function StatHints() {
+  return (
+    <>
       <details className={styles.hints}>
         <summary>每個數值有什麼用？</summary>
         <ul className={styles.list}>
@@ -734,21 +750,21 @@ function LedgerPanel({ state, open = false }: { state: GameState; open?: boolean
 const SCALE_ORDER: CampaignScale[] = ["lean", "standard", "full"];
 
 /** 每回合的預算：競選回合選規模（人事、廣告、活動），任期中只有服務處開銷 */
-function BudgetPanel({ state, onScale }: { state: GameState; onScale: (scale: CampaignScale) => void }) {
-  const next = nextPayout(state);
-  const loanDue = state.loan && state.loan.remaining > 0 ? state.loan.installment : 0;
-  if (!isCampaignTurn(state.turn)) {
-    return (
-      <p className={styles.turn}>
-        任期中：每回合服務處與政治幕僚開銷 {formatFunds(OFFICE_UPKEEP)}。下次入帳在 {next.inTurns} 回合後，預估{" "}
-        {formatFunds(next.estimate)}。
-      </p>
-    );
-  }
-  const burn = scaleCost(state.scale) + loanDue;
-  const lasts = burn > 0 ? Math.floor(state.funds / burn) : Infinity;
+/** 回合數（0-based）換成玩家看到的「第幾階段第幾回合」 */
+const turnName = (turn: number) => `${turn < STAGE_LENGTH ? "" : "第二階段"}第 ${(turn % STAGE_LENGTH) + 1} 回合`;
+
+/** 競選規模的選擇：只在第一階段第 1、7 回合與第二階段第 7 回合出現 */
+function ScalePicker({ state, onScale }: { state: GameState; onScale: (scale: CampaignScale) => void }) {
+  const upcoming = nextScaleTurn(state.turn);
+  const reelection = !isCampaignTurn(state.turn);
   return (
     <section className={styles.budget}>
+      <p className={styles.budgetTitle}>
+        {reelection ? "連任選戰從第 9 回合開始：現在決定競選總部的規模" : "這一回合可以調整競選規模"}
+        <small>
+          {upcoming !== undefined && !reelection ? `下次調整：${turnName(upcoming)}` : "決定後到選舉結束都不能再改"}
+        </small>
+      </p>
       <div className={styles.scaleRow} role="radiogroup" aria-label="競選規模">
         {SCALE_ORDER.map((k) => {
           const plan = CAMPAIGN_SCALES[k];
@@ -770,15 +786,35 @@ function BudgetPanel({ state, onScale }: { state: GameState; onScale: (scale: Ca
       </div>
       <p className={styles.budgetNote}>
         {CAMPAIGN_SCALES[state.scale].note}。人事 {CAMPAIGN_SCALES[state.scale].costs.staff}｜廣告{" "}
-        {CAMPAIGN_SCALES[state.scale].costs.ads}｜活動 {CAMPAIGN_SCALES[state.scale].costs.events} 萬
-        {loanDue > 0 && `，另有貸款還款 ${loanDue} 萬`}。
-      </p>
-      <p className={lasts <= next.inTurns ? styles.budgetWarn : styles.budgetNote}>
-        照這個規模，經費可以撐 {lasts === Infinity ? "很久" : `${lasts} 回合`}；下次入帳在 {next.inTurns} 回合後，預估{" "}
-        {formatFunds(next.estimate)}。
-        {lasts < next.inTurns && " 撐不到下次入帳：會被迫縮編，連精簡都付不起就是欠薪。"}
+        {CAMPAIGN_SCALES[state.scale].costs.ads}｜活動 {CAMPAIGN_SCALES[state.scale].costs.events} 萬。
       </p>
     </section>
+  );
+}
+
+/** 經費摘要：一兩行，放在事件下方；撐不到下次入帳時改用警告色 */
+function BudgetSummary({ state }: { state: GameState }) {
+  const next = nextPayout(state);
+  const loanDue = state.loan && state.loan.remaining > 0 ? state.loan.installment : 0;
+  const loan = loanDue > 0 ? `｜貸款還剩 ${formatFunds(state.loan!.remaining)}，每回合還 ${formatFunds(loanDue)}` : "";
+  if (!isCampaignTurn(state.turn)) {
+    return (
+      <p className={styles.budgetNote}>
+        💰 任期中：每回合服務處開銷 {formatFunds(OFFICE_UPKEEP)}｜{next.inTurns} 回合後入帳約 {formatFunds(next.estimate)}
+        {loan}
+      </p>
+    );
+  }
+  const burn = scaleCost(state.scale) + loanDue;
+  const lasts = burn > 0 ? Math.floor(state.funds / burn) : Infinity;
+  const short = lasts < next.inTurns;
+  return (
+    <p className={short ? styles.budgetWarn : styles.budgetNote}>
+      💰 {CAMPAIGN_SCALES[state.scale].label}規模 {formatFunds(scaleCost(state.scale))}／回合｜可撐{" "}
+      {lasts === Infinity ? "很久" : `${lasts} 回合`}｜{next.inTurns} 回合後入帳約 {formatFunds(next.estimate)}
+      {loan}
+      {short && "。撐不到下次入帳：會被迫縮編，連精簡都付不起就是欠薪。"}
+    </p>
   );
 }
 

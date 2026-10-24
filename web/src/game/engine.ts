@@ -33,6 +33,7 @@ import {
   VOTE_BIAS,
   VOTE_NOISE,
   VOTE_WEIGHTS,
+  SCALE_TURNS,
 } from "./model";
 import {
   ALL_STATS,
@@ -768,10 +769,16 @@ export function totalDelta(state: GameState): Stats {
   return sum;
 }
 
-/** 調整競選規模：從下一次開銷開始生效 */
+/** 這一回合可以調整競選規模嗎 */
+export const canSetScale = (state: GameState) => SCALE_TURNS.includes(state.turn) && !state.pendingFate;
+
+/** 調整競選規模：從下一次開銷開始生效；不是可以調整的回合時不變 */
 export function setScale(state: GameState, scale: CampaignScale): GameState {
-  return { ...state, scale };
+  return canSetScale(state) ? { ...state, scale } : state;
 }
+
+/** 下一次可以調整競選規模的回合（0-based）；這一局已經沒有機會時為 undefined */
+export const nextScaleTurn = (turn: number) => SCALE_TURNS.find((t) => t > turn);
 
 /** 這一回合結束時要付競選規模開銷（競選期與任期尾聲），否則付任期中的服務處開銷 */
 export function isCampaignTurn(turn: number): boolean {

@@ -89,14 +89,14 @@
 .stats {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 8px 16px;
-  font-size: 0.8125rem;
+  gap: 6px 16px;
+  font-size: 0.875rem;
 }
 
 .stat {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
 }
 
 .meter {
@@ -235,10 +235,12 @@
 
 .quiet {
   align-self: center;
+  min-height: 44px;
+  padding: 0 12px;
   background: none;
   border: none;
   color: var(--muted);
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   text-decoration: underline;
   cursor: pointer;
 }
@@ -286,7 +288,7 @@
 }
 
 .slotLabel {
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   color: var(--muted);
 }
 
@@ -415,7 +417,10 @@
 }
 
 .analysisLink {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
   color: var(--muted);
   font-size: 0.875rem;
 }
@@ -461,7 +466,7 @@
 
 .scaleOn small,
 .scaleOff small {
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   color: var(--muted);
   text-align: center;
 }
@@ -507,7 +512,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   color: var(--muted);
 }
 
@@ -521,7 +526,7 @@
   margin-left: 8px;
   padding: 1px 8px;
   border-radius: 999px;
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   font-weight: 700;
   color: var(--tier-epic);
   border: 1px solid var(--tier-epic);
@@ -545,7 +550,7 @@
 
 .cardLabelHint {
   flex-basis: 100%;
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   color: var(--muted);
 }
 
@@ -751,7 +756,7 @@
 
 .fateKind {
   color: var(--kind);
-  font-size: 0.8rem;
+  font-size: 0.8125rem;
   font-weight: 700;
   letter-spacing: 0.1em;
 }
@@ -769,5 +774,100 @@
 
   .fateCard:hover {
     transform: none;
+  }
+}
+
+/* ---- 手機優先的遊戲畫面 ---- */
+.gameHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.turnLine {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  margin: 0;
+  font-size: 0.9375rem;
+}
+
+.turnLine span {
+  color: var(--muted);
+}
+
+.whoLine {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.budgetTitle {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 12px;
+  margin: 0 0 8px;
+  font-weight: 600;
+}
+
+.budgetTitle small {
+  font-weight: 400;
+  color: var(--muted);
+}
+
+/* 可以展開的說明：整列都好點 */
+.main summary {
+  padding: 11px 0;
+  cursor: pointer;
+}
+
+/* 角色卡很長：「開始參選」固定在畫面底部 */
+.stickyAction {
+  position: sticky;
+  bottom: 0;
+  padding: 16px 0 calc(12px + env(safe-area-inset-bottom));
+  background: linear-gradient(to bottom, transparent, var(--background) 35%);
+}
+
+.stickyAction > button {
+  width: 100%;
+}
+
+/* 小字最小 13px，手機上才讀得清楚 */
+.main small {
+  font-size: max(0.8125rem, 0.85em);
+}
+
+/* 段落裡的外部連結（來源）：加大可點範圍，不影響排版 */
+.main a[target="_blank"] {
+  display: inline-block;
+  padding: 10px 0;
+  margin: -10px 0;
+}
+
+/* 很窄的手機：競選規模改成三列，每列一行 */
+@media (max-width: 359px) {
+  .scaleRow {
+    grid-template-columns: 1fr;
+  }
+
+  .scaleOn,
+  .scaleOff {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0 8px;
+    text-align: left;
+    padding: 6px 12px;
+  }
+
+  .scaleOn small,
+  .scaleOff small {
+    flex-basis: 100%;
+    text-align: left;
   }
 }
