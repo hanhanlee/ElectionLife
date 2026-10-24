@@ -692,7 +692,7 @@ function turnLabel(turn: number): string {
 
 /** 幕僚長回報：一句主要處境，其他折疊成快報 */
 function StaffReportCard({ state }: { state: GameState }) {
-  const report = staffReport(state, ARCS);
+  const report = staffReport(state, ARCS, EVENTS);
   if (!report.main) return null;
   return (
     <section className={styles.staff}>

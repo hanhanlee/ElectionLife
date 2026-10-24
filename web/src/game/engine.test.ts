@@ -994,23 +994,29 @@ describe("劇情鏈", () => {
     }
   });
 
-  it("幕僚長回報不會一直重複同一句話（連續兩回合同一句 < 12%）", () => {
-    let pairs = 0, same = 0;
+  it("幕僚長回報不會一直重複同一句話（連續兩回合同一句 < 12%），而且每一句都跟玩家的選擇有關", () => {
+    let pairs = 0, same = 0, turns = 0, cited = 0;
+    const uncited: string[] = [];
     for (let seed = 1; seed <= 200; seed++) {
       const rand = mulberry32(seed * 31);
       let s = newGame(EVENTS, seed, PARTIES[seed % 6], BACKGROUNDS[seed % 5], profileSetup(drawProfile(seed, BACKGROUNDS[seed % 5], PARTIES[seed % 6], TRAITS, BURDENS, CITIES[seed % 6], LEGENDS)));
       let prev = "";
       while (!s.finished) {
         if (s.turn > 0) {
-          const m = staffReport(s, ARCS).main ?? "";
+          const m = staffReport(s, ARCS, EVENTS).main ?? "";
           if (prev) { pairs++; if (m === prev) same++; }
           prev = m;
+          // 每一句都要說得出是哪個決定：引用事件、帳本、競選規模或命運牌（「…」）
+          turns++;
+          if (m.includes("「")) cited++;
+          else if (m) uncited.push(m);
         }
         const open = offeredOptions(s, currentEvent(s, EVENTS)!).filter((o) => optionAvailability(s, o) !== "locked");
         s = choose(s, EVENTS, open[Math.floor(rand() * open.length)].id, CRISES, PARTIES, ARCS);
       }
     }
     expect(same / pairs).toBeLessThan(0.12);
+    expect(cited / turns, uncited.slice(0, 5).join(" / ")).toBeGreaterThan(0.95);
   });
 
   it("同一個 seed、同一串選擇，帳本完全相同", () => {
@@ -1115,13 +1121,14 @@ describe("政治命運", () => {
     expect(a.turn).toBe(s.turn);
   });
 
-  it("試煉有成有敗；正向效果同時最多兩個；劇情鏈的任期配額不變", () => {
+  it("試煉有成有敗；同一張牌的效果不會重複；劇情鏈的任期配額不變", () => {
     const ordeals = fateGames.flatMap((g) => (g.fateHistory ?? []).filter((h) => h.success !== undefined));
     const rate = ordeals.filter((h) => h.success).length / ordeals.length;
     expect(rate).toBeGreaterThan(0.3);
     expect(rate).toBeLessThan(0.7);
     for (const g of fateGames) {
-      expect((g.fateEffects ?? []).length).toBeLessThanOrEqual(2);
+      const ids = (g.fateEffects ?? []).map((a) => `${a.cardId}/${a.type}`);
+      expect(new Set(ids).size).toBe(ids.length);
       const arcTurns = g.deck.filter((id, t) => ["term", "incumbency"].includes(TURN_PLAN[t]) && EVENTS.find((e) => e.id === id)?.arc).length;
       expect(arcTurns).toBeLessThanOrEqual(3);
     }

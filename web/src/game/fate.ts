@@ -25,9 +25,6 @@ export const FATE_SCALE = {
   fundsGain: 0.6,
 };
 
-/** 同時生效的正向效果（加成、持續、護盾）上限；第三個會取代最舊的 */
-export const MAX_ACTIVE_FATES = 2;
-
 /** 試煉成功率的上下限：再有利也可能失敗，再不利也有機會 */
 export const ORDEAL_CHANCE = { min: 0.2, max: 0.8 };
 
@@ -104,7 +101,10 @@ export function pickText(text: string | string[], r: number): string {
   return typeof text === "string" ? text : text[Math.floor(r * text.length)];
 }
 
-/** 把一張牌帶來的加成、持續效果、護盾加進生效清單；超過上限時取代最舊的 */
+/**
+ * 把一張牌帶來的加成、持續效果、護盾加進生效清單。不同的人與資源可以同時存在；
+ * 只有同一個職位（同一個 stackGroup，例如兩任小編）才會由新的接手。
+ */
 export function addActiveFates(active: ActiveFate[], card: FateCard, effect: FateEffect): { active: ActiveFate[]; replaced: string[] } {
   const added: ActiveFate[] = [];
   const base = { cardId: card.id, stackGroup: card.stackGroup };
@@ -115,15 +115,9 @@ export function addActiveFates(active: ActiveFate[], card: FateCard, effect: Fat
   if (effect.passive) added.push({ ...base, type: "passive", label: effect.passive.label, turns: effect.passive.turns, effects: effect.passive.effects });
   if (effect.shield) added.push({ ...base, type: "shield", label: effect.shield.label, turns: effect.shield.turns, charges: 1 });
   if (!added.length) return { active, replaced: [] };
-
-  let next = active.filter((a) => !(card.stackGroup && a.stackGroup === card.stackGroup));
+  const next = active.filter((a) => !(card.stackGroup && a.stackGroup === card.stackGroup));
   const replaced = active.filter((a) => !next.includes(a)).map((a) => a.label);
-  next = [...next, ...added];
-  while (next.length > MAX_ACTIVE_FATES) {
-    replaced.push(next[0].label);
-    next = next.slice(1);
-  }
-  return { active: next, replaced };
+  return { active: [...next, ...added], replaced };
 }
 
 /** 正面效果放大（負面效果不變） */

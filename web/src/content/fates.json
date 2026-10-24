@@ -6,7 +6,6 @@
     "scene": "一群大學生在競選總部門口排隊，說看了你的影片，想來幫忙掃街。",
     "hint": "接下來的掃街和組織動員更有力；志工要吃要喝，熱情也來得快去得快。",
     "stages": ["campaign"],
-    "stackGroup": "ground",
     "effect": { "text": ["志工們穿上背心就出門了。有一位把你的名字寫錯，但很有精神。", "總部第一次擠滿了人。你的幕僚說，便當要多訂兩百個。"], "effects": { "team": 3 }, "boost": { "skills": ["grassroots", "organize"], "charges": 2, "turns": 4, "label": "熱血志工" }, "funds": -100 },
     "source": { "prototype": "素人候選人以網路號召大量年輕志工投入掃街與造勢。", "realCase": "2014 年直轄市長選舉的網路志工動員" }
   },
@@ -17,7 +16,6 @@
     "scene": "幾位大學教授主動寫信來，說願意組一個政策顧問團。顧問費不便宜，但他們很認真。",
     "hint": "政策和行政的選擇更紮實；要付顧問費，而且教授們講話很直。",
     "stages": ["campaign", "term"],
-    "stackGroup": "policy",
     "effect": { "text": "顧問團的第一份報告有八十頁。你讀完三頁，就知道這些人是來真的。", "funds": -300, "effects": { "integrity": 1 }, "boost": { "skills": ["policy", "admin"], "charges": 2, "turns": 4, "label": "學者顧問團" } }
   },
   {
@@ -27,7 +25,7 @@
     "scene": "你週末在菜市場的直播，因為一句即興的話突然爆紅，觀看數破了百萬。",
     "hint": "一夕之間大家都認識你；紅了，就會有人開始翻你的舊帳。",
     "stages": ["campaign"],
-    "effect": { "text": ["你的那句話被做成貼圖，連對手的支持者都在用。", "記者打電話來要專訪，排到下下週。"], "effects": { "media": 12, "approval": 4 }, "delayed": { "afterTurns": 2, "effects": { "approval": -4, "media": 3 }, "text": "網友挖出你十年前的貼文，跟爆紅那句話放在一起比較。" } }
+    "effect": { "text": ["你的那句話被做成貼圖，連對手的支持者都在用。", "記者打電話來要專訪，排到下下週。"], "effects": { "media": 12, "approval": 4 }, "delayed": { "afterTurns": 2, "effects": { "approval": -4, "media": 3 }, "text": "週末那支爆紅的直播之後，網友挖出你十年前的貼文，跟爆紅的那句話放在一起比較。" } }
   },
   {
     "id": "o-meme",
@@ -36,8 +34,7 @@
     "scene": "一位很會做梗圖的小編毛遂自薦。作品很好笑，尺度有點大。",
     "hint": "接下來幾週網路聲量穩定；小編的尺度，你不一定管得住。",
     "stages": ["campaign", "term"],
-    "stackGroup": "media",
-    "effect": { "text": "第一張梗圖就破了萬分享。第二張，你的發言人看了很久才說「可以」。", "funds": -150, "passive": { "effects": { "media": 2, "approval": 1 }, "turns": 4, "label": "神級小編" }, "delayed": { "afterTurns": 4, "effects": { "approval": -3, "integrity": -2 }, "text": "小編的一張梗圖開錯了玩笑，你在記者會上代替小編道歉。" } }
+    "effect": { "text": "第一張梗圖就破了萬分享。第二張，你的發言人看了很久才說「可以」。", "funds": -150, "passive": { "effects": { "media": 2, "approval": 1 }, "turns": 4, "label": "神級小編" }, "delayed": { "afterTurns": 4, "effects": { "approval": -3, "integrity": -2 }, "text": "你請來的神級小編，有一張梗圖開錯了玩笑，你在記者會上代替小編道歉。" } }
   },
   {
     "id": "o-old-mayor",
@@ -47,7 +44,7 @@
     "hint": "老市長的支持者會跟過來；老市長的舊帳，你也得一起背。",
     "stages": ["campaign"],
     "conditions": { "notFlags": ["bg-incumbent"] },
-    "effect": { "text": "老市長在造勢場上握著你的手說：「這個年輕人，我看好。」台下的阿伯們都站起來了。", "effects": { "approval": 5, "party": 3 }, "delayed": { "afterTurns": 4, "effects": { "approval": -3, "media": 4 }, "text": "記者翻出老市長任內的弊案，問你怎麼看。你看了很久。" } }
+    "effect": { "text": "老市長在造勢場上握著你的手說：「這個年輕人，我看好。」台下的阿伯們都站起來了。", "effects": { "approval": 5, "party": 3 }, "delayed": { "afterTurns": 4, "effects": { "approval": -3, "media": 4 }, "text": "幫你站台的退休老市長，被記者翻出任內的弊案。記者問你怎麼看，你看了很久。" } }
   },
   {
     "id": "o-neighbors",
@@ -65,7 +62,6 @@
     "scene": "對面陣營的一位資深議員私下傳話：有些案子，其實可以談。",
     "hint": "跟議會協商會順利很多；自己的支持者有人會說你太軟。",
     "stages": ["term"],
-    "stackGroup": "council",
     "effect": { "text": "你們在議會的咖啡廳談了半小時。隔天，兩個卡了半年的案子排進了議程。", "effects": { "council": 6, "party": -3 }, "boost": { "skills": ["negotiate", "admin"], "charges": 2, "turns": 4, "label": "跨黨協商窗口" } }
   },
   {
@@ -75,7 +71,6 @@
     "scene": "消防局和災防辦提議成立跨局處應變小組，平常演練，市府出事的時候第一時間接手。",
     "hint": "下一次突發危機的衝擊會小一點；要撥人力和預算給他們。",
     "stages": ["term"],
-    "stackGroup": "shield",
     "effect": { "text": "救火隊的群組名稱叫「市長不要再上新聞」。你決定假裝沒看到。", "effects": { "treasury": -3, "team": 2 }, "shield": { "turns": 5, "label": "公務員救援隊" } }
   },
   {
@@ -114,8 +109,7 @@
     "scene": "新來的實習生寫的新聞稿，比發言人寫的好太多了。就是有點太敢寫。",
     "hint": "接下來的媒體和政策攻防更有力；實習生總有一天會離職，帶著你的祕密。",
     "stages": ["campaign", "term"],
-    "stackGroup": "media",
-    "effect": { "text": "實習生的第一篇稿子，被三家媒體原封不動地刊出來。", "boost": { "skills": ["media", "debate"], "charges": 2, "turns": 4, "label": "天才實習生" }, "delayed": { "afterTurns": 5, "effects": { "media": 4, "approval": -2 }, "text": "實習生離職後開了一個政治評論 Podcast，第一集在講你。" } }
+    "effect": { "text": "實習生的第一篇稿子，被三家媒體原封不動地刊出來。", "boost": { "skills": ["media", "debate"], "charges": 2, "turns": 4, "label": "天才實習生" }, "delayed": { "afterTurns": 5, "effects": { "media": 4, "approval": -2 }, "text": "那位天才實習生離職後開了一個政治評論 Podcast，第一集在講你。" } }
   },
   {
     "id": "o-breakfast",
@@ -133,7 +127,7 @@
     "scene": "大學生自組助選團，條件只有一個：要你公開回答他們最在意的租屋問題。",
     "hint": "年輕人的議題更有說服力；說出口的承諾，他們會截圖。",
     "stages": ["campaign"],
-    "effect": { "text": "你在學生餐廳回答了兩個小時的問題。有一題你答不出來，學生說：「至少你沒有亂講。」", "effects": { "approval": 3, "media": 3 }, "delayed": { "afterTurns": 8, "effects": { "approval": -3 }, "text": "當年的助選團成員在網路上整理了「你答應我們的事」，目前打勾的只有一項。" }, "boost": { "skills": ["debate"], "issues": ["housing", "welfare"], "charges": 2, "turns": 4, "label": "青年助選團" } }
+    "effect": { "text": "你在學生餐廳回答了兩個小時的問題。有一題你答不出來，學生說：「至少你沒有亂講。」", "effects": { "approval": 3, "media": 3 }, "delayed": { "afterTurns": 8, "effects": { "approval": -3 }, "text": "當年幫你助選的校園青年團，在網路上整理了「你答應我們的事」，目前打勾的只有一項。" }, "boost": { "skills": ["debate"], "issues": ["housing", "welfare"], "charges": 2, "turns": 4, "label": "青年助選團" } }
   },
   {
     "id": "o-retired-civil",
@@ -142,7 +136,6 @@
     "scene": "幾位退休的主計和工務主管說，可以幫你把每一條政見的成本算清楚。",
     "hint": "政見不會再出現算錯的尷尬；他們算出來的數字，不一定好聽。",
     "stages": ["campaign"],
-    "stackGroup": "policy",
     "effect": { "text": "退休主計長把你的政見表拿回去，隔天送來一份紅字比黑字多的試算表。", "effects": { "integrity": 2 }, "funds": -150, "boost": { "skills": ["policy", "admin"], "charges": 2, "turns": 5, "label": "退休智囊" } }
   },
   {
@@ -152,7 +145,7 @@
     "scene": "夜市的雞排攤老闆邀你來顧攤一晚，直播全程開著。",
     "hint": "很接地氣的畫面；你不知道一份雞排多少錢，也會被全國知道。",
     "stages": ["campaign"],
-    "effect": { "text": ["你炸了兩百塊雞排，切了三次手指。直播觀看數比任何一場政見會都高。", "有客人問你一杯珍奶多少錢，你答對了。幕僚在旁邊鬆了一口氣。"], "effects": { "approval": 4, "media": 6 }, "delayed": { "afterTurns": 2, "effects": { "approval": -2, "media": 2 }, "text": "直播裡你把找零算錯的片段被剪了出來，標題是「市長候選人不會算錢」。" } }
+    "effect": { "text": ["你炸了兩百塊雞排，切了三次手指。直播觀看數比任何一場政見會都高。", "有客人問你一杯珍奶多少錢，你答對了。幕僚在旁邊鬆了一口氣。"], "effects": { "approval": 4, "media": 6 }, "delayed": { "afterTurns": 2, "effects": { "approval": -2, "media": 2 }, "text": "你去夜市當一日店員的那場直播，有一段你把找零算錯的片段被剪了出來，標題是「市長候選人不會算錢」。" } }
   },
   {
     "id": "o-petition",
@@ -161,7 +154,7 @@
     "scene": "你的一項政見連署人數破了紀錄，一夜之間變成全市都在討論的話題。",
     "hint": "那項政見會更受矚目；其他政見，暫時沒人在聽。",
     "stages": ["campaign"],
-    "effect": { "text": "連署名單印出來有三公尺長。你在記者會上把它攤開，鏡頭只拍得到一半。", "effects": { "approval": 5, "media": 4, "team": -2 }, "delayed": { "afterTurns": 7, "effects": { "approval": -3 }, "text": "連署發起人來問：當選之後，那項政見做到哪裡了？" } }
+    "effect": { "text": "連署名單印出來有三公尺長。你在記者會上把它攤開，鏡頭只拍得到一半。", "effects": { "approval": 5, "media": 4, "team": -2 }, "delayed": { "afterTurns": 7, "effects": { "approval": -3 }, "text": "那份破紀錄的連署，發起人來問：當選之後，那項政見做到哪裡了？" } }
   },
   {
     "id": "o-debate-pack",
@@ -179,7 +172,7 @@
     "scene": "一位里長把活動中心借給你辦座談，不收錢，只說：「我們里的路燈，你記一下。」",
     "hint": "辦活動省下一筆錢；里長的路燈，你得記著。",
     "stages": ["campaign"],
-    "effect": { "text": "活動中心坐滿了人，冷氣有點弱。里長在門口幫你發水。", "effects": { "approval": 2 }, "funds": 300, "delayed": { "afterTurns": 9, "effects": { "approval": -2 }, "text": "那個里的路燈還是壞的。里長在里民大會上說：「當初答應的人，現在很忙。」" } }
+    "effect": { "text": "活動中心坐滿了人，冷氣有點弱。里長在門口幫你發水。", "effects": { "approval": 2 }, "funds": 300, "delayed": { "afterTurns": 9, "effects": { "approval": -2 }, "text": "借你活動中心的那位里長，里裡的路燈還是壞的。里長在里民大會上說：「當初答應的人，現在很忙。」" } }
   },
   {
     "id": "o-small-wave",
@@ -198,7 +191,7 @@
     "scene": "一位很有名的街頭攝影師拍了你在雨中掃街的照片，問你要不要拿去用。",
     "hint": "一張好照片勝過千言萬語；太好看的照片，總有人說是擺拍。",
     "stages": ["campaign"],
-    "effect": { "text": "照片上的你全身濕透，正在跟一位阿嬤握手。那張照片後來印在每一面看板上。", "effects": { "media": 6, "approval": 3 }, "delayed": { "afterTurns": 3, "effects": { "integrity": -2, "media": 2 }, "text": "有網友找到那天的其他照片，說阿嬤是你的競選志工。" } }
+    "effect": { "text": "照片上的你全身濕透，正在跟一位阿嬤握手。那張照片後來印在每一面看板上。", "effects": { "media": 6, "approval": 3 }, "delayed": { "afterTurns": 3, "effects": { "integrity": -2, "media": 2 }, "text": "那張雨中掃街的照片，有網友找到那天的其他照片，說照片裡的阿嬤是你的競選志工。" } }
   },
   {
     "id": "o-hometown",
@@ -207,7 +200,6 @@
     "scene": "一群在外地工作的年輕人說，投票前要請假回鄉幫你催票。",
     "hint": "選前的動員更有力；他們想聽的，是年輕人為什麼留不住。",
     "stages": ["campaign"],
-    "stackGroup": "ground",
     "effect": { "text": "返鄉志工的群組叫「回家投票」。群組裡最常出現的一句話是：「這裡沒有工作。」", "effects": { "approval": 2 }, "boost": { "skills": ["organize", "grassroots"], "charges": 2, "turns": 4, "label": "返鄉志工" } }
   },
   {
@@ -217,7 +209,6 @@
     "scene": "幾位防災專家自願來市府「義診」：把全市的淹水、坡地、老屋風險攤開來看。",
     "hint": "下一次災害來的時候，你會比較有準備；報告裡的問題，你得想辦法處理。",
     "stages": ["term"],
-    "stackGroup": "shield",
     "effect": { "text": "專家們在地圖上標了四十七個紅點。水利局長看完，說要請一個禮拜的假。", "effects": { "achievement": 2, "treasury": -2 }, "boost": { "issues": ["environment", "safety"], "charges": 1, "turns": 6, "label": "防災地圖" }, "shield": { "turns": 5, "label": "防災專家的建議" } }
   },
   {
@@ -273,7 +264,6 @@
     "scene": "消防局提議辦一場全市的防災演習，從里長到市長都要參加。",
     "hint": "下一次真的出事，大家會知道該怎麼做；演習那天，全市都在塞車。",
     "stages": ["term"],
-    "stackGroup": "shield",
     "effect": { "text": "演習當天你在臨時指揮所待了一整天。有一位阿伯真的被抬上擔架，因為他太熱了。", "effects": { "team": 2, "approval": -1 }, "shield": { "turns": 6, "label": "社區防災演習" } }
   },
   {
@@ -292,7 +282,7 @@
     "scene": "一個公民監督團體提議：讓他們每季檢查市府的三項政策，結果全部公開。",
     "hint": "政策品質會更好；報告裡的缺點，對手也看得到。",
     "stages": ["term"],
-    "effect": { "text": "第一份監督報告給你打了七十分。對手只引用了扣分的那三十分。", "effects": { "integrity": 4, "achievement": 2, "party": -2 }, "delayed": { "afterTurns": 3, "effects": { "approval": -2, "media": 3 }, "text": "第二季的監督報告點名了兩項跳票的政策，標題是「市長自己請來的監督」。" } }
+    "effect": { "text": "第一份監督報告給你打了七十分。對手只引用了扣分的那三十分。", "effects": { "integrity": 4, "achievement": 2, "party": -2 }, "delayed": { "afterTurns": 3, "effects": { "approval": -2, "media": 3 }, "text": "你請來的民間監督團體，第二季報告點名了兩項跳票的政策，標題是「市長自己請來的監督」。" } }
   },
   {
     "id": "o-old-classmate",
@@ -301,7 +291,7 @@
     "scene": "大學同學現在是電視台的主管，說可以安排一次深度專訪。「老同學嘛。」",
     "hint": "一次很漂亮的曝光；老同學的關係被翻出來時，你得解釋。",
     "stages": ["campaign", "term"],
-    "effect": { "text": "專訪做得很好，好到有網友去查了主持人的學歷。", "effects": { "media": 7, "approval": 3 }, "delayed": { "afterTurns": 3, "effects": { "integrity": -2, "media": 2 }, "text": "網友發現專訪主持人是你的大學同學，「關係採訪」上了熱搜。" } }
+    "effect": { "text": "專訪做得很好，好到有網友去查了主持人的學歷。", "effects": { "media": 7, "approval": 3 }, "delayed": { "afterTurns": 3, "effects": { "integrity": -2, "media": 2 }, "text": "老同學幫你安排的那次專訪，被網友發現主持人是你的大學同學，「關係採訪」上了熱搜。" } }
   },
   {
     "id": "o-volunteer-map",
@@ -310,7 +300,6 @@
     "scene": "一位工程師做了一張志工地圖：誰住哪裡、會什麼、哪天有空，一目了然。",
     "hint": "動員的人力省很多；那份名單要是外流，就是另一回事了。",
     "stages": ["campaign", "term"],
-    "stackGroup": "ground",
     "effect": { "text": "志工地圖上線第一天，就排好了一個月的班表。", "delayed": { "afterTurns": 5, "effects": { "integrity": -2, "media": 3 }, "text": "志工地圖的資料被發現存在沒有加密的雲端，記者寫成了個資外洩。" }, "boost": { "skills": ["organize", "grassroots"], "charges": 2, "turns": 4, "label": "志工地圖" } }
   },
   {
@@ -320,7 +309,6 @@
     "scene": "一個設計團隊把你的政見做成互動圖表，連阿嬤都看得懂。",
     "hint": "政策更容易說清楚；圖表做得越清楚，數字的破綻也越明顯。",
     "stages": ["campaign", "term"],
-    "stackGroup": "policy",
     "effect": { "text": "互動圖表一週有五十萬人點開。最多人停留的頁面，是預算從哪裡來。", "effects": { "approval": 2 }, "boost": { "skills": ["policy", "media"], "charges": 2, "turns": 4, "label": "政策圖表" } }
   },
   {
@@ -330,7 +318,6 @@
     "scene": "一群事實查核志工說，可以幫你追蹤網路上關於你的謠言，第一時間澄清。",
     "hint": "下一次被抹黑時，傷害會小一點；澄清本身，有時候也會變成新聞。",
     "stages": ["campaign", "term"],
-    "stackGroup": "shield",
     "effect": { "text": "查核志工第一天就找到了三個你根本沒說過的「名言」。", "effects": { "integrity": 1 }, "shield": { "turns": 6, "label": "事實查核志工" } },
     "source": { "prototype": "公民事實查核社群在選舉期間追蹤並澄清針對候選人的不實訊息。" }
   },
@@ -359,7 +346,6 @@
     "scene": "一位很有名的公益律師說，願意免費幫你看每一份有法律風險的文件。",
     "hint": "踩到法律紅線前會有人提醒你；律師講話很直，而且照規矩來都比較慢。",
     "stages": ["campaign", "term"],
-    "stackGroup": "shield",
     "effect": { "text": "律師看完你的前三份文件，退回了兩份。附註寫著：「這樣做會被告。」", "effects": { "integrity": 3 }, "shield": { "turns": 6, "label": "公益律師" } }
   },
   {
@@ -369,7 +355,7 @@
     "scene": "一位平常很討厭你的名嘴，在節目上突然稱讚你的某個政策。",
     "hint": "這次說的話更有人聽；這樣的稱讚，你最好別過度宣傳。",
     "stages": ["campaign", "term"],
-    "effect": { "text": "你的小編把那段影片剪成了十五秒，配上感動的音樂。名嘴隔天說：「我只是說那一項。」", "effects": { "approval": 4, "media": 4 }, "delayed": { "afterTurns": 2, "effects": { "approval": -1 }, "text": "名嘴在下一集節目花了半小時解釋，自己仍然不支持你。" } }
+    "effect": { "text": "你的小編把那段影片剪成了十五秒，配上感動的音樂。名嘴隔天說：「我只是說那一項。」", "effects": { "approval": 4, "media": 4 }, "delayed": { "afterTurns": 2, "effects": { "approval": -1 }, "text": "公開稱讚你的那位名嘴，在下一集節目花了半小時解釋，自己仍然不支持你。" } }
   },
   {
     "id": "c-tycoon",
@@ -388,7 +374,6 @@
     "scene": "地方大老請你吃飯，一桌都是里長和農會總幹事。「選舉的事，交給我們。」",
     "hint": "基層動員馬上到位；選上之後，大老的人事名單會送到你桌上。",
     "stages": ["campaign"],
-    "stackGroup": "ground",
     "effect": { "text": "那頓飯吃了四個小時。隔天，你的看板出現在每一個里辦公處門口。", "effects": { "approval": 4, "party": 3 }, "boost": { "skills": ["grassroots", "organize"], "charges": 2, "turns": 4, "label": "大老的樁腳" }, "arcs": [{ "id": "faction", "open": true, "add": { "backers": 1 }, "note": "選前接受地方大老與里長系統的動員" }] },
     "source": { "prototype": "地方派系以里長、農會等組織動員支持候選人，選後要求人事與建設回報。" }
   },
@@ -409,8 +394,7 @@
     "scene": "一家媒體集團的高層提議「策略合作」：專題報導、專訪、頭版。價錢好談。",
     "hint": "新聞版面多很多；版面是買來的，總有人會發現。",
     "stages": ["campaign", "term"],
-    "stackGroup": "media",
-    "effect": { "text": "接下來一週，你上了三次頭版。標題都很漂亮，漂亮到有點不自然。", "funds": -500, "effects": { "media": 8, "approval": 3 }, "boost": { "skills": ["media"], "charges": 2, "turns": 4, "label": "媒體合作" }, "delayed": { "afterTurns": 4, "effects": { "integrity": -4, "approval": -4, "media": 3 }, "text": "那家媒體的「專題報導」被揭露是置入行銷，合約金額寫得清清楚楚。" } },
+    "effect": { "text": "接下來一週，你上了三次頭版。標題都很漂亮，漂亮到有點不自然。", "funds": -500, "effects": { "media": 8, "approval": 3 }, "boost": { "skills": ["media"], "charges": 2, "turns": 4, "label": "媒體合作" }, "delayed": { "afterTurns": 4, "effects": { "integrity": -4, "approval": -4, "media": 3 }, "text": "跟你策略合作的那家媒體，「專題報導」被揭露是置入行銷，合約金額寫得清清楚楚。" } },
     "source": { "prototype": "政府或候選人以標案、廣告採購形式向媒體購買新聞版面（置入性行銷），被揭露後引發爭議。" }
   },
   {
@@ -420,7 +404,7 @@
     "scene": "一家大企業願意全額贊助市府的跨年晚會，只要舞台上有他們的品牌。",
     "hint": "活動辦得風光、市庫不用出錢；贊助商之後也想要點什麼。",
     "stages": ["term"],
-    "effect": { "text": "跨年晚會很成功，品牌的燈光秀比你的致詞還久。", "effects": { "approval": 5, "media": 4, "business": 5 }, "delayed": { "afterTurns": 3, "effects": { "approval": -3, "integrity": -4 }, "text": "贊助企業拿下了市府的下一個大標案。議員在質詢台上拿出跨年晚會的照片。" } }
+    "effect": { "text": "跨年晚會很成功，品牌的燈光秀比你的致詞還久。", "effects": { "approval": 5, "media": 4, "business": 5 }, "delayed": { "afterTurns": 3, "effects": { "approval": -3, "integrity": -4 }, "text": "全額贊助跨年晚會的那家企業，拿下了市府的下一個大標案。議員在質詢台上拿出跨年晚會的照片。" } }
   },
   {
     "id": "c-dev-alliance",
@@ -438,7 +422,7 @@
     "scene": "全市最大宮廟的主委說，願意讓你在遶境時走在神轎前面。信眾很多，主委的請託也很多。",
     "hint": "信眾的支持跟著來；主委之後會來市府泡茶。",
     "stages": ["campaign"],
-    "effect": { "text": "你在遶境隊伍裡走了八公里。鞭炮聲中，你聽到有人喊你的名字。", "effects": { "approval": 5, "party": 2 }, "arcs": [{ "id": "faction", "open": true, "add": { "backers": 1 }, "note": "接受宮廟主委與信眾的力挺" }], "delayed": { "afterTurns": 6, "effects": { "integrity": -3, "business": 3 }, "text": "主委來市府泡茶，順便帶來了廟地變更的申請書。" } },
+    "effect": { "text": "你在遶境隊伍裡走了八公里。鞭炮聲中，你聽到有人喊你的名字。", "effects": { "approval": 5, "party": 2 }, "arcs": [{ "id": "faction", "open": true, "add": { "backers": 1 }, "note": "接受宮廟主委與信眾的力挺" }], "delayed": { "afterTurns": 6, "effects": { "integrity": -3, "business": 3 }, "text": "選前力挺你的宮廟主委來市府泡茶，順便帶來了廟地變更的申請書。" } },
     "source": { "prototype": "宮廟與信眾在地方選舉中的動員力，選後的請託與土地使用爭議。" }
   },
   {
@@ -448,7 +432,7 @@
     "scene": "幾個大工會願意全力挺你，條件是：選上之後，公務員和約聘人員要調薪。",
     "hint": "工會的動員又快又準；他們的帳單在後面。",
     "stages": ["campaign", "term"],
-    "effect": { "text": "工會的遊行隊伍裡，出現了你的競選旗幟。整整齊齊，一個缺口都沒有。", "effects": { "approval": 4, "team": 3 }, "delayed": { "afterTurns": 5, "effects": { "treasury": -6, "council": -2 }, "text": "工會來要求兌現調薪的承諾，財政局長在會議上沉默了很久。" } }
+    "effect": { "text": "工會的遊行隊伍裡，出現了你的競選旗幟。整整齊齊，一個缺口都沒有。", "effects": { "approval": 4, "team": 3 }, "delayed": { "afterTurns": 5, "effects": { "treasury": -6, "council": -2 }, "text": "選前挺你的工會來要求兌現調薪的承諾，財政局長在會議上沉默了很久。" } }
   },
   {
     "id": "c-netarmy",
@@ -457,8 +441,7 @@
     "scene": "一家「數位行銷公司」說，三週內可以讓你的網路聲量翻轉。報價單上沒有寫具體做法。",
     "hint": "網路風向一夜翻轉；這種事，通常會被抓到。",
     "stages": ["campaign"],
-    "stackGroup": "media",
-    "effect": { "text": "一夜之間，網路上多了好幾千個很喜歡你的帳號。它們的大頭貼都很像。", "funds": -600, "effects": { "media": 8, "approval": 5, "integrity": -5 }, "delayed": { "afterTurns": 4, "effects": { "approval": -7, "media": 6, "integrity": -3 }, "text": "那家數位行銷公司的帳本外流，客戶名單上第一個就是你。" } },
+    "effect": { "text": "一夜之間，網路上多了好幾千個很喜歡你的帳號。它們的大頭貼都很像。", "funds": -600, "effects": { "media": 8, "approval": 5, "integrity": -5 }, "delayed": { "afterTurns": 4, "effects": { "approval": -7, "media": 6, "integrity": -3 }, "text": "你外包網軍的那家數位行銷公司帳本外流，客戶名單上第一個就是你。" } },
     "source": { "prototype": "候選人委託公關公司經營大量假帳號帶風向，被揭露後成為選戰醜聞。" }
   },
   {
@@ -468,7 +451,6 @@
     "scene": "議長請你喝茶：「預算的事，我幫你顧好。我們是自己人。」",
     "hint": "議會預算一路放行；議長的這筆人情，記在你的帳上。",
     "stages": ["term"],
-    "stackGroup": "council",
     "effect": { "text": "那一季的預算案，議會一個字都沒改就通過了。議長在走廊上對你點點頭。", "effects": { "council": 10, "integrity": -2 }, "arcs": [{ "id": "faction", "open": true, "add": { "backers": 1 }, "note": "接受議長的人情，換取預算一路放行" }] }
   },
   {
@@ -478,7 +460,7 @@
     "scene": "一家廣告公司開出五折的優惠，條件是：廣告內容他們決定，下週一前要定案。",
     "hint": "廣告又多又便宜；內容不是你寫的，說了什麼，你也要負責。",
     "stages": ["campaign"],
-    "effect": { "text": "廣告上了一週，你在裡面笑得很燦爛。台詞是你從來沒說過的話。", "effects": { "media": 8, "approval": 3 }, "funds": -300, "delayed": { "afterTurns": 3, "effects": { "integrity": -3, "approval": -2 }, "text": "廣告裡的一句台詞被發現跟你的政見相反，對手做了一支對照影片。" } }
+    "effect": { "text": "廣告上了一週，你在裡面笑得很燦爛。台詞是你從來沒說過的話。", "effects": { "media": 8, "approval": 3 }, "funds": -300, "delayed": { "afterTurns": 3, "effects": { "integrity": -3, "approval": -2 }, "text": "那家廣告商打折做的廣告，有一句台詞被發現跟你的政見相反，對手做了一支對照影片。" } }
   },
   {
     "id": "c-biz-forum",
@@ -505,7 +487,7 @@
     "scene": "一位很紅的名嘴邀你上節目：「我們很公道，你來講你的版本。」",
     "hint": "一次免費的大曝光；節目怎麼剪，是名嘴說了算。",
     "stages": ["campaign"],
-    "effect": { "text": ["你在節目上講得很好。播出時，你最好的那段被剪掉了。", "名嘴一直打斷你。觀眾說你很有耐心，名嘴說你很會裝。"], "effects": { "media": 9, "approval": 2 }, "delayed": { "afterTurns": 4, "effects": { "approval": -2, "media": 2 }, "text": "名嘴在選前一週翻出你在節目上的說法，對照你後來的政見。" } }
+    "effect": { "text": ["你在節目上講得很好。播出時，你最好的那段被剪掉了。", "名嘴一直打斷你。觀眾說你很有耐心，名嘴說你很會裝。"], "effects": { "media": 9, "approval": 2 }, "delayed": { "afterTurns": 4, "effects": { "approval": -2, "media": 2 }, "text": "那位邀你上節目的名嘴，在選前一週翻出你在節目上的說法，對照你後來的政見。" } }
   },
   {
     "id": "c-youth-org",
@@ -514,7 +496,7 @@
     "scene": "幾個青年團體願意幫你動員，條件是你要簽一份「青年政策承諾書」。",
     "hint": "年輕選民的熱情跟著來；承諾書上的簽名，選後會被拿出來。",
     "stages": ["campaign"],
-    "effect": { "text": "你在承諾書上簽了名，青年團體把照片放上網：「我們會盯著。」", "effects": { "approval": 5, "integrity": 1 }, "delayed": { "afterTurns": 9, "effects": { "approval": -3, "media": 2 }, "text": "青年團體公布承諾書的兌現進度，三項只做到一項。" } }
+    "effect": { "text": "你在承諾書上簽了名，青年團體把照片放上網：「我們會盯著。」", "effects": { "approval": 5, "integrity": 1 }, "delayed": { "afterTurns": 9, "effects": { "approval": -3, "media": 2 }, "text": "跟你簽承諾書的青年團體，公布了兌現進度：三項只做到一項。" } }
   },
   {
     "id": "c-vision-petition",
@@ -542,7 +524,6 @@
     "scene": "一位老議員把自己的服務處網絡借給你：志工、名冊、婚喪喜慶的行事曆。",
     "hint": "掃街和聯繫省力很多；老議員關心的那幾件事，你之後得一起關心。",
     "stages": ["campaign"],
-    "stackGroup": "ground",
     "effect": { "text": "老議員的行事曆上，下週有六場喜宴和四場告別式。你全部都要去。", "effects": { "approval": 3 }, "arcs": [{ "id": "faction", "open": true, "add": { "backers": 1 }, "note": "借用老議員的地方服務網絡" }], "boost": { "skills": ["grassroots"], "charges": 2, "turns": 4, "label": "老議員的服務網" } }
   },
   {
@@ -579,7 +560,7 @@
     "scene": "工商團體邀你參加圓桌會議，承諾支持你的經濟政策，只希望「法規鬆綁一點」。",
     "hint": "產業界全力挺你；鬆綁的那一點，會讓其他人不滿。",
     "stages": ["term"],
-    "effect": { "text": "圓桌會議結束後，工商團體發了聲明支持你。勞工團體隔天也發了一份。", "effects": { "business": 8, "approval": 2 }, "delayed": { "afterTurns": 3, "effects": { "approval": -3, "integrity": -2 }, "text": "法規鬆綁後，勞工團體在市府門口抗議「市長只聽老闆的」。" } }
+    "effect": { "text": "圓桌會議結束後，工商團體發了聲明支持你。勞工團體隔天也發了一份。", "effects": { "business": 8, "approval": 2 }, "delayed": { "afterTurns": 3, "effects": { "approval": -3, "integrity": -2 }, "text": "工商團體圓桌之後的法規鬆綁上路了，勞工團體在市府門口抗議「市長只聽老闆的」。" } }
   },
   {
     "id": "c-naming",
@@ -597,7 +578,7 @@
     "scene": "一家醫學中心願意跟市府合作，在偏遠區域開設門診，條件是市府提供土地與補助。",
     "hint": "偏遠地區看病變方便；其他區的居民會問：「那我們呢？」",
     "stages": ["term"],
-    "effect": { "text": "第一家合作門診開幕那天，排隊的阿公阿嬤從門口排到街角。", "effects": { "approval": 4, "achievement": 4, "treasury": -5 }, "delayed": { "afterTurns": 4, "effects": { "council": -3 }, "text": "其他區的議員聯名要求，合作門診也要開在他們的選區。" } }
+    "effect": { "text": "第一家合作門診開幕那天，排隊的阿公阿嬤從門口排到街角。", "effects": { "approval": 4, "achievement": 4, "treasury": -5 }, "delayed": { "afterTurns": 4, "effects": { "council": -3 }, "text": "醫療合作計畫的門診開張後，其他區的議員聯名要求，合作門診也要開在他們的選區。" } }
   },
   {
     "id": "c-realty-renewal",
@@ -606,7 +587,7 @@
     "scene": "地產協會提出一套都更方案：老舊社區可以重建，容積獎勵再加一點。",
     "hint": "老社區有機會改建；住戶、租客和建商的帳，很難算平。",
     "stages": ["term"],
-    "effect": { "text": "都更說明會擠滿了人。房東們很開心，租客們很安靜。", "effects": { "achievement": 5, "business": 6, "integrity": -2 }, "arcs": [{ "id": "donor", "add": { "favors": 1 }, "note": "支持地產協會的都更方案，增加容積獎勵" }], "delayed": { "afterTurns": 4, "effects": { "approval": -3, "media": 3 }, "text": "都更基地的租戶在市府門口抗議：「我們要搬去哪裡？」" } }
+    "effect": { "text": "都更說明會擠滿了人。房東們很開心，租客們很安靜。", "effects": { "achievement": 5, "business": 6, "integrity": -2 }, "arcs": [{ "id": "donor", "add": { "favors": 1 }, "note": "支持地產協會的都更方案，增加容積獎勵" }], "delayed": { "afterTurns": 4, "effects": { "approval": -3, "media": 3 }, "text": "地產協會的都更方案動工了，基地的租戶在市府門口抗議：「我們要搬去哪裡？」" } }
   },
   {
     "id": "c-friendly-councilors",
@@ -615,7 +596,6 @@
     "scene": "幾位議員願意連署支持你的政策，條件是政策發表會上，他們要站在你旁邊。",
     "hint": "政策審議順利很多；功勞要分給很多人。",
     "stages": ["term"],
-    "stackGroup": "council",
     "effect": { "text": "政策發表會上站了十二位議員，你被擠到了舞台邊邊。", "effects": { "council": 7, "achievement": 2, "media": -1 } }
   },
   {
@@ -625,7 +605,6 @@
     "scene": "一家地方電台給你一個每週專欄，聽眾大多是計程車司機和菜市場攤商。",
     "hint": "每週都有固定的聲量；聽眾的問題，你每週都得回答。",
     "stages": ["campaign", "term"],
-    "stackGroup": "media",
     "effect": { "text": "第一集節目，有一位司機叩應問你停車費的事。你答不出來，主持人幫你圓場。", "effects": { "approval": 1 }, "passive": { "effects": { "media": 2, "approval": 1 }, "turns": 4, "label": "地方電台專欄" } }
   },
   {
@@ -645,7 +624,7 @@
     "scene": "一群作家、導演和音樂人聯名支持你，條件是文化預算不能砍。",
     "hint": "藝文界的聲量與好感跟著來；文化預算，從此你一塊都不能動。",
     "stages": ["campaign", "term"],
-    "effect": { "text": "聲援名單上有一位國際得獎導演。記者問你最喜歡那位導演哪部片，你答錯了片名。", "effects": { "media": 6, "approval": 3 }, "delayed": { "afterTurns": 6, "effects": { "treasury": -3, "approval": -1 }, "text": "文化界來檢視你的預算：文化局的經費，有沒有被挪去辦晚會？" }, "boost": { "issues": ["culture"], "charges": 2, "turns": 4, "label": "藝文界聲援" } }
+    "effect": { "text": "聲援名單上有一位國際得獎導演。記者問你最喜歡那位導演哪部片，你答錯了片名。", "effects": { "media": 6, "approval": 3 }, "delayed": { "afterTurns": 6, "effects": { "treasury": -3, "approval": -1 }, "text": "當初聲援你的文化界回頭檢視預算：文化局的經費，有沒有被挪去辦晚會？" }, "boost": { "issues": ["culture"], "charges": 2, "turns": 4, "label": "藝文界聲援" } }
   },
   {
     "id": "c-charity-mou",
@@ -663,7 +642,7 @@
     "scene": "社區裡很有份量的幾位長輩說要挺你，然後把一疊陳情書交給你：「拜託你了。」",
     "hint": "里鄰的支持穩穩的；那疊陳情書，你得一張一張處理。",
     "stages": ["campaign", "term"],
-    "effect": { "text": "陳情書有四十二張，最上面那張是：「巷口的公車站可以不要拆嗎？」", "effects": { "approval": 4 }, "delayed": { "afterTurns": 5, "effects": { "approval": -2, "team": -1 }, "text": "長輩們來問陳情書的進度，你只處理了一半。" } }
+    "effect": { "text": "陳情書有四十二張，最上面那張是：「巷口的公車站可以不要拆嗎？」", "effects": { "approval": 4 }, "delayed": { "afterTurns": 5, "effects": { "approval": -2, "team": -1 }, "text": "託付你陳情書的長輩們來問進度，你只處理了一半。" } }
   },
   {
     "id": "c-tech-community",
@@ -672,7 +651,7 @@
     "scene": "一群工程師提議幫市府做數位服務，條件是程式碼要開源，資料要開放。",
     "hint": "數位服務做得又快又好；資安和資料的責任，就落在你身上。",
     "stages": ["term"],
-    "effect": { "text": "新的線上申辦系統三週就上線了。工程師們說，舊系統的程式碼「很有歷史感」。", "effects": { "achievement": 4, "integrity": 2 }, "delayed": { "afterTurns": 4, "effects": { "approval": -2, "media": 3 }, "text": "線上系統被駭客測試出漏洞，記者寫成「市府資安破口」。" }, "boost": { "skills": ["admin"], "charges": 2, "turns": 4, "label": "工程師社群" } }
+    "effect": { "text": "新的線上申辦系統三週就上線了。工程師們說，舊系統的程式碼「很有歷史感」。", "effects": { "achievement": 4, "integrity": 2 }, "delayed": { "afterTurns": 4, "effects": { "approval": -2, "media": 3 }, "text": "科技社群幫市府做的線上系統，被駭客測試出漏洞，記者寫成「市府資安破口」。" }, "boost": { "skills": ["admin"], "charges": 2, "turns": 4, "label": "工程師社群" } }
   },
   {
     "id": "c-celebrity",
@@ -681,7 +660,7 @@
     "scene": "一位當紅的網紅說願意幫你拍影片。網紅很紅，爭議也不少。",
     "hint": "網路聲量一下子衝上來；網紅的爭議，也會一起掛在你身上。",
     "stages": ["campaign", "term"],
-    "effect": { "text": "影片上線三天破了三百萬觀看。留言裡一半在誇你，一半在吵網紅以前的事。", "effects": { "media": 10, "approval": 4 }, "delayed": { "afterTurns": 3, "effects": { "approval": -4, "media": 4 }, "text": "網紅爆出新的爭議，記者第一個打電話來問你。" } }
+    "effect": { "text": "影片上線三天破了三百萬觀看。留言裡一半在誇你，一半在吵網紅以前的事。", "effects": { "media": 10, "approval": 4 }, "delayed": { "afterTurns": 3, "effects": { "approval": -4, "media": 4 }, "text": "幫你拍影片的那位網紅爆出新的爭議，記者第一個打電話來問你。" } }
   },
   {
     "id": "c-longform",
@@ -690,7 +669,7 @@
     "scene": "一家深度報導媒體想跟拍你三個月，做一系列長篇專題。",
     "hint": "你有機會完整說清楚你的政策；跟拍的記者，什麼都會看到。",
     "stages": ["campaign", "term"],
-    "effect": { "text": "記者跟了你三個月，看過你開會、吃便當、罵幕僚。專題刊出時，你看了很久。", "effects": { "integrity": 3, "media": 5 }, "delayed": { "afterTurns": 4, "effects": { "approval": -2, "media": 2 }, "text": "專題的最後一篇，把你選前和選後的說法並排放在一起。" }, "boost": { "skills": ["policy"], "charges": 1, "turns": 5, "label": "深度專題" } }
+    "effect": { "text": "記者跟了你三個月，看過你開會、吃便當、罵幕僚。專題刊出時，你看了很久。", "effects": { "integrity": 3, "media": 5 }, "delayed": { "afterTurns": 4, "effects": { "approval": -2, "media": 2 }, "text": "那家深度媒體跟拍你的長期專題，最後一篇把你選前和選後的說法並排放在一起。" }, "boost": { "skills": ["policy"], "charges": 1, "turns": 5, "label": "深度專題" } }
   },
   {
     "id": "c-transit-assoc",
@@ -699,7 +678,7 @@
     "scene": "交通專業協會願意背書你的交通政策，但他們主張的是減少汽車、增加公車。",
     "hint": "交通議題有專業撐腰；開車的人和騎機車的人，各有各的不滿。",
     "stages": ["campaign", "term"],
-    "effect": { "text": "協會的背書讓你的交通政策上了頭條。計程車工會也上了頭條，在你辦公室外面。", "effects": { "integrity": 2 }, "delayed": { "afterTurns": 3, "effects": { "approval": -2 }, "text": "汽機車族在網路上發起「我也要被聽見」連署。" }, "boost": { "issues": ["transit"], "charges": 2, "turns": 5, "label": "交通專家背書" } }
+    "effect": { "text": "協會的背書讓你的交通政策上了頭條。計程車工會也上了頭條，在你辦公室外面。", "effects": { "integrity": 2 }, "delayed": { "afterTurns": 3, "effects": { "approval": -2 }, "text": "交通協會背書的交通政策上路後，汽機車族在網路上發起「我也要被聽見」連署。" }, "boost": { "issues": ["transit"], "charges": 2, "turns": 5, "label": "交通專家背書" } }
   },
   {
     "id": "c-placemaking",

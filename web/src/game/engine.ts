@@ -721,7 +721,7 @@ export function chooseFate(state: GameState, events: GameEvent[], cardId: string
   const stacked = addActiveFates(state.fateEffects ?? [], card, effect);
   const notices: Notice[] = [
     ...arcResult.notices,
-    ...stacked.replaced.map((label): Notice => ({ kind: "fate", tone: "bad", text: `「${label}」的效果被新的命運取代了。` })),
+    ...stacked.replaced.map((label): Notice => ({ kind: "fate", tone: "bad", text: `「${label}」的位子，由「${card.title}」接手了。` })),
   ];
   const outcome = pickText(effect.text, turnRng(state.seed, state.turn, FATE_TEXT_SALT)());
 

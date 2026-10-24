@@ -1,10 +1,12 @@
 // 幕僚長回報：把數值變化和劇情進度翻成一兩句話，讓玩家不看數字也知道現在的政治處境。
+// 每一句都要說得出「是哪一個決定造成的」：引用玩家選過的事件、開過的帳、選的競選規模或命運牌；
+// 找不到原因的話就不說，避免出現跟玩家作為無關的閒話。
 // 全部是預先寫好的文案，依情境優先度挑選；同一個原因有多個版本，依 seed 與回合決定，重整不會變。
 
 import { nextPayout } from "./engine";
-import { scaleCost } from "./model";
-import { arcProgress, openArcs } from "./story";
-import type { ArcDef, ArcState, GameState } from "./types";
+import { CAMPAIGN_SCALES, scaleCost } from "./model";
+import { arcProgress } from "./story";
+import type { ArcDef, ArcState, GameEvent, GameState, HistoryEntry, StatKey } from "./types";
 
 export interface StaffReport {
   /** 這回合最重要的一句話 */
@@ -31,13 +33,64 @@ const hash = (s: string) => [...s].reduce((h, c) => (Math.imul(h, 31) + c.charCo
 /** 劇情文案裡的 {事實} 換成數字 */
 const fill = (text: string, a: ArcState) => arcProgress({ progress: text } as ArcDef, a);
 
-export function staffReport(state: GameState, arcDefs: ArcDef[]): StaffReport {
+/** 回顧某個決定時的說法：依那個決定最大的影響（數值與方向）挑句子；{t} 代入事件標題 */
+const CALLBACKS: Partial<Record<StatKey, [string[], string[]]>> = {
+  approval: [
+    ["「{t}」那一招還在發酵，市場裡有人跟你比讚。", "「{t}」的效果還在，最近造勢場的人多了一些。"],
+    ["「{t}」的決定，網路上還有人在罵。", "「{t}」那件事，支持者群組裡還在吵。"],
+  ],
+  media: [
+    ["「{t}」的新聞還在各台重播。", "「{t}」之後，記者打來約訪的電話沒停過。"],
+    ["「{t}」之後，記者打來的電話少了很多。", "「{t}」那次之後，新聞版面很安靜。"],
+  ],
+  integrity: [
+    ["「{t}」那次的堅持，有記者私下說佩服。", "「{t}」的決定，幾個老幕僚說他們跟對人了。"],
+    ["「{t}」那件事，幕僚群組裡沒人再提，但大家都記得。", "「{t}」的決定，有一位幕僚私下問我：「我們真的要這樣嗎？」"],
+  ],
+  business: [
+    ["「{t}」之後，有幾位老闆說想約你吃飯。", "「{t}」之後，募款餐會的訂桌多了好幾桌。"],
+    ["「{t}」之後，募款餐會的訂桌少了幾桌。", "「{t}」之後，工商團體的電話變少了。"],
+  ],
+  party: [
+    ["「{t}」之後，樁腳們動得特別勤快。", "「{t}」之後，地方組織的人主動來總部幫忙。"],
+    ["「{t}」之後，樁腳的電話變少了。", "「{t}」那件事，地方組織的人還在不高興。"],
+  ],
+  council: [
+    ["「{t}」之後，議會那邊客氣多了。", "「{t}」之後，幾位議員在質詢時放了水。"],
+    ["「{t}」之後，議員們在質詢台上特別兇。", "「{t}」那件事，議會到現在還在記仇。"],
+  ],
+  team: [
+    ["「{t}」之後，團隊的士氣好了不少。", "「{t}」那次，幕僚們說終於可以準時下班一天。"],
+    ["「{t}」之後，幕僚們累壞了。", "「{t}」那陣子，團隊有兩個人請了病假。"],
+  ],
+  treasury: [
+    ["「{t}」之後，財政局長難得笑了。", "「{t}」的決定，讓市庫喘了一口氣。"],
+    ["「{t}」的帳，財政局長還在算。", "「{t}」之後，財政局長每次開會都在嘆氣。"],
+  ],
+  achievement: [
+    ["「{t}」做出來的東西，市民開始在用了。", "「{t}」的成果，有里長特地打電話來道謝。"],
+    ["「{t}」之後，好幾個工程的進度慢了下來。", "「{t}」那件事，局處長說計畫要重新排。"],
+  ],
+};
+
+export function staffReport(state: GameState, arcDefs: ArcDef[], events: GameEvent[] = []): StaffReport {
   const served = state.turn >= 12 || state.flags.includes("bg-incumbent");
   const you = served ? "市長" : "老闆";
   const s = state.stats;
-  const last = state.history[state.history.length - 1];
+  const history = state.history;
+  const last = history[history.length - 1];
+  /** 引用玩家的決定：選項夠短就說選了什麼，太長才說事件名稱 */
+  const title = (h: HistoryEntry) => {
+    const event = events.find((e) => e.id === h.eventId);
+    const label = event?.options.find((o) => o.id === h.optionId)?.label.replace(/[。！]$/, "").replace(/「/g, "『").replace(/」/g, "』");
+    return label && label.length <= 16 ? label : (event?.title ?? "上次那件事");
+  };
   const lines: Line[] = [];
   const add = (priority: number, key: string, texts: string[]) => lines.push({ priority, key, texts });
+
+  /** 最近一次讓這個數值往這個方向變的決定（只看玩家的選擇本身） */
+  const causeOf = (key: StatKey, sign: 1 | -1, within = 6): HistoryEntry | undefined =>
+    history.slice(-within).reverse().find((h) => (h.optionDelta[key] ?? 0) * sign > 0);
 
   // 突發事件：上回合發生的危機
   for (const n of state.notices) {
@@ -49,11 +102,26 @@ export function staffReport(state: GameState, arcDefs: ArcDef[]): StaffReport {
     }
   }
 
-  // 劇情：剛曝光的事、過期沒處理的事、還在進行中的事
+  // 這一回合要處理的劇情節點：提醒當初是哪個決定開的帳
+  const current = events.find((e) => e.id === state.deck[state.turn]);
+  const due = current?.arc ? state.arcs[current.arc] : undefined;
+  if (due?.log.length) {
+    const origin = due.log[0].text;
+    add(98, `arc-due-${due.id}`, [
+      `${you}，還記得當初「${origin}」嗎？今天要面對的，就是那件事。`,
+      `${you}，今天這件事，要從「${origin}」說起。`,
+    ]);
+  }
+
+  // 劇情：剛曝光的事、過期沒處理的事、還在進行中的事（都是玩家開過的帳）
   for (const a of Object.values(state.arcs)) {
     const def = arcDefs.find((d) => d.id === a.id);
-    if (!def) continue;
-    const texts = (def.advisor[a.status] ?? []).map((t) => fill(t, a).replace(/^市長，/, `${you}，`));
+    if (!def || a.id === due?.id) continue;
+    // 還沒執政時，劇情的提醒只說「這筆帳選後會找上門」；執政後才講帳的進度，並冠上帳的名稱
+    const origin = a.log[0]?.text ?? def.title;
+    const texts = served
+      ? (def.advisor[a.status] ?? []).map((t) => `${you}，「${def.title}」的事：${fill(t, a).replace(/^市長，/, "")}`)
+      : [`${you}，「${origin}」已經記在帳本上了。選上之後，這筆帳會找上門。`, `${you}，「${origin}」的事，選後一定會有人來問。`];
     if (!texts.length) continue;
     const touched = a.log.length && a.log[a.log.length - 1].turn === state.turn - 1;
     const open = (a.status === "active" || a.status === "concealed") && a.node < def.nodes.length;
@@ -64,63 +132,78 @@ export function staffReport(state: GameState, arcDefs: ArcDef[]): StaffReport {
     else if (open && (state.turn + hash(a.id)) % 3 === 0) add(35, `arc-${a.id}`, texts);
   }
 
-  // 經費：撐不到下次撥款、欠薪
+  // 經費：照玩家選的競選規模，撐不撐得到下次撥款
+  const scaleLabel = CAMPAIGN_SCALES[state.scale].label;
   if (state.arrears > 0) {
-    add(90, "arrears", [`${you}，這個月的薪水還沒發，有兩個幕僚已經在投履歷了。`, `${you}，總部的人在問薪水的事，我說再等一下，他們不太相信。`]);
+    add(90, "arrears", [
+      `${you}，照「${scaleLabel}」的規模，這個月的薪水發不出來，有兩個幕僚已經在投履歷了。`,
+      `${you}，總部的人在問薪水的事。照「${scaleLabel}」的開銷，帳戶真的撐不住。`,
+    ]);
   } else if (!served || state.turn >= 20) {
     const next = nextPayout(state);
     const burn = scaleCost(state.scale) + (state.loan?.remaining ? state.loan.installment : 0);
     if (burn > 0 && state.funds < burn * next.inTurns) {
       add(75, "funds", [
-        `${you}，照現在的規模，總部的錢撐不到下次撥款。要嘛縮編，要嘛去找錢。`,
-        `${you}，會計說帳戶快見底了。廣告要不要先停一檔？`,
+        `${you}，照「${scaleLabel}」的規模，總部的錢撐不到下次撥款。要嘛縮編，要嘛去找錢。`,
+        `${you}，會計說照「${scaleLabel}」的開銷，帳戶快見底了。`,
       ]);
     }
   }
 
-  // 數值變成處境：剛跨過門檻時一定說，之後只偶爾提醒，避免同一句話連續出現
+  // 民調大變動：引用造成變動的那個決定
   const d = last?.delta;
-  const state_ = (priority: number, key: keyof typeof s, below: boolean, threshold: number, texts: string[]) => {
+  const lastTitle = last ? title(last) : "";
+  if (d && d.approval <= -5) {
+    add(65, "approval-down", [
+      `${you}，「${lastTitle}」之後，民調掉了 ${-d.approval} 點。支持者群組裡開始有人說要「再觀望」。`,
+      `${you}，「${lastTitle}」的反應不太好，民調掉了 ${-d.approval} 點。`,
+    ]);
+  } else if (d && d.approval >= 6) {
+    add(45, "approval-up", [
+      `${you}，「${lastTitle}」之後，民調漲了 ${d.approval} 點。聲勢一起來，對手和記者就會開始翻你的舊帳，接下來的問題會比較難答。`,
+      `${you}，「${lastTitle}」打中了，民調漲了 ${d.approval} 點，樁腳和支持者今天都打電話來關心。`,
+    ]);
+  }
+
+  // 數值變成處境：剛跨過門檻時一定說，之後只偶爾提醒；一律說出是哪個決定推過去的，找不到就不說
+  const threshold = (priority: number, key: StatKey, below: boolean, limit: number, texts: string[]) => {
     const now = s[key];
     const before = now - (d?.[key] ?? 0);
-    const inside = below ? now <= threshold : now >= threshold;
-    if (!inside) return;
-    const crossed = below ? before > threshold : before < threshold;
-    if (crossed || (state.turn + hash(String(key))) % 3 === 0) add(crossed ? priority : priority - 25, `stat-${String(key)}`, texts);
+    if (!(below ? now <= limit : now >= limit)) return;
+    const crossed = below ? before > limit : before < limit;
+    if (!crossed && (state.turn + hash(String(key))) % 3 !== 0) return;
+    const cause = causeOf(key, below ? -1 : 1);
+    if (!cause) return;
+    add(crossed ? priority : priority - 25, `stat-${key}`, texts.map((t) => `${you}，「${title(cause)}」之後，${t}`));
   };
-  if (d && d.approval <= -5) add(65, "approval-down", [`${you}，民調掉了 ${-d.approval} 點。支持者群組裡開始有人說要「再觀望」。`, `${you}，今天的民調不太好看，掉了 ${-d.approval} 點。造勢場的人可能會少一點。`]);
-  else if (d && d.approval >= 6) add(45, "approval-up", [`${you}，民調漲了 ${d.approval} 點。不過記者已經在找下一個可以問的問題了。`, `${you}，民調漲了 ${d.approval} 點，黨部今天打了三通電話來關心。`]);
-  state_(60, "council", true, 35, [`${you}，議會那邊不太配合，下一個預算案恐怕會被卡在委員會。`, `${you}，議長的人說「不是不支持，只是希望你先聽聽他們的建議」。`, `${you}，議員們這週退回了兩份報告，說是「資料不完整」。`]);
-  state_(58, "team", true, 40, [`${you}，局處長們已經連續加班三週，有兩個在問退休的事。`, `${you}，公文的處理速度慢了一半。不是大家不做事，是人手真的不夠。`, `${you}，幕僚群組裡已經三天沒人回訊息了。`]);
-  state_(55, "party", true, 30, [`${you}，黨部這次沒派人來，說是「人手調度不過來」。`, `${you}，黨中央最近開會都沒提到你的名字。`, `${you}，黨部的文宣裡，你的照片被放到最後一頁。`]);
-  state_(50, "business", false, 65, [`${you}，最近來拜訪的老闆有點多。每一個都說「只是來打招呼」。`, `${you}，有位董事長送了一盒茶葉來。我先放在會議室，還沒拆。`, `${you}，商會邀你當榮譽理事長。我覺得我們應該再想一下。`]);
-  state_(48, "media", true, 24, [`${you}，今天沒有任何一家媒體報導你。${state.opponent?.name ?? "對手"}倒是上了兩次頭條。`, `${you}，記者會只來了三家媒體，其中一家是實習生。`]);
-  if (served) state_(52, "treasury", true, 30, [`${you}，財政局長說，再追加任何預算，就要動用第二預備金了。`, `${you}，主計處把明年的預算砍了一成，每個局處都在抱怨。`]);
-  state_(30, "approval", false, 62, [`${you}，現在的聲勢不錯。不過選民的記憶都很短。`, `${you}，最近走在路上，有人主動來跟你自拍了。`, `${you}，民調很好看。好看到黨中央開始問你下一步的打算。`]);
+  threshold(60, "council", true, 35, ["議會那邊不太配合，下一個預算案恐怕會被卡在委員會。", "議員們這週退回了兩份報告，說是「資料不完整」。"]);
+  threshold(58, "team", true, 40, ["局處長們已經連續加班三週，有兩個在問退休的事。", "幕僚群組裡已經三天沒人回訊息了。"]);
+  threshold(55, "party", true, 30, ["組織的人這次沒來，說是「人手調度不過來」。", "樁腳們的電話越來越難打通。"]);
+  threshold(50, "business", false, 65, ["最近來拜訪的老闆有點多。每一個都說「只是來打招呼」。", "有位董事長送了一盒茶葉來。我先放在會議室，還沒拆。"]);
+  threshold(48, "media", true, 24, ["今天沒有任何一家媒體報導你。對手倒是上了兩次頭條。", "記者會只來了三家媒體，其中一家是實習生。"]);
+  if (served) threshold(52, "treasury", true, 30, ["財政局長說，再追加任何預算，就要動用第二預備金了。", "主計處把明年的預算砍了一成，每個局處都在抱怨。"]);
+  threshold(30, "approval", false, 62, ["現在的聲勢不錯，但選民的記憶很短，接下來幾週沒有新東西，就會慢慢退燒。", "最近走在路上，有人主動來跟你自拍了。"]);
 
-  // 平常日
-  const weeksLeft = 12 - (state.turn % 12);
-  const opp = state.opponent?.name ?? "對手";
-  add(10, "calm", served
-    ? [
-        `${you}，今天的行程排滿了：兩場剪綵、一場里民大會、一場議會備詢。`,
-        `${you}，市府這週沒什麼大事。記者在找新聞，我們最好別給他們。`,
-        `${you}，1999 的話務量這週下降了一成。不知道是問題變少，還是大家放棄打了。`,
-        `${you}，議會這週休會。這是我們難得可以好好做事的一週。`,
-        `${you}，離下一次投票還有 ${weeksLeft} 個回合。${opp}最近常在你的選區跑行程。`,
-      ]
-    : [
-        `${you}，今天的掃街行程排好了。${opp}那邊目前沒有新動作。`,
-        `${you}，競選總部的志工今天多了五個人，都是自己找上門的。`,
-        `${you}，離投票還有 ${weeksLeft} 個回合。${opp}的看板又多了一面。`,
-        `${you}，今天的便當訂了兩百個，來了一百五十個人。剩下的我拿去給隔壁的警察了。`,
-        `${you}，有位阿伯在總部門口站了一個小時，最後只說了一句「加油」就走了。`,
-      ]);
+  // 命運牌：玩家選的牌還在生效
+  for (const f of state.fateEffects ?? []) {
+    const what = f.type === "boost" ? "下一次用得上" : f.type === "shield" ? "下次出事的時候有人擋" : "這幾週都還在幫你";
+    add(25, `fate-${f.cardId}`, [`${you}，你選的「${f.label}」還在，${what}。`, `${you}，「${f.label}」那張牌${what}。`]);
+  }
+
+  // 沒有更急的事：回顧最近的一個決定，依它最大的影響挑一句話
+  const recent = history.slice(-4).filter((h) => Object.values(h.optionDelta).some((v) => v !== 0));
+  if (recent.length) {
+    const h = recent[(hash(String(state.seed)) + state.turn) % recent.length];
+    const [key, value] = (Object.entries(h.optionDelta) as [StatKey, number][])
+      .filter(([k]) => CALLBACKS[k])
+      .sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]))[0] ?? [];
+    const pool = key && CALLBACKS[key]?.[value > 0 ? 0 : 1];
+    if (pool) add(10, `recall-${h.turn}`, pool.map((t) => `${you}，${t.replace("{t}", title(h))}`));
+  }
 
   lines.sort((a, b) => b.priority - a.priority);
   const unique = lines.filter((l, i) => lines.findIndex((x) => x.key === l.key) === i);
   const texts = unique.map((l) => pick(l.texts, state.seed, state.turn, hash(l.key)));
-  const [main, ...rest] = texts.filter((t, i) => unique[i].key !== "calm" || i === 0);
+  const [main, ...rest] = texts;
   return { main, items: rest.slice(0, 3) };
 }
-

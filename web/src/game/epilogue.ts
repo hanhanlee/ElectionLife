@@ -534,7 +534,12 @@ const CITY_LINES: Record<string, [string[], string[]]> = {
 /** 這一局最值得回頭看的那個選擇，多年後怎麼被記得 */
 function keyEventText(item: ReflectionItem, c: Ctx): string[] {
   const e = `「${item.eventTitle}」`;
-  const o = `「${item.optionLabel}」`;
+  // 選項文字本身就是引號包起來的政見時不要再包一層；裡面的引號改成『』
+  const label = item.optionLabel;
+  const o = /^「[^「」]*」$/.test(label) ? label : `「${label.replace(/「/g, "『").replace(/」/g, "』")}」`;
+  // 放在對白（「…」）裡的版本用『』
+  const flat = label.replace(/「/g, "『").replace(/」/g, "』");
+  const inner = /^『[^『』]*』$/.test(flat) ? flat : `『${flat}』`;
   if (item.kind === "principled") {
     return [
       `${e}那一回，你選擇了${o}，民調因此掉了 ${-item.approval}。幕僚說那是整場選戰最笨的決定；多年後，那是你唯一願意拿出來講的事。`,
@@ -544,16 +549,22 @@ function keyEventText(item: ReflectionItem, c: Ctx): string[] {
   if (item.kind === "popular") {
     return [
       `大家記得你，多半是因為${e}。你選擇${o}的那一次，是你人氣最高的一刻，後來再也沒有超過。`,
-      `多年後，計程車司機認出你，第一句話就是：「${item.eventTitle}那時候，你是不是選了『${item.optionLabel}』？」你點點頭，沒有說其他的事。`,
+      `多年後，計程車司機認出你，第一句話就是：「${item.eventTitle}那時候，你是不是選了${inner}？」你點點頭，沒有說其他的事。`,
     ];
   }
   const perk = item.perk ? "用的是市府的資源，" : "";
+  // 這是「拿原則換選票」的那一次，不是輸贏的原因：贏了說它換到了什麼，輸了說它換到了票、卻沒換到勝選
+  if (c.won) {
+    return [
+      `多年後回頭看，你最常被提起的是${e}那一回。你選擇了${o}，${perk}民調漲了 ${item.approval}。你贏了，但後來每次有人質疑你，都會先提起這件事。`,
+      `記者寫你的人物專訪時，翻出了${e}的舊新聞。你當年選擇${o}，換到了掌聲，也換到了這篇專訪的標題。`,
+      `你常想起${e}那天。如果沒有選${o}，你還會贏嗎？你不確定，但你知道那一刻自己猶豫過。`,
+    ];
+  }
   return [
-    `多年後回頭看，最關鍵的是${e}那一回。你選擇了${o}，${perk}民調漲了 ${item.approval}。當時沒人追究；後來每次有人質疑你，都會先提起這件事。`,
-    `記者寫你的人物專訪時，翻出了${e}的舊新聞。你當年選擇${o}，換到了掌聲，也換到了這篇專訪的標題。`,
-    c.won
-      ? `你常想起${e}那天。如果沒有選${o}，你還會贏嗎？你不確定，但你知道那一刻自己猶豫過。`
-      : `你常想起${e}那天。你選了${o}，最後還是沒有贏。有些交換，換到的比想像中少。`,
+    `多年後回頭看，你最放不下的是${e}那一回。你選擇了${o}，${perk}民調確實漲了 ${item.approval}，最後還是輸了。那幾點民調沒有留下來，留下來的是那個決定。`,
+    `記者寫你的人物專訪時，翻出了${e}的舊新聞：你當年選擇${o}，換到了 ${item.approval} 點民調，卻沒換到勝選。專訪的標題就是這件事。`,
+    `你常想起${e}那天。你選了${o}，換到了 ${item.approval} 點民調，最後還是沒有贏。有些交換，換到的比想像中少。`,
   ];
 }
 

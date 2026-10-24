@@ -286,7 +286,7 @@
       { "id": "coalition", "label": "與大黨談合作，換取對方禮讓", "outcome": "大黨答應不推人。他們的支持者要你承諾的事情，清單很長。", "effects": { "party": 10, "integrity": -4 }, "appearsIf": { "anyFlags": ["party-third", "party-independent"] }, "skill": "deal", "setFlags": ["ally-green"], "arcs": [{ "id": "alliance", "open": true, "add": { "yields": 1 }, "note": "選戰策略：與大黨談合作，換取對方禮讓" }] },
       { "id": "no-donation", "label": "宣布「不收企業政治獻金」", "outcome": "形象分數大增。廣告預算大減。", "effects": { "integrity": 6, "approval": 3, "party": -2, "business": -8 }, "appearsIf": { "anyFlags": ["bg-outsider", "party-third", "party-independent"] } },
       { "id": "dinner", "label": "辦一場募款餐會", "outcome": "一桌十萬，坐滿八十桌。你記住了每一位大桌的名字，他們也記住了你。", "effects": { "party": 2, "integrity": -1, "business": 5 }, "funds": 1200 },
-      { "id": "corporate", "label": "接受企業大額政治獻金", "outcome": "錢一次到位。捐款名單要等選後才會公開。", "effects": { "integrity": -6, "business": 12 }, "funds": 2500, "delayed": { "afterTurns": 6, "effects": { "integrity": -3, "media": 5 }, "text": "政治獻金名單公開：最大的捐款人，剛好拿到市府的大型標案。" } }
+      { "id": "corporate", "label": "接受企業大額政治獻金", "outcome": "錢一次到位。捐款名單要等選後才會公開。", "effects": { "integrity": -6, "business": 12 }, "funds": 2500, "delayed": { "afterTurns": 6, "effects": { "integrity": -3, "media": 5 }, "text": "選前收下的那筆企業大額政治獻金，捐款名單公開了：最大的捐款人，剛好拿到市府的大型標案。" } }
     ],
     "source": { "status": "draft", "prototype": "選戰策略取材自歷屆選舉常見的操作：中央資源站台、地方派系結盟、網路動員、負面選舉，以及第三勢力與大黨的合作。", "adaptation": "情境為虛構；效果數值為遊戲設計。", "refs": [{ "title": "2010 臺中市長選舉公報：向中央爭取", "url": "https://bulletin.cec.gov.tw/01%E9%81%B8%E8%88%89%E5%85%AC%E5%A0%B1/03%E7%9B%B4%E8%BD%84%E5%B8%82%E9%95%B7/099%E5%B9%B4/03%E8%87%BA%E4%B8%AD%E5%B8%82%E5%B8%82%E9%95%B7.pdf", "quote": "向中央積極爭取在短時間內", "accessed": "2026-10-23" }, { "title": "2018 桃園市長選舉公報：打破藍綠", "url": "https://bulletin.cec.gov.tw/01%E9%81%B8%E8%88%89%E5%85%AC%E5%A0%B1/03%E7%9B%B4%E8%BD%84%E5%B8%82%E9%95%B7/107%E5%B9%B4/%E6%A1%83%E5%9C%92%E5%B8%82%E5%B8%82%E9%95%B7.pdf", "quote": "打破藍綠意識形態的牢籠", "accessed": "2026-10-23" }] }
   },
@@ -525,7 +525,7 @@
     "scenario": "一位以「追問到底」聞名的主持人邀你上節目，一小時現場直播，不給題綱。",
     "tags": ["選戰", "專訪", "政策"],
     "options": [
-      { "id": "accept", "label": "接受專訪，現場直播", "outcome": "訪問中規中矩，沒有失分，也沒有亮點。", "effects": { "approval": 2 }, "skill": "policy", "variants": [{ "when": { "flags": ["trait-policy-wonk"] }, "outcome": "你把財源、時程、績效指標一項項攤開。主持人最後說，這是節目開播以來最紮實的候選人。", "effects": { "approval": 4, "integrity": 2, "media": 4 } }, { "when": { "flags": ["trait-unprepared"] }, "outcome": "主持人追問財源，你答成了另一題，再追問，你又答成了第三題。那十五秒被剪成迷因，觀看次數破百萬。", "effects": { "approval": -8, "media": 6 } }, { "when": { "anyFlags": ["trait-debater", "trait-photogenic"] }, "outcome": "你說得很漂亮，金句一句接一句，節目的收視率創新高。只是有幾個數字，你說得比實際的大一點。", "effects": { "approval": 4, "media": 5 }, "delayed": { "afterTurns": 3, "effects": { "approval": -5, "integrity": -3, "media": 4 }, "text": "事實查核報告出爐：你在專訪中引用的三個數字，有兩個是錯的。" } }, { "when": { "flags": ["trait-poor-speaker"] }, "outcome": "你準備得很充分，但講得很乾。收視率只有對手上節目時的一半。", "effects": { "approval": -1, "integrity": 2 } }, { "when": { "flags": ["trait-overconfident"] }, "outcome": "你自信滿滿地說「這個很簡單」，主持人請你算給大家看。你算錯了。", "effects": { "approval": -5, "media": 4 } }] },
+      { "id": "accept", "label": "接受專訪，現場直播", "outcome": "訪問中規中矩，沒有失分，也沒有亮點。", "effects": { "approval": 2 }, "skill": "policy", "variants": [{ "when": { "flags": ["trait-policy-wonk"] }, "outcome": "你把財源、時程、績效指標一項項攤開。主持人最後說，這是節目開播以來最紮實的候選人。", "effects": { "approval": 4, "integrity": 2, "media": 4 } }, { "when": { "flags": ["trait-unprepared"] }, "outcome": "主持人追問財源，你答成了另一題，再追問，你又答成了第三題。那十五秒被剪成迷因，觀看次數破百萬。", "effects": { "approval": -8, "media": 6 } }, { "when": { "anyFlags": ["trait-debater", "trait-photogenic"] }, "outcome": "你說得很漂亮，金句一句接一句，節目的收視率創新高。只是有幾個數字，你說得比實際的大一點。", "effects": { "approval": 4, "media": 5 }, "delayed": { "afterTurns": 3, "effects": { "approval": -5, "integrity": -3, "media": 4 }, "text": "那場現場直播的深度專訪，事實查核報告出爐了：你在專訪中引用的三個數字，有兩個是錯的。" } }, { "when": { "flags": ["trait-poor-speaker"] }, "outcome": "你準備得很充分，但講得很乾。收視率只有對手上節目時的一半。", "effects": { "approval": -1, "integrity": 2 } }, { "when": { "flags": ["trait-overconfident"] }, "outcome": "你自信滿滿地說「這個很簡單」，主持人請你算給大家看。你算錯了。", "effects": { "approval": -5, "media": 4 } }] },
       { "id": "written", "label": "只接受書面專訪", "outcome": "你的回答很完整，但沒有人會截圖書面專訪。", "effects": { "integrity": 1, "media": -2 } },
       { "id": "variety", "label": "婉拒，改上綜藝節目", "outcome": "你在綜藝節目上玩了一輪遊戲，觀眾覺得你很親切。政策？那是什麼？", "effects": { "media": 5, "approval": 2, "integrity": -1 }, "skill": "media" },
       { "id": "spreadsheet", "label": "帶著自己做的政策試算表上節目", "outcome": "你在直播中把試算表投影出來，逐格解釋。主持人投降了，網友開始幫你的試算表做迷因——這次是好的那種。", "effects": { "approval": 6, "integrity": 3, "media": 5 }, "appearsIf": { "flags": ["trait-policy-wonk"] } }
@@ -1620,7 +1620,7 @@
     "scenario": "多年前發包的大型場館工程延宕至今，廠商要求追加 40 億。",
     "tags": ["工程", "財政"],
     "options": [
-      { "id": "pay", "label": "追加預算，趕在選前完工剪綵", "outcome": "剪綵很風光。審計報告在選後才出來。", "effects": { "approval": 6, "treasury": -18, "business": 6 }, "delayed": { "afterTurns": 4, "effects": { "approval": -6, "integrity": -4 }, "text": "審計報告指出場館追加預算程序有瑕疵。" }, "requires": { "min": { "treasury": 30 } } },
+      { "id": "pay", "label": "追加預算，趕在選前完工剪綵", "outcome": "剪綵很風光。審計報告在選後才出來。", "effects": { "approval": 6, "treasury": -18, "business": 6 }, "delayed": { "afterTurns": 4, "effects": { "approval": -6, "integrity": -4 }, "text": "你為了趕在選前剪綵而追加的場館預算，審計報告指出程序有瑕疵。" }, "requires": { "min": { "treasury": 30 } } },
       { "id": "audit", "label": "暫停工程，全面查帳", "outcome": "工地圍籬長出了青苔，也長出了一篇篇評論。", "effects": { "approval": -6, "integrity": 6, "achievement": 4, "business": -6 } },
       { "id": "renegotiate", "label": "重新議約，分期完工", "outcome": "沒人滿意，但也沒人能抓到把柄。", "effects": { "treasury": -8, "council": 4, "achievement": 3 } }
     ],
@@ -1649,7 +1649,7 @@
     "tags": ["財政", "承諾", "劇情"],
     "options": [
       { "id": "pay", "label": "照發，承諾就是承諾", "outcome": "市民很開心。坑洞也很開心，它們可以多活一年。", "effects": { "approval": 5, "treasury": -15, "achievement": -5 }, "requires": { "min": { "treasury": 20 } }, "arcs": [{ "id": "cash", "status": "fulfilled", "set": { "paid": "checks" }, "note": "砍其他預算，福利支票全部照發" }] },
-      { "id": "debt", "label": "發行公債支應", "outcome": "問題解決了，交給下一任。", "effects": { "approval": 4, "treasury": -5 }, "delayed": { "afterTurns": 20, "effects": { "treasury": -20 }, "text": "下一任市長接手時，市債利息創新高。" }, "arcs": [{ "id": "cash", "status": "fulfilled", "set": { "paid": "checks" }, "note": "發行公債，福利支票全部照發" }] },
+      { "id": "debt", "label": "發行公債支應", "outcome": "問題解決了，交給下一任。", "effects": { "approval": 4, "treasury": -5 }, "delayed": { "afterTurns": 20, "effects": { "treasury": -20 }, "text": "當年發公債支應的福利支票，利息到期了：下一任市長接手時，市債利息創新高。" }, "arcs": [{ "id": "cash", "status": "fulfilled", "set": { "paid": "checks" }, "note": "發行公債，福利支票全部照發" }] },
       { "id": "shrink", "label": "改成「分期發放」，名稱照舊、金額悄悄少一點", "outcome": "新聞稿寫的是「如期發放」。只有很會算數的家長發現哪裡怪怪的。", "effects": { "approval": 2, "integrity": -6, "treasury": -6 }, "arcs": [{ "id": "cash", "status": "concealed", "note": "改為分期發放，金額悄悄縮水" }] },
       { "id": "break", "label": "宣布延後發放", "outcome": "「跳票」兩個字在網路上待了整整一個月。", "effects": { "approval": -12, "treasury": 5 }, "arcs": [{ "id": "cash", "status": "broken", "note": "宣布福利支票延後發放" }] }
     ],
@@ -1938,7 +1938,7 @@
     "weight": 2,
     "options": [
       { "id": "halt", "label": "立即停駛，全線總體檢", "outcome": "通勤族怨聲載道，但你睡得著。", "effects": { "approval": -5, "integrity": 4, "achievement": -2 }, "skill": "admin" },
-      { "id": "quiet", "label": "照常營運，低調處理", "outcome": "新聞兩天就過去了。工程師們的群組沒有過去。", "effects": { "integrity": -6, "approval": 1 }, "delayed": { "afterTurns": 2, "effects": { "approval": -6, "media": 8 }, "text": "內部檢修紀錄外流：捷運公司早知道零件有問題。" } },
+      { "id": "quiet", "label": "照常營運，低調處理", "outcome": "新聞兩天就過去了。工程師們的群組沒有過去。", "effects": { "integrity": -6, "approval": 1 }, "delayed": { "afterTurns": 2, "effects": { "approval": -6, "media": 8 }, "text": "捷運聯接器斷裂那次你選擇低調處理，結果內部檢修紀錄外流：捷運公司早就知道零件有問題。" } },
       { "id": "explain", "label": "市長親自召開記者會，逐項說明", "outcome": "你把技術報告講得很清楚，連工程師都點頭。", "effects": { "media": 8, "approval": 2, "integrity": 2 }, "requires": { "min": { "team": 45 } }, "skill": "policy" }
     ],
     "source": { "status": "draft", "prototype": "捷運新路線試營運期間發生電聯車零件斷裂，監察院立案調查。", "adaptation": "情境已虛構化。", "refs": [{ "title": "臺中市政府：近三年監察院糾正案與調查報告之說明與檢討（2022）", "url": "https://www.rdec.taichung.gov.tw/media/785392/1110413-4-市政府針對近三年監察院對臺中市提出糾正案-糾舉案-調查報告案之說明與檢討專.pdf", "quote": "電聯車車廂間半永久聯接器牽引裝置軸心斷裂案", "accessed": "2026-10-23" }] }
@@ -2029,7 +2029,7 @@
     "tags": ["動保"],
     "options": [
       { "id": "expand", "label": "擴建收容所、增聘獸醫", "outcome": "空間夠了。下一個問題是：誰來付以後每年的飼料錢？", "effects": { "treasury": -8, "achievement": 3, "team": 2 }, "requires": { "min": { "treasury": 25 } } },
-      { "id": "outsource", "label": "把狗送到民間狗場", "outcome": "籠子空了。狗去了哪裡，沒人追蹤。", "effects": { "integrity": -5, "treasury": 2 }, "delayed": { "afterTurns": 2, "effects": { "approval": -6, "media": 8 }, "text": "動保團體踢爆：市府委託的民間狗場環境惡劣。" } },
+      { "id": "outsource", "label": "把狗送到民間狗場", "outcome": "籠子空了。狗去了哪裡，沒人追蹤。", "effects": { "integrity": -5, "treasury": 2 }, "delayed": { "afterTurns": 2, "effects": { "approval": -6, "media": 8 }, "text": "收容所的狗送去民間狗場之後，動保團體踢爆：那間狗場的環境惡劣。" } },
       { "id": "tnr", "label": "推動絕育與認養，治本但慢", "outcome": "效果要好幾年才看得到。收容所的籠子明天還是滿的。", "effects": { "achievement": 3, "approval": -1, "team": -2 } }
     ],
     "source": { "status": "draft", "prototype": "零撲殺政策實施後，公立收容所超收，大量犬隻被送往民間私人狗場。", "adaptation": "情境已虛構化。", "refs": [{ "title": "報導者：零撲殺上路6年專題", "url": "https://www.twreporter.org/topics/6-years-after-no-kill-policy-adopted", "quote": "公立收容所大量將狗送到民間的私人狗場", "accessed": "2026-10-23" }] }
@@ -2226,7 +2226,7 @@
     "weight": 2.5,
     "options": [
       { "id": "wait", "label": "全部改善完成才通車", "outcome": "通車晚了兩個月。罵聲很大，但沒有出事。", "effects": { "approval": -4, "integrity": 3, "achievement": 3 }, "skill": "admin" },
-      { "id": "free-ride", "label": "先開放免費試乘，邊營運邊改", "outcome": "試乘人潮擠爆，免費的感覺很好。改善項目還剩一半。", "effects": { "approval": 5, "media": 4, "integrity": -2 }, "delayed": { "afterTurns": 3, "effects": { "approval": -5, "media": 6 }, "text": "環狀線通車後頻傳異常停駛，議會要求專案報告。" } },
+      { "id": "free-ride", "label": "先開放免費試乘，邊營運邊改", "outcome": "試乘人潮擠爆，免費的感覺很好。改善項目還剩一半。", "effects": { "approval": 5, "media": 4, "integrity": -2 }, "delayed": { "afterTurns": 3, "effects": { "approval": -5, "media": 6 }, "text": "環狀線先開放試乘、邊營運邊改，結果通車後頻傳異常停駛，議會要求專案報告。" } },
       { "id": "blame", "label": "把延宕推給中央審查太慢", "outcome": "中央和你隔空吵了一週，車還是沒開。", "effects": { "approval": -1, "party": 3, "council": -2 }, "skill": "confront" }
     ],
     "source": { "status": "draft", "prototype": "新北捷運環狀線通車前，交通部履勘要求多項改善，通車時程一再受到關注。", "adaptation": "城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：新北環狀捷運線改善中 仍盼春節能試乘（2020）", "url": "https://news.pts.org.tw/article/463071", "quote": "新北環狀捷運線改善中 仍盼春節能試乘", "accessed": "2026-10-23" }] }
@@ -2286,7 +2286,7 @@
     "weight": 2.5,
     "options": [
       { "id": "map", "label": "全面普查管線圖資，強制業者申報", "outcome": "普查花了兩年和一大筆預算，業者抱怨不斷。地圖終於畫出來了。", "effects": { "achievement": 7, "treasury": -6, "business": -5, "team": -2 }, "skill": "admin" },
-      { "id": "trust", "label": "相信業者，維持現行管理", "outcome": "什麼事都沒發生——目前為止。", "effects": { "business": 4, "integrity": -3 }, "delayed": { "afterTurns": 4, "effects": { "approval": -10, "achievement": -6, "media": 10 }, "text": "一條沒有登記的老舊管線外洩，消防隊找了三個小時才找到閥門。" } },
+      { "id": "trust", "label": "相信業者，維持現行管理", "outcome": "什麼事都沒發生——目前為止。", "effects": { "business": 4, "integrity": -3 }, "delayed": { "afterTurns": 4, "effects": { "approval": -10, "achievement": -6, "media": 10 }, "text": "你當初決定相信業者的石化管線出事了：一條沒有登記的老舊管線外洩，消防隊找了三個小時才找到閥門。" } },
       { "id": "relocate", "label": "要求管線限期遷出市區", "outcome": "業者揚言撤資，議會吵翻天。", "effects": { "integrity": 3, "business": -8, "council": -3 }, "skill": "confront" }
     ],
     "source": { "status": "draft", "prototype": "2014 年高雄氣爆事故暴露地下石化管線圖資不明、權責不清的問題，監察院糾正市府與經濟部。", "adaptation": "城市、人物與數字已虛構化。", "refs": [{ "title": "風傳媒：地下管線混亂 高雄大氣爆錯失黃金3小時還原（2014）", "url": "https://www.storm.mg/article/34317", "quote": "高雄大氣爆案意外爆出了政府管理石化產業的重大漏洞", "accessed": "2026-10-23" }] }
@@ -2311,7 +2311,7 @@
     "scenario": "文化部要在你的城市蓋一座國家級博物館，條件是市府要出地、出配合款、還要負責日後營運。",
     "tags": ["中央", "文化"],
     "options": [
-      { "id": "accept", "label": "全部答應，先拿下再說", "outcome": "簽約儀式很風光。十年後的營運費用，是下一任的事。", "effects": { "approval": 4, "media": 4, "treasury": -5 }, "delayed": { "afterTurns": 5, "effects": { "treasury": -5 }, "text": "博物館的營運預算超出預期，市府每年得多編一筆。" } },
+      { "id": "accept", "label": "全部答應，先拿下再說", "outcome": "簽約儀式很風光。十年後的營運費用，是下一任的事。", "effects": { "approval": 4, "media": 4, "treasury": -5 }, "delayed": { "afterTurns": 5, "effects": { "treasury": -5 }, "text": "當初全部答應的國家級博物館開館了，營運預算超出預期，市府每年得多編一筆。" } },
       { "id": "bargain", "label": "談條件：中央負擔營運費用", "outcome": "談判拖了半年，最後條件好了一點，博物館的開館日期也晚了一點。", "effects": { "achievement": 3, "council": 2 }, "skill": "negotiate" },
       { "id": "decline", "label": "婉拒，市府沒有能力承擔", "outcome": "很誠實，標題寫「XX 把國家級建設推掉」。", "effects": { "approval": -3, "integrity": 3, "treasury": 2 } }
     ],
@@ -2400,7 +2400,7 @@
     "options": [
       { "id": "raise", "label": "全部加高，安全第一", "outcome": "堤防蓋好了，河景沒了，騎單車的人在網路上抱怨了一整年。", "effects": { "achievement": 6, "approval": -2, "treasury": -5 }, "skill": "admin" },
       { "id": "park", "label": "改做可淹水的河濱公園與滯洪池", "outcome": "設計很漂亮，花的時間和錢都是加高堤防的兩倍。", "effects": { "achievement": 4, "approval": 2, "treasury": -8 } },
-      { "id": "later", "label": "先處理最危險的一段，其他明年再說", "outcome": "最危險的一段蓋好了。第二危險的一段，今年颱風剛好經過。", "effects": { "achievement": 2 }, "delayed": { "afterTurns": 3, "effects": { "approval": -6, "achievement": -3 }, "text": "颱風過境，沒有加高的那段堤防溢堤，三個里泡水。" } }
+      { "id": "later", "label": "先處理最危險的一段，其他明年再說", "outcome": "最危險的一段蓋好了。第二危險的一段，今年颱風剛好經過。", "effects": { "achievement": 2 }, "delayed": { "afterTurns": 3, "effects": { "approval": -6, "achievement": -3 }, "text": "當初說「明年再說」的那幾段堤防，颱風過境時溢堤，三個里泡水。" } }
     ],
     "source": { "status": "real", "prototype": "新北沿河地區的堤防與滯洪設施，常面臨防洪安全與河岸景觀、休閒用途之間的取捨。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [], "realCase": "新北大漢溪、淡水河沿岸堤防與二重疏洪道" }
   },
@@ -2447,7 +2447,7 @@
     "weight": 2.5,
     "options": [
       { "id": "keep", "label": "保留埤塘，開發案修改設計", "outcome": "生態團體大力讚揚，開發商說這樣不划算。", "effects": { "integrity": 3, "business": -5, "achievement": 2 } },
-      { "id": "fill", "label": "同意填平，換取開發", "outcome": "開發案動工了，夏天的時候，附近的里開始淹水。", "effects": { "business": 6, "achievement": 2, "integrity": -3 }, "delayed": { "afterTurns": 3, "effects": { "approval": -5 }, "text": "埤塘填平後少了滯洪空間，周邊三個里在大雨後淹水。" } },
+      { "id": "fill", "label": "同意填平，換取開發", "outcome": "開發案動工了，夏天的時候，附近的里開始淹水。", "effects": { "business": 6, "achievement": 2, "integrity": -3 }, "delayed": { "afterTurns": 3, "effects": { "approval": -5 }, "text": "你同意填平的那三個埤塘，少了滯洪空間，周邊三個里在大雨後淹水。" } },
       { "id": "park", "label": "改造成埤塘公園", "outcome": "公園很漂亮，開發商拿到了周邊的容積獎勵。", "effects": { "approval": 3, "treasury": -4, "business": 2 } }
     ],
     "source": { "status": "draft", "prototype": "桃園埤塘兼具灌溉、滯洪與生態功能，開發壓力下的存廢一直有爭議。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：桃園大園三大埤塘將填平 野鳥學會盼推動保育共生地", "url": "https://news.pts.org.tw/article/806779", "quote": "桃園大園三大埤塘將填平", "accessed": "2026-10-23" }], "realCase": "桃園埤塘保存與開發填埋爭議" }
@@ -2644,7 +2644,7 @@
     "options": [
       { "id": "publish", "label": "公開名單，強制補強", "outcome": "住戶們嚇壞了，房價應聲下跌。那些房子終於開始補強。", "effects": { "achievement": 5, "approval": -3, "business": -4 }, "skill": "confront" },
       { "id": "subsidy", "label": "不公開，但大幅補助自主補強", "outcome": "申請的人不多，大部分住戶不知道自己住在名單上。", "effects": { "treasury": -4, "achievement": 2 } },
-      { "id": "quiet", "label": "內部列管，避免恐慌", "outcome": "沒有恐慌。下一場地震什麼時候來，沒人知道。", "effects": { "integrity": -4 }, "delayed": { "afterTurns": 5, "effects": { "approval": -8, "media": 8 }, "text": "媒體取得市府內部的耐震危險名單，質疑市府刻意隱瞞。" } }
+      { "id": "quiet", "label": "內部列管，避免恐慌", "outcome": "沒有恐慌。下一場地震什麼時候來，沒人知道。", "effects": { "integrity": -4 }, "delayed": { "afterTurns": 5, "effects": { "approval": -8, "media": 8 }, "text": "你決定內部列管的耐震危險名單，被媒體拿到了，質疑市府刻意隱瞞。" } }
     ],
     "source": { "status": "draft", "prototype": "老舊建物的耐震評估結果是否公開，牽涉公共安全、房價與住戶權益。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：維冠樓塌115死 起訴建商林明輝等5人", "url": "https://news.pts.org.tw/article/320705", "quote": "維冠樓塌115死", "accessed": "2026-10-23" }], "realCase": "2016 年臺南維冠大樓倒塌後，各縣市老屋耐震評估與名單公開爭議" }
   },
@@ -2656,7 +2656,7 @@
     "tags": ["大型活動", "財政"],
     "issue": "culture",
     "options": [
-      { "id": "bid", "label": "全力申辦", "outcome": "申辦成功，全市沸騰。三座場館的維護費，從明年開始算。", "effects": { "approval": 5, "media": 6, "treasury": -8 }, "delayed": { "afterTurns": 5, "effects": { "treasury": -5, "approval": -2 }, "text": "賽後場館閒置，每年的維護費成了議會質詢的固定題目。" } },
+      { "id": "bid", "label": "全力申辦", "outcome": "申辦成功，全市沸騰。三座場館的維護費，從明年開始算。", "effects": { "approval": 5, "media": 6, "treasury": -8 }, "delayed": { "afterTurns": 5, "effects": { "treasury": -5, "approval": -2 }, "text": "當年全力申辦的國際賽事辦完了，三座場館閒置，每年的維護費成了議會質詢的固定題目。" } },
       { "id": "reuse", "label": "申辦，但只用既有場館改建", "outcome": "規模小了一點，花費也小了很多。", "effects": { "approval": 2, "achievement": 2, "treasury": -3 }, "skill": "admin" },
       { "id": "pass", "label": "不申辦", "outcome": "財政局長鬆了一口氣，體育界很失望。", "effects": { "integrity": 1, "approval": -2 } }
     ],
@@ -2671,7 +2671,7 @@
     "issue": "local",
     "options": [
       { "id": "public", "label": "主動公開，移送法辦", "outcome": "媒體報導「市府自清」，建管處人心惶惶。", "effects": { "integrity": 5, "approval": 2, "team": -3 } },
-      { "id": "internal", "label": "內部懲處，不對外公開", "outcome": "事情悄悄落幕了。三個月後，另一家媒體挖了出來。", "effects": { "integrity": -4 }, "delayed": { "afterTurns": 3, "effects": { "approval": -6, "integrity": -3, "media": 8 }, "text": "媒體揭露市府曾低調處理建管收賄案，標題是「市長知情不報」。" } },
+      { "id": "internal", "label": "內部懲處，不對外公開", "outcome": "事情悄悄落幕了。三個月後，另一家媒體挖了出來。", "effects": { "integrity": -4 }, "delayed": { "afterTurns": 3, "effects": { "approval": -6, "integrity": -3, "media": 8 }, "text": "建管處科長收賄那件事，你當初選擇內部懲處、不對外公開。現在媒體揭露了，標題是「市長知情不報」。" } },
       { "id": "reform", "label": "公開並推動建照審查全面上網", "outcome": "審查透明了，建商們抱怨流程變慢。", "effects": { "integrity": 4, "achievement": 3, "business": -4 }, "skill": "policy" }
     ],
     "source": { "status": "placeholder", "prototype": "地方政府建管、採購等業務的收賄案，考驗首長的處理態度。", "adaptation": "情境為虛構，取材自台灣地方政治的常見情境。", "refs": [] }
@@ -2767,7 +2767,7 @@
     "weight": 2.5,
     "options": [
       { "id": "fix-first", "label": "缺失全部改善完才通車", "outcome": "又延了半年。通車那天，什麼問題都沒有，但已經沒人記得要感謝你。", "effects": { "achievement": 4, "approval": -2, "integrity": 2 }, "skill": "admin" },
-      { "id": "open", "label": "先通車，邊營運邊改善", "outcome": "通車典禮很風光，第一個月故障了四次。", "effects": { "approval": 3, "media": 4 }, "delayed": { "afterTurns": 2, "effects": { "approval": -5 }, "text": "機場捷運通車後頻傳故障，旅客趕不上飛機的新聞登上國際媒體。" } },
+      { "id": "open", "label": "先通車，邊營運邊改善", "outcome": "通車典禮很風光，第一個月故障了四次。", "effects": { "approval": 3, "media": 4 }, "delayed": { "afterTurns": 2, "effects": { "approval": -5 }, "text": "先通車、邊營運邊改善的機場捷運頻傳故障，旅客趕不上飛機的新聞登上國際媒體。" } },
       { "id": "blame", "label": "強調是中央主導的工程，市府權責有限", "outcome": "權責說明很清楚，市民覺得你在推卸。", "effects": { "approval": -3, "party": 2 } }
     ],
     "source": { "status": "draft", "prototype": "跨縣市的大型軌道工程延宕多年，通車時程與安全改善在中央與地方之間牽扯不清。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "桃園機場捷運多年延宕，2017 年通車", "refs": [{ "title": "中央社：機場捷運通車時程變更6次 始末報你知", "url": "https://www.cna.com.tw/news/firstnews/201603040457.aspx", "quote": "機場捷運通車時程變更6次", "accessed": "2026-10-23" }] }
@@ -2963,7 +2963,7 @@
     "tags": ["兒少", "危機"],
     "issue": "welfare",
     "options": [
-      { "id": "shut", "label": "先勒令停業，再調查", "outcome": "家長們鬆了一口氣。三個月後檢驗全數陰性，園方告你。", "effects": { "approval": 4, "integrity": -2 }, "delayed": { "afterTurns": 2, "effects": { "approval": -4, "treasury": -2 }, "text": "幼兒園檢驗全數陰性，園方提起國賠，媒體說市府「先射箭再畫靶」。" } },
+      { "id": "shut", "label": "先勒令停業，再調查", "outcome": "家長們鬆了一口氣。三個月後檢驗全數陰性，園方告你。", "effects": { "approval": 4, "integrity": -2 }, "delayed": { "afterTurns": 2, "effects": { "approval": -4, "treasury": -2 }, "text": "你下令先停業再調查的那間幼兒園，檢驗全數陰性。園方提起國賠，媒體說市府「先射箭再畫靶」。" } },
       { "id": "evidence", "label": "保全監視器影像，等證據再處置", "outcome": "程序很完整，但前三天家長每天在市府門口抗議。", "effects": { "approval": -3, "integrity": 4, "achievement": 2 }, "skill": "admin" },
       { "id": "presser", "label": "市長親自開記者會，承諾「一定給真相」", "outcome": "你在鏡頭前紅了眼眶。真相還沒來，下一則新聞已經來了。", "effects": { "approval": 2, "media": 5 } }
     ],
@@ -3142,7 +3142,7 @@
     "scenario": "捷運支線原定明年三月通車。工程處說：「趕一下，十一月也可以。只是有些測試要縮短。」",
     "tags": ["現任資源", "工程"],
     "options": [
-      { "id": "rush", "label": "提前通車，市長親自剪綵", "outcome": "首班車上擠滿了記者。你的笑容登上每一家晚報。", "effects": { "approval": 22, "achievement": 2, "media": 8 }, "perk": true, "setFlags": ["perk-rush"], "delayed": { "afterTurns": 1, "effects": { "approval": -7, "integrity": -3 }, "text": "通車第二週，號誌系統當機，列車停駛三小時。" } },
+      { "id": "rush", "label": "提前通車，市長親自剪綵", "outcome": "首班車上擠滿了記者。你的笑容登上每一家晚報。", "effects": { "approval": 22, "achievement": 2, "media": 8 }, "perk": true, "setFlags": ["perk-rush"], "delayed": { "afterTurns": 1, "effects": { "approval": -7, "integrity": -3 }, "text": "你提前剪綵通車的捷運支線，第二週號誌系統當機，列車停駛三小時。" } },
       { "id": "schedule", "label": "照原定時程，選後再通車", "outcome": "工程處長鬆了一口氣。選後剪綵的會是誰，還不知道。", "effects": { "achievement": 4, "integrity": 3 } },
       { "id": "preview", "label": "辦「搶先試乘」活動，市長帶隊", "outcome": "沒正式通車，但照片一樣好看。", "effects": { "approval": 17, "treasury": -2 }, "perk": true }
     ],
@@ -3283,7 +3283,7 @@
     "tags": ["現任資源", "工程"],
     "issue": "transit",
     "options": [
-      { "id": "rush", "label": "提前施工，全市大刨鋪", "outcome": "每條路都在施工，每個工地圍籬上都有「市府用心 路平有感」。", "effects": { "approval": 14, "treasury": -5, "achievement": 2 }, "perk": true, "delayed": { "afterTurns": 2, "effects": { "approval": -3 }, "text": "趕工的路面不到半年就出現補丁，網友整理出「選前柏油地圖」。" } },
+      { "id": "rush", "label": "提前施工，全市大刨鋪", "outcome": "每條路都在施工，每個工地圍籬上都有「市府用心 路平有感」。", "effects": { "approval": 14, "treasury": -5, "achievement": 2 }, "perk": true, "delayed": { "afterTurns": 2, "effects": { "approval": -3 }, "text": "選前趕工刨鋪的路面，不到半年就出現補丁，網友整理出「選前柏油地圖」。" } },
       { "id": "patch", "label": "只補坑洞，不整段重鋪", "outcome": "便宜又快。民眾發現新補的補丁一塊一塊，像拼布。", "effects": { "approval": 4, "treasury": -1 }, "perk": true },
       { "id": "normal", "label": "照原進度，不為選舉調整", "outcome": "工務局長很感動。路還是一樣顛。", "effects": { "integrity": 3, "achievement": 1 } }
     ],
@@ -3575,7 +3575,7 @@
     "tags": ["捷運", "選舉", "劇情"],
     "arc": "mrt",
     "options": [
-      { "id": "rush", "label": "搶在選前試營運，你親自當第一位乘客", "outcome": "你在車廂裡跟每個乘客握手。列車在第三站停了十分鐘，沒有人說為什麼。", "effects": { "approval": 6, "integrity": -4, "media": 5 }, "arcs": [{ "id": "mrt", "add": { "opened": 1 }, "note": "選前搶試營運，市長搭首班車" }], "delayed": { "afterTurns": 1, "effects": { "approval": -5, "media": 4 }, "text": "試營運的列車連續兩天停駛，乘客在高架橋上走回車站的影片上了新聞。" } },
+      { "id": "rush", "label": "搶在選前試營運，你親自當第一位乘客", "outcome": "你在車廂裡跟每個乘客握手。列車在第三站停了十分鐘，沒有人說為什麼。", "effects": { "approval": 6, "integrity": -4, "media": 5 }, "arcs": [{ "id": "mrt", "add": { "opened": 1 }, "note": "選前搶試營運，市長搭首班車" }], "delayed": { "afterTurns": 1, "effects": { "approval": -5, "media": 4 }, "text": "你搶在選前試營運的那條路線，列車連續兩天停駛，乘客在高架橋上走回車站的影片上了新聞。" } },
       { "id": "count", "label": "把已動工的路線都算進「通車里程」", "outcome": "競選文宣上的路網圖很漂亮。實線和虛線，要很仔細才看得出來。", "effects": { "approval": 3, "integrity": -5 }, "arcs": [{ "id": "mrt", "status": "concealed", "set": { "claimed": "promised" }, "note": "把已動工的路線算進通車里程" }] },
       { "id": "safe", "label": "照工程進度，選後再通車", "outcome": "工程師鬆了一口氣。競選總部的人在電話裡嘆了一口氣。", "effects": { "approval": -3, "integrity": 4, "party": -3, "achievement": 2 } }
     ],
@@ -3691,7 +3691,7 @@
     "tags": ["觀光", "建設", "劇情"],
     "arc": "tourism",
     "options": [
-      { "id": "build", "label": "市府自己出錢蓋，先蓋再說", "outcome": "動土典禮辦得很盛大。預算書上多了一個「後續維運費」的欄位，數字還沒填。", "effects": { "approval": 4, "achievement": 3, "treasury": -12 }, "arcs": [{ "id": "tourism", "add": { "built": 1 }, "note": "市府自行出資興建大建設" }], "delayed": { "afterTurns": 6, "effects": { "treasury": -5 }, "text": "大建設的維運費第一次入帳，比預估多了一倍。" } },
+      { "id": "build", "label": "市府自己出錢蓋，先蓋再說", "outcome": "動土典禮辦得很盛大。預算書上多了一個「後續維運費」的欄位，數字還沒填。", "effects": { "approval": 4, "achievement": 3, "treasury": -12 }, "arcs": [{ "id": "tourism", "add": { "built": 1 }, "note": "市府自行出資興建大建設" }], "delayed": { "afterTurns": 6, "effects": { "treasury": -5 }, "text": "市府自己出錢蓋的大建設，維運費第一次入帳，比預估多了一倍。" } },
       { "id": "shady", "label": "找一家背景不太清楚的外資合作", "outcome": "外資的代表很會講話，名片上的公司在網路上查不太到。", "effects": { "approval": 3, "business": 8, "integrity": -6 }, "legalRisk": "圖利", "arcs": [{ "id": "tourism", "status": "concealed", "add": { "built": 1 }, "note": "與背景不明的外資合作興建大建設" }] },
       { "id": "admit", "label": "承認不可行，停建", "outcome": "議員說你「選前畫大餅」。工程師說這是正確的決定。", "effects": { "approval": -5, "integrity": 5, "treasury": 3 }, "arcs": [{ "id": "tourism", "status": "broken", "note": "承認大建設不可行，宣布停建" }] }
     ],
