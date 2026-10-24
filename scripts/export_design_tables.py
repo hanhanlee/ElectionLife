@@ -181,6 +181,8 @@ def main() -> int:
                 if o.get("delayed"):
                     d = o["delayed"]
                     marks.append(f"{d['afterTurns']} 回合後：{delta(d['effects'])}（{esc(d['text'])}）")
+                if o.get("onElected"):
+                    marks.append(f"當選後兌現：{delta(o['onElected']['effects'])}（{esc(o['onElected']['text'])}）")
                 if o.get("skill"):
                     marks.append(f"能力 {o['skill']}")
                 for v in o.get("variants", []):

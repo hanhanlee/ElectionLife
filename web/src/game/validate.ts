@@ -15,6 +15,9 @@ export interface ValidationOptions {
   release?: boolean;
 }
 
+/** 第一階段（競選期）的事件階段 */
+const CAMPAIGN_PHASES: Phase[] = ["launch", "platform", "campaign", "eve"];
+
 export function validateEvents(events: GameEvent[], opts: ValidationOptions = {}): string[] {
   const errors: string[] = [];
   const ids = new Set<string>();
@@ -35,6 +38,13 @@ export function validateEvents(events: GameEvent[], opts: ValidationOptions = {}
       if (optIds.has(o.id)) errors.push(`${at}：選項 id 重複 ${o.id}`);
       optIds.add(o.id);
       if (o.skill && !(SKILLS as readonly string[]).includes(o.skill)) errors.push(`${at}/${o.id}：未知能力 ${o.skill}`);
+      // 競選期只是提出政策與承諾：挑戰者還沒執政，施政成果與市庫要當選後才變（onElected）
+      const incumbentOnly = [e.conditions?.flags, o.appearsIf?.flags].some((f) => f?.includes("bg-incumbent"));
+      if (CAMPAIGN_PHASES.includes(e.phase) && !o.perk && !incumbentOnly) {
+        for (const k of ["achievement", "treasury"] as const) {
+          if (o.effects[k]) errors.push(`${at}/${o.id}：競選期的選項不能直接改「${k}」，請改用 onElected（當選後才兌現）`);
+        }
+      }
       if ((o.funds ?? 0) < 0 && !SPENDING_WORDS.test(o.label)) {
         errors.push(`${at}/${o.id}：要花經費 ${-o.funds!} 萬，但選項文字「${o.label}」看不出錢花在哪裡`);
       }
@@ -142,6 +152,13 @@ export function validateFates(cards: FateCard[], arcs: ArcDef[]): string[] {
         checkEffect(c.id, c.ordeal.failure, "失敗結果");
       }
     } else checkEffect(c.id, c.effect, "效果");
+    // 選戰期的牌：挑戰者還沒執政，不能直接改施政成果與市庫
+    if (c.stages.includes("campaign")) {
+      const effects = [c.effect, c.ordeal?.success, c.ordeal?.failure].map((e) => e?.effects ?? {});
+      for (const k of ["achievement", "treasury"] as const) {
+        if (effects.some((e) => e[k])) errors.push(`命運 ${c.id}：選戰期可抽到的牌不能直接改「${k}」`);
+      }
+    }
   }
   for (const stage of ["campaign", "term"] as const) {
     const pool = cards.filter((c) => c.stages.includes(stage) && !c.conditions);

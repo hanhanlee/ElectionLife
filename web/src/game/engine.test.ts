@@ -725,6 +725,29 @@ describe("競選規模與開銷", () => {
     expect(newGame(EVENTS, 1, PARTIES.find((p) => p.id === "minor")!, BACKGROUNDS[1]).scale).toBe("lean");
   });
 
+  it("競選承諾當選後才兌現：挑戰者選了不會立刻改施政成果，當選後才加上；現任市長立即生效；落選不會發生", () => {
+    const event = EVENTS.find((e) => e.id === "o-sig-scholar-mayor")!;
+    const option = event.options.find((o) => o.onElected)!;
+    const at = (bg: string) => {
+      const s = newGame(EVENTS, 5, PARTIES[0], BACKGROUNDS.find((b) => b.id === bg)!);
+      return { ...s, deck: [...s.deck.slice(0, s.turn), event.id], offered: event.options.map((o) => o.id) };
+    };
+    const challenger = at("legislator");
+    const after = choose(challenger, EVENTS, option.id, [], PARTIES, ARCS);
+    expect(after.history[0].optionDelta.achievement).toBe(0);
+    expect(after.afterElection).toHaveLength(1);
+    expect(after.notices.some((n) => n.text.includes("當選後才會兌現"))).toBe(true);
+    const incumbent = at("incumbent");
+    const now = choose(incumbent, EVENTS, option.id, [], PARTIES, ARCS);
+    expect(now.history[0].optionDelta.achievement).toBe(option.onElected!.effects.achievement);
+    expect(now.afterElection ?? []).toHaveLength(0);
+    for (const g of games({}, 200)) {
+      const promised = g.history.filter((h) => EVENTS.find((e) => e.id === h.eventId)?.options.find((o) => o.id === h.optionId)?.onElected).length;
+      if (g.firstElection?.won) expect(g.afterElection ?? []).toHaveLength(0);
+      else if (!g.flags.includes("bg-incumbent")) expect((g.afterElection ?? []).length).toBe(promised);
+    }
+  });
+
   it("競選規模只能在第一階段第 1、7 回合與第二階段第 7 回合調整", () => {
     let s = newGame(EVENTS, 3, PARTIES[0], BACKGROUNDS[1]);
     expect(setScale(s, "full").scale).toBe("full");
@@ -881,7 +904,7 @@ describe("事件隨機性", () => {
       if (s.deck.some((id) => EVENTS.find((e) => e.id === id)!.phase === "term")) reachedTerm++;
       for (const id of s.deck) seen[id] = (seen[id] ?? 0) + 1;
     }
-    const open = EVENTS.filter((e) => (e.phase === "campaign" || e.phase === "term") && !e.conditions && e.id !== "c-strategy");
+    const open = EVENTS.filter((e) => (e.phase === "campaign" || e.phase === "term") && !e.conditions && !e.arc && e.id !== "c-strategy");
     for (const e of open) {
       const rate = (seen[e.id] ?? 0) / (e.phase === "term" ? reachedTerm : N);
       expect(rate, `${e.title} 出現率 ${(rate * 100).toFixed(0)}%`).toBeLessThan(0.25);

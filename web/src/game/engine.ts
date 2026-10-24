@@ -434,6 +434,13 @@ export function choose(
   let fateEffects = boosted.active;
   const effects = withStatScaling(state, option.perk ? withPerkDecay(state, events, boosted.effects) : boosted.effects);
   stats = addDelta(stats, effects);
+  // 競選承諾：現任市長本來就在執政，立即生效；挑戰者要當選後才兌現
+  let afterElection = state.afterElection;
+  const incumbentNow = state.flags.includes("bg-incumbent") || !!state.firstElection?.won;
+  if (option.onElected) {
+    if (incumbentNow) stats = addDelta(stats, option.onElected.effects);
+    else afterElection = [...(afterElection ?? []), { ...option.onElected, fromEventId: event.id }];
+  }
 
   let flags = [...new Set([...state.flags, ...(option.setFlags ?? [])])];
   let { character, income } = state;
@@ -459,6 +466,9 @@ export function choose(
 
   // 結算到期的延遲後果
   const notices: Notice[] = [...arcResult.notices];
+  if (option.onElected && !incumbentNow) {
+    notices.push({ kind: "story", tone: "good", text: "📌 這是競選承諾：要當選後才會兌現。" });
+  }
   if (boosted.used) notices.push({ kind: "fate", tone: "good", text: `🃏 「${boosted.used.label}」這次派上用場了。` });
   for (const p of pending.filter((p) => p.dueTurn <= turn && turn < TURN_PLAN.length)) {
     const before = stats;
@@ -621,6 +631,7 @@ export function choose(
     scale,
     arrears,
     spending,
+    afterElection,
     ...(state.fateOn ? { fateEffects: tickFates(fateEffects) } : {}),
     offered: [],
     history: [
@@ -642,7 +653,7 @@ export function choose(
     const { won, probability, mobilization } = runElection(next, "first");
     next = { ...next, funds: next.funds - mobilization, firstElection: { won, probability, mobilization } };
     if (!won) return { ...next, flags: withArcFlags(next.flags, next.arcs, arcDefs), finished: true };
-    next = withSecondOpponent(next, probability);
+    next = withElectionPromises(withSecondOpponent(next, probability));
   }
   // 過了階段還沒排上議程的劇情節點，以快報結算（第一次投票落選時不結算任期劇情，留給後日談）
   const expired = expireArcs(next.arcs, turn, TURN_PLAN, arcDefs);
@@ -661,6 +672,21 @@ export function choose(
     if (offer) return { ...next, pendingFate: offer };
   }
   return withNextEvent(next, events, arcDefs);
+}
+
+/** 當選上任：選前提出的政策與承諾的花費開始兌現 */
+function withElectionPromises(state: GameState): GameState {
+  const promises = state.afterElection ?? [];
+  if (!promises.length) return state;
+  let stats = state.stats;
+  const notices: Notice[] = [...state.notices];
+  for (const p of promises) {
+    const before = stats;
+    stats = addDelta(stats, p.effects);
+    const good = Object.values(p.effects).reduce((sum, v) => sum + (v ?? 0), 0) > 0;
+    notices.push({ kind: "delayed", tone: good ? "good" : "bad", title: "上任兌現", text: p.text, effects: diff(stats, before) });
+  }
+  return { ...state, stats, notices, afterElection: [] };
 }
 
 /**

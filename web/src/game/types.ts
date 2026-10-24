@@ -67,6 +67,11 @@ export interface GameOption {
   effects: StatDelta;
   setFlags?: string[];
   delayed?: DelayedEffect;
+  /**
+   * 當選後才兌現的效果：競選時提出的政策、承諾的花費，要真的當上市長才會影響施政成果與市庫。
+   * 現任市長本來就在執政，選了立即生效；第一次投票落選則不會發生。
+   */
+  onElected?: { effects: StatDelta; text: string };
   /** 不符合時顯示為灰色；若有 unlockCost 可付出代價解鎖 */
   requires?: Condition;
   unlockCost?: StatDelta;
@@ -628,6 +633,8 @@ export interface GameState {
   offered: string[];
   history: HistoryEntry[];
   pending: PendingEffect[];
+  /** 競選承諾：第一次投票當選後才兌現的效果 */
+  afterElection?: { effects: StatDelta; text: string; fromEventId: string }[];
   /** 本回合觸發的延遲後果與突發事件，供 UI 顯示 */
   notices: Notice[];
   /** 已觸發的突發事件與回合 */
