@@ -30,9 +30,11 @@ jobs:
           cache-dependency-path: web/package-lock.json
       - run: npm ci
       - run: npm test
+      # 有設定儲存庫變數 CUSTOM_DOMAIN（例如 beyondvote.com）時部署在網域根目錄；沒設定時在 github.io/<repo> 子路徑
       - run: npm run build
         env:
-          PAGES_BASE_PATH: /${{ github.event.repository.name }}
+          PAGES_BASE_PATH: ${{ vars.CUSTOM_DOMAIN == '' && format('/{0}', github.event.repository.name) || '' }}
+          SITE_URL: ${{ vars.CUSTOM_DOMAIN != '' && format('https://{0}', vars.CUSTOM_DOMAIN) || format('https://{0}.github.io', github.repository_owner) }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: web/out

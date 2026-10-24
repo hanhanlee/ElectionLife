@@ -1,4 +1,5 @@
 :root {
+  color-scheme: light;
   --background: #f6f4ef;
   --surface: #ffffff;
   --foreground: #1c1b19;
@@ -11,10 +12,16 @@
   --tier-common: #16a34a;
   --tier-rare: #2563eb;
   --tier-epic: #9333ea;
+  /* 命運牌：機運、契約、試煉 */
+  --fate-opportunity: #15803d;
+  --fate-contract: #b45309;
+  --fate-ordeal: #b91c1c;
 }
 
+/* 深色：跟隨系統（沒有選「淺色」時），或玩家在設定裡選了「深色」。兩處的值要一致 */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
     --background: #141311;
     --surface: #1f1d1a;
     --foreground: #ece9e2;
@@ -27,7 +34,29 @@
     --tier-common: #4ade80;
     --tier-rare: #60a5fa;
     --tier-epic: #c084fc;
+    --fate-opportunity: #6fb37a;
+    --fate-contract: #e0a84f;
+    --fate-ordeal: #e07a66;
   }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --background: #141311;
+  --surface: #1f1d1a;
+  --foreground: #ece9e2;
+  --muted: #a39e94;
+  --accent: #fb923c;
+  --accent-fg: #1c1b19;
+  --border: #34312c;
+  --warn: #fdba74;
+  --tier-negative: #f87171;
+  --tier-common: #4ade80;
+  --tier-rare: #60a5fa;
+  --tier-epic: #c084fc;
+  --fate-opportunity: #6fb37a;
+  --fate-contract: #e0a84f;
+  --fate-ordeal: #e07a66;
 }
 
 * {

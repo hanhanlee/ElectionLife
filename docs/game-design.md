@@ -30,6 +30,12 @@
 - **網站圖示**：`web/src/app/icon.png`（256×256，圓角外透明）、`apple-icon.png`（180×180）、`favicon.ico`；圖案是中選會的圈選章印記蓋在選票上。
 - 原始圖檔放在本機 `pics/`，不進 git。
 
+### 2.0.0 外觀與「關於與聲明」
+
+- **外觀切換**：每個畫面底部的頁尾有 ☀️/🌙 深色模式開關（`role="switch"`，旁邊寫「淺色」或「深色」）。沒動過時跟隨系統，也跟著系統切換；動過之後記在瀏覽器（`election-life:theme`）。`layout.tsx` 用 `next/script` 的 `beforeInteractive` 在畫面出來前套用，避免閃一下系統配色。配色一律用 `globals.css` 的變數，深色的值同時寫在「跟隨系統的深色」與「`data-theme="dark"`」兩處，要一起改。命運牌的機運、契約、試煉也有各自的深淺色（`--fate-*`），兩種外觀的對比都在 4.5:1 以上。
+- **關於與聲明**（`/about`）：BeyondVote 的設計理念、真實人物與公開資料、政治中立與免責聲明、資料勘誤與意見回饋。頁尾、開始畫面與結局頁都有連結。聯絡信箱寫在 `web/src/app/site.ts` 的 `CONTACT_EMAIL`（目前 contact@beyondvote.com，轉寄到維護者的信箱），留空時顯示「整理中，近期公布」。
+- **網址與自己的網域**：GitHub 儲存庫變數 `CUSTOM_DOMAIN` 沒設定時，部署在 `https://<帳號>.github.io/<儲存庫>/`；設定成 `beyondvote.com` 後，部署在網域根目錄。`.github/workflows/pages.yml` 依此決定 `PAGES_BASE_PATH`（子路徑）與 `SITE_URL`（分享預覽圖的完整網址），`next.config.ts` 再把它們交給頁面。網域本身在 GitHub 的 Settings → Pages 設定，DNS 指向 GitHub Pages。
+
 ### 2.0.1 手機優先的版面
 
 主要玩家用手機，版面以 375 px 寬（一般手機）為準，也檢查 320 px（最窄的手機）：
@@ -606,6 +612,9 @@ web/                          Next.js 16 靜態網站（output: export），無�
   src/app/RollingScreen.tsx   「正在隨機你的人生」動畫
   src/app/ResultBanner.tsx    結局頁的開票結果大圖
   src/app/ShareCard.tsx       分享圖卡（canvas 繪製、分享與下載）
+  src/app/SiteFooter.tsx      頁尾：外觀切換與「關於與聲明」連結
+  src/app/about/page.tsx      關於與聲明
+  src/app/site.ts             對外聯絡信箱
   public/                     主視覺 title.webp、城市插圖 cities/、分享圖卡底圖 cards/（原圖在 pics/，不進 git）
 scripts/                      中選會抓取、彙總、引文檢查、附錄產生
 data/                         原始資料與彙總（公報 PDF 與全文不進 git）

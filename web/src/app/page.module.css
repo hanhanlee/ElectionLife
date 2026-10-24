@@ -86,6 +86,13 @@
   color: var(--accent);
 }
 
+/* 停用的按鈕要看得出來不能按 */
+.primary:disabled,
+.secondary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
 .stats {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -698,7 +705,7 @@
 /* 政治命運 */
 .fateKicker {
   margin: 0;
-  color: #e0a84f;
+  color: var(--fate-contract);
   font-size: 0.85rem;
   letter-spacing: 0.15em;
 }
@@ -711,7 +718,7 @@
 }
 
 .fateCard {
-  --kind: #6fb37a;
+  --kind: var(--fate-opportunity);
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -719,8 +726,8 @@
   text-align: left;
   color: inherit;
   font: inherit;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-top: 4px solid var(--kind);
   border-radius: 12px;
   cursor: pointer;
@@ -728,11 +735,11 @@
 }
 
 .fateCard[data-kind="contract"] {
-  --kind: #e0a84f;
+  --kind: var(--fate-contract);
 }
 
 .fateCard[data-kind="ordeal"] {
-  --kind: #d9604c;
+  --kind: var(--fate-ordeal);
 }
 
 .fateCard:hover {
@@ -741,7 +748,7 @@
 
 .fateCard[aria-checked="true"] {
   border-color: var(--kind);
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--background);
   box-shadow: 0 0 0 2px var(--kind);
 }
 
@@ -869,5 +876,129 @@
   .scaleOff small {
     flex-basis: 100%;
     text-align: left;
+  }
+}
+
+/* ---- 頁尾：關於與聲明、外觀切換 ---- */
+.siteFooter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 4px 20px;
+  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  font-size: 0.875rem;
+}
+
+.siteFooter a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 4px;
+  color: var(--muted);
+  background: none;
+  border: none;
+  font-size: 0.875rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ---- 關於與聲明 ---- */
+.about h1 {
+  font-size: 1.5rem;
+  line-height: 1.4;
+}
+
+.about section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.about h2 {
+  font-size: 1.125rem;
+  margin-top: 8px;
+}
+
+.about ul {
+  padding-left: 1.4em;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  align-self: flex-start;
+}
+
+.contact {
+  font-weight: 600;
+}
+
+.aboutClosing {
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  text-align: center;
+}
+
+/* 深色模式開關：☀️ 與 🌙 之間有一顆可以滑動的圓鈕 */
+.themeSwitch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 4px;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.themeTrack {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 60px;
+  height: 30px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-size: 14px;
+  line-height: 1;
+}
+
+.themeKnob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent);
+  transition: transform 0.2s ease;
+}
+
+.themeKnob[data-dark="true"] {
+  transform: translateX(30px);
+}
+
+.themeSwitch:focus-visible .themeTrack {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .themeKnob {
+    transition: none;
   }
 }

@@ -41,6 +41,7 @@ import { composeIntro, describeOpponent, drawCharacter, type DrawnCharacter } fr
 import RollingScreen from "./RollingScreen";
 import ResultBanner from "./ResultBanner";
 import ShareCard from "./ShareCard";
+import SiteFooter from "./SiteFooter";
 import { cardKind, cardStory, firstPerson } from "@/game/shareCard";
 import { buildEpilogue } from "@/game/epilogue";
 import { staffReport } from "@/game/feedback";
@@ -202,6 +203,7 @@ export default function Game() {
             繼續上一局（{characterLabel(saved)}，第 {saved.turn + 1} 回合）
           </button>
         )}
+        <SiteFooter />
       </main>
     );
   }
@@ -307,6 +309,7 @@ export default function Game() {
       {!outcome && !fate && canTakeLoan(game) && <LoanOffer state={game} onTake={() => setGame(takeLoan(game))} />}
       <StatHints />
       {!game.finished && <WithdrawButton onConfirm={withdraw} />}
+      <SiteFooter />
     </main>
   );
 }
@@ -1232,6 +1235,7 @@ function EndScreen({ state, onRestart }: { state: GameState; onRestart: () => vo
       </section>
 
       <button className={styles.primary} onClick={onRestart}>再來一局</button>
+      <SiteFooter />
     </main>
   );
 }
