@@ -2,7 +2,7 @@
 
 import { choose, currentEvent, newGame, offeredOptions, optionAvailability, type ProfileSetup } from "./engine";
 import { mulberry32 } from "./rng";
-import type { Background, Crisis, GameEvent, Party } from "./types";
+import type { ArcDef, Background, Crisis, GameEvent, Party } from "./types";
 
 export function estimateFirstWinRate(
   events: GameEvent[],
@@ -12,6 +12,7 @@ export function estimateFirstWinRate(
   background: Background,
   setup?: ProfileSetup,
   n = 300,
+  arcs: ArcDef[] = [],
 ): number {
   let wins = 0;
   for (let seed = 1; seed <= n; seed++) {
@@ -19,7 +20,7 @@ export function estimateFirstWinRate(
     let s = newGame(events, seed, party, background, setup);
     while (!s.firstElection) {
       const open = offeredOptions(s, currentEvent(s, events)!).filter((o) => optionAvailability(s, o) !== "locked");
-      s = choose(s, events, open[Math.floor(rand() * open.length)].id, crises, parties);
+      s = choose(s, events, open[Math.floor(rand() * open.length)].id, crises, parties, arcs);
     }
     if (s.firstElection.won) wins++;
   }

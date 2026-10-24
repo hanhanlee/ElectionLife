@@ -32,9 +32,9 @@
   },
   {
     "id": "airplane",
-    "name": "飛機城",
-    "mayorTitle": "飛機城市長",
-    "tagline": "航空城喊了二十年，土地徵收的抗議布條也掛了二十年。",
+    "name": "航空城",
+    "mayorTitle": "航空城市長",
+    "tagline": "航空特區喊了二十年，土地徵收的抗議布條也掛了二十年。",
     "weight": 1,
     "voters": "人口快速移入的工業城市，產業工人與新住民多，客家庄與眷村也有各自的投票傾向。",
     "voterGroups": [{ "name": "產業工人", "share": 30 }, { "name": "移入新住民", "share": 25 }, { "name": "眷村與老城區", "share": 25 }, { "name": "客家庄", "share": 20 }],
@@ -42,8 +42,8 @@
     "voteMods": { "achievement": 1.2 },
     "issueWeights": { "economy": 1.5, "safety": 1.2, "transit": 1.1, "environment": 1.1, "culture": 0.8 },
     "issueNotes": {
-      "economy": "飛機城的工廠和工人都在看你怎麼做，這件事在工業區傳得很快。",
-      "culture": "飛機城的選民比較在意工作和薪水，對這件事反應冷淡。"
+      "economy": "航空城的工廠和工人都在看你怎麼做，這件事在工業區傳得很快。",
+      "culture": "航空城的選民比較在意工作和薪水，對這件事反應冷淡。"
     }
   },
   {

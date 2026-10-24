@@ -24,7 +24,7 @@
     "options": [
       { "id": "keep", "label": "帶職參選，當選再辭", "outcome": "很務實。「落跑立委」這個詞開始在對手的文宣上出現。", "effects": { "approval": -2, "party": 3 } },
       { "id": "resign", "label": "立刻辭職，背水一戰", "outcome": "很有魄力。你的立委辦公室助理們開始找新工作。", "effects": { "approval": 4, "party": -2, "integrity": 3 } },
-      { "id": "record", "label": "花錢把四年的質詢剪成影片，全網投放", "outcome": "你把四年的質詢剪成一支三分鐘影片，觀看次數不錯。", "effects": { "approval": 3, "media": 4 }, "funds": -500, "skill": "debate" }
+      { "id": "record", "label": "花錢投放你在立法院推過的法案成果，說明為什麼要換跑道", "outcome": "影片列出你推動過的五個法案，觀看次數不錯。留言區有人說：「做得不錯，那為什麼不把任期做完？」", "effects": { "approval": 3, "media": 3 }, "funds": -500, "skill": "policy" }
     ],
     "source": { "status": "draft", "prototype": "立委於任期中轉戰縣市長，當選後辭職導致補選，常被質疑浪費公帑。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "中央社：蔣萬安辭立委 台北市中山北松山明年1月8日補選", "url": "https://www.cna.com.tw/news/aipl/202211185003.aspx", "quote": "蔣萬安辭立委 台北市中山北松山明年1月8日補選", "accessed": "2026-10-23" }], "realCase": "2023 年臺北市第三選舉區立委補選（原立委當選直轄市長後辭職）" }
   },
@@ -106,7 +106,7 @@
     "tags": ["參選", "立委轉戰", "派系"],
     "conditions": { "flags": ["bg-legislator"] },
     "options": [
-      { "id": "promise", "label": "答應派系，補選人選由他們決定", "outcome": "地方樁腳全部歸隊。黨中央知道這件事後，臉色很難看。", "effects": { "party": 4, "integrity": -4 } },
+      { "id": "promise", "label": "答應派系，補選人選由他們決定", "outcome": "地方樁腳全部歸隊。黨中央知道這件事後，臉色很難看。", "effects": { "party": 4, "integrity": -4 }, "arcs": [{ "id": "faction", "open": true, "add": { "backers": 1 }, "note": "答應原選區派系，補選人選由他們決定" }] },
       { "id": "party", "label": "說補選人選由黨中央決定", "outcome": "很有原則，地方派系說「那我們再看看」。", "effects": { "integrity": 2, "party": -3 } },
       { "id": "open", "label": "提議補選開放初選，誰民調高誰上", "outcome": "很公平，所有人都不太滿意，但也沒人能反對。", "effects": { "integrity": 3, "approval": 1 }, "skill": "negotiate" }
     ],
@@ -134,7 +134,7 @@
     "tags": ["參選", "議會", "交換"],
     "conditions": { "flags": ["bg-councilor"] },
     "options": [
-      { "id": "accept", "label": "答應議長，換取議會派系的支持", "outcome": "派系樁腳全部動起來了，你也多了一筆選後要還的人情。", "effects": { "party": 5, "council": 6, "integrity": -5 } },
+      { "id": "accept", "label": "答應議長，換取議會派系的支持", "outcome": "派系樁腳全部動起來了，你也多了一筆選後要還的人情。", "effects": { "party": 5, "council": 6, "integrity": -5 }, "arcs": [{ "id": "faction", "open": true, "add": { "backers": 1 }, "note": "答應議長，以建議款換取議會派系支持" }] },
       { "id": "refuse", "label": "婉拒，說「建議款我會依法檢討」", "outcome": "議長笑了笑沒說話。隔天，他的人出現在對手的造勢場上。", "effects": { "integrity": 4, "council": -5 } },
       { "id": "public", "label": "公開議長的條件，主打「不做交換」", "outcome": "新聞很大，你和議會的關係，也從今天開始很難修了。", "effects": { "approval": 4, "media": 5, "council": -8 }, "skill": "confront" }
     ],
@@ -218,7 +218,7 @@
     "tags": ["政見"],
     "drawOptions": 3,
     "options": [
-      { "id": "housing-big", "label": "「四年興建 2 萬戶社宅，只租不售」", "outcome": "年輕人很買單。你的財政幕僚默默算了一下土地在哪裡。", "effects": { "approval": 7, "integrity": -2 }, "setFlags": ["promise-housing-big"] },
+      { "id": "housing-big", "weight": 2, "label": "「四年興建 2 萬戶社宅，只租不售」", "outcome": "年輕人很買單。你的財政幕僚默默算了一下土地在哪裡。", "effects": { "approval": 7, "integrity": -2 }, "setFlags": ["promise-housing-big"], "arcs": [{ "id": "housing", "open": true, "set": { "promised": 20000, "built": 0, "claimed": 0 }, "note": "主打政見：「四年興建 2 萬戶社宅，只租不售」" }] },
       { "id": "housing-modest", "label": "「公辦都更結合社宅」，附逐年時程表", "outcome": "很務實。標題寫的是「XX 社宅政見保守」。", "effects": { "approval": 3, "integrity": 3 }, "setFlags": ["promise-housing-modest"] },
       { "id": "mrt", "label": "捷運路網：「三環三線，鄭重許諾」", "outcome": "地圖畫得很漂亮。有幾條線經過的地方還是農田。", "effects": { "approval": 6 }, "setFlags": ["promise-mrt"] },
       { "id": "childcare", "label": "育兒津貼：3 歲以下每月 3 千", "outcome": "年輕爸媽轉發了你的政見。主計處轉發了一張試算表。", "effects": { "approval": 7, "integrity": -1 }, "setFlags": ["promise-cash"] },
@@ -257,7 +257,7 @@
     "conditions": { "flags": ["party-major"] },
     "options": [
       { "id": "fight", "label": "堅持參選到底", "outcome": "你贏了初選，也贏得幾位一輩子的敵人。", "effects": { "party": -12, "approval": 5 } },
-      { "id": "deal", "label": "談條件，換取黨部全力輔選", "outcome": "樁腳名單送到你桌上，附帶一份人事建議。", "effects": { "party": 12, "integrity": -5 }, "setFlags": ["party-deal"], "funds": 1500 },
+      { "id": "deal", "label": "談條件，換取黨部全力輔選", "outcome": "樁腳名單送到你桌上，附帶一份人事建議。", "effects": { "party": 12, "integrity": -5 }, "setFlags": ["party-deal"], "funds": 1500, "arcs": [{ "id": "faction", "open": true, "add": { "backers": 1 }, "note": "黨內初選談條件，換取黨部與派系全力輔選" }] },
       { "id": "indie", "label": "退黨，以無黨籍參選", "outcome": "網路聲量暴衝，組織動員歸零。", "effects": { "party": -25, "approval": 8 }, "switchParty": "independent" }
     ],
     "source": { "status": "draft", "prototype": "直轄市長選舉曾發生黨內初選爭議與脫黨參選。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：楊秋興盼獲諒解 將以無黨籍參選", "url": "https://news.pts.org.tw/article/155731", "quote": "楊秋興盼獲諒解 將以無黨籍參選", "accessed": "2026-10-23" }], "realCase": "2010 年高雄市長選舉，時任縣長退出原政黨以無黨籍參選" }
@@ -348,7 +348,7 @@
     "scenario": "選前三個月，地方樁腳排好了行程：37 間宮廟、52 場紅白帖、19 場里民旅遊。",
     "tags": ["選戰", "地方"],
     "options": [
-      { "id": "all", "label": "全部跑完，香油錢、紅包白包自己出", "outcome": "你的膝蓋跪壞了，但每個主委都記住了你。", "effects": { "party": 5, "business": 3, "approval": 2, "team": -3 }, "funds": -400, "skill": "grassroots", "variants": [{ "when": { "flags": ["city-mama"] }, "outcome": "在媽媽市，跑宮廟是基本功。每一間廟的主委都會在選舉時記得你。", "effects": { "party": 4, "approval": 2 } }, { "when": { "flags": ["city-tianlong"] }, "outcome": "天龍市的年輕選民看到你一天跑十間廟，在網路上說你「只會拜票不會做事」。", "effects": { "approval": -4 } }] },
+      { "id": "all", "label": "全部跑完，香油錢、紅包白包自己出", "outcome": "你的膝蓋跪壞了，但每個主委都記住了你。", "effects": { "party": 5, "business": 3, "approval": 2, "team": -3 }, "funds": -400, "skill": "grassroots", "variants": [{ "when": { "flags": ["city-mama"] }, "outcome": "在媽媽市，跑宮廟是基本功。每一間廟的主委都會在選舉時記得你。", "effects": { "party": 4, "approval": 2 } }, { "when": { "flags": ["city-tianlong"] }, "outcome": "天龍市的年輕選民看到你一天跑十間廟，在網路上說你「只會拜票不會做事」。", "effects": { "approval": -4 } }], "arcs": [{ "id": "faction", "open": true, "add": { "backers": 1 }, "note": "跑遍宮廟與紅白帖，欠下地方樁腳的人情" }] },
       { "id": "key", "label": "只跑幾個重要的", "outcome": "你錯過的那幾場，主人都在問你去哪了。", "effects": { "party": 2 }, "skill": "grassroots" },
       { "id": "skip", "label": "不跑，把時間拿去準備政策", "outcome": "你的政策白皮書很完整。樁腳們有點冷淡。", "effects": { "party": -3, "integrity": 1, "team": 2 } }
     ],
@@ -360,9 +360,10 @@
     "title": "建商的支票",
     "scenario": "一位建商透過朋友傳話：願意捐兩千萬，「不求回報，只是欣賞你」。",
     "tags": ["選戰", "政治獻金"],
+    "weight": 1.5,
     "options": [
-      { "id": "accept", "label": "收下", "outcome": "錢到位了。他公司的都更案，剛好在你當選後要審。", "effects": { "business": 12, "integrity": -6 }, "funds": 2000 },
-      { "id": "disclose", "label": "收下，但公開捐款並承諾利益迴避", "outcome": "金額少了一半，他說「這樣就好」。記者說你「很聰明」。", "effects": { "business": 5, "integrity": 1, "media": 2 }, "funds": 1000 },
+      { "id": "accept", "label": "收下", "outcome": "錢到位了。他公司的都更案，剛好在你當選後要審。", "effects": { "business": 12, "integrity": -6 }, "funds": 2000, "arcs": [{ "id": "donor", "open": true, "set": { "money": 2000, "favors": 0 }, "note": "選戰時收下建商兩千萬政治獻金" }] },
+      { "id": "disclose", "label": "收下，但公開捐款並承諾利益迴避", "outcome": "金額少了一半，他說「這樣就好」。記者說你「很聰明」。", "effects": { "business": 5, "integrity": 1, "media": 2 }, "funds": 1000, "arcs": [{ "id": "donor", "open": true, "set": { "money": 1000, "favors": 0 }, "note": "收下建商一千萬，公開捐款並承諾利益迴避" }] },
       { "id": "refuse", "label": "婉拒", "outcome": "他笑著說「我懂」。你不太確定他懂了什麼。", "effects": { "business": -5, "integrity": 3 } }
     ],
     "source": { "status": "placeholder", "prototype": "建商與企業的政治獻金，與候選人當選後的審議案件之間，常有利益衝突的疑慮。", "adaptation": "情境為虛構。", "refs": [] }
@@ -562,15 +563,15 @@
   {
     "id": "c-airplane-expropriation",
     "phase": "campaign",
-    "title": "航空城的徵收戶",
-    "scenario": "競選總部外站滿了航空城的徵收戶：一群人要求被納入徵收、拿補償；另一群人舉著「反迫遷」的布條。",
-    "tags": ["飛機城", "土地徵收"],
+    "title": "航空特區的徵收戶",
+    "scenario": "競選總部外站滿了航空特區的徵收戶：一群人要求被納入徵收、拿補償；另一群人舉著「反迫遷」的布條。",
+    "tags": ["航空城", "土地徵收"],
     "conditions": { "flags": ["city-airplane"] },
     "weight": 2.5,
     "options": [
       { "id": "include", "label": "承諾擴大徵收範圍，補償從優", "outcome": "第一群人歡呼，第二群人把你的名字寫上布條。財政局默默算了算補償金。", "effects": { "approval": 3, "treasury": -6, "business": 4 } },
       { "id": "hearing", "label": "承諾當選後重辦公開聽證", "outcome": "兩群人都不完全滿意，但都願意再談。", "effects": { "integrity": 4, "approval": 1 }, "skill": "negotiate" },
-      { "id": "develop", "label": "強調航空城是城市未來，開發不能停", "outcome": "開發商和工商團體大力支持你。被徵收的人說你沒看見他們。", "effects": { "business": 8, "approval": -3, "party": 2 } }
+      { "id": "develop", "label": "強調航空特區是城市的未來，開發不能停", "outcome": "開發商和工商團體大力支持你。被徵收的人說你沒看見他們。", "effects": { "business": 8, "approval": -3, "party": 2 } }
     ],
     "source": { "status": "draft", "prototype": "桃園航空城區段徵收爭議多年，部分居民要求納入徵收以取得補償，也有居民堅持原地保留、反對迫遷。", "adaptation": "城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：航空城計畫 居民對土地徵收意見分歧（2019）", "url": "https://news.pts.org.tw/article/458328", "quote": "希望也能納入區段徵收範圍內，遷到機場南面、重組社區", "accessed": "2026-10-23" }] }
   },
@@ -688,7 +689,7 @@
     "phase": "campaign",
     "title": "客家庄的請託",
     "scenario": "客家庄的老一輩希望你承諾：客語教學要增加時數，客家文化園區要擴建。",
-    "tags": ["飛機城", "文化"],
+    "tags": ["航空城", "文化"],
     "issue": "culture",
     "conditions": { "flags": ["city-airplane"] },
     "weight": 2,
@@ -703,8 +704,8 @@
     "id": "c-ap-factory",
     "phase": "campaign",
     "title": "大廠的設廠條件",
-    "scenario": "一家半導體大廠考慮在飛機城設廠，條件是：工業用地、用水和用電都要保證。選前宣布會是大新聞。",
-    "tags": ["飛機城", "產業"],
+    "scenario": "一家半導體大廠考慮在航空城設廠，條件是：工業用地、用水和用電都要保證。選前宣布會是大新聞。",
+    "tags": ["航空城", "產業"],
     "issue": "economy",
     "conditions": { "flags": ["city-airplane"] },
     "weight": 2,
@@ -741,8 +742,8 @@
     "conditions": { "flags": ["city-mama"] },
     "weight": 2,
     "options": [
-      { "id": "sea", "label": "去海線", "outcome": "海線派系的樁腳全部動起來了。山線那邊，飯菜涼了。", "effects": { "party": 6, "council": 2 }, "skill": "deal" },
-      { "id": "mountain", "label": "去山線", "outcome": "山線派系全力相挺，海線大老說「我們會記得」。", "effects": { "party": 6, "council": 2 }, "skill": "deal" },
+      { "id": "sea", "label": "去海線", "outcome": "海線派系的樁腳全部動起來了。山線那邊，飯菜涼了。", "effects": { "party": 6, "council": 2 }, "skill": "deal", "arcs": [{ "id": "faction", "open": true, "add": { "backers": 1 }, "note": "選前接受海線派系大老的動員支持" }] },
+      { "id": "mountain", "label": "去山線", "outcome": "山線派系全力相挺，海線大老說「我們會記得」。", "effects": { "party": 6, "council": 2 }, "skill": "deal", "arcs": [{ "id": "faction", "open": true, "add": { "backers": 1 }, "note": "選前接受山線派系大老的動員支持" }] },
       { "id": "neither", "label": "兩邊都不去，改去夜市掃街", "outcome": "兩邊派系都覺得被冷落，夜市攤商很開心。", "effects": { "party": -4, "approval": 3, "integrity": 2 } }
     ],
     "source": { "status": "draft", "prototype": "中台灣地方派系長期分立，候選人與派系的關係常影響選情。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：廖了以挺胡志強 籲紅派全力支持", "url": "https://news.pts.org.tw/article/156228", "quote": "廖了以挺胡志強 籲紅派全力支持", "accessed": "2026-10-23" }], "realCase": "臺中海線、山線的地方派系（紅派、黑派）" }
@@ -1466,7 +1467,7 @@
     "conditions": { "anyFlags": ["opp-trait-connected", "opp-trait-opportunist", "opp-trait-faction-shadow"] },
     "weight": 3,
     "options": [
-      { "id": "promise", "label": "加碼承諾金主「選後一定照顧」", "outcome": "電話又通了，承諾也記在某個人的筆記本上。", "effects": { "business": 5, "integrity": -4 }, "funds": 1000 },
+      { "id": "promise", "label": "加碼承諾金主「選後一定照顧」", "outcome": "電話又通了，承諾也記在某個人的筆記本上。", "effects": { "business": 5, "integrity": -4 }, "funds": 1000, "arcs": [{ "id": "donor", "open": true, "add": { "money": 1000 }, "note": "向金主承諾「選後一定照顧」" }] },
       { "id": "small", "label": "放棄大金主，改推小額募款", "outcome": "募到的錢少很多，但沒有人可以說你被誰綁住。", "effects": { "integrity": 4, "business": -3 }, "skill": "grassroots" },
       { "id": "expose", "label": "公開對手的金主名單", "outcome": "名單很有看頭，對手說你「侵犯個資」。", "effects": { "approval": 2, "media": 4, "business": -2 }, "skill": "confront" }
     ],
@@ -1624,14 +1625,14 @@
     "id": "t-housing-progress",
     "phase": "term",
     "title": "社宅進度報告",
-    "scenario": "議員在質詢台上舉起一張大字報：「承諾 5 萬戶，完工 2,317 戶」。",
+    "scenario": "議員在質詢台上舉起一張大字報：「承諾 {housing.promised} 戶，完工 {housing.built} 戶」。",
     "tags": ["居住", "承諾"],
-    "conditions": { "flags": ["promise-housing-big"] },
     "weight": 3,
+    "arc": "housing",
     "options": [
-      { "id": "redefine", "label": "把「規劃中」和「已動工」都算進去", "outcome": "數字變成 3 萬 8 千戶。數學老師哭了。", "effects": { "approval": 2, "integrity": -8 } },
-      { "id": "admit", "label": "公開道歉並調整目標", "outcome": "誠實的代價是一週的頭版。", "effects": { "approval": -8, "integrity": 8 } },
-      { "id": "rush", "label": "砸錢加速發包", "outcome": "進度上來了，市庫下去了。", "effects": { "treasury": -15, "achievement": 8 }, "requires": { "min": { "treasury": 25 } } }
+      { "id": "redefine", "label": "把「規劃中」和「已動工」都算進去", "outcome": "數字變成 3 萬 8 千戶。數學老師哭了。", "effects": { "approval": 2, "integrity": -8 }, "arcs": [{ "id": "housing", "status": "concealed", "set": { "claimed": "promised" }, "note": "把「規劃中」和「已動工」都算進完工數字" }] },
+      { "id": "admit", "label": "公開道歉並調整目標", "outcome": "誠實的代價是一週的頭版。", "effects": { "approval": -8, "integrity": 8 }, "arcs": [{ "id": "housing", "status": "broken", "note": "公開道歉，承認社宅目標做不到" }] },
+      { "id": "rush", "label": "砸錢加速發包", "outcome": "進度上來了，市庫下去了。", "effects": { "treasury": -15, "achievement": 8 }, "requires": { "min": { "treasury": 25 } }, "arcs": [{ "id": "housing", "add": { "built": 9000 }, "note": "砸錢加速發包，多完工 9,000 戶" }] }
     ],
     "source": { "status": "draft", "prototype": "社宅政見的兌現進度常成為議會質詢焦點，「戶數」的計算口徑也曾引發爭議。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：柯文哲宣布暫緩社宅興建引發跳票爭議 北市議員齊聲批評", "url": "https://news.pts.org.tw/article/544813", "quote": "柯文哲宣布暫緩社宅興建引發跳票爭議", "accessed": "2026-10-23" }], "realCase": "2014 年臺北市長政見「公共住宅 5 萬戶」的兌現與戶數計算爭議" }
   },
@@ -1749,7 +1750,7 @@
     "title": "派系的人事帳單",
     "scenario": "選前結盟的地方派系來敲門：說好的副市長，人選他們已經決定了。",
     "tags": ["政黨", "派系"],
-    "conditions": { "flags": ["party-blue"] },
+    "conditions": { "flags": ["party-blue"], "notFlags": ["arc-faction"] },
     "weight": 3,
     "options": [
       { "id": "pay", "label": "照約定任命", "outcome": "派系很滿意。新副市長第一週就請了三位親戚當機要。", "effects": { "party": 8, "integrity": -5, "achievement": -2, "business": 6 } },
@@ -1943,7 +1944,7 @@
     "scenario": "一間農地上的違章工廠半夜起火，消防員受傷。調查發現，這樣的工廠全市還有上千家。",
     "tags": ["公安", "產業"],
     "options": [
-      { "id": "crackdown", "label": "全面稽查，違規者斷水斷電", "outcome": "工安大幅改善。幾千個工廠老闆和他們的員工都記住了你。", "effects": { "achievement": 6, "party": -6, "approval": -2, "business": -6 }, "requires": { "min": { "team": 40 } }, "skill": "admin", "variants": [{ "when": { "flags": ["city-airplane"] }, "outcome": "飛機城的工廠密度高，斷水斷電讓上百家工廠停工，工人們在市府前抗議。", "effects": { "approval": -4, "business": -3 } }] },
+      { "id": "crackdown", "label": "全面稽查，違規者斷水斷電", "outcome": "工安大幅改善。幾千個工廠老闆和他們的員工都記住了你。", "effects": { "achievement": 6, "party": -6, "approval": -2, "business": -6 }, "requires": { "min": { "team": 40 } }, "skill": "admin", "variants": [{ "when": { "flags": ["city-airplane"] }, "outcome": "航空城的工廠密度高，斷水斷電讓上百家工廠停工，工人們在市府前抗議。", "effects": { "approval": -4, "business": -3 } }] },
       { "id": "legalize", "label": "輔導就地合法化", "outcome": "工廠老闆們很感激。環保團體說你在幫違法者漂白。", "effects": { "party": 6, "integrity": -5, "council": 3, "business": 8 } },
       { "id": "one", "label": "只處理起火的那一家", "outcome": "事情暫時平息。下一場火在哪裡，沒人知道。", "effects": { "approval": -3 } }
     ],
@@ -2112,12 +2113,13 @@
     "id": "t-donor-favor",
     "phase": "term",
     "title": "金主的請託",
-    "scenario": "選前捐了大筆政治獻金的建商來拜訪，希望他的都更案能多拿一點容積獎勵。「下次選舉，我們一樣挺你。」",
+    "scenario": "選前捐了 {donor.money} 萬的建商來拜訪，希望他的都更案能多拿一點容積獎勵。「下次選舉，我們一樣挺你。」",
     "tags": ["政治獻金", "都更"],
+    "arc": "donor",
     "options": [
-      { "id": "help", "label": "請都發局「從寬審查」", "outcome": "建案順利通過。下次選舉的經費，你不用擔心了。", "effects": { "integrity": -8, "achievement": 2, "business": 12 }, "funds": 2000, "skill": "deal" },
-      { "id": "law", "label": "依法審查，不給特殊待遇", "outcome": "建商笑著離開。下次選舉，他的支票可能開給別人。", "effects": { "integrity": 3, "party": -2, "business": -5 } },
-      { "id": "disclose", "label": "公開往來紀錄，並退還有疑慮的捐款", "outcome": "公民團體叫好。幾位捐款人打電話來說「以後不方便了」。", "effects": { "integrity": 5, "media": 4, "party": -3, "business": -10 }, "funds": -500 }
+      { "id": "help", "label": "請都發局「從寬審查」", "outcome": "建案順利通過。下次選舉的經費，你不用擔心了。", "effects": { "integrity": -8, "achievement": 2, "business": 12 }, "funds": 2000, "skill": "deal", "arcs": [{ "id": "donor", "status": "concealed", "add": { "favors": 1 }, "note": "請都發局從寬審查建商的都更案" }] },
+      { "id": "law", "label": "依法審查，不給特殊待遇", "outcome": "建商笑著離開。下次選舉，他的支票可能開給別人。", "effects": { "integrity": 3, "party": -2, "business": -5 }, "arcs": [{ "id": "donor", "status": "broken", "note": "依法審查建商的都更案，不給特殊待遇" }] },
+      { "id": "disclose", "label": "公開往來紀錄，並退還有疑慮的捐款", "outcome": "公民團體叫好。幾位捐款人打電話來說「以後不方便了」。", "effects": { "integrity": 5, "media": 4, "party": -3, "business": -10 }, "funds": -500, "arcs": [{ "id": "donor", "status": "fulfilled", "note": "公開與建商的往來，退還有疑慮的捐款" }] }
     ],
     "source": { "status": "placeholder", "prototype": "政治獻金捐款人與市府行政處分之間的利益衝突，常是選後爭議的焦點。", "adaptation": "情境為虛構。", "refs": [] }
   },
@@ -2228,7 +2230,7 @@
     "phase": "term",
     "title": "移工宿舍大火",
     "scenario": "工業區一棟鐵皮違建宿舍半夜起火，多名移工罹難。宿舍蓋在工廠對面，只有一座樓梯。",
-    "tags": ["飛機城", "移工", "公安"],
+    "tags": ["航空城", "移工", "公安"],
     "conditions": { "flags": ["city-airplane"] },
     "weight": 2.5,
     "options": [
@@ -2417,7 +2419,7 @@
     "phase": "term",
     "title": "飛機的噪音",
     "scenario": "機場周邊的居民抗議：夜間航班越來越多，孩子睡不著。航空公司說減班會影響城市經濟。",
-    "tags": ["飛機城", "環境"],
+    "tags": ["航空城", "環境"],
     "issue": "environment",
     "conditions": { "flags": ["city-airplane"] },
     "weight": 2.5,
@@ -2433,7 +2435,7 @@
     "phase": "term",
     "title": "埤塘要填還是留",
     "scenario": "城市裡有上千個埤塘，是灌溉和生態的寶庫，也是開發商眼中的空地。一個大型開發案要填掉其中三個。",
-    "tags": ["飛機城", "環境", "土地"],
+    "tags": ["航空城", "環境", "土地"],
     "issue": "environment",
     "conditions": { "flags": ["city-airplane"] },
     "weight": 2.5,
@@ -2753,7 +2755,7 @@
     "phase": "term",
     "title": "延宕十年的機場捷運",
     "scenario": "機場捷運延了十年還沒通車，又被驗出三十多項缺失。旅客、議員和中央都在等你表態。",
-    "tags": ["飛機城", "交通"],
+    "tags": ["航空城", "交通"],
     "issue": "transit",
     "conditions": { "flags": ["city-airplane"] },
     "weight": 2.5,
@@ -2769,7 +2771,7 @@
     "phase": "term",
     "title": "消防員殉職",
     "scenario": "一場工廠大火中，六名消防員沒能走出火場。消防員工會說：人力不足、裝備老舊、而且工廠的化學品資訊根本沒有通報。",
-    "tags": ["飛機城", "公安"],
+    "tags": ["航空城", "公安"],
     "issue": "safety",
     "conditions": { "flags": ["city-airplane"] },
     "weight": 2.5,
@@ -3096,6 +3098,38 @@
     "source": { "status": "draft", "prototype": "全國性大型燈會帶來人潮與城市曝光，也帶來龐大經費與交通壓力。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "2023 年台灣燈會於臺北舉辦，十九天湧入逾千萬人次", "refs": [{ "title": "中央社：台灣燈會閉幕19天湧逾1200萬人次 2024年交棒台南", "url": "https://www.cna.com.tw/news/ahel/202302190204.aspx", "quote": "台灣燈會閉幕19天湧逾1200萬人次 2024年交棒台南", "accessed": "2026-10-23" }] }
   },
   {
+    "id": "a-housing-land",
+    "phase": "term",
+    "title": "社宅的地在哪裡",
+    "scenario": "選前說的 {housing.promised} 戶社宅，都發局長攤開地圖：「能用的公有地只夠蓋三成。剩下的，要跟中央要地、徵收私有地，或者跟建商合作。」",
+    "tags": ["社宅", "劇情"],
+    "issue": "housing",
+    "arc": "housing",
+    "options": [
+      { "id": "central", "label": "跟中央協商撥用國有地", "outcome": "協商了半年，拿到三塊地。動工的消息很小，但很踏實。", "effects": { "achievement": 3, "team": -2 }, "skill": "negotiate", "arcs": [{ "id": "housing", "add": { "built": 6000 }, "note": "向中央爭取國有地撥用，動工 6,000 戶" }] },
+      { "id": "expropriate", "label": "徵收私有地，強力推進", "outcome": "工地很快就圍起來了。地主們在市府門口拉白布條。", "effects": { "achievement": 5, "approval": -4, "treasury": -5 }, "skill": "confront", "arcs": [{ "id": "housing", "add": { "built": 9000 }, "note": "徵收私有地，動工 9,000 戶；地主上街抗議" }] },
+      { "id": "developer", "label": "找建商合建，用容積獎勵換社宅戶數", "outcome": "戶數衝上來了。合建的建商名單裡，有幾個名字你很眼熟。", "effects": { "achievement": 4, "business": 6, "integrity": -4 }, "arcs": [{ "id": "housing", "add": { "built": 11000 }, "note": "與建商合建，以容積獎勵換得 11,000 戶社宅" }, { "id": "donor", "add": { "favors": 1 }, "note": "捐款建商參與社宅合建，拿到容積獎勵" }] },
+      { "id": "lower", "label": "下修目標，先把能做的做好", "outcome": "你在記者會上說「做得到的才說」。支持者有點失望，工程倒是順了。", "effects": { "approval": -3, "integrity": 3 }, "arcs": [{ "id": "housing", "set": { "promised": 10000 }, "add": { "built": 4000 }, "note": "社宅目標下修為 1 萬戶" }] }
+    ],
+    "source": { "status": "real", "prototype": "社會住宅的用地取得：國有地撥用、徵收與聯合開發。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "臺北市社會住宅的用地取得與聯合開發", "refs": [] }
+  },
+  {
+    "id": "a-faction-jobs",
+    "phase": "term",
+    "title": "大老的人事名單",
+    "scenario": "選前幫你動員的派系大老來了，手上有一張名單：一個副市長、兩個局長。「這些都是很有能力的人。」",
+    "tags": ["派系", "人事", "劇情"],
+    "issue": "local",
+    "arc": "faction",
+    "options": [
+      { "id": "accept", "label": "照單全收", "outcome": "人事案很快通過，議會派系也很配合。新局長第一次開會，問了三次業務是什麼。", "effects": { "party": 8, "council": 5, "team": -4, "achievement": -2, "integrity": -4 }, "arcs": [{ "id": "faction", "status": "fulfilled", "add": { "jobs": 3 }, "note": "依派系名單任命副市長與兩位局長" }] },
+      { "id": "partial", "label": "給一個次要的局處長位置", "outcome": "大老收下了，表情看不出滿不滿意。", "effects": { "party": 2, "council": 2, "integrity": -1 }, "arcs": [{ "id": "faction", "add": { "jobs": 1 }, "note": "給派系一個次要局處長的位子" }] },
+      { "id": "budget", "label": "不給人事，改給地方建設預算", "outcome": "派系議員在各自的選區開了好幾場記者會，說是自己爭取來的。", "effects": { "council": 6, "treasury": -5, "integrity": -3 }, "arcs": [{ "id": "faction", "status": "concealed", "note": "以地方建設預算代替人事回報派系" }] },
+      { "id": "refuse", "label": "拒絕，用專業人選", "outcome": "大老走的時候說：「市長，你會需要我們的。」", "effects": { "party": -8, "council": -6, "integrity": 4, "achievement": 2 }, "arcs": [{ "id": "faction", "status": "broken", "note": "拒絕派系的人事名單" }] }
+    ],
+    "source": { "status": "real", "prototype": "地方派系在首長當選後要求人事安排作為回報。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "地方派系在首長當選後要求分配副首長與局處長職位", "refs": [] }
+  },
+  {
     "id": "i-ribbon-cutting",
     "phase": "incumbency",
     "title": "選前通車",
@@ -3278,6 +3312,36 @@
     "source": { "status": "draft", "prototype": "現任團隊參選時利用市府公開活動曝光，被批評公私不分。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "2022 年臺北市副市長參選期間出席市府升旗典禮遭批", "refs": [{ "title": "公視新聞網：九合一大選／黃珊珊出席北市升旗 藍綠同批寄生市府", "url": "https://news.pts.org.tw/article/603900", "quote": "九合一大選／黃珊珊出席北市升旗 藍綠同批寄生市府", "accessed": "2026-10-23" }] }
   },
   {
+    "id": "a-donor-leak",
+    "phase": "incumbency",
+    "title": "會議紀錄外流",
+    "scenario": "一位記者拿到都發局的會議紀錄：那件從寬審查的都更案，筆記上寫著「市長室關心」。記者給你一天時間回應。",
+    "tags": ["金主", "危機", "劇情"],
+    "issue": "housing",
+    "arc": "donor",
+    "options": [
+      { "id": "deny", "label": "否認，說「市長室關心每一件案子」", "outcome": "記者把你的回應原封不動登出來，旁邊是那張筆記的照片。", "effects": { "approval": -3, "integrity": -4 }, "legalRisk": "圖利", "arcs": [{ "id": "donor", "status": "concealed", "note": "否認市長室介入都更審查" }] },
+      { "id": "suspend", "label": "暫停案子，主動移送廉政單位調查", "outcome": "建商很憤怒，記者很意外。新聞標題是「市長自清」。", "effects": { "approval": 2, "integrity": 4, "business": -6 }, "arcs": [{ "id": "donor", "status": "exposed", "note": "主動暫停都更案並移送調查" }] },
+      { "id": "scapegoat", "label": "讓都發局長請辭負責", "outcome": "局長走了。他離開前看了你一眼，什麼都沒說。", "effects": { "integrity": -6, "team": -5, "approval": 1 }, "legalRisk": "圖利", "setFlags": ["scandal"], "arcs": [{ "id": "donor", "status": "concealed", "note": "讓都發局長辭職扛下都更案的責任" }] }
+    ],
+    "source": { "status": "real", "prototype": "首長關切特定開發案審查的紀錄外流，引發圖利疑慮。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "2024 年臺北市京華城容積獎勵案", "refs": [] }
+  },
+  {
+    "id": "a-donor-revenge",
+    "phase": "incumbency",
+    "title": "建商改挺對手",
+    "scenario": "被你拒絕的建商，開始出現在對手的募款餐會上。工商團體私下傳話：「市長是不是不歡迎企業？」",
+    "tags": ["金主", "劇情"],
+    "issue": "economy",
+    "arc": "donor",
+    "options": [
+      { "id": "others", "label": "找其他企業補上獻金缺口", "outcome": "新的金主很快就來了，也很快就提了第一個請求。", "effects": { "business": 4, "integrity": -3 }, "funds": 1500, "arcs": [{ "id": "donor", "add": { "money": 1500 }, "note": "找其他企業補上政治獻金缺口" }] },
+      { "id": "small", "label": "改推小額募款，公開所有捐款", "outcome": "募到的錢少很多，但每一筆都經得起看。", "effects": { "integrity": 3, "approval": 2, "business": -3 }, "skill": "grassroots", "arcs": [{ "id": "donor", "status": "fulfilled", "note": "改以小額募款取代企業獻金" }] },
+      { "id": "expose", "label": "公開建商施壓的經過", "outcome": "新聞很大。工商團體說你「不懂得跟企業合作」。", "effects": { "approval": 4, "media": 5, "business": -6 }, "skill": "confront", "arcs": [{ "id": "donor", "status": "fulfilled", "note": "公開建商施壓的經過" }] }
+    ],
+    "source": { "status": "real", "prototype": "拒絕金主請託後，金主轉而支持對手。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "地方選舉中企業政治獻金流向的轉變", "refs": [] }
+  },
+  {
     "id": "r-abuse-ads",
     "phase": "reelection",
     "title": "對手踢爆：廣告是誰付的？",
@@ -3447,5 +3511,39 @@
       { "id": "record", "label": "拿出四年的施政成果", "outcome": "成果很多，清單上沒做到的那幾項也很明顯。", "effects": { "achievement": 2, "approval": 2 }, "skill": "policy" }
     ],
     "source": { "status": "placeholder", "prototype": "落選者四年後捲土重來，以前次選舉的政見兌現程度作為攻擊主軸。", "adaptation": "情境為虛構；效果數值為遊戲設計。", "refs": [] }
+  },
+  {
+    "id": "a-housing-audit",
+    "phase": "reelection",
+    "title": "對手拿公報對帳",
+    "scenario": "連任辯論會上，對手舉起你四年前的選舉公報：「承諾 {housing.promised} 戶。市長，請問現在蓋好了幾戶？」",
+    "tags": ["社宅", "辯論", "劇情"],
+    "issue": "housing",
+    "arc": "housing",
+    "options": [
+      { "id": "met", "label": "說出實際完工的 {housing.built} 戶", "outcome": "數字達標了。對手愣了一下，把公報收了起來。", "effects": { "approval": 8, "integrity": 3 }, "appearsIf": { "flags": ["arc-housing-met"] }, "arcs": [{ "id": "housing", "status": "fulfilled", "note": "連任辯論公布完工數字，社宅承諾兌現" }] },
+      { "id": "truth", "label": "說出實際完工的 {housing.built} 戶，承認沒做到", "outcome": "台下安靜了幾秒。有人鼓掌，有人搖頭。", "effects": { "approval": -3, "integrity": 6 }, "appearsIf": { "notFlags": ["arc-housing-met"] }, "arcs": [{ "id": "housing", "status": "broken", "note": "連任辯論承認社宅沒有達標" }] },
+      { "id": "spin", "label": "強調「規劃加動工」的總數", "outcome": "數字聽起來很漂亮。主持人追問了一句「完工呢？」，你沒有正面回答。", "effects": { "approval": 3, "integrity": -5 }, "appearsIf": { "notFlags": ["arc-housing-met", "arc-housing-concealed"] }, "arcs": [{ "id": "housing", "status": "concealed", "set": { "claimed": "promised" }, "note": "連任辯論以「規劃加動工」的數字回應" }] },
+      { "id": "repeat", "label": "繼續用對外宣稱的 {housing.claimed} 戶", "outcome": "對手拿出空拍照，一棟一棟數給觀眾看。現場直播，沒辦法剪。", "effects": { "approval": -6, "integrity": -4, "media": 6 }, "appearsIf": { "flags": ["arc-housing-concealed"] }, "arcs": [{ "id": "housing", "status": "exposed", "note": "宣稱的戶數在辯論會上被對手當場拆穿" }] },
+      { "id": "counter", "label": "反問對手：你的政見又做到幾項？", "outcome": "兩個人互相翻舊帳，觀眾開始轉台。", "effects": { "approval": 2, "integrity": -2, "media": 3 } }
+    ],
+    "source": { "status": "real", "prototype": "連任選戰中，對手以前次選舉公報檢視政見兌現程度。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "2018 年臺北市長選舉辯論中的社宅 5 萬戶兌現攻防", "refs": [] }
+  },
+  {
+    "id": "a-faction-switch",
+    "phase": "reelection",
+    "title": "派系要挺誰？",
+    "scenario": "連任選戰最後一個月，派系大老同時接了你和對手的電話。",
+    "tags": ["派系", "選戰", "劇情"],
+    "issue": "local",
+    "arc": "faction",
+    "options": [
+      { "id": "apologize", "label": "登門道歉，承諾連任後補償", "outcome": "大老倒了一杯茶給你。這杯茶的價格，要四年後才知道。", "effects": { "party": 6, "integrity": -4 }, "appearsIf": { "flags": ["arc-faction-broken"] }, "arcs": [{ "id": "faction", "status": "concealed", "note": "選前登門道歉，承諾連任後補償派系" }] },
+      { "id": "stand", "label": "不道歉，主打不受派系綁架", "outcome": "派系的樁腳轉向對手，年輕選民倒是多看了你兩眼。", "effects": { "approval": 3, "party": -6, "integrity": 3 }, "appearsIf": { "flags": ["arc-faction-broken"] } },
+      { "id": "mobilize", "label": "接受派系全力動員", "outcome": "遊覽車一台一台開進造勢場。你站在台上，看到很多四年前也來過的臉。", "effects": { "party": 8, "approval": 2, "integrity": -2 }, "appearsIf": { "anyFlags": ["arc-faction-fulfilled", "arc-faction-concealed"] } },
+      { "id": "bargain", "label": "跟大老談好連任後的位子", "outcome": "談成了。你的連任競選總部多了一位派系推薦的副總幹事。", "effects": { "party": 5, "integrity": -3 }, "appearsIf": { "flags": ["arc-faction-active"] }, "arcs": [{ "id": "faction", "status": "concealed", "note": "選前跟派系談好連任後的人事" }] },
+      { "id": "distance", "label": "保持距離，只靠自己的組織", "outcome": "你的造勢場人少了一點，但每一個都是自己來的。", "effects": { "party": -3, "integrity": 2 } }
+    ],
+    "source": { "status": "real", "prototype": "地方派系在連任選舉中依人情往來決定動員對象。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "地方派系在連任選舉中轉向或續挺", "refs": [] }
   }
 ]

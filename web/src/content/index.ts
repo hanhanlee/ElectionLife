@@ -1,5 +1,6 @@
 import type { ProfileSetup } from "@/game/engine";
-import type { Background, Burden, City, Crisis, GameEvent, Legend, Party, Profile, Trait } from "@/game/types";
+import type { ArcDef, Background, Burden, City, Crisis, GameEvent, Legend, Party, Profile, Trait } from "@/game/types";
+import arcs from "./arcs.json";
 import backgrounds from "./backgrounds.json";
 import burdens from "./burdens.json";
 import cities from "./cities.json";
@@ -20,6 +21,7 @@ export const TRAITS = traits as Trait[];
 export const BURDENS = burdens as Burden[];
 export const CITIES = cities as City[];
 export const LEGENDS = legends as Legend[];
+export const ARCS = arcs as ArcDef[];
 export const cityById = (id: string) => CITIES.find((c) => c.id === id)!;
 
 /** 把抽出的人設 id 轉成引擎需要的資料 */

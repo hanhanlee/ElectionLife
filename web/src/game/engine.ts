@@ -1,6 +1,7 @@
 // 回合引擎：純函式，不碰 DOM 與儲存，方便測試與重現。
 
 import { mulberry32 } from "./rng";
+import { advanceArc, applyArcEffects, dueArcEvent, expireArcs, fillArcText, withArcFlags } from "./story";
 import {
   approvalGainMultiplier,
   BIG_ROUND,
@@ -52,10 +53,11 @@ import {
   type StatKey,
   type Stats,
   type Trait,
+  type ArcDef,
   type CampaignScale,
 } from "./types";
 
-export const STATE_VERSION = 14;
+export const STATE_VERSION = 15;
 
 /**
  * 兩個階段，各 12 回合：
@@ -175,9 +177,12 @@ function weightedPick<T>(items: T[], weight: (t: T) => number, r: number): T {
   return items[items.length - 1];
 }
 
-function drawEvent(state: GameState, events: GameEvent[], turn: number): GameEvent {
+function drawEvent(state: GameState, events: GameEvent[], turn: number, arcs: ArcDef[] = []): GameEvent {
+  // 到期的劇情節點優先出場；劇情節點事件不會被隨機抽到
+  const due = dueArcEvent(state, events, turn, TURN_PLAN, arcs);
+  if (due) return due;
   const phase = TURN_PLAN[turn];
-  const unused = events.filter((e) => e.phase === phase && !state.deck.includes(e.id));
+  const unused = events.filter((e) => e.phase === phase && !e.arc && !state.deck.includes(e.id));
   const eligible = unused.filter((e) => meetsCondition(state, e.conditions));
   const pool = eligible.length > 0 ? eligible : unused;
   if (pool.length === 0) throw new Error(`事件池不足：phase=${phase}, turn=${turn}`);
@@ -213,8 +218,8 @@ function drawOptions(state: GameState, event: GameEvent, turn: number): string[]
   return visible.filter((o) => picked.has(o.id)).map((o) => o.id);
 }
 
-function withNextEvent(state: GameState, events: GameEvent[]): GameState {
-  const event = drawEvent(state, events, state.turn);
+function withNextEvent(state: GameState, events: GameEvent[], arcs: ArcDef[] = []): GameState {
+  const event = drawEvent(state, events, state.turn, arcs);
   return { ...state, deck: [...state.deck, event.id], offered: drawOptions(state, event, state.turn) };
 }
 
@@ -273,6 +278,7 @@ export function newGame(
       ? { voteMods: setup.city.voteMods, issueWeights: setup.city.issueWeights, issueNotes: setup.city.issueNotes }
       : undefined,
     opponent,
+    arcs: {},
     finished: false,
   };
   return withNextEvent(withPayout(base), events);
@@ -395,6 +401,7 @@ export function choose(
   optionId: string,
   crises: Crisis[] = [],
   parties: Party[] = [],
+  arcDefs: ArcDef[] = [],
 ): GameState {
   const event = currentEvent(state, events);
   if (!event) throw new Error("遊戲已結束或事件不存在");
@@ -421,6 +428,10 @@ export function choose(
   }
   const turn = state.turn + 1;
   let funds = state.funds + (option.funds ?? 0);
+
+  // 劇情鏈：先套用選項對劇情的影響，再推進這個節點所屬的劇情
+  const arcResult = applyArcEffects(state.arcs, option.arcs, state.turn, arcDefs);
+  const arcs = advanceArc(arcResult.arcs, event, state.turn, arcDefs);
   const optionDelta = diff(stats, state.stats);
 
   let pending = [...state.pending];
@@ -429,7 +440,7 @@ export function choose(
   }
 
   // 結算到期的延遲後果
-  const notices: Notice[] = [];
+  const notices: Notice[] = [...arcResult.notices];
   for (const p of pending.filter((p) => p.dueTurn <= turn && turn < TURN_PLAN.length)) {
     const before = stats;
     stats = addDelta(stats, p.effects);
@@ -581,6 +592,7 @@ export function choose(
     notices,
     crisisLog,
     loan,
+    arcs,
     scale,
     arrears,
     spending,
@@ -594,7 +606,7 @@ export function choose(
         offered: state.offered,
         delta,
         optionDelta,
-        outcome: resolved.outcome,
+        outcome: fillArcText(resolved.outcome, arcs),
         traitsInvolved: resolved.traitsInvolved.length ? resolved.traitsInvolved : undefined,
       },
     ],
@@ -603,12 +615,20 @@ export function choose(
   if (turn === FIRST_ELECTION_TURN) {
     const { won, probability, mobilization } = runElection(next, "first");
     next = { ...next, funds: next.funds - mobilization, firstElection: { won, probability, mobilization } };
-    if (!won) return { ...next, finished: true };
+    if (!won) return { ...next, flags: withArcFlags(next.flags, next.arcs, arcDefs), finished: true };
     next = withSecondOpponent(next, probability);
   }
+  // 過了階段還沒排上議程的劇情節點，以快報結算（第一次投票落選時不結算任期劇情，留給後日談）
+  const expired = expireArcs(next.arcs, turn, TURN_PLAN, arcDefs);
+  next = {
+    ...next,
+    arcs: expired.arcs,
+    flags: withArcFlags(next.flags, expired.arcs, arcDefs),
+    notices: [...next.notices, ...expired.notices],
+  };
   if (turn >= TURN_PLAN.length) return { ...next, finished: true };
   if (turn % BIG_ROUND === 0) next = withPayout(next);
-  return withNextEvent(next, events);
+  return withNextEvent(next, events, arcDefs);
 }
 
 export interface ElectionResult {

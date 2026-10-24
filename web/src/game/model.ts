@@ -56,7 +56,7 @@ export const VOTE_BIAS = -0.32;
  * 連任選舉的對手基準，與第一次投票分開：第二階段經過 8 回合任期，數值與危機的累積和競選期不同。
  * 一樣對所有角色一視同仁。
  */
-export const REELECTION_BIAS = 0.27;
+export const REELECTION_BIAS = 0.5;
 
 /**
  * 選民疲乏：每多動用一次現任資源，該次的民調加分乘上此係數（第 n 次為 PERK_DECAY^(n-1)）。
@@ -200,3 +200,6 @@ export const LEGEND_CHANCE = 0.2;
 export const OPPONENT_INCUMBENT_CHANCE = 0.3;
 /** 第一次投票的模型勝率不超過這個值（贏得不多）時，對手四年後捲土重來 */
 export const REMATCH_THRESHOLD = 0.6;
+
+/** 第二階段任期中（任期與任期尾聲）最多幾個回合用來演劇情鏈；其餘到期節點以快報結算 */
+export const ARC_QUOTA_STAGE2 = 3;

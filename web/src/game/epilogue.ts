@@ -3,7 +3,8 @@
 // 片段可以有多個版本，依這一局的 seed 挑一個，同樣的局面在不同局會讀到不同的句子。
 
 import type { GameSummary, ReflectionItem } from "./endings";
-import type { GameEvent, GameState } from "./types";
+import { arcProgress } from "./story";
+import type { ArcDef, ArcStatus, GameEvent, GameState } from "./types";
 
 export interface Epilogue {
   /** 一句話總結這個人的下場，結局頁的大標 */
@@ -490,12 +491,12 @@ const CITY_LINES: Record<string, [string[], string[]]> = {
   ],
   airplane: [
     [
-      "航空城的抗議布條還掛在原地，只是換了一批人在綁。",
+      "航空特區的抗議布條還掛在原地，只是換了一批人在綁。",
       "你任內喊的「讓城市起飛」，最後只有機場的飛機真的起飛了。徵收戶的官司還在打。",
     ],
     [
       "選後你經過機場，飛機一架架起飛。你想起自己的競選口號：「讓城市起飛」。",
-      "飛機城的工業區照常運轉，夜班的工人們大多不知道曾經有你這個候選人。",
+      "航空城的工業區照常運轉，夜班的工人們大多不知道曾經有你這個候選人。",
     ],
   ],
   mama: [
@@ -568,7 +569,7 @@ function first(list: Fragment[], c: Ctx): Fragment | undefined {
   return list.find((f) => f.when(c));
 }
 
-export function buildEpilogue(state: GameState, events: GameEvent[], summary: GameSummary): Epilogue {
+export function buildEpilogue(state: GameState, events: GameEvent[], summary: GameSummary, arcDefs: ArcDef[] = []): Epilogue {
   const incumbent = state.flags.includes("bg-incumbent");
   const served = incumbent || !!state.firstElection?.won;
   const legalRisks = state.history.filter((h) =>
@@ -604,6 +605,13 @@ export function buildEpilogue(state: GameState, events: GameEvent[], summary: Ga
     paragraphs.push(variant(keyEventText(key, c), seed, 1));
   }
 
+  // 政治帳本：最值得一提的那筆帳怎麼收場（落選時是「沒機會兌現的承諾」）
+  const ledger = notableArc(state, arcDefs, served);
+  if (ledger) {
+    if (ledger.headline) headlines.push([ledger.headline[0], variant(ledger.headline[1], seed, 17)]);
+    paragraphs.push(variant(ledger.texts, seed, 7));
+  }
+
   add(first(MONEY, c), 2);
   add(first(CONSCIENCE, c), 3);
 
@@ -632,4 +640,24 @@ export function buildEpilogue(state: GameState, events: GameEvent[], summary: Ga
       variant(served ? ["做過一任市長的人", "市長名單上的一行字"] : ["參選過市長的人", "選舉公報上的一個名字", "差點成為市長的人"], seed, 20),
     paragraphs,
   };
+}
+
+/** 帳本結局的重要程度：曝光與掩蓋最值得寫，其次是跳票與兌現 */
+const ARC_WEIGHT: Record<ArcStatus, number> = { exposed: 5, concealed: 4, broken: 3, fulfilled: 2, active: 1 };
+
+function notableArc(
+  state: GameState,
+  defs: ArcDef[],
+  served: boolean,
+): { texts: string[]; headline?: [number, Text] } | undefined {
+  const arcs = Object.values(state.arcs)
+    .map((a) => ({ a, def: defs.find((d) => d.id === a.id) }))
+    .filter((x): x is { a: (typeof x)["a"]; def: ArcDef } => !!x.def)
+    .sort((x, y) => ARC_WEIGHT[y.a.status] - ARC_WEIGHT[x.a.status] || x.a.openedTurn - y.a.openedTurn);
+  const top = arcs[0];
+  if (!top) return undefined;
+  const key = served ? top.a.status : "lost";
+  const texts = (top.def.epilogue[key] ?? []).map((t) => arcProgress({ ...top.def, progress: t }, top.a));
+  if (!texts.length) return undefined;
+  return { texts, headline: served ? top.def.headlines?.[top.a.status] : undefined };
 }

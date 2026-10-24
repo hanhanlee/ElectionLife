@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
+  ARCS,
   backgroundById,
   BACKGROUNDS,
   BURDENS,
@@ -36,11 +37,14 @@ import { composeIntro, describeOpponent, drawCharacter, type DrawnCharacter } fr
 import RollingScreen from "./RollingScreen";
 import ResultBanner from "./ResultBanner";
 import { buildEpilogue } from "@/game/epilogue";
+import { staffReport } from "@/game/feedback";
+import { arcProgress, fillArcText, openArcs } from "@/game/story";
 import { summarize, type FinalStage, type ReflectionItem } from "@/game/endings";
 import {
   CAMPAIGN_SCALES,
   LOAN_AMOUNT,
   LOAN_INTEREST,
+  MOBILIZATION_CAP,
   MODEL_VERSION,
   OFFICE_UPKEEP,
   scaleCost,
@@ -49,7 +53,7 @@ import {
   WEIGHT_NOTES,
 } from "@/game/model";
 import { newSeed } from "@/game/rng";
-import { clearGame, loadGame, saveGame } from "@/game/storage";
+import { clearGame, hasStaleSave, loadGame, saveGame } from "@/game/storage";
 import {
   ALL_STATS,
   ISSUE_LABELS,
@@ -57,6 +61,7 @@ import {
   STAT_LABELS,
   TRAIT_TIER_LABELS,
   VISIBLE_STATS,
+  type ArcKind,
   type CampaignScale,
   type Condition,
   type Notice,
@@ -107,6 +112,7 @@ const CHARACTER_CONTENT = { cities: CITIES, parties: PARTIES, backgrounds: BACKG
 export default function Game() {
   const [game, setGame] = useState<GameState | null>(null);
   const [saved, setSaved] = useState<GameState | null>(null);
+  const [stale, setStale] = useState(false);
   const [outcome, setOutcome] = useState<Outcome | null>(null);
   /** 開局設定：先播放「正在隨機你的人生」，再顯示角色卡 */
   const [setup, setSetup] = useState<{ character: DrawnCharacter; rolling: boolean } | null>(null);
@@ -115,6 +121,7 @@ export default function Game() {
     // 存檔只在瀏覽器端讀取，避免伺服器輸出與客戶端不一致
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setSaved(loadGame());
+    setStale(hasStaleSave());
   }, []);
 
   useEffect(() => {
@@ -168,6 +175,7 @@ export default function Game() {
           事件與政見取材自過去 20 年的選舉公報與公開報導，並已虛構化。
         </p>
         <button className={styles.primary} onClick={restart}>開始參選</button>
+        {stale && <p className={styles.notice}>遊戲更新了，上一局的存檔無法繼續。請開始新的一局。</p>}
         {saved && !saved.finished && (
           <button className={styles.secondary} onClick={() => start(saved)}>
             繼續上一局（{characterLabel(saved)}，第 {saved.turn + 1} 回合）
@@ -202,6 +210,8 @@ export default function Game() {
         {phaseLabel(game, TURN_PLAN[shownTurn])}
       </p>
       {!outcome && <BudgetPanel state={game} onScale={(scale) => setGame(setScale(game, scale))} />}
+      {!outcome && Object.keys(game.arcs).length > 0 && <LedgerPanel state={game} />}
+      {!outcome && game.turn > 0 && <StaffReportCard state={game} />}
       {!outcome && canTakeLoan(game) && <LoanOffer state={game} onTake={() => setGame(takeLoan(game))} />}
 
       {outcome ? (
@@ -221,7 +231,8 @@ export default function Game() {
           <section className={styles.card}>
             {game.turn === 0 && game.notices.map((n) => <NoticeView key={n.text} notice={n} />)}
             <h2>{event.title}</h2>
-            <p>{event.scenario}</p>
+            {event.arc && <p className={styles.arcTag}>📒 {ARCS.find((a) => a.id === event.arc)?.title}</p>}
+            <p>{fillArcText(event.scenario, game.arcs)}</p>
             <div className={styles.options}>
               {offeredOptions(game, event).map((o) => {
                 const avail = optionAvailability(game, o);
@@ -231,13 +242,13 @@ export default function Game() {
                     className={avail === "open" ? styles.option : styles.optionLocked}
                     disabled={avail === "locked"}
                     onClick={() => {
-                      const next = choose(game, EVENTS, o.id, CRISES, PARTIES);
+                      const next = choose(game, EVENTS, o.id, CRISES, PARTIES, ARCS);
                       const last = next.history[next.history.length - 1];
                       setOutcome({ text: last.outcome, delta: last.optionDelta, funds: o.funds, notices: next.notices });
                       setGame(next);
                     }}
                   >
-                    {o.label}
+                    {fillArcText(o.label, game.arcs)}
                     {avail === "unlockable" && (
                       <small> · 解鎖代價：{formatDelta(o.unlockCost!)}</small>
                     )}
@@ -300,7 +311,7 @@ function TraitList({ advantages, baggage }: { advantages: string[]; baggage: str
 function CharacterReveal({ character, onStart }: { character: DrawnCharacter; onStart: () => void }) {
   const { city, party, background, profile } = character;
   const winRate = useMemo(
-    () => estimateFirstWinRate(EVENTS, CRISES, PARTIES, party, background, profileSetup(profile)),
+    () => estimateFirstWinRate(EVENTS, CRISES, PARTIES, party, background, profileSetup(profile), 300, ARCS),
     [party, background, profile],
   );
   const intro = composeIntro(profile, background, party, TRAITS, BURDENS, city);
@@ -515,6 +526,70 @@ function OpponentCard({ opponent, heading }: { opponent: Opponent; heading: stri
   );
 }
 
+const ARC_KIND_LABEL: Record<ArcKind, string> = { promise: "政策承諾", debt: "政治人情債", scandal: "重大爭議" };
+
+/** 回合編號：競選第 N 回合／任期第 N 回合 */
+function turnLabel(turn: number): string {
+  return turn < STAGE_LENGTH ? `競選第 ${turn + 1} 回合` : `第二階段第 ${turn - STAGE_LENGTH + 1} 回合`;
+}
+
+/** 幕僚長回報：一句主要處境，其他折疊成快報 */
+function StaffReportCard({ state }: { state: GameState }) {
+  const report = staffReport(state, ARCS);
+  if (!report.main) return null;
+  return (
+    <section className={styles.staff}>
+      <p>
+        <span className={styles.staffName}>🗣 幕僚長</span>
+        {report.main}
+      </p>
+      {report.items.length > 0 && (
+        <details className={styles.staffMore}>
+          <summary>快報（{report.items.length}）</summary>
+          <ul>
+            {report.items.map((t) => (
+              <li key={t}>{t}</li>
+            ))}
+          </ul>
+        </details>
+      )}
+    </section>
+  );
+}
+
+/** 政治帳本：我答應過什麼、誰幫過我、做到哪裡、還欠誰什麼 */
+function LedgerPanel({ state, open = false }: { state: GameState; open?: boolean }) {
+  const arcs = Object.values(state.arcs);
+  const pending = openArcs(state, ARCS).length;
+  return (
+    <details className={styles.ledger} open={open}>
+      <summary>
+        📒 政治帳本
+        {pending > 0 ? `：待處理 ${pending} 件` : `：${arcs.length} 筆紀錄`}
+      </summary>
+      {arcs.map((a) => {
+        const def = ARCS.find((d) => d.id === a.id)!;
+        return (
+          <div key={a.id} className={styles.ledgerEntry}>
+            <p>
+              <strong>{def.title}</strong>
+              <small>　{ARC_KIND_LABEL[def.kind]}｜{def.statusLabels[a.status]}</small>
+            </p>
+            <p className={styles.ledgerProgress}>{arcProgress(def, a)}</p>
+            <ul className={styles.ledgerLog}>
+              {a.log.map((l, i) => (
+                <li key={i}>
+                  <small>{turnLabel(l.turn)}</small>　{l.text}
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      })}
+    </details>
+  );
+}
+
 const SCALE_ORDER: CampaignScale[] = ["lean", "standard", "full"];
 
 /** 每回合的預算：競選回合選規模（人事、廣告、活動），任期中只有服務處開銷 */
@@ -635,6 +710,14 @@ function NoticeView({ notice }: { notice: Notice }) {
         <p className={styles.notice}>⚠ {notice.text}</p>
         {impact}
       </div>
+    );
+  }
+  if (notice.kind === "story") {
+    return (
+      <p className={styles.storyNotice}>
+        📒 {notice.title && <strong>{notice.title}：</strong>}
+        {notice.text}
+      </p>
     );
   }
   if (notice.kind === "funds") {
@@ -778,7 +861,7 @@ function EndScreen({ state, onRestart }: { state: GameState; onRestart: () => vo
   const party = partyById(state.character.party);
   const challengers = HISTORY.challengers[party.id as keyof typeof HISTORY.challengers];
 
-  const story = buildEpilogue(state, EVENTS, s);
+  const story = buildEpilogue(state, EVENTS, s, ARCS);
 
   return (
     <main className={styles.main}>
@@ -810,6 +893,16 @@ function EndScreen({ state, onRestart }: { state: GameState; onRestart: () => vo
         items={s.reflection}
         shareHead={`我在《選舉人生》以「${characterLabel(state)}」${s.election.won ? winText : loseText}`}
       />
+
+      {Object.keys(state.arcs).length > 0 && (
+        <section className={styles.card}>
+          <h2>政治帳本結算</h2>
+          <p>
+            <small>你答應過什麼、欠過誰什麼，最後怎麼收場。「灌水」與「私下回報」都不算兌現。</small>
+          </p>
+          <LedgerPanel state={state} open />
+        </section>
+      )}
 
       <section className={styles.card}>
         <h2>兩張成績單</h2>
@@ -846,7 +939,7 @@ function EndScreen({ state, onRestart }: { state: GameState; onRestart: () => vo
           )}
           <li>
             選前動員：投入 {formatFunds(s.election.mobilization)}，加分 {s.election.mobilizationValue.toFixed(2)}
-            <small> — 投票前剩下的競選經費會自動投入動員，最多 3,000 萬。</small>
+            <small> — 投票前剩下的競選經費會自動投入動員，最多 {formatFunds(MOBILIZATION_CAP)}。</small>
           </li>
           {s.election.contributions.filter((c) => VOTE_WEIGHTS[c.stat] > 0).map((c) => (
             <li key={c.stat}>

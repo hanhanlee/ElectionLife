@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { BACKGROUNDS, BURDENS, CITIES, CRISES, EVENTS, HISTORY as history, LEGENDS, PARTIES, profileSetup, TRAITS } from "@/content";
+import { ARCS, BACKGROUNDS, BURDENS, CITIES, CRISES, EVENTS, HISTORY as history, LEGENDS, PARTIES, profileSetup, TRAITS } from "@/content";
 import { composeIntro, describeOpponent, drawCharacter, drawProfile } from "./profile";
 import {
   choose,
@@ -20,7 +20,8 @@ import { CAMPAIGN_SCALES, LOAN_AMOUNT, LOAN_INTEREST, OFFICE_UPKEEP, payout, sca
 import { summarize } from "./endings";
 import { buildEpilogue } from "./epilogue";
 import { mulberry32 } from "./rng";
-import { validateEvents } from "./validate";
+import { validateArcs, validateEvents } from "./validate";
+import { staffReport } from "./feedback";
 import type { Background, GameOption, GameState, Party } from "./types";
 
 type PerkPolicy = "random" | "always" | "never";
@@ -54,7 +55,7 @@ function playRandom(seed: number, opts: PlayOptions = {}): GameState {
     let pick = open[Math.floor(rand() * open.length)];
     if (opts.strategy === "greedy") pick = [...open].sort((a, b) => (b.effects.approval ?? 0) - (a.effects.approval ?? 0))[0];
     if (opts.strategy === "balanced") pick = [...open].sort((a, b) => balancedScore(b) - balancedScore(a))[0];
-    s = choose(s, EVENTS, pick.id, CRISES, PARTIES);
+    s = choose(s, EVENTS, pick.id, CRISES, PARTIES, ARCS);
   }
   return s;
 }
@@ -105,7 +106,7 @@ describe("事件庫", () => {
     for (let seed = 1; seed <= 200; seed++) {
       const g = playRandom(seed);
       const s = summarize(g, EVENTS);
-      const text = buildEpilogue(g, EVENTS, s).paragraphs.join("");
+      const text = buildEpilogue(g, EVENTS, s, ARCS).paragraphs.join("");
       if (s.reflection.some((r) => text.includes(`「${r.eventTitle}」`) || text.includes(r.eventTitle))) mentioned++;
     }
     expect(mentioned).toBeGreaterThan(150);
@@ -113,11 +114,11 @@ describe("事件庫", () => {
 
   it("同一局重算後日談，結果不變；不同局讀到的段落不同", () => {
     const g = playRandom(11);
-    const a = buildEpilogue(g, EVENTS, summarize(g, EVENTS));
-    expect(buildEpilogue(g, EVENTS, summarize(g, EVENTS))).toEqual(a);
+    const a = buildEpilogue(g, EVENTS, summarize(g, EVENTS), ARCS);
+    expect(buildEpilogue(g, EVENTS, summarize(g, EVENTS), ARCS)).toEqual(a);
     const stories = new Set(Array.from({ length: 100 }, (_, i) => {
       const x = playRandom(i + 1);
-      return buildEpilogue(x, EVENTS, summarize(x, EVENTS)).paragraphs.join("|");
+      return buildEpilogue(x, EVENTS, summarize(x, EVENTS), ARCS).paragraphs.join("|");
     }));
     expect(stories.size).toBe(100);
   });
@@ -274,7 +275,7 @@ describe("數值都有意義", () => {
     for (let seed = 1; seed <= 200; seed++) {
       const g = playRandom(seed);
       const s = summarize(g, EVENTS);
-      const text = buildEpilogue(g, EVENTS, s).paragraphs.join("");
+      const text = buildEpilogue(g, EVENTS, s, ARCS).paragraphs.join("");
       if (s.reflection.some((r) => text.includes(`「${r.eventTitle}」`) || text.includes(r.eventTitle))) mentioned++;
     }
     expect(mentioned).toBeGreaterThan(150);
@@ -282,11 +283,11 @@ describe("數值都有意義", () => {
 
   it("同一局重算後日談，結果不變；不同局讀到的段落不同", () => {
     const g = playRandom(11);
-    const a = buildEpilogue(g, EVENTS, summarize(g, EVENTS));
-    expect(buildEpilogue(g, EVENTS, summarize(g, EVENTS))).toEqual(a);
+    const a = buildEpilogue(g, EVENTS, summarize(g, EVENTS), ARCS);
+    expect(buildEpilogue(g, EVENTS, summarize(g, EVENTS), ARCS)).toEqual(a);
     const stories = new Set(Array.from({ length: 100 }, (_, i) => {
       const x = playRandom(i + 1);
-      return buildEpilogue(x, EVENTS, summarize(x, EVENTS)).paragraphs.join("|");
+      return buildEpilogue(x, EVENTS, summarize(x, EVENTS), ARCS).paragraphs.join("|");
     }));
     expect(stories.size).toBe(100);
   });
@@ -380,7 +381,7 @@ describe("個人貸款", () => {
     s = { ...s, funds: 100000 };
     while (s.turn < STAGE_LENGTH && !s.finished) {
       const open = offeredOptions(s, currentEvent(s, EVENTS)!).filter((o) => optionAvailability(s, o) !== "locked");
-      s = choose(s, EVENTS, open[0].id, CRISES, PARTIES);
+      s = choose(s, EVENTS, open[0].id, CRISES, PARTIES, ARCS);
     }
     expect(s.loan!.remaining).toBe(0);
   });
@@ -391,7 +392,7 @@ describe("個人貸款", () => {
     let defaulted = false;
     while (s.turn < STAGE_LENGTH && !s.finished) {
       const open = offeredOptions(s, currentEvent(s, EVENTS)!).filter((o) => optionAvailability(s, o) !== "locked");
-      s = choose(s, EVENTS, open[0].id, CRISES, PARTIES);
+      s = choose(s, EVENTS, open[0].id, CRISES, PARTIES, ARCS);
       if (s.notices.some((n) => n.title === "貸款違約")) defaulted = true;
       s = { ...s, funds: 0 };
     }
@@ -409,11 +410,11 @@ describe("退黨", () => {
       let s = newGame(EVENTS, seed, blue, legislator);
       while (!s.finished && s.turn < STAGE_LENGTH && currentEvent(s, EVENTS)!.id !== "c-party-nomination") {
         const open = offeredOptions(s, currentEvent(s, EVENTS)!).filter((o) => optionAvailability(s, o) !== "locked");
-        s = choose(s, EVENTS, open[0].id, CRISES, PARTIES);
+        s = choose(s, EVENTS, open[0].id, CRISES, PARTIES, ARCS);
       }
       if (s.finished || s.turn >= STAGE_LENGTH) continue;
       s = { ...s, funds: 100000 };
-      s = choose(s, EVENTS, "indie", CRISES, PARTIES);
+      s = choose(s, EVENTS, "indie", CRISES, PARTIES, ARCS);
       expect(s.character.party).toBe("independent");
       expect(s.character.formerParty).toBe("blue");
       expect(s.flags).toContain("party-independent");
@@ -423,7 +424,7 @@ describe("退黨", () => {
       const before = s.payouts.length;
       while (!s.finished && s.payouts.length === before) {
         const open = offeredOptions(s, currentEvent(s, EVENTS)!).filter((o) => optionAvailability(s, o) !== "locked");
-        s = choose(s, EVENTS, open[0].id, CRISES, PARTIES);
+        s = choose(s, EVENTS, open[0].id, CRISES, PARTIES, ARCS);
       }
       if (s.payouts.length === before) continue;
       expect(s.payouts.at(-1)!.party).toBe(0);
@@ -443,7 +444,7 @@ describe("個人貸款補繳", () => {
       // 第 4 回合故意沒錢，其餘回合錢很多
       s = { ...s, funds: s.turn === 4 ? 0 : 100000 };
       const open = offeredOptions(s, currentEvent(s, EVENTS)!).filter((o) => optionAvailability(s, o) !== "locked");
-      s = choose(s, EVENTS, open[0].id, CRISES, PARTIES);
+      s = choose(s, EVENTS, open[0].id, CRISES, PARTIES, ARCS);
       if (s.notices.some((n) => n.title === "貸款違約")) defaulted = true;
     }
     expect(defaulted).toBe(false);
@@ -583,7 +584,7 @@ describe("耐玩度與城市差異", () => {
     let s = newGame(EVENTS, seed, c.party, c.background, profileSetup(c.profile));
     while (!s.finished) {
       const open = offeredOptions(s, currentEvent(s, EVENTS)!).filter((o) => optionAvailability(s, o) !== "locked");
-      s = choose(s, EVENTS, open[Math.floor(rand() * open.length)].id, CRISES, PARTIES);
+      s = choose(s, EVENTS, open[Math.floor(rand() * open.length)].id, CRISES, PARTIES, ARCS);
     }
     return s;
   }
@@ -655,7 +656,7 @@ describe("後日談", () => {
   it("每一局都有大標與至少四段故事，且段落不重複", () => {
     for (let seed = 1; seed <= 200; seed++) {
       const g = playRandom(seed);
-      const story = buildEpilogue(g, EVENTS, summarize(g, EVENTS));
+      const story = buildEpilogue(g, EVENTS, summarize(g, EVENTS), ARCS);
       expect(story.headline.length).toBeGreaterThan(0);
       expect(story.paragraphs.length).toBeGreaterThanOrEqual(4);
       expect(new Set(story.paragraphs).size).toBe(story.paragraphs.length);
@@ -665,7 +666,7 @@ describe("後日談", () => {
   it("貸款違約的人，後日談會寫到傾家蕩產", () => {
     const g = playRandom(7);
     const broke = { ...g, flags: [...g.flags, "loan-defaulted"], loanTaken: true };
-    const story = buildEpilogue(broke, EVENTS, summarize(broke, EVENTS));
+    const story = buildEpilogue(broke, EVENTS, summarize(broke, EVENTS), ARCS);
     expect(story.paragraphs.join("")).toContain("銀行");
     expect(["為了選舉傾家蕩產的人", "把房子押進票匭的人", "被起訴的前候選人", "從選舉公報走進起訴書的人"]).toContain(story.headline);
   });
@@ -675,7 +676,7 @@ describe("後日談", () => {
       const g = playRandom(seed);
       const s = summarize(g, EVENTS);
       if (s.stage !== "first" || g.flags.includes("bg-incumbent")) continue;
-      const text = buildEpilogue(g, EVENTS, s).paragraphs.join("");
+      const text = buildEpilogue(g, EVENTS, s, ARCS).paragraphs.join("");
       expect(text).not.toContain("任期");
       expect(text).not.toContain("卸任");
     }
@@ -686,7 +687,7 @@ describe("後日談", () => {
     for (let seed = 1; seed <= 200; seed++) {
       const g = playRandom(seed);
       const s = summarize(g, EVENTS);
-      const text = buildEpilogue(g, EVENTS, s).paragraphs.join("");
+      const text = buildEpilogue(g, EVENTS, s, ARCS).paragraphs.join("");
       if (s.reflection.some((r) => text.includes(`「${r.eventTitle}」`) || text.includes(r.eventTitle))) mentioned++;
     }
     expect(mentioned).toBeGreaterThan(150);
@@ -694,11 +695,11 @@ describe("後日談", () => {
 
   it("同一局重算後日談，結果不變；不同局讀到的段落不同", () => {
     const g = playRandom(11);
-    const a = buildEpilogue(g, EVENTS, summarize(g, EVENTS));
-    expect(buildEpilogue(g, EVENTS, summarize(g, EVENTS))).toEqual(a);
+    const a = buildEpilogue(g, EVENTS, summarize(g, EVENTS), ARCS);
+    expect(buildEpilogue(g, EVENTS, summarize(g, EVENTS), ARCS)).toEqual(a);
     const stories = new Set(Array.from({ length: 100 }, (_, i) => {
       const x = playRandom(i + 1);
-      return buildEpilogue(x, EVENTS, summarize(x, EVENTS)).paragraphs.join("|");
+      return buildEpilogue(x, EVENTS, summarize(x, EVENTS), ARCS).paragraphs.join("|");
     }));
     expect(stories.size).toBe(100);
   });
@@ -718,7 +719,7 @@ describe("競選規模與開銷", () => {
   it("每個競選回合依規模扣人事、廣告、活動，並記錄在支出裡", () => {
     let s = setScale(newGame(EVENTS, 3, PARTIES[0], BACKGROUNDS[1]), "standard");
     s = { ...s, funds: 5000 };
-    const next = choose(s, EVENTS, pickFree(s), [], PARTIES);
+    const next = choose(s, EVENTS, pickFree(s), [], PARTIES, ARCS);
     const c = CAMPAIGN_SCALES.standard.costs;
     expect(next.spending.staff).toBe(c.staff);
     expect(next.spending.ads).toBe(c.ads);
@@ -729,11 +730,11 @@ describe("競選規模與開銷", () => {
   it("付不起選定的規模會自動縮編；連精簡都付不起就欠薪，連續欠薪會被爆料", () => {
     let s = setScale(newGame(EVENTS, 3, PARTIES[0], BACKGROUNDS[1]), "full");
     s = { ...s, funds: scaleCost("standard") };
-    let next = choose(s, EVENTS, pickFree(s), [], PARTIES);
+    let next = choose(s, EVENTS, pickFree(s), [], PARTIES, ARCS);
     expect(next.scale).toBe("standard");
     expect(next.funds).toBe(0);
     for (let i = 0; i < 2; i++) {
-      next = choose({ ...next, funds: 0, notices: [] }, EVENTS, pickFree(next), [], PARTIES);
+      next = choose({ ...next, funds: 0, notices: [] }, EVENTS, pickFree(next), [], PARTIES, ARCS);
     }
     expect(next.arrears).toBe(2);
     expect(next.flags).toContain("unpaid-staff");
@@ -865,5 +866,82 @@ describe("事件隨機性", () => {
       const rate = (seen[e.id] ?? 0) / (e.phase === "term" ? reachedTerm : N);
       expect(rate, `${e.title} 出現率 ${(rate * 100).toFixed(0)}%`).toBeLessThan(0.25);
     }
+  });
+});
+
+describe("劇情鏈", () => {
+  it("劇情資料完整：節點事件存在並指回劇情、選項引用的劇情存在", () => {
+    expect(validateArcs(ARCS, EVENTS)).toEqual([]);
+  });
+
+  const games = Array.from({ length: 600 }, (_, i) => playRandom(i * 131 + 7));
+
+  it("沒收過建商的錢，就不會遇到「金主的請託」", () => {
+    for (const g of games) {
+      if (g.deck.includes("t-donor-favor")) expect(g.arcs.donor, g.seed.toString()).toBeDefined();
+    }
+  });
+
+  it("任期走完的局，每條劇情的節點都有結果（出場、分支略過或以快報結算），不會無聲消失", () => {
+    let checked = 0;
+    for (const g of games) {
+      if (!g.finished || !g.firstElection?.won) continue;
+      for (const a of Object.values(g.arcs)) {
+        const def = ARCS.find((d) => d.id === a.id)!;
+        expect(a.node, `${g.seed} ${a.id}`).toBe(def.nodes.length);
+        checked++;
+      }
+    }
+    expect(checked).toBeGreaterThan(20);
+  });
+
+  it("第二階段任期中最多 3 個劇情回合", () => {
+    for (const g of games) {
+      const used = g.deck.filter((id, t) => ["term", "incumbency"].includes(TURN_PLAN[t]) && EVENTS.find((e) => e.id === id)!.arc).length;
+      expect(used).toBeLessThanOrEqual(3);
+    }
+  });
+
+  it("社宅只有真的蓋到承諾戶數才算兌現；灌水不等於兌現", () => {
+    for (const g of games) {
+      const h = g.arcs.housing;
+      if (h?.status === "fulfilled") expect(h.facts.built).toBeGreaterThanOrEqual(h.facts.promised);
+      if (h?.status === "concealed" || h?.status === "exposed") expect(h.facts.claimed).toBeGreaterThan(h.facts.built);
+    }
+  });
+
+  it("第一次投票落選時，不結算任期中的劇情，後日談改寫「沒機會兌現」", () => {
+    const lost = games.filter((g) => g.firstElection && !g.firstElection.won && Object.keys(g.arcs).length > 0);
+    expect(lost.length).toBeGreaterThan(5);
+    for (const g of lost) {
+      for (const a of Object.values(g.arcs)) {
+        const def = ARCS.find((d) => d.id === a.id)!;
+        expect(def.nodes[a.node]?.phase).not.toBe("campaign");
+        expect(a.log.every((l) => l.turn < 12)).toBe(true);
+      }
+    }
+  });
+
+  it("幕僚長回報不會一直重複同一句話（連續兩回合同一句 < 12%）", () => {
+    let pairs = 0, same = 0;
+    for (let seed = 1; seed <= 200; seed++) {
+      const rand = mulberry32(seed * 31);
+      let s = newGame(EVENTS, seed, PARTIES[seed % 6], BACKGROUNDS[seed % 5], profileSetup(drawProfile(seed, BACKGROUNDS[seed % 5], PARTIES[seed % 6], TRAITS, BURDENS, CITIES[seed % 6], LEGENDS)));
+      let prev = "";
+      while (!s.finished) {
+        if (s.turn > 0) {
+          const m = staffReport(s, ARCS).main ?? "";
+          if (prev) { pairs++; if (m === prev) same++; }
+          prev = m;
+        }
+        const open = offeredOptions(s, currentEvent(s, EVENTS)!).filter((o) => optionAvailability(s, o) !== "locked");
+        s = choose(s, EVENTS, open[Math.floor(rand() * open.length)].id, CRISES, PARTIES, ARCS);
+      }
+    }
+    expect(same / pairs).toBeLessThan(0.12);
+  });
+
+  it("同一個 seed、同一串選擇，帳本完全相同", () => {
+    for (const seed of [11, 202, 3003]) expect(playRandom(seed).arcs).toEqual(playRandom(seed).arcs);
   });
 });

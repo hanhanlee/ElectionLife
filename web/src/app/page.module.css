@@ -548,3 +548,86 @@
   font-size: 0.75rem;
   color: var(--muted);
 }
+
+/* 幕僚長回報 */
+.staff {
+  border-left: 3px solid var(--accent);
+  background: var(--surface);
+  border-radius: 8px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  line-height: 1.7;
+}
+
+.staffName {
+  font-weight: 700;
+  color: var(--accent);
+  margin-right: 8px;
+}
+
+.staffMore {
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+.staffMore ul {
+  margin: 6px 0 0 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* 政治帳本 */
+.ledger {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 14px;
+  background: var(--surface);
+  font-size: 0.875rem;
+}
+
+.ledger summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.ledgerEntry {
+  border-top: 1px solid var(--border);
+  margin-top: 8px;
+  padding-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ledgerEntry small {
+  color: var(--muted);
+}
+
+.ledgerProgress {
+  color: var(--accent);
+  font-size: 0.8125rem;
+}
+
+.ledgerLog {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.8125rem;
+}
+
+.arcTag {
+  font-size: 0.8125rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.storyNotice {
+  font-size: 0.875rem;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px dashed var(--accent);
+}

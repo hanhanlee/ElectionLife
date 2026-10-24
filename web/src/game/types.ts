@@ -86,6 +86,8 @@ export interface GameOption {
   skill?: Skill;
   /** 依資質改寫結果：第一個符合條件的變化會取代結果文字、額外加上效果（不再套用一般能力規則） */
   variants?: OptionVariant[];
+  /** 對劇情鏈的影響：開啟、改變狀態或更新事實（見 story.ts） */
+  arcs?: ArcEffect[];
 }
 
 export const SKILLS = [
@@ -171,7 +173,7 @@ export interface Crisis {
 }
 
 export interface Notice {
-  kind: "delayed" | "crisis" | "funds";
+  kind: "delayed" | "crisis" | "funds" | "story";
   tone: "bad" | "good";
   title?: string;
   text: string;
@@ -194,7 +196,83 @@ export interface GameEvent {
   issue?: Issue;
   /** 設定時為選項池事件：每次從符合 appearsIf 的選項中隨機抽出這麼多個 */
   drawOptions?: number;
+  /** 劇情鏈節點：只由劇情排程安排出場，不會被隨機抽到 */
+  arc?: string;
   source: EventSource;
+}
+
+// ---------- 劇情鏈（Story Arc）與政治帳本 ----------
+
+/**
+ * 劇情鏈狀態。帳本依劇情種類顯示不同的說法（例如人情債的「掩蓋中」顯示為「私下回報」）：
+ * active 進行中、fulfilled 已兌現／已了結、broken 跳票／拒絕、concealed 掩蓋中、exposed 已曝光。
+ * 掩蓋不等於兌現：concealed 的承諾在結局仍算沒做到。
+ */
+export type ArcStatus = "active" | "fulfilled" | "broken" | "concealed" | "exposed";
+
+/** 帳本分類：政策承諾、政治人情債、重大爭議 */
+export type ArcKind = "promise" | "debt" | "scandal";
+
+export interface ArcNode {
+  /** 這個節點出場的事件（事件的 arc 欄位要指回這條劇情） */
+  event: string;
+  /** 出場的階段；過了這個階段還沒排上，就以快報結算 */
+  phase: Phase;
+  /** 上一個節點之後至少隔幾回合 */
+  delay: number;
+  /** 只在劇情處於這些狀態時出場（分支）；不符合時直接略過 */
+  when?: ArcStatus[];
+  /** 沒排上議程時的快報文字 */
+  missed: string;
+}
+
+export interface ArcDef {
+  id: string;
+  kind: ArcKind;
+  title: string;
+  /** 帳本裡的進度說明，可用 {事實名稱} 代入，例如「承諾 {promised} 戶」 */
+  progress: string;
+  /** 依狀態的帳本狀態文字 */
+  statusLabels: Record<ArcStatus, string>;
+  /** 有目標值的劇情：facts[value] ≥ facts[target] 時設定旗標 arc-<id>-met */
+  goal?: { value: string; target: string };
+  nodes: ArcNode[];
+  /** 幕僚長依狀態的提醒（多個版本） */
+  advisor: Partial<Record<ArcStatus, string[]>>;
+  /** 後日談：lost 是第一次投票落選時（沒有機會執政），其餘依最後狀態 */
+  epilogue: Partial<Record<ArcStatus | "lost", string[]>>;
+  /** 會讓這段成為後日談大標的狀態 */
+  headlines?: Partial<Record<ArcStatus, [number, string]>>;
+}
+
+export interface ArcEffect {
+  id: string;
+  /** 開啟劇情（已開啟時只更新事實與紀錄） */
+  open?: boolean;
+  status?: ArcStatus;
+  /** 直接設定事實；值可以是數字，或另一個事實的名稱（例如 claimed = promised） */
+  set?: Record<string, number | string>;
+  /** 增減事實 */
+  add?: Record<string, number>;
+  /** 帳本紀錄：這一步發生了什麼 */
+  note: string;
+}
+
+export interface ArcLogEntry {
+  turn: number;
+  text: string;
+}
+
+export interface ArcState {
+  id: string;
+  status: ArcStatus;
+  openedTurn: number;
+  /** 下一個要出場的節點索引 */
+  node: number;
+  /** 下一個節點最早可以出場的回合 */
+  nextTurn: number;
+  facts: Record<string, number>;
+  log: ArcLogEntry[];
 }
 
 /** 政黨或出身背景的共同欄位 */
@@ -481,6 +559,8 @@ export interface GameState {
   cityMods?: { voteMods: StatDelta; issueWeights: Partial<Record<Issue, number>>; issueNotes: Partial<Record<Issue, string>> };
   /** 目前這一階段的對手 */
   opponent?: Opponent;
+  /** 劇情鏈的狀態（政治帳本） */
+  arcs: Record<string, ArcState>;
   /** 競選期結束後的第一次投票結果；落選則遊戲提前結束 */
   firstElection?: ElectionSnapshot;
   finished: boolean;

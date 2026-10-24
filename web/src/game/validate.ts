@@ -1,7 +1,7 @@
 // 事件庫檢查：給 agent 與 CI 用，任何錯誤都應阻止上線。
 
 import { TURN_PLAN } from "./engine";
-import { ALL_STATS, SKILLS, type GameEvent, type Phase } from "./types";
+import { ALL_STATS, SKILLS, type ArcDef, type GameEvent, type Phase } from "./types";
 
 /**
  * 要花競選經費的選項，文字必須看得出錢花在哪裡。
@@ -27,7 +27,7 @@ export function validateEvents(events: GameEvent[], opts: ValidationOptions = {}
 
     if (e.drawOptions) {
       if (e.options.length < e.drawOptions) errors.push(`${at}：選項池的選項少於 drawOptions`);
-    } else if (e.options.length < 2 || e.options.length > 4) {
+    } else if (e.options.length < 2 || e.options.length > (e.options.some((o) => o.appearsIf) ? 6 : 4)) {
       errors.push(`${at}：選項數應為 2–4`);
     }
     const optIds = new Set<string>();
@@ -53,7 +53,7 @@ export function validateEvents(events: GameEvent[], opts: ValidationOptions = {}
     }
     const free = e.options.filter((o) => !o.requires && !o.appearsIf && (o.funds ?? 0) >= 0 && !o.perk);
     if (free.length === 0) errors.push(`${at}：至少要有一個不需條件、不花經費、不動用公家資源的選項`);
-    if (e.phase === "incumbency" && !e.options.some((o) => o.perk)) {
+    if (e.phase === "incumbency" && !e.arc && !e.options.some((o) => o.perk)) {
       errors.push(`${at}：現任限定事件至少要有一個動用現任資源（perk）的選項`);
     }
     if (e.phase === "incumbency" && e.options.every((o) => o.perk)) {
@@ -86,6 +86,34 @@ export function validateEvents(events: GameEvent[], opts: ValidationOptions = {}
   for (const [phase, n] of need) {
     const have = events.filter((e) => e.phase === phase).length;
     if (have < n) errors.push(`${phase} 事件不足：需要 ${n}，目前 ${have}`);
+  }
+  return errors;
+}
+
+/** 劇情鏈檢查：節點事件存在且指回同一條劇情、選項引用的劇情存在、每個劇情節點事件都有劇情收留 */
+export function validateArcs(arcs: ArcDef[], events: GameEvent[]): string[] {
+  const errors: string[] = [];
+  const arcIds = new Set(arcs.map((a) => a.id));
+  for (const a of arcs) {
+    if (a.nodes.length === 0) errors.push(`劇情 ${a.id}：沒有節點`);
+    for (const n of a.nodes) {
+      const e = events.find((x) => x.id === n.event);
+      if (!e) errors.push(`劇情 ${a.id}：節點事件 ${n.event} 不存在`);
+      else {
+        if (e.arc !== a.id) errors.push(`劇情 ${a.id}：事件 ${n.event} 的 arc 欄位不是 ${a.id}`);
+        if (e.phase !== n.phase) errors.push(`劇情 ${a.id}：事件 ${n.event} 的階段 ${e.phase} 與節點 ${n.phase} 不同`);
+      }
+    }
+    for (const s of ["active", "fulfilled", "broken", "concealed", "exposed"] as const) {
+      if (!a.statusLabels[s]) errors.push(`劇情 ${a.id}：缺少狀態文字 ${s}`);
+    }
+    if (!a.epilogue.lost?.length) errors.push(`劇情 ${a.id}：缺少落選時的後日談`);
+  }
+  for (const e of events) {
+    if (e.arc && !arcs.some((a) => a.nodes.some((n) => n.event === e.id))) errors.push(`事件 ${e.id}：標記為劇情 ${e.arc} 但不是任何節點`);
+    for (const o of e.options) {
+      for (const eff of o.arcs ?? []) if (!arcIds.has(eff.id)) errors.push(`事件 ${e.id}／${o.id}：劇情 ${eff.id} 不存在`);
+    }
   }
   return errors;
 }
