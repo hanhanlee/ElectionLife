@@ -10,6 +10,7 @@ import {
   cityById,
   CRISES,
   EVENTS,
+  FATES,
   HISTORY,
   LEGENDS,
   PARTIES,
@@ -20,6 +21,7 @@ import {
 import {
   canTakeLoan,
   choose,
+  chooseFate,
   currentEvent,
   FIRST_ELECTION_TURN,
   newGame,
@@ -44,6 +46,7 @@ import { arcProgress, fillArcText, openArcs } from "@/game/story";
 import { summarize, type FinalStage, type ReflectionItem } from "@/game/endings";
 import {
   CAMPAIGN_SCALES,
+  FATE_ENABLED,
   LOAN_AMOUNT,
   LOAN_INTEREST,
   MOBILIZATION_CAP,
@@ -66,6 +69,8 @@ import {
   type ArcKind,
   type CampaignScale,
   type Condition,
+  type FateCard,
+  type FateKind,
   type Notice,
   type Opponent,
   type GameState,
@@ -78,6 +83,8 @@ import {
 import styles from "./page.module.css";
 
 interface Outcome {
+  /** 命運牌的結果有標題（牌名與成敗） */
+  title?: string;
   text: string;
   /** 只有選項本身的效果；延遲後果與突發事件在 notices 裡分開顯示 */
   delta: Stats;
@@ -162,7 +169,7 @@ export default function Game() {
       <CharacterReveal
         character={character}
         onStart={() =>
-          start(newGame(EVENTS, newSeed(), character.party, character.background, profileSetup(character.profile)))
+          start(newGame(EVENTS, newSeed(), character.party, character.background, profileSetup(character.profile), { fate: FATE_ENABLED }))
         }
       />
     );
@@ -199,7 +206,8 @@ export default function Game() {
 
   if (game.finished && !outcome) return <EndScreen state={game} onRestart={restart} />;
 
-  const event = outcome ? undefined : currentEvent(game, EVENTS);
+  const fate = outcome ? undefined : game.pendingFate;
+  const event = outcome || fate ? undefined : currentEvent(game, EVENTS);
   // 顯示結果時 turn 已前進，標題仍停在剛做完的那一回合
   const shownTurn = outcome ? game.turn - 1 : game.turn;
   const justVoted = outcome && game.turn === FIRST_ELECTION_TURN && game.firstElection;
@@ -217,17 +225,19 @@ export default function Game() {
         )}
       </p>
       <StatBar stats={game.stats} />
+      <ActiveFates state={game} />
       <p className={styles.turn}>
         {stageLabel(game, shownTurn)} 第 {(shownTurn % STAGE_LENGTH) + 1} / {STAGE_LENGTH} 回合 ·{" "}
         {phaseLabel(game, TURN_PLAN[shownTurn])}
       </p>
       {!outcome && <BudgetPanel state={game} onScale={(scale) => setGame(setScale(game, scale))} />}
       {!outcome && Object.keys(game.arcs).length > 0 && <LedgerPanel state={game} />}
-      {!outcome && game.turn > 0 && <StaffReportCard state={game} />}
-      {!outcome && canTakeLoan(game) && <LoanOffer state={game} onTake={() => setGame(takeLoan(game))} />}
+      {!outcome && !fate && game.turn > 0 && <StaffReportCard state={game} />}
+      {!outcome && !fate && canTakeLoan(game) && <LoanOffer state={game} onTake={() => setGame(takeLoan(game))} />}
 
       {outcome ? (
         <section className={styles.card}>
+          {outcome.title && <h2>{outcome.title}</h2>}
           <p className={styles.outcome}>{outcome.text}</p>
           <DeltaList delta={outcome.delta} funds={outcome.funds} />
           {outcome.notices.map((n) => (
@@ -238,6 +248,17 @@ export default function Game() {
             {game.finished ? "看結果" : justVoted ? "進入第二階段" : "下一回合"}
           </button>
         </section>
+      ) : fate ? (
+        <FateScreen
+          state={game}
+          onPick={(card) => {
+            const next = chooseFate(game, EVENTS, card.id, FATES, ARCS);
+            const last = next.fateHistory![next.fateHistory!.length - 1];
+            const verdict = last.success === undefined ? "" : last.success ? "・成功" : "・失敗";
+            setOutcome({ title: `🃏 ${card.title}${verdict}`, text: last.outcome, delta: last.delta, funds: last.funds || undefined, notices: next.notices });
+            setGame(next);
+          }}
+        />
       ) : (
         event && (
           <section className={styles.card}>
@@ -254,7 +275,7 @@ export default function Game() {
                     className={avail === "open" ? styles.option : styles.optionLocked}
                     disabled={avail === "locked"}
                     onClick={() => {
-                      const next = choose(game, EVENTS, o.id, CRISES, PARTIES, ARCS);
+                      const next = choose(game, EVENTS, o.id, CRISES, PARTIES, ARCS, FATES);
                       const last = next.history[next.history.length - 1];
                       setOutcome({ text: last.outcome, delta: last.optionDelta, funds: o.funds, notices: next.notices });
                       setGame(next);
@@ -283,6 +304,94 @@ export default function Game() {
       )}
       {!game.finished && <WithdrawButton onConfirm={withdraw} />}
     </main>
+  );
+}
+
+const FATE_KIND_LABELS: Record<FateKind, string> = { opportunity: "機運", contract: "契約", ordeal: "試煉" };
+
+/** 命運頁的開場白：幕僚長遞來三個選擇 */
+const FATE_INTROS: Record<"campaign" | "term", string[]> = {
+  campaign: [
+    "老闆，有三通電話在等你回。只能回一通。",
+    "老闆，今天桌上有三份邀約。幕僚長說：「選一個，其他的就當沒看到。」",
+    "老闆，選戰打到這裡，有三條路擺在你面前。",
+  ],
+  term: [
+    "市長，有三件事同時找上門。你只能處理一件。",
+    "市長，秘書遞來三張便條紙，每一張都寫著「急」。",
+    "市長，幕僚長關上門說：「這三件事，你得選一件。」",
+  ],
+};
+
+/** 政治命運：三張牌選一張，確認後不能反悔 */
+function FateScreen({ state, onPick }: { state: GameState; onPick: (card: FateCard) => void }) {
+  const [picked, setPicked] = useState<string | null>(null);
+  const offer = state.pendingFate!;
+  const cards = offer.cards.map((id) => FATES.find((c) => c.id === id)!);
+  const intros = FATE_INTROS[offer.stage];
+  const intro = intros[(state.seed + state.turn) % intros.length];
+  const chosen = cards.find((c) => c.id === picked);
+  return (
+    <section className={styles.card}>
+      <p className={styles.fateKicker}>政治命運來敲門</p>
+      <h2>{intro}</h2>
+      <div className={styles.fateCards} role="radiogroup" aria-label="三張命運牌">
+        {cards.map((c) => (
+          <button
+            key={c.id}
+            role="radio"
+            aria-checked={picked === c.id}
+            className={styles.fateCard}
+            data-kind={c.kind}
+            onClick={() => setPicked(c.id)}
+          >
+            <span className={styles.fateKind}>{FATE_KIND_LABELS[c.kind]}</span>
+            <strong>{c.title}</strong>
+            <span>{c.scene}</span>
+            <small>{c.hint}</small>
+          </button>
+        ))}
+      </div>
+      <button className={styles.primary} disabled={!chosen} onClick={() => chosen && onPick(chosen)}>
+        {chosen ? `就選「${chosen.title}」` : "先選一張牌"}
+      </button>
+    </section>
+  );
+}
+
+/** 正在生效的命運效果：只寫名字和還剩多久 */
+function ActiveFates({ state }: { state: GameState }) {
+  const active = state.fateEffects ?? [];
+  if (!active.length) return null;
+  const left = (a: (typeof active)[number]) =>
+    a.type === "boost" ? `還能用 ${a.charges} 次` : a.type === "shield" ? "能擋下一次危機" : `還有 ${a.turns} 回合`;
+  return <p className={styles.fateActive}>🃏 生效中：{active.map((a) => `${a.label}（${left(a)}）`).join("、")}</p>;
+}
+
+/** 結局頁：這一局抽到的命運 */
+function FateSummary({ state }: { state: GameState }) {
+  const history = state.fateHistory ?? [];
+  if (!history.length) return null;
+  return (
+    <section className={styles.card}>
+      <h2>你的政治命運</h2>
+      <ul className={styles.list}>
+        {history.map((h) => {
+          const card = FATES.find((c) => c.id === h.cardId);
+          if (!card) return null;
+          const verdict = h.success === undefined ? "" : h.success ? "（成功）" : "（失敗）";
+          return (
+            <li key={h.offerId}>
+              <strong>
+                {FATE_KIND_LABELS[card.kind]}・{card.title}
+                {verdict}
+              </strong>
+              ：{h.outcome}
+            </li>
+          );
+        })}
+      </ul>
+    </section>
   );
 }
 
@@ -955,6 +1064,8 @@ function EndScreen({ state, onRestart }: { state: GameState; onRestart: () => vo
         shareHead={`我在《選舉人生》以「${characterLabel(state)}」${s.election.won ? winText : loseText}`}
         onShareLine={setShareLine}
       />
+
+      <FateSummary state={state} />
 
       {Object.keys(state.arcs).length > 0 && (
         <section className={styles.card}>

@@ -2,6 +2,7 @@
 
 import { mulberry32 } from "./rng";
 import { advanceArc, applyArcEffects, dueArcEvent, expireArcs, fillArcText, withArcFlags } from "./story";
+import { addActiveFates, applyBoost, applyShield, drawFateOffer, isFateTurn, ordealChance, passiveEffects, pickText, scaleFateEffects, tickFates, FATE_SCALE } from "./fate";
 import {
   approvalGainMultiplier,
   BIG_ROUND,
@@ -55,9 +56,10 @@ import {
   type Trait,
   type ArcDef,
   type CampaignScale,
+  type FateCard,
 } from "./types";
 
-export const STATE_VERSION = 15;
+export const STATE_VERSION = 16;
 
 /**
  * 兩個階段，各 12 回合：
@@ -83,6 +85,9 @@ export const stageEnd = (turn: number) => (turn < STAGE_LENGTH ? STAGE_LENGTH : 
 const FIRST_ELECTION_SALT = 0xf1257;
 const FINAL_ELECTION_SALT = 0xe1ec;
 const OPTION_DRAW_SALT = 0x0b7;
+const FATE_DRAW_SALT = 0xfa7e;
+const FATE_ROLL_SALT = 0xd1ce;
+const FATE_TEXT_SALT = 0x7e47;
 
 const clamp = (n: number) => Math.max(0, Math.min(100, n));
 
@@ -242,6 +247,7 @@ export function newGame(
   party: Party,
   background: Background,
   setup?: ProfileSetup,
+  options: { fate?: boolean } = {},
 ): GameState {
   let stats = addDelta(addDelta({ ...START_STATS }, party.startDelta), background.startDelta);
   if (setup) stats = addDelta(stats, setup.city.startDelta);
@@ -284,6 +290,7 @@ export function newGame(
       : undefined,
     opponent,
     arcs: {},
+    ...(options.fate ? { fateOn: true, fateEffects: [], fateHistory: [] } : {}),
     finished: false,
   };
   return withNextEvent(withPayout(base), events);
@@ -407,7 +414,9 @@ export function choose(
   crises: Crisis[] = [],
   parties: Party[] = [],
   arcDefs: ArcDef[] = [],
+  fates: FateCard[] = [],
 ): GameState {
+  if (state.pendingFate) throw new Error("請先選擇政治命運");
   const event = currentEvent(state, events);
   if (!event) throw new Error("遊戲已結束或事件不存在");
   const option = event.options.find((o) => o.id === optionId);
@@ -419,7 +428,10 @@ export function choose(
   let stats = state.stats;
   if (availability === "unlockable") stats = addDelta(stats, option.unlockCost!);
   const resolved = resolveOption(state, option, event);
-  const effects = withStatScaling(state, option.perk ? withPerkDecay(state, events, resolved.effects) : resolved.effects);
+  // 命運牌的加成：用到對應能力或議題時，正面效果放大
+  const boosted = applyBoost(state.fateEffects ?? [], option.skill, eventIssue(event), resolved.effects);
+  let fateEffects = boosted.active;
+  const effects = withStatScaling(state, option.perk ? withPerkDecay(state, events, boosted.effects) : boosted.effects);
   stats = addDelta(stats, effects);
 
   let flags = [...new Set([...state.flags, ...(option.setFlags ?? [])])];
@@ -446,12 +458,17 @@ export function choose(
 
   // 結算到期的延遲後果
   const notices: Notice[] = [...arcResult.notices];
+  if (boosted.used) notices.push({ kind: "fate", tone: "good", text: `🃏 「${boosted.used.label}」這次派上用場了。` });
   for (const p of pending.filter((p) => p.dueTurn <= turn && turn < TURN_PLAN.length)) {
     const before = stats;
     stats = addDelta(stats, p.effects);
     notices.push({ kind: "delayed", tone: "bad", text: p.text, effects: diff(stats, before) });
   }
   pending = pending.filter((p) => !(p.dueTurn <= turn && turn < TURN_PLAN.length));
+
+  // 命運牌的持續效果
+  const passive = passiveEffects(fateEffects);
+  if (Object.keys(passive).length) stats = addDelta(stats, passive);
 
   // 媒體聲量退燒
   if (stats.media > MEDIA_FLOOR) stats = { ...stats, media: Math.max(MEDIA_FLOOR, stats.media - MEDIA_DECAY) };
@@ -562,7 +579,9 @@ export function choose(
   const crisis = checkCrisis({ ...state, stats, flags }, crises, TURN_PLAN[state.turn]);
   if (crisis) {
     const before = stats;
-    stats = addDelta(stats, crisis.effects);
+    const shielded = applyShield(fateEffects, crisis.effects);
+    fateEffects = shielded.active;
+    stats = addDelta(stats, shielded.effects);
     const paid = Math.max(-funds, crisis.funds ?? 0);
     funds += paid;
     flags = [...new Set([...flags, ...(crisis.setFlags ?? [])])];
@@ -571,7 +590,7 @@ export function choose(
       kind: "crisis",
       tone: crisis.tone,
       title: crisis.title,
-      text: crisis.text,
+      text: shielded.used ? `${crisis.text}（「${shielded.used.label}」擋下了一部分衝擊。）` : crisis.text,
       effects: diff(stats, before),
       funds: paid || undefined,
     });
@@ -601,6 +620,7 @@ export function choose(
     scale,
     arrears,
     spending,
+    ...(state.fateOn ? { fateEffects: tickFates(fateEffects) } : {}),
     offered: [],
     history: [
       ...state.history,
@@ -633,6 +653,66 @@ export function choose(
   };
   if (turn >= TURN_PLAN.length) return { ...next, finished: true };
   if (turn % BIG_ROUND === 0) next = withPayout(next);
+  // 政治命運：階段的第 3、6、9 回合結束後三選一；選完才抽下一個事件
+  if (next.fateOn && fates.length && isFateTurn(turn, STAGE_LENGTH)) {
+    const meets = (c?: Condition) => meetsCondition(next, c);
+    const offer = drawFateOffer(next, fates, turn, STAGE_LENGTH, meets, turnRng(next.seed, turn, FATE_DRAW_SALT));
+    if (offer) return { ...next, pendingFate: offer };
+  }
+  return withNextEvent(next, events, arcDefs);
+}
+
+/**
+ * 選一張命運牌：套用效果（試煉在這裡擲骰）、記進命運紀錄，再抽下一個事件。
+ * 同一組命運只能選一次；不算回合，不入帳、不扣開銷、不觸發突發事件。
+ */
+export function chooseFate(state: GameState, events: GameEvent[], cardId: string, fates: FateCard[], arcDefs: ArcDef[] = []): GameState {
+  const offer = state.pendingFate;
+  if (!offer) throw new Error("現在沒有政治命運可以選");
+  if (!offer.cards.includes(cardId)) throw new Error(`這張牌不在這一組命運裡：${cardId}`);
+  const card = fates.find((c) => c.id === cardId);
+  if (!card) throw new Error(`找不到命運牌：${cardId}`);
+
+  const meets = (c?: Condition) => meetsCondition(state, c);
+  let success: boolean | undefined;
+  let effect = card.effect;
+  if (card.ordeal) {
+    success = turnRng(state.seed, state.turn, FATE_ROLL_SALT)() < ordealChance(card, meets);
+    effect = success ? card.ordeal.success : card.ordeal.failure;
+  }
+  if (!effect) throw new Error(`命運牌沒有效果：${cardId}`);
+
+  const stats = addDelta(state.stats, scaleFateEffects(effect.effects ?? {}, card.kind, success));
+  const gained = effect.funds ?? 0;
+  const funds = Math.max(0, state.funds + (gained > 0 ? Math.round(gained * FATE_SCALE.fundsGain) : gained));
+  const arcResult = applyArcEffects(state.arcs, effect.arcs, state.turn, arcDefs);
+  const flags = withArcFlags([...new Set([...state.flags, ...(effect.setFlags ?? [])])], arcResult.arcs, arcDefs);
+  // 之後才找上門的後果也套上係數（代價加重）
+  const pending = effect.delayed
+    ? [...state.pending, { ...effect.delayed, effects: scaleFateEffects(effect.delayed.effects, "contract"), dueTurn: state.turn + effect.delayed.afterTurns, fromEventId: card.id }]
+    : state.pending;
+  const stacked = addActiveFates(state.fateEffects ?? [], card, effect);
+  const notices: Notice[] = [
+    ...arcResult.notices,
+    ...stacked.replaced.map((label): Notice => ({ kind: "fate", tone: "bad", text: `「${label}」的效果被新的命運取代了。` })),
+  ];
+  const outcome = pickText(effect.text, turnRng(state.seed, state.turn, FATE_TEXT_SALT)());
+
+  const next: GameState = {
+    ...state,
+    stats,
+    funds,
+    flags,
+    arcs: arcResult.arcs,
+    pending,
+    notices,
+    fateEffects: stacked.active,
+    fateHistory: [
+      ...(state.fateHistory ?? []),
+      { turn: state.turn, offerId: offer.offerId, offered: offer.cards, cardId, success, outcome, delta: diff(stats, state.stats), funds: funds - state.funds },
+    ],
+    pendingFate: undefined,
+  };
   return withNextEvent(next, events, arcDefs);
 }
 

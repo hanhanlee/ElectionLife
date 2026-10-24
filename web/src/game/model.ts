@@ -203,3 +203,6 @@ export const REMATCH_THRESHOLD = 0.6;
 
 /** 第二階段任期中（任期與任期尾聲）最多幾個回合用來演劇情鏈；其餘到期節點以快報結算 */
 export const ARC_QUOTA_STAGE2 = 3;
+
+/** 政治命運（每階段第 3、6、9 回合後三選一）是否開啟；只影響新開的局，存檔會記住開局時的設定 */
+export const FATE_ENABLED = true;

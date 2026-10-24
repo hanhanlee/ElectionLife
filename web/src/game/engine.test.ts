@@ -1,8 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { ARCS, BACKGROUNDS, BURDENS, CITIES, CRISES, EVENTS, HISTORY as history, LEGENDS, PARTIES, profileSetup, TRAITS } from "@/content";
+import { ARCS, BACKGROUNDS, BURDENS, CITIES, CRISES, EVENTS, FATES, HISTORY as history, LEGENDS, PARTIES, profileSetup, TRAITS } from "@/content";
 import { composeIntro, describeOpponent, drawCharacter, drawProfile } from "./profile";
 import {
   choose,
+  chooseFate,
   currentEvent,
   FIRST_ELECTION_TURN,
   meetsCondition,
@@ -20,7 +21,7 @@ import { CAMPAIGN_SCALES, LOAN_AMOUNT, LOAN_INTEREST, OFFICE_UPKEEP, payout, sca
 import { ENDING_IDS, summarize } from "./endings";
 import { buildEpilogue } from "./epilogue";
 import { mulberry32 } from "./rng";
-import { validateArcs, validateEvents } from "./validate";
+import { validateArcs, validateEvents, validateFates } from "./validate";
 import { staffReport } from "./feedback";
 import { cardKind, cardStory } from "./shareCard";
 import type { Background, GameOption, GameState, Party } from "./types";
@@ -40,6 +41,8 @@ interface PlayOptions {
   strategy?: Strategy;
   party?: Party;
   background?: Background;
+  /** 開啟政治命運，命運牌隨機選 */
+  fate?: boolean;
 }
 
 /** 用隨機策略玩完一局；未指定角色時依 seed 隨機挑 */
@@ -47,8 +50,12 @@ function playRandom(seed: number, opts: PlayOptions = {}): GameState {
   const rand = mulberry32(seed);
   const party = opts.party ?? PARTIES[Math.floor(rand() * PARTIES.length)];
   const background = opts.background ?? BACKGROUNDS[Math.floor(rand() * BACKGROUNDS.length)];
-  let s = newGame(EVENTS, seed, party, background, profileSetup(drawProfile(seed, background, party, TRAITS, BURDENS, CITIES[seed % CITIES.length], LEGENDS)));
+  let s = newGame(EVENTS, seed, party, background, profileSetup(drawProfile(seed, background, party, TRAITS, BURDENS, CITIES[seed % CITIES.length], LEGENDS)), { fate: opts.fate });
   while (!s.finished) {
+    if (s.pendingFate) {
+      s = chooseFate(s, EVENTS, s.pendingFate.cards[Math.floor(rand() * 3)], FATES, ARCS);
+      continue;
+    }
     const e = currentEvent(s, EVENTS)!;
     let open = offeredOptions(s, e).filter((o) => optionAvailability(s, o) !== "locked");
     if (opts.perks === "always" && open.some((o) => o.perk)) open = open.filter((o) => o.perk);
@@ -56,7 +63,7 @@ function playRandom(seed: number, opts: PlayOptions = {}): GameState {
     let pick = open[Math.floor(rand() * open.length)];
     if (opts.strategy === "greedy") pick = [...open].sort((a, b) => (b.effects.approval ?? 0) - (a.effects.approval ?? 0))[0];
     if (opts.strategy === "balanced") pick = [...open].sort((a, b) => balancedScore(b) - balancedScore(a))[0];
-    s = choose(s, EVENTS, pick.id, CRISES, PARTIES, ARCS);
+    s = choose(s, EVENTS, pick.id, CRISES, PARTIES, ARCS, opts.fate ? FATES : []);
   }
   return s;
 }
@@ -1001,3 +1008,70 @@ describe("分享圖卡", () => {
     expect(endingsSeen.size).toBeGreaterThanOrEqual(35);
   });
 });
+
+describe("政治命運", () => {
+  const fateGames = Array.from({ length: 600 }, (_, i) => playRandom(i * 53 + 11, { fate: true }));
+
+  it("卡池資料完整：效果、引用的能力與劇情存在，牌面提示不寫數字，每個階段三種類型都夠", () => {
+    expect(validateFates(FATES, ARCS)).toEqual([]);
+    expect(FATES.length).toBeGreaterThanOrEqual(100);
+  });
+
+  it("只在每個階段的第 3、6、9 回合後出現；落選的局最多 3 次，當選的局最多 6 次", () => {
+    for (const g of fateGames) {
+      const turns = (g.fateHistory ?? []).map((h) => h.turn);
+      const allowed = g.firstElection?.won ? [3, 6, 9, 15, 18, 21] : [3, 6, 9];
+      for (const t of turns) expect(allowed, `seed ${g.seed}`).toContain(t);
+      expect(new Set(turns).size).toBe(turns.length);
+    }
+    expect(fateGames.some((g) => (g.fateHistory ?? []).length === 6)).toBe(true);
+  });
+
+  it("每次三張不同的牌、多半湊得出兩種以上類型；同一局出現過的牌不會再出現", () => {
+    let mixed = 0, offers = 0;
+    for (const g of fateGames) {
+      const shown = (g.fateHistory ?? []).flatMap((h) => h.offered);
+      expect(new Set(shown).size, `seed ${g.seed}`).toBe(shown.length);
+      for (const h of g.fateHistory ?? []) {
+        expect(new Set(h.offered).size).toBe(3);
+        offers++;
+        if (new Set(h.offered.map((id) => FATES.find((c) => c.id === id)!.kind)).size >= 2) mixed++;
+      }
+    }
+    expect(mixed / offers).toBeGreaterThan(0.95);
+  });
+
+  it("沒開命運的局不會出現命運牌（預設關閉，既有平衡測試不受影響）", () => {
+    for (const g of games({}, 100)) expect(g.fateHistory).toBeUndefined();
+  });
+
+  it("命運頁不能跳過、同一組不能選兩次；同一個 seed 與選擇會得到同一個結果", () => {
+    let s = newGame(EVENTS, 4242, PARTIES[0], BACKGROUNDS[1], profileSetup(drawProfile(4242, BACKGROUNDS[1], PARTIES[0], TRAITS, BURDENS, CITIES[0], LEGENDS)), { fate: true });
+    while (!s.pendingFate) {
+      const e = currentEvent(s, EVENTS)!;
+      s = choose(s, EVENTS, offeredOptions(s, e).find((o) => optionAvailability(s, o) === "open")!.id, CRISES, PARTIES, ARCS, FATES);
+    }
+    expect(currentEvent(s, EVENTS)).toBeUndefined();
+    expect(() => choose(s, EVENTS, "x", CRISES, PARTIES, ARCS, FATES)).toThrow();
+    const card = s.pendingFate.cards[0];
+    const a = chooseFate(s, EVENTS, card, FATES, ARCS);
+    const b = chooseFate(s, EVENTS, card, FATES, ARCS);
+    expect(a).toEqual(b);
+    expect(() => chooseFate(a, EVENTS, card, FATES, ARCS)).toThrow();
+    expect(currentEvent(a, EVENTS)).toBeDefined();
+    expect(a.turn).toBe(s.turn);
+  });
+
+  it("試煉有成有敗；正向效果同時最多兩個；劇情鏈的任期配額不變", () => {
+    const ordeals = fateGames.flatMap((g) => (g.fateHistory ?? []).filter((h) => h.success !== undefined));
+    const rate = ordeals.filter((h) => h.success).length / ordeals.length;
+    expect(rate).toBeGreaterThan(0.3);
+    expect(rate).toBeLessThan(0.7);
+    for (const g of fateGames) {
+      expect((g.fateEffects ?? []).length).toBeLessThanOrEqual(2);
+      const arcTurns = g.deck.filter((id, t) => ["term", "incumbency"].includes(TURN_PLAN[t]) && EVENTS.find((e) => e.id === id)?.arc).length;
+      expect(arcTurns).toBeLessThanOrEqual(3);
+    }
+  });
+});
+

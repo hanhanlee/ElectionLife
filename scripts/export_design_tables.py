@@ -203,8 +203,51 @@ def main() -> int:
     for f, e, o in sorted(paid, key=lambda x: x[0]):
         out.append(f"| {f} | {e['title']} | {esc(o['label'])} | {esc(o['outcome'])} |")
     out.append("")
+
+    fates = load("fates.json")
+    kinds = {"opportunity": "機運", "contract": "契約", "ordeal": "試煉"}
+    stages = {"campaign": "選戰", "term": "任期"}
+
+    def fate_effect(e):
+        parts = [delta(e.get("effects"))]
+        if e.get("funds"):
+            parts.append(f"經費 {e['funds']:+d}")
+        if e.get("boost"):
+            b = e["boost"]
+            parts.append(f"加成〔{'/'.join(b.get('skills', []) + b.get('issues', []))}〕{b['charges']} 次、{b['turns']} 回合內")
+        if e.get("passive"):
+            p = e["passive"]
+            parts.append(f"每回合 {delta(p['effects'])}（{p['turns']} 回合）")
+        if e.get("shield"):
+            parts.append(f"擋下一次危機的一半衝擊（{e['shield']['turns']} 回合內）")
+        if e.get("arcs"):
+            parts.append("帳本 " + "、".join(a["id"] + ("（開啟）" if a.get("open") else "") + (f"→{a['status']}" if a.get("status") else "") for a in e["arcs"]))
+        if e.get("delayed"):
+            d = e["delayed"]
+            parts.append(f"{d['afterTurns']} 回合後 {delta(d['effects'])}")
+        if e.get("setFlags"):
+            parts.append("旗標 " + ",".join(e["setFlags"]))
+        return "；".join(p for p in parts if p and p != "—") or "—"
+
+    out += ["## F. 政治命運牌", "",
+            f"共 {len(fates)} 張：" + "、".join(f"{kinds[k]} {sum(c['kind'] == k for c in fates)}" for k in kinds) + "。"
+            "表中是牌面寫的原始效果；實際套用時機運與契約的好處 ×0.4、代價 ×1.5，拿到的經費 ×0.6，"
+            "試煉成功 ×0.75、失敗 ×1.35（`fate.ts` 的 `FATE_SCALE`）。試煉的成功率不顯示給玩家。", ""]
+    for k, label in kinds.items():
+        out += [f"### {label}", "", "| 牌 | 階段 | 條件 | 效果 |", "|---|---|---|---|"]
+        for c in [c for c in fates if c["kind"] == k]:
+            where = "/".join(stages[s] for s in c["stages"])
+            if c.get("ordeal"):
+                o = c["ordeal"]
+                mods = "、".join(f"{cond(m['when'])} {m['add']:+.2f}" for m in o["mods"])
+                eff = f"基礎成功率 {o['base']:.2f}（{mods}）；成功：{fate_effect(o['success'])}；失敗：{fate_effect(o['failure'])}"
+            else:
+                eff = fate_effect(c["effect"])
+            out.append(f"| **{c['title']}**（`{c['id']}`） | {where} | {cond(c.get('conditions'))} | {esc(eff)} |")
+        out.append("")
+
     OUT.write_text("\n".join(out) + "\n", encoding="utf-8")
-    print(f"寫入 {OUT.relative_to(ROOT)}：{len(events)} 事件、{len(crises)} 突發事件")
+    print(f"寫入 {OUT.relative_to(ROOT)}：{len(events)} 事件、{len(crises)} 突發事件、{len(fates)} 張命運牌")
     return 0
 
 

@@ -173,7 +173,7 @@ export interface Crisis {
 }
 
 export interface Notice {
-  kind: "delayed" | "crisis" | "funds" | "story";
+  kind: "delayed" | "crisis" | "funds" | "story" | "fate";
   tone: "bad" | "good";
   title?: string;
   text: string;
@@ -261,6 +261,85 @@ export interface ArcEffect {
 export interface ArcLogEntry {
   turn: number;
   text: string;
+}
+
+// ---------- 政治命運（Roguelite 三選一） ----------
+
+/** 機運：立即機會或有限次加成；契約：較大的好處換之後的人情與後果；試煉：高風險，成敗由隨機決定 */
+export type FateKind = "opportunity" | "contract" | "ordeal";
+
+/** 命運牌出現的階段：選戰（第一階段）或任期（第二階段） */
+export type FateStage = "campaign" | "term";
+
+/** 一張牌選下去之後發生的事。文字是故事，數值在背後結算 */
+export interface FateEffect {
+  /** 結果文案（多個版本時依 seed 挑一個） */
+  text: string | string[];
+  effects?: StatDelta;
+  funds?: number;
+  setFlags?: string[];
+  /** 開啟或更新政治帳本（沿用劇情鏈的效果格式） */
+  arcs?: ArcEffect[];
+  /** 之後才找上門的後果 */
+  delayed?: DelayedEffect;
+  /** 有次數的加成：接下來用到這些能力或議題的選項，正面效果放大 */
+  boost?: { skills?: Skill[]; issues?: Issue[]; charges: number; turns: number; label: string };
+  /** 持續效果：接下來每回合 */
+  passive?: { effects: StatDelta; turns: number; label: string };
+  /** 下一次突發事件的負面衝擊減半 */
+  shield?: { turns: number; label: string };
+}
+
+export interface FateCard {
+  id: string;
+  kind: FateKind;
+  title: string;
+  /** 牌面情境：誰打電話來、發生了什麼 */
+  scene: string;
+  /** 牌面提示：好處與代價，用故事語言寫，不寫數字 */
+  hint: string;
+  stages: FateStage[];
+  weight?: number;
+  conditions?: Condition;
+  /** 同一組的效果同時只能有一個 */
+  stackGroup?: string;
+  /** 機運與契約的效果 */
+  effect?: FateEffect;
+  /** 試煉：成功率在背後計算，不顯示給玩家 */
+  ordeal?: { base: number; mods: { when: Condition; add: number }[]; success: FateEffect; failure: FateEffect };
+  source?: Pick<EventSource, "prototype" | "realCase">;
+}
+
+export interface PendingFate {
+  offerId: string;
+  stage: FateStage;
+  cards: string[];
+}
+
+/** 正在生效的命運效果（加成、持續、護盾） */
+export interface ActiveFate {
+  cardId: string;
+  label: string;
+  type: "boost" | "passive" | "shield";
+  /** 還剩幾個主要回合 */
+  turns: number;
+  charges?: number;
+  skills?: Skill[];
+  issues?: Issue[];
+  effects?: StatDelta;
+  stackGroup?: string;
+}
+
+export interface FateHistoryEntry {
+  turn: number;
+  offerId: string;
+  offered: string[];
+  cardId: string;
+  /** 試煉才有：成功或失敗 */
+  success?: boolean;
+  outcome: string;
+  delta: Stats;
+  funds: number;
 }
 
 export interface ArcState {
@@ -563,5 +642,11 @@ export interface GameState {
   arcs: Record<string, ArcState>;
   /** 競選期結束後的第一次投票結果；落選則遊戲提前結束 */
   firstElection?: ElectionSnapshot;
+  /** 這一局有沒有政治命運（開局決定，同一局不會中途改變） */
+  fateOn?: boolean;
+  /** 等待玩家三選一的命運；有值時不會出現下一個事件 */
+  pendingFate?: PendingFate;
+  fateEffects?: ActiveFate[];
+  fateHistory?: FateHistoryEntry[];
   finished: boolean;
 }

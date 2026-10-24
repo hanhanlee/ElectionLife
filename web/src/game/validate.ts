@@ -1,7 +1,7 @@
 // 事件庫檢查：給 agent 與 CI 用，任何錯誤都應阻止上線。
 
 import { TURN_PLAN } from "./engine";
-import { ALL_STATS, SKILLS, type ArcDef, type GameEvent, type Phase } from "./types";
+import { ALL_STATS, ISSUES, SKILLS, type ArcDef, type FateCard, type FateEffect, type GameEvent, type Phase } from "./types";
 
 /**
  * 要花競選經費的選項，文字必須看得出錢花在哪裡。
@@ -113,6 +113,40 @@ export function validateArcs(arcs: ArcDef[], events: GameEvent[]): string[] {
     if (e.arc && !arcs.some((a) => a.nodes.some((n) => n.event === e.id))) errors.push(`事件 ${e.id}：標記為劇情 ${e.arc} 但不是任何節點`);
     for (const o of e.options) {
       for (const eff of o.arcs ?? []) if (!arcIds.has(eff.id)) errors.push(`事件 ${e.id}／${o.id}：劇情 ${eff.id} 不存在`);
+    }
+  }
+  return errors;
+}
+
+/** 命運牌檢查：效果完整、引用的能力／議題／劇情存在、牌面提示不寫數字、每個階段都湊得出三張不同類型 */
+export function validateFates(cards: FateCard[], arcs: ArcDef[]): string[] {
+  const errors: string[] = [];
+  const ids = new Set<string>();
+  const arcIds = new Set(arcs.map((a) => a.id));
+  const checkEffect = (id: string, e: FateEffect | undefined, what: string) => {
+    if (!e) return errors.push(`命運 ${id}：缺少${what}`);
+    if (!e.text || (Array.isArray(e.text) && !e.text.length)) errors.push(`命運 ${id}：${what}沒有結果文字`);
+    for (const s of e.boost?.skills ?? []) if (!(SKILLS as readonly string[]).includes(s)) errors.push(`命運 ${id}：能力 ${s} 不存在`);
+    for (const i of e.boost?.issues ?? []) if (!(ISSUES as readonly string[]).includes(i)) errors.push(`命運 ${id}：議題 ${i} 不存在`);
+    for (const a of e.arcs ?? []) if (!arcIds.has(a.id)) errors.push(`命運 ${id}：劇情 ${a.id} 不存在`);
+  };
+  for (const c of cards) {
+    if (ids.has(c.id)) errors.push(`命運 ${c.id}：id 重複`);
+    ids.add(c.id);
+    if (!c.stages.length) errors.push(`命運 ${c.id}：沒有指定階段`);
+    if (/[0-9０-９]/.test(c.hint)) errors.push(`命運 ${c.id}：牌面提示不寫數字`);
+    if (c.kind === "ordeal") {
+      if (!c.ordeal) errors.push(`命運 ${c.id}：試煉缺少成功與失敗`);
+      else {
+        checkEffect(c.id, c.ordeal.success, "成功結果");
+        checkEffect(c.id, c.ordeal.failure, "失敗結果");
+      }
+    } else checkEffect(c.id, c.effect, "效果");
+  }
+  for (const stage of ["campaign", "term"] as const) {
+    const pool = cards.filter((c) => c.stages.includes(stage) && !c.conditions);
+    for (const kind of ["opportunity", "contract", "ordeal"] as const) {
+      if (pool.filter((c) => c.kind === kind).length < 3) errors.push(`命運：${stage} 階段沒有條件限制的 ${kind} 少於 3 張`);
     }
   }
   return errors;

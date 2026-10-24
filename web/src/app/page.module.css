@@ -689,3 +689,85 @@
   text-align: center;
   text-decoration: none;
 }
+
+/* 政治命運 */
+.fateKicker {
+  margin: 0;
+  color: #e0a84f;
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+}
+
+.fateCards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.fateCard {
+  --kind: #6fb37a;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  text-align: left;
+  color: inherit;
+  font: inherit;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 4px solid var(--kind);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.fateCard[data-kind="contract"] {
+  --kind: #e0a84f;
+}
+
+.fateCard[data-kind="ordeal"] {
+  --kind: #d9604c;
+}
+
+.fateCard:hover {
+  transform: translateY(-2px);
+}
+
+.fateCard[aria-checked="true"] {
+  border-color: var(--kind);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 2px var(--kind);
+}
+
+.fateCard strong {
+  font-size: 1.1rem;
+}
+
+.fateCard small {
+  opacity: 0.8;
+  line-height: 1.5;
+}
+
+.fateKind {
+  color: var(--kind);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.fateActive {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fateCard {
+    transition: none;
+  }
+
+  .fateCard:hover {
+    transform: none;
+  }
+}
