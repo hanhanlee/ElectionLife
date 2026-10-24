@@ -36,6 +36,8 @@ import { difficultyLabel, estimateFirstWinRate } from "@/game/difficulty";
 import { composeIntro, describeOpponent, drawCharacter, type DrawnCharacter } from "@/game/profile";
 import RollingScreen from "./RollingScreen";
 import ResultBanner from "./ResultBanner";
+import ShareCard from "./ShareCard";
+import { cardKind, cardStory, firstPerson } from "@/game/shareCard";
 import { buildEpilogue } from "@/game/epilogue";
 import { staffReport } from "@/game/feedback";
 import { arcProgress, fillArcText, openArcs } from "@/game/story";
@@ -169,7 +171,17 @@ export default function Game() {
   if (!game) {
     return (
       <main className={styles.main}>
-        <h1 className={styles.title}>選舉人生：市長篇</h1>
+        {/* 主視覺已經寫著標題，文字標題留給螢幕閱讀器與搜尋引擎 */}
+        <h1 className={styles.visuallyHidden}>選舉人生：市長篇</h1>
+        {/* eslint-disable-next-line @next/next/no-img-element -- 靜態輸出不使用 next/image 的圖片最佳化 */}
+        <img
+          className={styles.hero}
+          src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/title.webp`}
+          alt="選舉人生：市長篇。候選人站在競選宣傳車上，對著夕陽下的城市揮手。"
+          width={1200}
+          height={800}
+          fetchPriority="high"
+        />
         <p className={styles.lead}>
           你的城市、政黨、出身和個性，全部隨機決定。你只能決定接下來怎麼選。當選之後，還有四年任期和下一場選舉在等你。
           事件與政見取材自過去 20 年的選舉公報與公開報導，並已虛構化。
@@ -347,6 +359,7 @@ function CharacterReveal({ character, onStart }: { character: DrawnCharacter; on
       {profile.rivals && <OpponentCard opponent={profile.rivals.first} heading="你的對手" />}
       <section className={styles.card}>
         <CardLabel label="競選城市" hint="選民結構與他們在意的議題，會放大或縮小你每個選擇的效果" />
+        <CityImage id={city.id} name={city.name} />
         <h2>{city.name}</h2>
         <p>{city.tagline}</p>
         <p>{city.voters}</p>
@@ -486,6 +499,25 @@ function StatBar({ stats }: { stats: Stats }) {
 
 function formatFunds(n: number): string {
   return `${n.toLocaleString()} 萬`;
+}
+
+/** 城市插畫（web/public/cities/<城市 id>.webp）；載入失敗時直接隱藏，不影響卡片其他內容 */
+function CityImage({ id, name }: { id: string; name: string }) {
+  const [failed, setFailed] = useState(false);
+  if (failed) return null;
+  return (
+    // eslint-disable-next-line @next/next/no-img-element -- 靜態輸出不使用 next/image 的圖片最佳化
+    <img
+      className={styles.cityImage}
+      src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/cities/${id}.webp`}
+      alt={`${name}的城市插畫`}
+      width={1200}
+      height={800}
+      loading="lazy"
+      decoding="async"
+      onError={() => setFailed(true)}
+    />
+  );
 }
 
 /** 卡片最上面的小字：這張卡在描述什麼，以及它對遊戲的影響 */
@@ -760,7 +792,16 @@ const REFLECT_PREFIX: Record<ReflectionItem["kind"], string> = {
 };
 
 /** 換你當選民：把玩家自己的選擇丟回給玩家，以選民的身分表態 */
-function VoterReflection({ items, shareHead }: { items: ReflectionItem[]; shareHead: string }) {
+function VoterReflection({
+  items,
+  shareHead,
+  onShareLine,
+}: {
+  items: ReflectionItem[];
+  shareHead: string;
+  /** 答完題後，把結果交給分享圖卡 */
+  onShareLine?: (line: string) => void;
+}) {
   const [answers, setAnswers] = useState<Record<string, boolean>>({});
   const [copied, setCopied] = useState(false);
   const tempting = items.filter((i) => i.kind === "tempting");
@@ -772,6 +813,15 @@ function VoterReflection({ items, shareHead }: { items: ReflectionItem[]; shareH
     tempting.length > 0
       ? `${shareHead}。我用來拿選票的 ${tempting.length} 招裡，有 ${rejected} 招，我自己當選民時不會支持。`
       : `${shareHead}，而且沒用任何拿原則換選票的招。`;
+
+  useEffect(() => {
+    if (!done || !onShareLine) return;
+    onShareLine(
+      tempting.length > 0
+        ? `我用來拿選票的 ${tempting.length} 招裡，有 ${rejected} 招，我自己當選民時不會支持。`
+        : "我沒用任何拿原則換選票的招。",
+    );
+  }, [done, rejected, tempting.length, onShareLine]);
 
   if (items.length === 0) return null;
 
@@ -862,6 +912,7 @@ function EndScreen({ state, onRestart }: { state: GameState; onRestart: () => vo
   const challengers = HISTORY.challengers[party.id as keyof typeof HISTORY.challengers];
 
   const story = buildEpilogue(state, EVENTS, s, ARCS);
+  const [shareLine, setShareLine] = useState<string>();
 
   return (
     <main className={styles.main}>
@@ -883,6 +934,16 @@ function EndScreen({ state, onRestart }: { state: GameState; onRestart: () => vo
         <p><small>{s.persona}</small></p>
       </section>
 
+      <ShareCard
+        kind={cardKind(state, s)}
+        label={characterLabel(state)}
+        result={s.election.won ? winText : loseText}
+        headline={story.headline}
+        story={cardStory(state, s)}
+        line={shareLine ?? firstPerson(s.persona)}
+        won={s.election.won}
+      />
+
       <div className={styles.endActions}>
         <button className={styles.primary} onClick={onRestart}>再來一局</button>
         <a className={styles.analysisLink} href="#analysis">往下看這一局的事件分析 ↓</a>
@@ -892,6 +953,7 @@ function EndScreen({ state, onRestart }: { state: GameState; onRestart: () => vo
       <VoterReflection
         items={s.reflection}
         shareHead={`我在《選舉人生》以「${characterLabel(state)}」${s.election.won ? winText : loseText}`}
+        onShareLine={setShareLine}
       />
 
       {Object.keys(state.arcs).length > 0 && (
@@ -921,7 +983,7 @@ function EndScreen({ state, onRestart }: { state: GameState; onRestart: () => vo
         {s.leftovers.length > 0 && (
           <>
             <h3>留給下一任的帳單</h3>
-            {s.leftovers.map((t) => <p key={t} className={styles.notice}>{t}</p>)}
+            {s.leftovers.map((t, i) => <p key={i} className={styles.notice}>{t}</p>)}
           </>
         )}
       </section>

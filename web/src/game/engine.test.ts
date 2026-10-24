@@ -17,11 +17,12 @@ import {
   runElection,
 } from "./engine";
 import { CAMPAIGN_SCALES, LOAN_AMOUNT, LOAN_INTEREST, OFFICE_UPKEEP, payout, scaleCost, SKILL_EFFECTS, STAGE_LENGTH } from "./model";
-import { summarize } from "./endings";
+import { ENDING_IDS, summarize } from "./endings";
 import { buildEpilogue } from "./epilogue";
 import { mulberry32 } from "./rng";
 import { validateArcs, validateEvents } from "./validate";
 import { staffReport } from "./feedback";
+import { cardKind, cardStory } from "./shareCard";
 import type { Background, GameOption, GameState, Party } from "./types";
 
 type PerkPolicy = "random" | "always" | "never";
@@ -158,7 +159,8 @@ describe("回合引擎", () => {
         if (tag && !(s.character.formerParty && tag.startsWith("party-"))) expect(s.flags).toContain(tag);
       }
       if (s.deck.includes("t-housing-progress")) expect(s.flags).toContain("promise-housing-big");
-      if (s.deck.includes("t-cash-due")) expect(s.flags).toContain("promise-cash");
+      // 「發錢的時候到了」是發錢政見劇情的節點：開出過福利支票才會出場
+      if (s.deck.includes("t-cash-due")) expect(s.arcs.cash).toBeDefined();
     }
   });
 
@@ -876,6 +878,16 @@ describe("劇情鏈", () => {
 
   const games = Array.from({ length: 600 }, (_, i) => playRandom(i * 131 + 7));
 
+  it("每條劇情鏈在模擬中都會開啟，而且至少有一個節點真的出場", () => {
+    const more = Array.from({ length: 1500 }, (_, i) => playRandom(i * 37 + 1));
+    for (const a of ARCS) {
+      const opened = more.filter((g) => g.arcs[a.id]).length;
+      const played = more.filter((g) => g.deck.some((id) => EVENTS.find((e) => e.id === id)?.arc === a.id)).length;
+      expect(opened, a.id).toBeGreaterThan(0);
+      expect(played, a.id).toBeGreaterThan(0);
+    }
+  });
+
   it("沒收過建商的錢，就不會遇到「金主的請託」", () => {
     for (const g of games) {
       if (g.deck.includes("t-donor-favor")) expect(g.arcs.donor, g.seed.toString()).toBeDefined();
@@ -943,5 +955,49 @@ describe("劇情鏈", () => {
 
   it("同一個 seed、同一串選擇，帳本完全相同", () => {
     for (const seed of [11, 202, 3003]) expect(playRandom(seed).arcs).toEqual(playRandom(seed).arcs);
+  });
+});
+
+describe("分享圖卡", () => {
+  it("醜聞與破產優先於輸贏；五種底圖都會用到", () => {
+    const seen: Record<string, number> = {};
+    for (let seed = 1; seed <= 1500; seed++) {
+      const g = playRandom(seed * 37);
+      const s = summarize(g, EVENTS);
+      const k = cardKind(g, s);
+      seen[k] = (seen[k] ?? 0) + 1;
+      if (g.flags.includes("investigated")) expect(k).toBe("scandal");
+      if (g.flags.includes("loan-defaulted") && k !== "scandal") expect(k).toBe("broke");
+      if (k === "win") expect(s.election.won).toBe(true);
+      if (k === "dawn" || k === "loss") expect(s.election.won).toBe(false);
+    }
+    console.log("分享圖卡底圖：" + Object.entries(seen).map(([k, n]) => `${k} ${((n / 1500) * 100).toFixed(1)}%`).join("、"));
+    for (const k of ["scandal", "broke", "win", "dawn", "loss"]) expect(seen[k], k).toBeGreaterThan(0);
+  });
+
+  it("小故事：依分數挑 1–3 句再接結局，長度控制在圖卡放得下的範圍", () => {
+    const lengths: number[] = [];
+    const samples: string[] = [];
+    const endingsSeen = new Set<string>();
+    for (let seed = 1; seed <= 1500; seed++) {
+      const g = playRandom(seed * 37);
+      const s = summarize(g, EVENTS);
+      const story = cardStory(g, s);
+      lengths.push(story.length);
+      expect(story).toMatch(/[。？！」]$/);
+      if (g.opponent) expect(story).not.toContain(g.opponent.name);
+      endingsSeen.add(s.ending.id);
+      expect(story).not.toContain("undefined");
+      if (seed % 300 === 0) samples.push(story);
+    }
+    lengths.sort((a, b) => a - b);
+    console.log(`小故事長度：中位數 ${lengths[750]}、最長 ${lengths[lengths.length - 1]}\n` + samples.join("\n"));
+    expect(lengths[lengths.length - 1]).toBeLessThanOrEqual(130);
+    expect(lengths[750]).toBeGreaterThan(30);
+    // 每種結局都要有圖卡收尾句；連任勝選不能再集中在單一結局
+    const g = playRandom(37);
+    const s = summarize(g, EVENTS);
+    for (const id of ENDING_IDS) expect(cardStory(g, { ...s, ending: { id, title: "", tagline: "" } }), id).toMatch(/[。？！」]$/);
+    expect(endingsSeen.size).toBeGreaterThanOrEqual(35);
   });
 });

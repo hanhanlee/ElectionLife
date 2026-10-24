@@ -631,3 +631,61 @@
   border-radius: 8px;
   border: 1px dashed var(--accent);
 }
+
+/* 城市插畫：滿版放在城市卡片頂端 */
+.cityImage {
+  display: block;
+  width: calc(100% + 40px);
+  max-width: none;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  margin: 0 -20px;
+  background: var(--border);
+}
+
+/* 標題主視覺 */
+.hero {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 14px;
+  background: var(--border);
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* 分享圖卡 */
+.shareCard {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.shareActions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.shareActions a {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+}

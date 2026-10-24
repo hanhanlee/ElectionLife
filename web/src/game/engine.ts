@@ -177,6 +177,11 @@ function weightedPick<T>(items: T[], weight: (t: T) => number, r: number): T {
   return items[items.length - 1];
 }
 
+/** 城市專屬事件的抽選權重加成：劇情鏈變多後會佔掉任期中的回合，讓城市特色仍然常出現 */
+const CITY_EVENT_BOOST = 1.25;
+
+const drawWeight = (e: GameEvent) => (e.weight ?? 1) * (e.conditions?.flags?.some((f) => f.startsWith("city-")) ? CITY_EVENT_BOOST : 1);
+
 function drawEvent(state: GameState, events: GameEvent[], turn: number, arcs: ArcDef[] = []): GameEvent {
   // 到期的劇情節點優先出場；劇情節點事件不會被隨機抽到
   const due = dueArcEvent(state, events, turn, TURN_PLAN, arcs);
@@ -186,7 +191,7 @@ function drawEvent(state: GameState, events: GameEvent[], turn: number, arcs: Ar
   const eligible = unused.filter((e) => meetsCondition(state, e.conditions));
   const pool = eligible.length > 0 ? eligible : unused;
   if (pool.length === 0) throw new Error(`事件池不足：phase=${phase}, turn=${turn}`);
-  return weightedPick(pool, (e) => e.weight ?? 1, turnRng(state.seed, turn)());
+  return weightedPick(pool, drawWeight, turnRng(state.seed, turn)());
 }
 
 /** 不花經費、沒有數值門檻、也不動用公家資源的選項：保證玩家永遠有一條乾淨的路可走 */

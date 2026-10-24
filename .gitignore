@@ -4,3 +4,5 @@ __pycache__/
 # 選舉公報全文含候選人地址與電話：只留在本機供 check_quotes.py 比對，不進 repo
 # 需要時用 scripts/fetch_bulletins.py 依 manifest 重抓
 data/raw/cec_bulletin/**/*.txt
+# 城市插畫原檔（每張約 3 MB）只留在本機；遊戲用的是 web/public/cities/ 裡壓縮過的 WebP
+pics/
