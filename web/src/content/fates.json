@@ -63,7 +63,7 @@
     "kind": "opportunity",
     "title": "跨黨協商窗口",
     "scene": "對面陣營的一位資深議員私下傳話：有些案子，其實可以談。",
-    "hint": "跟議會協商會順利很多；黨內有人會說你太軟。",
+    "hint": "跟議會協商會順利很多；自己的支持者有人會說你太軟。",
     "stages": ["term"],
     "stackGroup": "council",
     "effect": { "text": "你們在議會的咖啡廳談了半小時。隔天，兩個卡了半年的案子排進了議程。", "effects": { "council": 6, "party": -3 }, "boost": { "skills": ["negotiate", "admin"], "charges": 2, "turns": 4, "label": "跨黨協商窗口" } }
@@ -635,7 +635,8 @@
     "scene": "幾個政黨的青年部想組一個跨黨聯盟，推動青年住宅與勞動政策，邀你掛名。",
     "hint": "青年議題的推動力變強；黨內的人會問你站在哪一邊。",
     "stages": ["campaign", "term"],
-    "effect": { "text": "聯盟成立記者會上，各黨的年輕人站在一起。你的黨部主委沒有出席。", "effects": { "approval": 3, "integrity": 2, "party": -4 }, "boost": { "issues": ["housing", "welfare"], "charges": 2, "turns": 4, "label": "跨黨青年聯盟" } }
+    "effect": { "text": "聯盟成立記者會上，各黨的年輕人站在一起。你的黨部主委沒有出席。", "effects": { "approval": 3, "integrity": 2, "party": -4 }, "boost": { "issues": ["housing", "welfare"], "charges": 2, "turns": 4, "label": "跨黨青年聯盟" } },
+    "conditions": { "notFlags": ["party-independent"] }
   },
   {
     "id": "c-culture",
@@ -1013,10 +1014,10 @@
     "id": "r-hold-line",
     "kind": "ordeal",
     "title": "政策逆風仍不改口",
-    "scene": "你的一項政策民調很差，黨內要你改口。你決定堅持。",
+    "scene": "你的一項政策民調很差，身邊的人都要你改口。你決定堅持。",
     "hint": "高風險：如果之後證明你是對的就是遠見，如果沒有，就是固執。",
     "stages": ["term"],
-    "ordeal": { "base": 0.4, "mods": [{ "when": { "flags": ["trait-principled"] }, "add": 0.15 }, { "when": { "flags": ["trait-indomitable"] }, "add": 0.15 }, { "when": { "min": { "achievement": 45 } }, "add": 0.15 }, { "when": { "flags": ["trait-opportunist"] }, "add": -0.1 }], "success": { "text": "半年後，那項政策的成果開始出現。當初罵你的名嘴說：「我那時候可能太急了。」", "effects": { "approval": 8, "integrity": 6, "achievement": 4, "party": -2 } }, "failure": { "text": "政策的成果一直沒有出現。黨內的人開始在背後說，你是「不知變通的那一個」。", "effects": { "approval": -8, "party": -6, "integrity": 3 } } }
+    "ordeal": { "base": 0.4, "mods": [{ "when": { "flags": ["trait-principled"] }, "add": 0.15 }, { "when": { "flags": ["trait-indomitable"] }, "add": 0.15 }, { "when": { "min": { "achievement": 45 } }, "add": 0.15 }, { "when": { "flags": ["trait-opportunist"] }, "add": -0.1 }], "success": { "text": "半年後，那項政策的成果開始出現。當初罵你的名嘴說：「我那時候可能太急了。」", "effects": { "approval": 8, "integrity": 6, "achievement": 4, "party": -2 } }, "failure": { "text": "政策的成果一直沒有出現。身邊的人開始在背後說，你是「不知變通的那一個」。", "effects": { "approval": -8, "party": -6, "integrity": 3 } } }
   },
   {
     "id": "r-third-party",

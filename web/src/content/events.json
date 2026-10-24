@@ -37,7 +37,8 @@
     "conditions": { "flags": ["bg-councilor"] },
     "options": [
       { "id": "expose", "label": "在議會爆料市府弊案，衝高聲量", "outcome": "你上了所有電視台。市府說你「為選舉抹黑」。", "effects": { "approval": 6, "council": -4, "integrity": -2, "media": 8 }, "skill": "confront" },
-      { "id": "elders", "label": "請黨內大老輪流站台", "outcome": "大老們很給面子。你在照片裡站在第二排。", "effects": { "party": 6, "approval": 2 } },
+      { "id": "elders", "label": "請黨內大老輪流站台", "outcome": "大老們很給面子。你在照片裡站在第二排。", "effects": { "party": 6, "approval": 2 }, "appearsIf": { "notFlags": ["party-independent"] } },
+      { "id": "notables", "label": "請地方仕紳與老里長聯名推薦", "outcome": "仕紳們很給面子。你在照片裡站在正中間，旁邊每個人都比你有名。", "effects": { "party": 5, "approval": 2 }, "appearsIf": { "flags": ["party-independent"] } },
       { "id": "ground", "label": "走遍每一個里，從基層做起", "outcome": "你的鞋底磨壞了三雙。知名度慢慢爬到 25%。", "effects": { "approval": 3, "party": 3 }, "skill": "grassroots" }
     ],
     "source": { "status": "draft", "prototype": "市議員挑戰縣市長時，常面臨全市知名度不足的問題。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：九合一大選／黃偉哲小勝4.5萬票連任成功 謝龍介得票率創藍營台南市紀錄", "url": "https://news.pts.org.tw/article/611246", "quote": "黃偉哲小勝4.5萬票連任成功 謝龍介得票率創藍營台南市紀錄", "accessed": "2026-10-23" }], "realCase": "2022 年臺南市長選舉，市議員挑戰現任市長" }
@@ -90,7 +91,7 @@
     "title": "黨中央想換人",
     "scenario": "黨中央的內部民調顯示你落後。秘書長私下說：「如果你願意讓賢，黨可以安排你去更好的位子。」",
     "tags": ["參選", "政黨", "連任"],
-    "conditions": { "flags": ["bg-incumbent"] },
+    "conditions": { "flags": ["bg-incumbent"], "notFlags": ["party-independent"] },
     "options": [
       { "id": "fight", "label": "堅持參選，公開說「市民會給我答案」", "outcome": "黨中央很不高興，地方支持者很感動。", "effects": { "party": -6, "approval": 4 } },
       { "id": "deal", "label": "答應參選，但接受黨中央派來的競選總幹事", "outcome": "組織動員回來了，競選總部也多了一雙看著你的眼睛。", "effects": { "party": 6, "team": -3, "integrity": -2 } },
@@ -106,8 +107,9 @@
     "tags": ["參選", "立委轉戰", "派系"],
     "conditions": { "flags": ["bg-legislator"] },
     "options": [
-      { "id": "promise", "label": "答應派系，補選人選由他們決定", "outcome": "地方樁腳全部歸隊。黨中央知道這件事後，臉色很難看。", "effects": { "party": 4, "integrity": -4 }, "arcs": [{ "id": "faction", "open": true, "add": { "backers": 1 }, "note": "答應原選區派系，補選人選由他們決定" }] },
-      { "id": "party", "label": "說補選人選由黨中央決定", "outcome": "很有原則，地方派系說「那我們再看看」。", "effects": { "integrity": 2, "party": -3 } },
+      { "id": "promise", "label": "答應派系，補選人選由他們決定", "outcome": "地方樁腳全部歸隊。記者知道這件事後，標題寫的是「補選內定」。", "effects": { "party": 4, "integrity": -4 }, "arcs": [{ "id": "faction", "open": true, "add": { "backers": 1 }, "note": "答應原選區派系，補選人選由他們決定" }] },
+      { "id": "party", "label": "說補選人選由黨中央決定", "outcome": "很有原則，地方派系說「那我們再看看」。", "effects": { "integrity": 2, "party": -3 }, "appearsIf": { "notFlags": ["party-independent"] } },
+      { "id": "civic", "label": "說補選人選交給選區的公民團體推薦", "outcome": "公民團體很興奮，地方派系說「那我們再看看」。", "effects": { "integrity": 3, "party": -3 }, "appearsIf": { "flags": ["party-independent"] } },
       { "id": "open", "label": "提議補選開放初選，誰民調高誰上", "outcome": "很公平，所有人都不太滿意，但也沒人能反對。", "effects": { "integrity": 3, "approval": 1 }, "skill": "negotiate" }
     ],
     "source": { "status": "real", "prototype": "立委轉戰首長，原選區的補選提名牽動地方派系支持。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "2023 年臺北市第三選舉區立委補選的提名過程", "refs": [] }
@@ -1182,7 +1184,8 @@
     "options": [
       { "id": "sweep", "label": "一個市場一個市場去掃，連掃三週", "outcome": "腳底磨出了水泡，有幾攤阿嬤開始叫你的名字。", "effects": { "approval": 3, "team": -3 }, "skill": "grassroots" },
       { "id": "youth", "label": "放棄市場，改攻年輕族群", "outcome": "年輕人按讚很踴躍，投票率一向不高。", "effects": { "media": 4, "approval": 1 }, "skill": "media" },
-      { "id": "party", "label": "請黨部找里長一里一里拜託", "outcome": "里長們很給面子，阿嬤們也很給面子，但票不一定給你。", "effects": { "party": 3, "integrity": -1 } }
+      { "id": "party", "label": "請黨部找里長一里一里拜託", "outcome": "里長們很給面子，阿嬤們也很給面子，但票不一定給你。", "effects": { "party": 3, "integrity": -1 }, "appearsIf": { "notFlags": ["party-independent"] } },
+      { "id": "notables", "label": "請老里長帶你一里一里去拜託", "outcome": "老里長很給面子，阿嬤們也很給面子，但票不一定給你。", "effects": { "party": 2, "approval": 1 }, "appearsIf": { "flags": ["party-independent"] } }
     ],
     "source": { "status": "real", "prototype": "長期執政者在基層市場建立的綿密人際網絡。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [], "realCase": "高雄市長陳菊長期經營的基層網絡" }
   },
@@ -1262,7 +1265,8 @@
     "options": [
       { "id": "race", "label": "你也跑，跑得比對手多", "outcome": "兩邊比賽跑行程，最後兩個人都在車上睡著。", "effects": { "approval": 3, "team": -4 }, "skill": "grassroots" },
       { "id": "depth", "label": "說「跑完不等於做完」，改辦深度座談", "outcome": "很有內容，報紙只登了一小格。", "effects": { "approval": 2, "integrity": 2 }, "onElected": { "effects": { "achievement": 1 }, "text": "深度座談收集的意見，變成上任後第一批要處理的清單。" } },
-      { "id": "bigname", "label": "請黨內大咖來站台", "outcome": "大咖來了一個小時，對手又跑了二十個里。", "effects": { "party": 3, "media": 2 } }
+      { "id": "bigname", "label": "請黨內大咖來站台", "outcome": "大咖來了一個小時，對手又跑了二十個里。", "effects": { "party": 3, "media": 2 }, "appearsIf": { "notFlags": ["party-independent"] } },
+      { "id": "celebrity", "label": "請一位國民偶像來陪你掃街", "outcome": "偶像來了一個小時，簽名的隊伍比握手的還長。對手又跑了二十個里。", "effects": { "media": 4, "approval": 1 }, "appearsIf": { "flags": ["party-independent"] } }
     ],
     "source": { "status": "real", "prototype": "以密集走訪基層建立勤政形象。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [], "realCase": "前省長走遍全台鄉鎮的基層經營" }
   },
@@ -1584,7 +1588,7 @@
     "id": "e-gunshot",
     "phase": "eve",
     "title": "選前之夜的槍聲",
-    "scenario": "選前之夜，同黨一位議員的造勢會場傳出槍響，到場站台的黨內重量級人物受傷送醫。電視台全部改播這則新聞，你的造勢晚會只剩兩個小時。",
+    "scenario": "選前之夜，一場議員的造勢晚會傳出槍響，到場站台、一路支持你的重量級政治人物受傷送醫。電視台全部改播這則新聞，你的造勢晚會只剩兩個小時。",
     "tags": ["選前之夜", "危機"],
     "issue": "safety",
     "weight": 1,
@@ -1670,10 +1674,10 @@
     "id": "t-appointment",
     "phase": "term",
     "title": "局長人選",
-    "scenario": "交通局長出缺。黨部推薦一位輔選有功的前議員，學界推薦一位你沒見過的教授。",
+    "scenario": "交通局長出缺。競選時輔選有功的支持者推薦一位前議員，學界推薦一位你沒見過的教授。",
     "tags": ["人事"],
     "options": [
-      { "id": "loyal", "label": "任命輔選功臣", "outcome": "黨部很滿意。新局長上任第一天問「號誌是誰管的」。", "effects": { "party": 10, "achievement": -5, "integrity": -4, "team": -6 } },
+      { "id": "loyal", "label": "任命輔選功臣", "outcome": "當初幫你輔選的人很滿意。新局長上任第一天問「號誌是誰管的」。", "effects": { "party": 10, "achievement": -5, "integrity": -4, "team": -6 } },
       { "id": "expert", "label": "任命專業教授", "outcome": "政策很漂亮，就是沒人會跟議會打交道。", "effects": { "achievement": 6, "party": -6, "council": -4, "team": 6 } },
       { "id": "promote", "label": "內升資深文官", "outcome": "穩。穩到沒有任何新聞。", "effects": { "achievement": 2, "team": 2 } }
     ],
@@ -1839,13 +1843,13 @@
     "id": "t-bg-legislator",
     "phase": "term",
     "title": "原選區補選",
-    "scenario": "你辭去立委後，原選區要補選。黨部希望你全力輔選，不然會被說「拍拍屁股走人」。",
+    "scenario": "你辭去立委後，原選區要補選。原選區的支持者希望你全力輔選，不然會被說「拍拍屁股走人」。",
     "tags": ["出身", "補選"],
     "conditions": { "flags": ["bg-legislator"] },
     "weight": 2,
     "options": [
       { "id": "campaign", "label": "請假全力輔選", "outcome": "補選贏了。市政會議延期了兩次。", "effects": { "party": 6, "achievement": -3 } },
-      { "id": "focus", "label": "專心市政，只拍一支站台影片", "outcome": "黨部不太高興。補選結果和你沒什麼關係了。", "effects": { "party": -5, "achievement": 3 } },
+      { "id": "focus", "label": "專心市政，只拍一支站台影片", "outcome": "原選區的支持者不太高興。補選結果和你沒什麼關係了。", "effects": { "party": -5, "achievement": 3 } },
       { "id": "aide", "label": "推自己的前辦公室主任參選", "outcome": "你的人脈延續了。對手說這叫「世襲」。", "effects": { "party": 3, "integrity": -3 } }
     ],
     "source": { "status": "draft", "prototype": "立委轉任縣市長後，原選區補選常被視為新任首長的延伸戰場。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "中央社：蔣萬安辭立委 台北市中山北松山明年1月8日補選", "url": "https://www.cna.com.tw/news/aipl/202211185003.aspx", "quote": "蔣萬安辭立委 台北市中山北松山明年1月8日補選", "accessed": "2026-10-23" }], "realCase": "2023 年臺北市第三選舉區立委補選（原立委當選直轄市長後辭職）" }
@@ -1899,13 +1903,13 @@
     "id": "t-bg-incumbent",
     "phase": "term",
     "title": "跛腳的開始",
-    "scenario": "第二任才過一半，黨內幾位接班人已經開始卡位，局處長開始看下一任的臉色。",
+    "scenario": "第二任才過一半，幾位接班人選已經開始卡位，局處長開始看下一任的臉色。",
     "tags": ["出身", "接班"],
     "conditions": { "flags": ["bg-incumbent"] },
     "weight": 2,
     "options": [
       { "id": "anoint", "label": "指定接班人", "outcome": "接班人很感激。其他人很不服。", "effects": { "party": 5, "council": -3 } },
-      { "id": "primary", "label": "讓黨內初選公平競爭", "outcome": "很民主。初選打得頭破血流。", "effects": { "integrity": 3, "party": -2 } },
+      { "id": "primary", "label": "讓接班人公開競爭，民調高的人出線", "outcome": "很民主。接班人選打得頭破血流。", "effects": { "integrity": 3, "party": -2 } },
       { "id": "legacy", "label": "不管接班，專心做長期建設", "outcome": "沒有連任壓力的你，終於可以做那些「不會有選票」的事了。", "effects": { "achievement": 6, "party": -4 } }
     ],
     "source": { "status": "placeholder", "prototype": "連任的縣市長第二任期無法再連任，常面臨黨內接班卡位與行政跛腳。", "adaptation": "情境為虛構。", "refs": [] }
@@ -1919,7 +1923,7 @@
     "options": [
       { "id": "borrow", "label": "舉債補足，「城市行銷是長期投資」", "outcome": "帳面平了。市債多了一筆，議員多了一個質詢題目。", "effects": { "treasury": -12, "council": -2 } },
       { "id": "cut", "label": "刪減其他局處預算來補", "outcome": "博覽會的洞補上了，社福和教育的洞變大了。", "effects": { "achievement": -5, "team": -4 } },
-      { "id": "probe", "label": "公開檢討，追究決策責任", "outcome": "報告寫得很誠實，前任團隊和黨內前輩都不太高興。", "effects": { "integrity": 5, "media": 6, "party": -5, "team": -2 } }
+      { "id": "probe", "label": "公開檢討，追究決策責任", "outcome": "報告寫得很誠實，前任團隊和地方前輩都不太高興。", "effects": { "integrity": 5, "media": 6, "party": -5, "team": -2 } }
     ],
     "source": { "status": "draft", "prototype": "直轄市辦理國際博覽會後，歲入決算大幅短收，需舉債支應，並遭監察院調查。", "adaptation": "城市與金額已虛構化。", "refs": [{ "title": "臺中市政府：近三年監察院糾正案與調查報告之說明與檢討（2022）", "url": "https://www.rdec.taichung.gov.tw/media/785392/1110413-4-市政府針對近三年監察院對臺中市提出糾正案-糾舉案-調查報告案之說明與檢討專.pdf", "quote": "經舉借債務17 億5,635 萬餘元支應", "accessed": "2026-10-23" }] },
     "conditions": { "notFlags": ["bg-incumbent"] }
@@ -2156,7 +2160,7 @@
     "id": "t-indicted",
     "phase": "term",
     "title": "偵查中的市長",
-    "scenario": "檢調搜索後，你被列為被告。黨內有人建議你請假，支持者則要你硬起來。",
+    "scenario": "檢調搜索後，你被列為被告。身邊有人建議你請假，支持者則要你硬起來。",
     "tags": ["司法", "後續"],
     "conditions": { "flags": ["investigated"] },
     "weight": 6,
@@ -3029,12 +3033,12 @@
     "id": "t-higher-office",
     "phase": "term",
     "title": "被拱去選更大的位子",
-    "scenario": "你的市長聲勢正旺，黨內就有人喊你出來選總統。民調顯示你是黨內最有希望的人。",
+    "scenario": "你的市長聲勢正旺，政壇就有人喊你出來選總統。民調顯示你是最有希望的人之一。",
     "tags": ["政黨", "野心"],
     "issue": "local",
     "options": [
-      { "id": "run", "label": "請假投入初選", "outcome": "你說「我現在要出征」。市府由副市長代理，市民開始問：「那我們呢？」", "effects": { "party": 8, "media": 10, "approval": -8, "achievement": -3 }, "setFlags": ["ran-higher"] },
-      { "id": "refuse", "label": "公開承諾做滿任期", "outcome": "黨內有人失望，市民鬆了一口氣。", "effects": { "approval": 4, "integrity": 3, "party": -4 } },
+      { "id": "run", "label": "請假投入總統選戰", "outcome": "你說「我現在要出征」。市府由副市長代理，市民開始問：「那我們呢？」", "effects": { "party": 8, "media": 10, "approval": -8, "achievement": -3 }, "setFlags": ["ran-higher"] },
+      { "id": "refuse", "label": "公開承諾做滿任期", "outcome": "支持者有人失望，市民鬆了一口氣。", "effects": { "approval": 4, "integrity": 3, "party": -4 } },
       { "id": "vague", "label": "不表態，「一切以市政為重」", "outcome": "你說了三個月的「以市政為重」，新聞每天都在算你什麼時候宣布。", "effects": { "media": 4, "approval": -2 } }
     ],
     "source": { "status": "draft", "prototype": "剛上任的地方首長被拱參選更高職位，任期承諾與政治野心的拉扯。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "2019 年高雄市長上任不到一年即投入總統選舉", "refs": [{ "title": "公視新聞網：主打「庶民」口號 韓剛選上市長就選總統", "url": "https://news.pts.org.tw/article/460056", "quote": "主打「庶民」口號 韓剛選上市長就選總統", "accessed": "2026-10-23" }] }
@@ -3567,13 +3571,13 @@
     "id": "a-mrt-ribbon",
     "phase": "incumbency",
     "title": "通車要趕在選前嗎",
-    "scenario": "最快的那條路線工程進度 85%，選舉在三個月後。工程顧問說安全測試還要半年；黨部說：「選前一定要通車。」",
+    "scenario": "最快的那條路線工程進度 85%，選舉在三個月後。工程顧問說安全測試還要半年；競選總部說：「選前一定要通車。」",
     "tags": ["捷運", "選舉", "劇情"],
     "arc": "mrt",
     "options": [
       { "id": "rush", "label": "搶在選前試營運，你親自當第一位乘客", "outcome": "你在車廂裡跟每個乘客握手。列車在第三站停了十分鐘，沒有人說為什麼。", "effects": { "approval": 6, "integrity": -4, "media": 5 }, "arcs": [{ "id": "mrt", "add": { "opened": 1 }, "note": "選前搶試營運，市長搭首班車" }], "delayed": { "afterTurns": 1, "effects": { "approval": -5, "media": 4 }, "text": "試營運的列車連續兩天停駛，乘客在高架橋上走回車站的影片上了新聞。" } },
       { "id": "count", "label": "把已動工的路線都算進「通車里程」", "outcome": "競選文宣上的路網圖很漂亮。實線和虛線，要很仔細才看得出來。", "effects": { "approval": 3, "integrity": -5 }, "arcs": [{ "id": "mrt", "status": "concealed", "set": { "claimed": "promised" }, "note": "把已動工的路線算進通車里程" }] },
-      { "id": "safe", "label": "照工程進度，選後再通車", "outcome": "工程師鬆了一口氣。黨部的人在電話裡嘆了一口氣。", "effects": { "approval": -3, "integrity": 4, "party": -3, "achievement": 2 } }
+      { "id": "safe", "label": "照工程進度，選後再通車", "outcome": "工程師鬆了一口氣。競選總部的人在電話裡嘆了一口氣。", "effects": { "approval": -3, "integrity": 4, "party": -3, "achievement": 2 } }
     ],
     "source": { "status": "real", "prototype": "選前搶通車、搶試營運是常見的選舉操作，試營運期間故障頻傳時常被質疑趕工。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [], "realCase": "多條捷運與輕軌於選前試營運或通車的爭議" }
   },

@@ -24,7 +24,7 @@ import { mulberry32 } from "./rng";
 import { validateArcs, validateEvents, validateFates } from "./validate";
 import { staffReport } from "./feedback";
 import { cardKind, cardStory } from "./shareCard";
-import type { Background, GameOption, GameState, Party } from "./types";
+import type { Background, Condition, GameOption, GameState, Party } from "./types";
 
 type PerkPolicy = "random" | "always" | "never";
 type Strategy = "random" | "greedy" | "balanced";
@@ -723,6 +723,25 @@ describe("競選規模與開銷", () => {
   it("大黨從標準規模開始，小黨從精簡開始", () => {
     expect(newGame(EVENTS, 1, PARTIES.find((p) => p.id === "blue")!, BACKGROUNDS[1]).scale).toBe("standard");
     expect(newGame(EVENTS, 1, PARTIES.find((p) => p.id === "minor")!, BACKGROUNDS[1]).scale).toBe("lean");
+  });
+
+  it("無黨籍看不到自己政黨的黨中央、黨部、黨主席、黨內（「黨中央的交換」與「大黨的禮讓」劇情除外）", () => {
+    const RX = /黨中央|黨部|黨主席|黨內/;
+    // 只看政黨條件：限定其他政黨、排除無黨籍、或「任一政黨」不含無黨籍的，無黨籍都看不到
+    const forIndie = (c?: Condition) =>
+      !c ||
+      (!(c.flags ?? []).some((f) => f.startsWith("party-") && f !== "party-independent") &&
+        !(c.notFlags ?? []).includes("party-independent") &&
+        !(c.anyFlags?.every((f) => f.startsWith("party-")) && !c.anyFlags.includes("party-independent")));
+    for (const e of EVENTS) {
+      if (e.arc === "party" || e.arc === "alliance" || !forIndie(e.conditions)) continue;
+      for (const o of e.options) {
+        if (forIndie(o.appearsIf)) expect(RX.test([e.scenario, o.label, o.outcome].join(" ")), `${e.id}/${o.id}`).toBe(false);
+      }
+    }
+    for (const c of FATES) {
+      if (forIndie(c.conditions)) expect(RX.test(JSON.stringify([c.scene, c.hint, c.effect, c.ordeal])), c.id).toBe(false);
+    }
   });
 
   it("競選承諾當選後才兌現：挑戰者選了不會立刻改施政成果，當選後才加上；現任市長立即生效；落選不會發生", () => {
