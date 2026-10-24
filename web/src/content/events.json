@@ -308,11 +308,12 @@
     "id": "c-poll-behind",
     "phase": "campaign",
     "title": "民調落後",
-    "scenario": "最新民調你落後 6 個百分點。支持者開始焦慮，記者問你「是不是要換策略」。",
+    "scenario": "連續第三份民調，你都落後對手 6 個百分點，已經超出誤差範圍。第三位候選人拿走了一部分原本可能投給你的票。支持者開始焦慮，記者問你「是不是要換策略」。",
     "tags": ["選戰", "民調"],
+    "conditions": { "max": { "approval": 45 } },
     "options": [
       { "id": "internal", "label": "公布一份對自己有利的內部民調", "outcome": "支持者士氣回來了。民調專家說你的抽樣「很有創意」。", "effects": { "approval": 3, "integrity": -4 } },
-      { "id": "strategic", "label": "呼籲同陣營選民「集中選票、棄保」", "outcome": "第三勢力的支持者很不爽，但有些人真的轉向了。", "effects": { "approval": 4, "party": -2, "integrity": -1 }, "skill": "deal" },
+      { "id": "strategic", "label": "呼籲第三位候選人的支持者「集中選票、棄保」", "outcome": "第三位候選人的支持者很不爽，但有些人真的轉向了。", "effects": { "approval": 4, "party": -2, "integrity": -1 }, "skill": "deal" },
       { "id": "steady", "label": "不理會民調，照原計畫走", "outcome": "你的團隊繼續掃街。少數人說你有定力，多數人說你沒反應。", "effects": { "integrity": 1, "team": 2 } }
     ],
     "source": { "status": "draft", "prototype": "選戰後期，候選人常以公布內部民調或呼籲棄保因應民調落後。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "refs": [{ "title": "公視新聞網：綠不讓柯 2018北市長選戰三足鼎立", "url": "https://news.pts.org.tw/article/394095", "quote": "綠不讓柯 2018北市長選戰三足鼎立", "accessed": "2026-10-23" }, { "title": "中央社：柯文哲險勝丁守中 台北市長選舉恐有延長賽", "url": "https://www.cna.com.tw/news/firstnews/201811255004.aspx", "quote": "柯文哲險勝丁守中", "accessed": "2026-10-23" }], "realCase": "2018 年臺北市長選舉選前的棄保操作" }
@@ -390,7 +391,7 @@
     "scenario": "一位資深樁腳私下說：「對手那邊每票五百，我們不給，票就跑了。」",
     "tags": ["選戰", "賄選"],
     "options": [
-      { "id": "pay", "label": "默許，撥一筆錢交給樁腳處理", "outcome": "你不知道細節，也不想知道。票好像真的穩了。", "effects": { "approval": 5, "party": 5, "integrity": -15 }, "funds": -1000, "setFlags": ["vote-buying"], "legalRisk": "涉及賄選，違反選罷法" },
+      { "id": "pay", "label": "默許，撥一筆錢交給樁腳處理", "outcome": "你不知道細節，也不想知道。票好像真的穩了。", "effects": { "approval": 5, "party": 5, "integrity": -15 }, "funds": -1000, "setFlags": ["vote-buying"], "legalRisk": "賄選" },
       { "id": "refuse", "label": "嚴正拒絕", "outcome": "樁腳摸摸鼻子走了。下週那個里，投票率掉了一截。", "effects": { "party": -5, "integrity": 3 } },
       { "id": "report", "label": "向檢調檢舉對手陣營", "outcome": "檢調開始查了。地方上說你「不懂規矩」。", "effects": { "integrity": 6, "party": -8, "media": 5 } }
     ],
@@ -980,7 +981,7 @@
     "conditions": { "notFlags": ["bg-incumbent"] },
     "options": [
       { "id": "admit", "label": "公開道歉，主動放棄學位", "outcome": "你在記者會上鞠躬三次。支持者說你有擔當，對手說你「終於承認了」。", "effects": { "approval": -4, "integrity": 6, "media": 4 } },
-      { "id": "fight", "label": "堅稱沒有抄襲，請律師提告爆料者", "outcome": "官司開打，新聞每天都有你的名字，但沒有一則是政見。", "effects": { "approval": -6, "integrity": -5, "media": 6 }, "funds": -600, "legalRisk": "訴訟", "setFlags": ["thesis-fight"] },
+      { "id": "fight", "label": "堅稱沒有抄襲，請律師提告爆料者", "outcome": "官司開打，新聞每天都有你的名字，但沒有一則是政見。", "effects": { "approval": -6, "integrity": -5, "media": 6 }, "funds": -600, "legalRisk": "誣告", "setFlags": ["thesis-fight"] },
       { "id": "pause", "label": "暫停競選活動，等學校審議結果", "outcome": "你消失了一週。審議結果出來前，對手每天都在講你的論文。", "effects": { "approval": -3, "integrity": 3, "party": -2 } }
     ],
     "source": { "status": "draft", "prototype": "候選人的學位論文在選戰中被指抄襲，學校審議期間選情急轉直下。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "2022 年桃園市長選舉，候選人碩士論文抄襲爭議後退選", "refs": [{ "title": "公視新聞網：論文爭議／林智堅被認定抄襲 張善政、賴香伶要求退選", "url": "https://news.pts.org.tw/article/594305", "quote": "論文爭議／林智堅被認定抄襲 張善政、賴香伶要求退選", "accessed": "2026-10-23" }] }
@@ -1458,7 +1459,7 @@
     "options": [
       { "id": "self", "label": "自己轉發，順便自嘲", "outcome": "網友說你很有梗。迷因的熱度變成你的。", "effects": { "media": 5, "approval": 2 }, "skill": "media" },
       { "id": "clarify", "label": "發聲明澄清那張照片的前後文", "outcome": "聲明很完整，迷因又多了一張「認真澄清」的版本。", "effects": { "integrity": 2, "approval": -1 } },
-      { "id": "troll", "label": "花錢找網軍反擊", "outcome": "網軍很努力，被記者抓到同一批帳號在三天前賣面膜。", "effects": { "media": 3, "integrity": -5 }, "funds": -800, "legalRisk": "網軍" }
+      { "id": "troll", "label": "花錢找網軍反擊", "outcome": "網軍很努力，被記者抓到同一批帳號在三天前賣面膜。", "effects": { "media": 3, "integrity": -5 }, "funds": -800, "legalRisk": "誹謗" }
     ],
     "source": { "status": "placeholder", "prototype": "選戰中的網路迷因攻防。", "adaptation": "情境為虛構；效果數值為遊戲設計。", "refs": [] }
   },

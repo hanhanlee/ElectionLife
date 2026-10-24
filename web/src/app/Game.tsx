@@ -295,7 +295,7 @@ export default function Game() {
                     {avail === "locked" && (
                       <small> · 🔒 {lacksFunds(game, o) ? "經費不足" : requirementText(o.requires)}</small>
                     )}
-                    {o.legalRisk && <small> · ⚖ {o.legalRisk}</small>}
+                    {o.legalRisk && <small> · ⚖ 觸法風險：{o.legalRisk}</small>}
                     {o.perk && <small> · 🏛 動用現任資源{o.effects.treasury ? "（市府出錢）" : ""}</small>}
                   </button>
                 );
