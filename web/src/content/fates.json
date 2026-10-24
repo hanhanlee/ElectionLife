@@ -72,7 +72,7 @@
     "id": "o-rescue",
     "kind": "opportunity",
     "title": "公務員救援隊",
-    "scene": "幾位資深局處長組了一支「救火隊」，說市府出事的時候，他們可以第一時間處理。",
+    "scene": "消防局和災防辦提議成立跨局處應變小組，平常演練，市府出事的時候第一時間接手。",
     "hint": "下一次突發危機的衝擊會小一點；要撥人力和預算給他們。",
     "stages": ["term"],
     "stackGroup": "shield",
@@ -255,7 +255,7 @@
     "scene": "工務局提議：把主要工地的進度用攝影機直播，二十四小時開著。",
     "hint": "做得好的工程會被看見；做不好的，也會。",
     "stages": ["term"],
-    "effect": { "text": "直播第一天最多人看的畫面，是工人在午休時間睡午覺。第二天開始，大家看的是進度。", "effects": { "achievement": 2, "integrity": 3 }, "passive": { "effects": { "media": 1, "achievement": 1 }, "turns": 4, "label": "工地直播" } }
+    "effect": { "text": "直播第一天最多人看的畫面，是工人在午休時間睡午覺。第二天開始，大家看的是進度。", "effects": { "integrity": 3, "media": 2 }, "passive": { "effects": { "approval": 1, "media": 1 }, "turns": 4, "label": "工地直播" } }
   },
   {
     "id": "o-hotline",
@@ -338,9 +338,9 @@
     "id": "o-car-free",
     "kind": "opportunity",
     "title": "一日無車城市",
-    "scene": "環保團體提議辦一場「一日無車」：主要幹道封街一天，讓大家走路、騎車。",
+    "scene": "環保團體提議市府辦一場「一日無車」：主要幹道封街一天，讓大家走路、騎車。",
     "hint": "交通政策可以先試水溫；那一天，開車通勤的人會記住你。",
-    "stages": ["campaign", "term"],
+    "stages": ["term"],
     "effect": { "text": ["封街那天，大馬路上都是野餐墊和滑板車。開車的人在外環道塞了兩個小時。", "你騎腳踏車上班，被拍到闖紅燈。這張照片比整個活動還紅。"], "effects": { "approval": 2, "media": 5 }, "boost": { "issues": ["transit", "environment"], "charges": 2, "turns": 4, "label": "無車日的民意" } }
   },
   {
@@ -529,10 +529,11 @@
     "id": "c-joint-rally",
     "kind": "contract",
     "title": "選前共同造勢",
-    "scene": "另一個政黨的候選人提議共同造勢：場地、舞台、人力都分攤。",
+    "scene": "你的組織動員一直起不來，造勢場的椅子總是坐不滿。另一個政黨的候選人提議共同造勢：場地、舞台、人力都分攤。",
     "hint": "省錢又熱鬧；你得跟立場不完全一樣的人站在同一個舞台上。",
     "stages": ["campaign"],
-    "effect": { "text": "造勢場上兩邊的旗子一半一半。你的支持者問：「我們什麼時候跟他們同一國了？」", "effects": { "approval": 3, "party": -3 }, "funds": 400, "delayed": { "afterTurns": 4, "effects": { "party": -2, "integrity": -1 }, "text": "共同造勢的夥伴在議題上跟你唱反調，記者問你們到底是不是盟友。" } }
+    "effect": { "text": "造勢場上兩邊的旗子一半一半。你的支持者問：「我們什麼時候跟他們同一國了？」", "effects": { "approval": 3, "party": -3 }, "funds": 400, "delayed": { "afterTurns": 4, "effects": { "party": -2, "integrity": -1 }, "text": "共同造勢的夥伴在議題上跟你唱反調，記者問你們到底是不是盟友。" } },
+    "conditions": { "max": { "party": 45 } }
   },
   {
     "id": "c-service-network",
@@ -569,7 +570,7 @@
     "scene": "中央有一筆專案補助可以申請，條件是地方要拿出配合款，而且照中央的規格做。",
     "hint": "建設經費壓力減輕；配合款和規格，會綁住你好幾年。",
     "stages": ["term"],
-    "effect": { "text": "補助核下來了，金額很漂亮。附件有四十頁的規格書。", "effects": { "treasury": 8, "achievement": 4, "party": 2 }, "delayed": { "afterTurns": 4, "effects": { "treasury": -5 }, "text": "中央補助的配合款到期，財政局長說今年其他建設要延後。" } }
+    "effect": { "text": "補助核下來了，金額很漂亮。附件有四十頁的規格書。", "effects": { "treasury": 8, "party": 2 }, "delayed": { "afterTurns": 4, "effects": { "treasury": -5 }, "text": "中央補助的配合款到期，財政局長說今年其他建設要延後。" } }
   },
   {
     "id": "c-chamber",
@@ -758,11 +759,11 @@
   {
     "id": "r-referendum",
     "kind": "ordeal",
-    "title": "財政改革公投",
-    "scene": "市庫吃緊。你可以把「財政改革方案」直接交給市民公投：通過了，議會不能再擋；沒通過，就是對你的不信任投票。",
-    "hint": "高風險：通過就能大刀闊斧，失敗就是全市對你說不。",
+    "title": "財政改革的攤牌",
+    "scene": "市庫吃緊，財政改革方案卡在議會半年。你決定攤牌：發起全市連署，要求議會一個月內表決。表決通過，就能大刀闊斧；不通過，就是議會和你公開決裂。",
+    "hint": "高風險：通過就能大刀闊斧，失敗就是議會和市民一起對你說不。",
     "stages": ["term"],
-    "ordeal": { "base": 0.4, "mods": [{ "when": { "min": { "approval": 60 } }, "add": 0.15 }, { "when": { "max": { "treasury": 30 } }, "add": 0.1 }, { "when": { "max": { "council": 30 } }, "add": 0.1 }, { "when": { "max": { "approval": 40 } }, "add": -0.15 }], "success": { "text": "公投過了。議長在電視上說「尊重民意」，臉色很難看。", "effects": { "treasury": 14, "achievement": 5, "approval": 4, "council": -3 } }, "failure": { "text": "公投沒過。隔天報紙頭版是一張你在開票現場低頭的照片。", "effects": { "approval": -9, "council": -6, "party": -4 } } }
+    "ordeal": { "base": 0.4, "mods": [{ "when": { "min": { "approval": 60 } }, "add": 0.15 }, { "when": { "max": { "treasury": 30 } }, "add": 0.1 }, { "when": { "max": { "council": 30 } }, "add": 0.1 }, { "when": { "max": { "approval": 40 } }, "add": -0.15 }], "success": { "text": "連署破了二十萬份。議會表決那天，議長在電視上說「尊重民意」，臉色很難看。", "effects": { "treasury": 14, "achievement": 5, "approval": 4, "council": -3 } }, "failure": { "text": "議會否決了方案。隔天報紙頭版是一張你在議場外低頭的照片。", "effects": { "approval": -9, "council": -6, "party": -4 } } }
   },
   {
     "id": "r-small-donors",
@@ -859,7 +860,7 @@
     "id": "r-pull-ads",
     "kind": "ordeal",
     "title": "停掉最後一支廣告",
-    "scene": "選前最後兩週，你決定停掉所有電視廣告，把錢全部拿去辦基層座談。",
+    "scene": "選前最後兩週，電視台的黃金時段漲價三倍。你決定停掉所有電視廣告，把錢全部拿去辦基層座談。",
     "hint": "高風險：成功就是省錢又踏實，失敗就是在最關鍵的時候從電視上消失。",
     "stages": ["campaign"],
     "ordeal": { "base": 0.5, "mods": [{ "when": { "min": { "party": 55 } }, "add": 0.1 }, { "when": { "flags": ["trait-grassroots"] }, "add": 0.15 }, { "when": { "flags": ["trait-organizer"] }, "add": 0.1 }, { "when": { "max": { "media": 25 } }, "add": -0.15 }], "success": { "text": "你跑了三十場座談。對手的廣告很多，但大家討論的是你的座談。", "effects": { "approval": 6, "integrity": 3, "media": -3 }, "funds": 800 }, "failure": { "text": "電視上只剩下對手的臉。你的座談很溫馨，但每場只來了五十個人。", "effects": { "approval": -7, "media": -8 }, "funds": 800 } }
@@ -886,7 +887,7 @@
     "id": "r-quiet-night",
     "kind": "ordeal",
     "title": "最後一夜不辦造勢",
-    "scene": "選前之夜，你決定不辦大型造勢，改成在家門口跟鄰居聊天，網路直播。",
+    "scene": "選前之夜，競選經費只剩一點。幕僚算過：辦一場大型造勢，會把最後的錢花光。你決定不辦，改成在家門口跟鄰居聊天，網路直播。",
     "hint": "高風險：成功就是清新的形象，失敗就是支持者覺得被冷落。",
     "stages": ["campaign"],
     "ordeal": { "base": 0.45, "mods": [{ "when": { "min": { "integrity": 75 } }, "add": 0.15 }, { "when": { "flags": ["bg-outsider"] }, "add": 0.1 }, { "when": { "min": { "party": 65 } }, "add": -0.15 }, { "when": { "flags": ["trait-photogenic"] }, "add": 0.1 }], "success": { "text": "你在家門口跟鄰居聊了三個小時，直播觀看數比對手的造勢場還多。", "effects": { "approval": 7, "integrity": 3, "party": -3 }, "funds": 600 }, "failure": { "text": "對手的造勢場有十萬人。你的直播畫面上，只有你和三位鄰居。", "effects": { "approval": -8, "party": -5, "team": -3 }, "funds": 600 } }

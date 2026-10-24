@@ -1057,7 +1057,8 @@
     "options": [
       { "id": "attend", "label": "照常出席，認真講完", "outcome": "你講得很好，台下的公務員拍手很準時。電視台的轉播收視率是 0.3。", "effects": { "integrity": 3, "approval": 1 } },
       { "id": "skip", "label": "缺席，同一時間自己也辦一場造勢晚會", "outcome": "你的造勢場也人山人海，兩邊的空拍畫面在新聞上並排播出。只有記者寫你「看不起制度」。", "effects": { "approval": 3, "integrity": -3, "media": 2 }, "funds": -400 },
-      { "id": "livestream", "label": "出席，同時找網紅直播發表會", "outcome": "公辦政見會第一次有人在留言區刷愛心。", "effects": { "media": 5, "approval": 2 }, "skill": "media" }
+      { "id": "livestream", "label": "出席，同時找網紅直播發表會", "outcome": "公辦政見會第一次有人在留言區刷愛心。", "effects": { "media": 5, "approval": 2 }, "skill": "media" },
+      { "id": "selfie", "label": "把冷清的會場拍成自嘲短影音", "outcome": "「四十個人也是聽眾」這句話被轉了二十萬次。也有人說你把公辦政見會當綜藝節目。", "effects": { "media": 6, "approval": 2, "integrity": -1 }, "skill": "media" }
     ],
     "source": { "status": "draft", "prototype": "公辦政見發表會出席率低，候選人寧可辦自己的造勢活動。", "adaptation": "改編自真實事件，城市、人物與數字已虛構化。", "realCase": "2018 年臺北市長公辦政見會，有候選人改赴自辦造勢", "refs": [{ "title": "公視新聞網：北市長公辦政見會 僅丁守中造勢沒到", "url": "https://news.pts.org.tw/article/412695", "quote": "北市長公辦政見會 僅丁守中造勢沒到", "accessed": "2026-10-23" }] }
   },
