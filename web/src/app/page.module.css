@@ -1150,7 +1150,7 @@ button.ballotRow:focus-visible {
   margin-top: 2px;
 }
 
-/* 圈選欄：平常是空的虛線圈；按下或滑過時蓋上「卜」字圈選章 */
+/* 圈選欄：平常是空的虛線圈；按下或滑過時蓋上圈選章 */
 .ballotStamp {
   position: relative;
   width: 44px;
@@ -1161,16 +1161,13 @@ button.ballotRow:focus-visible {
 }
 
 .ballotStamp::after {
-  content: "卜";
+  /* 台灣選票的圈選章：圓圈裡一豎、左下一撇（用遮罩畫，顏色跟著 --stamp） */
+  content: "";
   position: absolute;
-  inset: -2px;
-  display: grid;
-  place-items: center;
-  border: 3px solid var(--stamp);
-  border-radius: 50%;
-  color: var(--stamp);
-  font-weight: 700;
-  font-size: 1.25rem;
+  inset: -3px;
+  background: var(--stamp);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='black' stroke-width='7.5'%3E%3Ccircle cx='50' cy='50' r='46'/%3E%3Cpath d='M50 4V96M50 48L18 80'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='black' stroke-width='7.5'%3E%3Ccircle cx='50' cy='50' r='46'/%3E%3Cpath d='M50 4V96M50 48L18 80'/%3E%3C/svg%3E") center / contain no-repeat;
   transform: rotate(-12deg) scale(1.4);
   opacity: 0;
   transition: opacity 120ms ease-out, transform 160ms ease-out;
@@ -1211,9 +1208,6 @@ button:active > .ballotStamp::after {
     height: 34px;
   }
 
-  .ballotStamp::after {
-    font-size: 1rem;
-  }
 }
 
 /* 特別篇選邊頁：兩條路線，手機上下排、寬螢幕左右對峙 */
