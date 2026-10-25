@@ -40,6 +40,8 @@ const REAL_PATH: Record<string, string> = {
   "sp-capital-n03": "lunch",
   "sp-capital-n04": "soft",
   "sp-capital-n05": "ask",
+  "sp-capital-n06": "more",
+  "sp-capital-n07": "books",
 };
 const real: Pick = (o, s, r) => {
   const id = REAL_PATH[s.pendingInterlude ?? s.deck[s.turn]];
