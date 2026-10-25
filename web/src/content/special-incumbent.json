@@ -275,7 +275,7 @@
     "fact": "CLAIM",
     "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
     "options": [
-      { "id": "energy", "label": "「沒有能源，哪有電力？」把問題丟回中央的能源政策", "outcome": "黨內很買單。工程師在網路上說：變電所和發電是兩件事。", "effects": { "party": 2, "media": 1, "approval": -1 } },
+      { "id": "energy", "label": "「沒有能源，哪有電力？」把問題丟回中央的能源政策", "outcome": "黨內很買單。工程師在網路上說：變電所和發電是兩件事。隔天，市府和電力公司就拍板了變電所的方案，大家才發現，原來早就在談了。", "effects": { "party": 2, "media": 1, "approval": -1 } },
       { "id": "schedule", "label": "公布變電所的時程：先蓋臨時的，永久的地下化", "outcome": "記者拿到了具體日期。對手說你早該這樣做。", "effects": { "achievement": 3, "approval": 1 } },
       { "id": "blame", "label": "說這是電力公司的事，市府已經盡力了", "outcome": "電力公司隔天發了一份新聞稿，列出和市府開過的每一次會。", "effects": { "approval": -2, "party": 1 } }
     ],
