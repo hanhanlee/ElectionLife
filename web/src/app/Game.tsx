@@ -378,7 +378,11 @@ export default function Game() {
         event && (
           <section className={styles.card}>
             {game.turn === 0 && game.notices.map((n) => <NoticeView key={n.text} notice={n} />)}
-            {interlude?.interlude && <p className={styles.turn}>🃏 命運插曲｜{INTERLUDE_LABELS[interlude.interlude]}</p>}
+            {interlude?.interlude && (
+              <p className={styles.turn}>
+                {interlude.interludeFollowUp ? "📎 後續發展" : `🃏 命運插曲｜${INTERLUDE_LABELS[interlude.interlude]}`}
+              </p>
+            )}
             <h2>{event.title}</h2>
             {event.arc && <p className={styles.arcTag}>📒 {ARCS.find((a) => a.id === event.arc)?.title}</p>}
             {event.fact && <p className={styles.arcTag}>{FACT_TAG[event.fact]}</p>}

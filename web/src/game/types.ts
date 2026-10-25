@@ -229,6 +229,8 @@ export interface GameEvent {
   interlude?: InterludeKind;
   /** 插曲的必出條件：符合時跳過機率與類別抽選，直接出現（仍算進每局上限） */
   interludeUrgent?: Condition;
+  /** 延伸插曲：前一題的某個選擇引出的後續，條件符合就一定出現，不算進每局上限 */
+  interludeFollowUp?: boolean;
   /** 資料分級：事實、某方說法、遊戲虛構（見特別篇手冊） */
   fact?: FactLevel;
   /** 結局頁「真實世界的這一題」：發生了什麼、兩邊各自省略或扭曲了什麼（特別篇，遊戲中途不顯示） */

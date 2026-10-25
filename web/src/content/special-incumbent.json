@@ -37,15 +37,15 @@
   {
     "id": "sp-incumbent-03",
     "phase": "campaign",
-    "title": "颱風假",
-    "scenario": "強颱逼近。這兩天，行政院長帶著 Puma 委員去內湖視察抽水站，新聞畫面一直在重播。晚上八點前，你要和隔壁三個市長一起決定明天要不要停班停課。氣象資料說，暴風圈到明天下午都不會碰到陸地；但萬一淹水，沒有人會記得氣象資料。你也知道：只要台北停班，股市就跟著休市。",
+    "title": "七月的颱風假",
+    "scenario": "七月，強颱逼近。這兩天，行政院長帶著 Puma 委員去內湖視察抽水站，新聞畫面一直在重播。晚上八點前，你要和隔壁三個市長一起決定明天要不要停班停課。氣象資料說，暴風圈到明天下午都不會碰到陸地；但萬一淹水，沒有人會記得氣象資料。你也知道：只要台北停班，股市就跟著休市。",
     "tags": ["防災", "市政"],
     "special": "capital-2026-incumbent",
     "specialTurn": 3,
     "fact": "FACT",
     "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
     "options": [
-      { "id": "off", "label": "和隔壁三市一起宣布停班停課", "outcome": "隔天無風無雨。台指期夜盤大漲，股市卻休市，網路上有人喊「還我錢」。綠黨立委說：未達標準就放假，是沒有抗壓力。", "effects": { "approval": -4, "team": 1, "integrity": 1 } },
+      { "id": "off", "label": "和隔壁三市一起宣布停班停課", "outcome": "隔天無風無雨。台指期夜盤大漲，股市卻休市，網路上有人喊「還我錢」。綠黨立委說：未達標準就放假，是沒有抗壓力。", "effects": { "approval": -3, "team": 1, "integrity": 1 } },
       { "id": "work", "label": "照標準來：明天照常上班上課，你自己守在災害應變中心", "outcome": "颱風沒有造成大災情。有人說你有擔當，也有家長抱怨孩子淋雨上學。你在應變中心待了一整夜。", "effects": { "approval": 2, "achievement": 2, "team": -2 } },
       { "id": "half", "label": "宣布下午停班：股市上午照常交易", "outcome": "兩邊都有人罵，但罵得比較小聲。隔壁的市長們打電話來問，為什麼沒有一起。", "effects": { "approval": 1, "achievement": 1, "party": -1 } }
     ],
@@ -53,13 +53,13 @@
     "reflection": ["發生了什麼：北北基桃聯合宣布颱風停班，隔天風雨不大，股市跟著休市，被批評未達標準。", "現任這邊：停班停課是防災判斷，寧可放錯也不要出事；四市一起決定，生活秩序比較一致。", "批評的一方：股市跟著台北停班休市，是三十年前訂的規則；停班的標準，也應該依科學判斷。", "如果你是市長，你會為了一個可能不會來的颱風放假嗎？"]
   },
   {
-    "id": "sp-incumbent-04",
+    "id": "sp-incumbent-05",
     "phase": "campaign",
     "title": "十二年前的那句話",
     "scenario": "這兩天，有人翻出 Puma 委員十二年前的一篇文章，裡面有一句：台灣至少可以效仿某些國家，建立社區中心，提供吸毒者毒品與乾淨的針頭。他回應說這是在製造恐慌，他講的是醫院裡的美沙冬替代治療。幕僚問你：要不要親自出手？",
     "tags": ["攻防", "毒品"],
     "special": "capital-2026-incumbent",
-    "specialTurn": 4,
+    "specialTurn": 5,
     "fact": "CLAIM",
     "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
     "options": [
@@ -71,13 +71,13 @@
     "reflection": ["發生了什麼：挑戰者十二年前文章的一句話被翻出，他說對方製造恐慌；現任市長發文追問社區要不要提供毒品跟針頭；貼文留言破五十萬則，多數指出台北市本來就提供清潔針具。", "現任這邊：擷取的那句話確實寫在文章裡，也確實寫得太省。", "但拿掉前後文、略過自己市府正在做的減害，攻擊就打到了自己身上。", "你轉傳一句話之前，會先看完整篇嗎？"]
   },
   {
-    "id": "sp-incumbent-05",
+    "id": "sp-incumbent-04",
     "phase": "campaign",
     "title": "生生喝鮮奶",
     "scenario": "議員建議，生生喝鮮奶從每週一瓶加到兩瓶。對手笑說：「這跟手機背後的鏡頭一樣，越來越多。」他還提醒：開學前，還有一百五十二所學校的營養午餐沒招標完。",
     "tags": ["教育", "政見"],
     "special": "capital-2026-incumbent",
-    "specialTurn": 5,
+    "specialTurn": 4,
     "fact": "CLAIM",
     "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
     "options": [
@@ -89,13 +89,13 @@
     "reflection": ["發生了什麼：現任市長說願意研究把鮮奶加碼到每週兩瓶；挑戰者用手機鏡頭嘲諷，並指出營養午餐仍有學校未完成招標。", "宣傳的一方容易只講加碼；攻擊的一方容易只講笑點。", "孩子每天吃到什麼，你知道嗎？"]
   },
   {
-    "id": "sp-incumbent-06",
+    "id": "sp-incumbent-p01",
     "phase": "campaign",
     "title": "講稿機",
     "scenario": "議會備詢時，你看著平板回答，研考會主委在旁邊即時傳答案。綠黨立委幫你取了外號：「講稿機」。幾個月後，網路上有人把你在不同訪問的回答剪成合輯，說你問 A 答 B。一個節目邀你去，主持人一定會問。",
     "tags": ["形象", "媒體"],
     "special": "capital-2026-incumbent",
-    "specialTurn": 6,
+    "specialSlots": [8],
     "fact": "CLAIM",
     "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
     "options": [
@@ -107,17 +107,17 @@
     "reflection": ["發生了什麼：現任市長備詢看平板、幕僚即時給答案，被取外號「講稿機」；網路上剪成「問 A 答 B」的合輯；他上節目說議會備詢都要當場回答。", "剪輯的一方：片段不代表全部的回答。", "被批評的一方：「都要當場回答」說明了制度，但沒有回答大家想知道的事：答案是誰想的？", "你看過合輯嗎？看過完整的質詢嗎？"]
   },
   {
-    "id": "sp-incumbent-07",
+    "id": "sp-incumbent-06",
     "phase": "campaign",
     "title": "搖滾區",
     "scenario": "一位藝人去了對手的競總成立大會，拿著加油棒。你說，歡迎他也來你的競總，一定安排在搖滾區。後來傳出你的團隊想請他上台合唱競選歌；他發文說會到場，但不上台。記者問你：到底有沒有邀他上台？",
     "tags": ["選戰", "形象"],
     "special": "capital-2026-incumbent",
-    "specialTurn": 7,
+    "specialTurn": 6,
     "fact": "FACT",
     "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
     "options": [
-      { "id": "never", "label": "說：「本來就沒有要邀請他上台。」", "outcome": "這句話被批評沒禮貌。隔天，他發了一篇文章：有人打電話找「京都人」，他說這邊沒有，對方就掛了，「現在只剩下：嘟嘟嘟⋯」。你請文化局長再打電話給他。", "effects": { "approval": -5, "media": 2, "integrity": -1 } },
+      { "id": "never", "label": "說：「本來就沒有要邀請他上台。」", "outcome": "這句話被批評沒禮貌。隔天，他發了一篇文章：有人打電話找「京都人」，他說這邊沒有，對方就掛了，「現在只剩下：嘟嘟嘟⋯」。你請文化局長再打電話給他。", "effects": { "approval": -4, "media": 2, "integrity": -1 } },
       { "id": "thanks", "label": "說：「他願意來就很感謝，坐哪裡都可以。」", "outcome": "記者沒有追問。他後來真的來了，坐在台下，鼓掌鼓得很客氣。", "effects": { "approval": 2, "integrity": 1 } },
       { "id": "freedom", "label": "說：「出席誰的活動都是他的自由，任何人都不該因此被懲罰。」", "outcome": "這句話也是在說對岸的切割。你黨內有人不太高興，但很多中間選民記住了這一句。", "effects": { "integrity": 3, "approval": 2, "party": -2 } }
     ],
@@ -125,13 +125,13 @@
     "reflection": ["發生了什麼：一位藝人出席挑戰者的競總，現任市長說歡迎他坐搖滾區；傳出想請他上台，他婉拒；現任說本來就沒要邀他上台，被批沒禮貌；之後請文化局長聯絡。", "現任這邊：想爭取同一位藝人，本來就是選戰常態。", "但請市府的文化局長去聯絡競選活動的來賓，算不算公私不分？", "一位藝人出席了誰的活動，會改變你對他的看法嗎？"]
   },
   {
-    "id": "sp-incumbent-08",
+    "id": "sp-incumbent-07",
     "phase": "campaign",
     "title": "機場遷建",
     "scenario": "幕僚建議，選前丟一個大題目：把市區的機場遷走，空出來的地做 AI 園區。這件事，四年前別人提的時候，你說國土規劃要嚴肅面對；三年前，你也在回覆中央的公文裡提過。距離投票不到兩個月。",
     "tags": ["政見", "交通"],
     "special": "capital-2026-incumbent",
-    "specialTurn": 8,
+    "specialTurn": 7,
     "fact": "CLAIM",
     "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
     "options": [
@@ -143,13 +143,13 @@
     "reflection": ["發生了什麼：現任市長在選前不到兩個月宣布遷移市區機場；行政院說這是市府四年來第一次來談；他出示三年前回覆中央徵詢的公文。", "現任這邊：大題目要有人提，公文也證明不是臨時起意。", "但四年前說要嚴肅面對、不該倉促，這次在選前宣布，理由是時空背景不同。", "立場可以改變。改變時，有沒有交代理由和評估？"]
   },
   {
-    "id": "sp-incumbent-09",
+    "id": "sp-incumbent-08",
     "phase": "campaign",
     "title": "兩份民調",
     "scenario": "一份民調說，你落後十七個百分點；另一份說，差距在誤差範圍內；還有一份說，大家還是比較看好你會當選。藍營資深主持人在節目上說：藍營的支持者，不敢表態了。",
     "tags": ["民調", "選戰"],
     "special": "capital-2026-incumbent",
-    "specialTurn": 9,
+    "specialTurn": 8,
     "fact": "CLAIM",
     "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
     "options": [
@@ -160,13 +160,13 @@
     "source": { "status": "draft", "prototype": "2026 年 10 月 20 日信民協會民調沈伯洋 50.3%、蔣萬安 33.3%；10 月 22 日震傳媒投票意向差距在誤差範圍內、當選看好度蔣萬安較高；趙少康在節目上說藍營支持者表態率下降。現任市長的回應待查。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "Newtalk（2026-10-20）：沈伯洋支持度領先17%，戴立安分析", "url": "https://newtalk.tw/news/view/2026-10-20/1066585", "quote": "50.3%", "accessed": "2026-10-25" }, { "title": "震傳媒：台北市長當選看好度（2026-10-22）", "url": "https://www.zmedia.com.tw/Document/PoolDetail/44790", "quote": "看好度", "accessed": "2026-10-25" }] }
   },
   {
-    "id": "sp-incumbent-10",
+    "id": "sp-incumbent-11",
     "phase": "campaign",
     "title": "電視辯論（架空）",
     "scenario": "（架空情節）電視辯論。對手的第一題問颱風假，第二題問機場，第三題問你：「四年了，你自己最滿意的一件事是什麼？」",
     "tags": ["辯論"],
     "special": "capital-2026-incumbent",
-    "specialTurn": 10,
+    "specialTurn": 11,
     "fact": "SIMULATION",
     "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
     "options": [
@@ -178,13 +178,13 @@
     "reflection": ["發生了什麼：這場辯論是遊戲虛構的，真實的辯論在 10 月 31 日。但你在台上被問到的題目，都是這場選戰裡真的吵過的：颱風假、機場、十二年前那句話……", "辯論只有幾分鐘，兩邊都會挑對自己有利的那一半講。", "如果你能問兩位候選人一個問題，你會問什麼？"]
   },
   {
-    "id": "sp-incumbent-11",
+    "id": "sp-incumbent-10",
     "phase": "campaign",
     "title": "競總成立",
     "scenario": "你的競選總部成立大會。立法院長、中部的市長、隔壁的市長都說要來。黨部說，這是最強的陣容。也有年輕幕僚小聲提醒：年輕人想看的，不是天王。",
     "tags": ["選戰", "組織"],
     "special": "capital-2026-incumbent",
-    "specialTurn": 11,
+    "specialTurn": 10,
     "fact": "CLAIM",
     "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
     "options": [
@@ -313,5 +313,41 @@
       { "id": "joint", "label": "和電力公司一起開記者會，每小時更新進度", "outcome": "沒有人覺得你做得特別好，但也沒有人罵得出口。", "effects": { "achievement": 2, "approval": 1 } }
     ],
     "source": { "status": "placeholder", "prototype": "（架空）遊戲虛構的突發事件，不指涉任何真實事件。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [] }
+  },
+  {
+    "id": "sp-incumbent-09",
+    "phase": "campaign",
+    "title": "風雨過後",
+    "scenario": "十月底，又一個颱風來了，這次真的有風有雨。你宣布暫停競選行程，坐鎮應變中心。風雨過後，你去看復原進度。清潔隊長問你：要不要跟同仁一起體驗搬樹枝？",
+    "tags": ["防災", "形象"],
+    "special": "capital-2026-incumbent",
+    "specialTurn": 9,
+    "fact": "FACT",
+    "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
+    "options": [
+      { "id": "experience", "label": "換上制服，跟清潔隊一起搬樹枝", "outcome": "你說要幫忙清斷樹。一旁的工作人員說：「粗的樹幹他們比較專業，市長要體驗的話，這個比較妥當。」這句話被錄了下來，網路上說你在作秀。晚上，清潔隊長在你的臉書底下留言：是他邀請你的，他很內疚。也有網友問：清潔隊長，會邀市長來體驗撿樹枝？", "effects": { "media": 2, "approval": -2, "team": 1 }, "setFlags": ["si-branches"] },
+      { "id": "eoc", "label": "留在應變中心，派局處長去現場", "outcome": "沒有畫面。但復原進度表每兩小時更新一次，里長們都在轉。", "effects": { "achievement": 2, "approval": 1, "media": -1 } },
+      { "id": "thanks", "label": "去現場只做一件事：謝謝第一線，不拿工具、不拍照", "outcome": "新聞很小。清潔隊員說，這是他們今年聽到最實在的一句話。", "effects": { "approval": 2, "team": 2, "integrity": 1 } }
+    ],
+    "source": { "status": "draft", "prototype": "2026 年 10 月薔琵颱風期間蔣萬安暫停選舉行程；10 月 24 日主持應變中心會報後勘災，表示要協助清理斷樹，一旁工作人員說「這個比較粗的樹幹，他們比較專業的用搬的，至於市長要『體驗』的話，我建議是這個比較妥當」，畫面曝光後被批作秀；中山區清潔隊長王開武留言說是自己邀請、感到內疚，蔣萬安回覆「請不要自責，你沒有做錯任何事」；沈伯洋表示防災不分藍綠、蔣萬安坐鎮辛苦；10 月 25 日下午恢復選舉行程。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "Newtalk（2026-10-24）：挨轟作秀！蔣萬安為何現身撿樹枝？清潔隊長說明原因", "url": "https://newtalk.tw/news/view/2026-10-24/1067315", "quote": "市長要『體驗』的話", "accessed": "2026-10-25" }, { "title": "自由時報：搬樹枝被批作秀，蔣萬安：隊長沒做錯、永遠做最強靠山", "url": "https://news.ltn.com.tw/news/politics/breakingnews/5617910", "quote": "隊長沒做錯", "accessed": "2026-10-25" }, { "title": "Newtalk（2026-10-25）：蔣萬安：網友說我掃地很笨拙，但掃馬路的掃把跟家用的不太一樣", "url": "https://newtalk.tw/news/view/2026-10-25/1067392", "quote": "防災不分藍綠", "accessed": "2026-10-25" }] },
+    "reflection": ["發生了什麼：颱風後現任市長勘災、體驗搬樹枝，工作人員一句「市長要體驗的話，這個比較妥當」被批作秀；清潔隊長說是自己邀請的；隔天掃地的姿勢又被說笨拙。", "現任這邊：市長到災區關心第一線，本來是應該的；對手也說防災不分藍綠、坐鎮辛苦。", "但「體驗」兩個字，讓到場的意義變成了拍照。清潔隊長的說明，你相信嗎？", "你希望市長在颱風後做的第一件事是什麼？"]
+  },
+  {
+    "id": "sp-incumbent-f07",
+    "phase": "campaign",
+    "title": "隔天的掃把",
+    "scenario": "隔天，你去南港幫忙掃落葉。影片傳上網，網友說，你拿掃把的姿勢很笨拙，一看就沒掃過地。記者在下一個行程等你。",
+    "tags": ["延伸"],
+    "special": "capital-2026-incumbent",
+    "interlude": "backlash",
+    "interludeFollowUp": true,
+    "fact": "FACT",
+    "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue", "si-branches"] },
+    "options": [
+      { "id": "broom", "label": "「掃馬路的掃把跟家裡用的不太一樣，比較重，也要技巧。」", "outcome": "你說的是實話，也說了比不上第一線。但標題只留下了「掃把不一樣」。", "effects": { "approval": -1, "media": 2 } },
+      { "id": "honest", "label": "笑說：「我真的不太會掃。清潔隊每天這樣掃，真的很辛苦。」", "outcome": "這句話被很多清潔隊員轉貼。網友說：至少他承認了。", "effects": { "approval": 2, "integrity": 1 } },
+      { "id": "silent", "label": "不回應，繼續跑行程", "outcome": "影片又被轉了兩天，然後被別的新聞蓋過去。", "effects": { "approval": -1 } }
+    ],
+    "source": { "status": "draft", "prototype": "2026 年 10 月 25 日蔣萬安在南港掃地，拿掃把的姿勢被網友說笨拙；他受訪說「掃馬路的掃把跟家裡用的其實不太一樣，比較重而且要有一定的技巧」，也說自己當然比不上第一線清潔隊員與志工。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "Newtalk（2026-10-25）：蔣萬安：網友說我掃地很笨拙，但掃馬路的掃把跟家用的不太一樣", "url": "https://newtalk.tw/news/view/2026-10-25/1067392", "quote": "掃把", "accessed": "2026-10-25" }] }
   }
 ]

@@ -63,7 +63,9 @@ describe("特別篇：首都保衛戰（萬安守城）", () => {
     }
     const g = play(3, real);
     const check = realityCheck(def, g, EVENTS, true);
-    expect(check.rows.length).toBe(Object.keys(def.realChoices).length);
+    // 只對照這一局遇到的回合（替換事件與插曲不一定出現；插曲不列入對照）
+    expect(check.rows.length).toBe(g.history.filter((h) => def.realChoices[h.eventId]).length);
+    expect(check.rows.length).toBeGreaterThanOrEqual(8);
     expect(check.same).toBe(check.rows.length);
     expect(check.closing[1]).toBe("他的選擇裡，有哪些是你不會做的？");
   });
@@ -76,6 +78,18 @@ describe("特別篇：首都保衛戰（萬安守城）", () => {
         expect(o.funds).toBeUndefined();
       }
       if (e.fact !== "SIMULATION") expect(e.source.refs.length > 0 || /待補/.test(e.source.prototype), e.id).toBe(true);
+    }
+  });
+
+  it("延伸插曲：第 9 回合選了搬樹枝，之後一定出現〈隔天的掃把〉，而且不佔插曲上限；沒選就不會出現", () => {
+    const followUp = own.find((e) => e.interludeFollowUp)!;
+    for (let seed = 1; seed <= 60; seed++) {
+      const withIt = play(seed, (ids, s, r) => (s.deck[s.turn] === "sp-incumbent-09" ? "experience" : random(ids, s, r)));
+      const ids = withIt.interludes!.map((i) => i.eventId);
+      expect(ids, `seed ${seed}`).toContain(followUp.id);
+      expect(ids.filter((id) => id !== followUp.id).length).toBeLessThanOrEqual(2);
+      const without = play(seed, (ids, s, r) => (s.deck[s.turn] === "sp-incumbent-09" ? "eoc" : random(ids, s, r)));
+      expect(without.interludes!.map((i) => i.eventId)).not.toContain(followUp.id);
     }
   });
 
