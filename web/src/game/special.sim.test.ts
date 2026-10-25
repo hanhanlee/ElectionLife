@@ -108,7 +108,7 @@ test.skipIf(!N)("特別篇平衡模擬", () => {
     out.push("\n結局筆數（每局一個結局）與突發事件觸發次數（一局可能觸發多次）：\n", "| 策略 | 結局筆數 | 突發事件觸發次數 |", "|---|---|---|", ...endRows);
     out.push(`\n隨機遊玩時，各替換事件與插曲的出現局數（共 ${N.toLocaleString()} 局）：\n`, "| 卡 | 出現局數 |", "|---|---|");
     for (const [id, v] of Object.entries(cards).sort((a, b) => b[1] - a[1])) {
-      out.push(`| ${id.replace("sp-capital-", "").toUpperCase()} ${title(id)} | ${v.toLocaleString()} |`);
+      out.push(`| ${id.replace(/^sp-[a-z]+-/, "").toUpperCase()} ${title(id)} | ${v.toLocaleString()} |`);
     }
   }
   writeFileSync(process.env.SIM_OUT ?? "special-sim.md", out.join("\n") + "\n");

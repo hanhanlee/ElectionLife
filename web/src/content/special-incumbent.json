@@ -3,7 +3,7 @@
     "id": "sp-incumbent-01",
     "phase": "launch",
     "title": "對手出爐",
-    "scenario": "綠黨終於決定了：徵召一位被對岸立案偵查的教授立委，來挑戰你。你黨內的立委一聽就笑了：「靠他來拯救我們黨整場選舉。」兩週後，第一份民調出來，你領先二十八個百分點。幕僚問你：要怎麼回應這位對手？",
+    "scenario": "綠黨終於決定了：徵召在大學教犯罪學、被對岸立案偵查的 Puma 委員，來挑戰你。你黨內的立委一聽就笑了：「靠他來拯救我們黨整場選舉。」兩週後，第一份民調出來，你領先二十八個百分點。幕僚問你：要怎麼回應這位對手？",
     "tags": ["選戰", "民調"],
     "special": "capital-2026-incumbent",
     "specialTurn": 1,
@@ -27,7 +27,7 @@
     "fact": "CLAIM",
     "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
     "options": [
-      { "id": "press", "label": "讓大陸小組繼續追打：「請拿出證據」", "outcome": "大陸小組又發了兩份新聞稿。藍黨的長輩很滿意；也有記者問：市府的機關，什麼時候變成競選總部了？", "effects": { "party": 3, "media": 2, "integrity": -2 }, "delayed": { "afterTurns": 2, "effects": { "approval": -3 }, "text": "大陸小組的新聞稿被記者整理成一張時間表：市府的機關，替市長回了五次競選對手。中間選民開始問：這是市府，還是競總？" } },
+      { "id": "press", "label": "讓大陸小組繼續追打：「請拿出證據」", "outcome": "大陸小組又發了兩份新聞稿。藍黨的長輩很滿意；也有記者問：市府的機關，什麼時候變成競選總部了？", "effects": { "party": 3, "media": 2, "integrity": -2 }, "delayed": { "afterTurns": 2, "effects": { "approval": -4 }, "text": "大陸小組的新聞稿被記者整理成一張時間表：市府的機關，替市長回了五次競選對手。中間選民開始問：這是市府，還是競總？" } },
       { "id": "open", "label": "公開歷屆論壇的成果清單，讓市民自己判斷", "outcome": "清單很長，有些成果很實在，有些只是一張合照。記者說：至少這次大家吵的是內容。", "effects": { "achievement": 3, "integrity": 2, "approval": 1 } },
       { "id": "pivot", "label": "說論壇照辦，但這次的主題改成防災與公衛", "outcome": "對手一時找不到可以打的地方。黨內有人說你軟了。", "effects": { "approval": 2, "achievement": 1, "party": -1 } }
     ],
@@ -45,7 +45,7 @@
     "fact": "FACT",
     "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
     "options": [
-      { "id": "off", "label": "和隔壁三市一起宣布停班停課", "outcome": "隔天無風無雨。台指期夜盤大漲，股市卻休市，網路上有人喊「還我錢」。綠黨立委說：未達標準就放假，是沒有抗壓力。", "effects": { "approval": -4, "team": 1, "integrity": 1 } },
+      { "id": "off", "label": "和隔壁三市一起宣布停班停課", "outcome": "隔天無風無雨。台指期夜盤大漲，股市卻休市，網路上有人喊「還我錢」。綠黨立委說：未達標準就放假，是沒有抗壓力。", "effects": { "approval": -5, "team": 1, "integrity": 1 } },
       { "id": "work", "label": "照標準來：明天照常上班上課，你自己守在災害應變中心", "outcome": "颱風沒有造成大災情。有人說你有擔當，也有家長抱怨孩子淋雨上學。你在應變中心待了一整夜。", "effects": { "approval": 2, "achievement": 2, "team": -2 } },
       { "id": "half", "label": "宣布下午停班：股市上午照常交易", "outcome": "兩邊都有人罵，但罵得比較小聲。隔壁的市長們打電話來問，為什麼沒有一起。", "effects": { "approval": 1, "achievement": 1, "party": -1 } }
     ],
@@ -63,7 +63,7 @@
     "fact": "CLAIM",
     "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
     "options": [
-      { "id": "post", "label": "貼出這一句，問他是不是要在社區發針頭", "outcome": "貼文二十四小時湧進五十多萬則留言，破了世界紀錄。大部分在說同一件事：「台北市衛生局本來就在發針頭了啊？」也有人翻出你當立委時，提案凍結戒治預算、要求改善戒治資源的舊紀錄。", "effects": { "media": 4, "party": 3, "approval": -5, "integrity": -2 }, "setFlags": ["si-needle"] },
+      { "id": "post", "label": "貼出這一句，問他是不是要在社區發針頭", "outcome": "貼文二十四小時湧進五十多萬則留言，破了世界紀錄。大部分在說同一件事：「台北市衛生局本來就在發針頭了啊？」也有人翻出你當立委時，提案凍結戒治預算、要求改善戒治資源的舊紀錄。", "effects": { "media": 4, "party": 3, "approval": -6, "integrity": -2 }, "setFlags": ["si-needle"] },
       { "id": "read", "label": "讀完整篇再談：要比的是誰的戒治政策更完整", "outcome": "你發現那句話前後還有很多條件。你沒有貼那一句，改辦了一場戒治政策座談。新聞不大，但沒有出錯。", "effects": { "achievement": 3, "integrity": 2, "approval": 1 } },
       { "id": "skip", "label": "不碰舊文章，繼續談市政", "outcome": "黨內有人說你太客氣。這一週，新聞都在談別的事。", "effects": { "team": 1, "approval": 1, "party": -1 } }
     ],
@@ -117,7 +117,7 @@
     "fact": "FACT",
     "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
     "options": [
-      { "id": "never", "label": "說：「本來就沒有要邀請他上台。」", "outcome": "這句話被批評沒禮貌。隔天，他發了一篇文章：有人打電話找「京都人」，他說這邊沒有，對方就掛了，「現在只剩下：嘟嘟嘟⋯」。你請文化局長再打電話給他。", "effects": { "approval": -4, "media": 2, "integrity": -1 } },
+      { "id": "never", "label": "說：「本來就沒有要邀請他上台。」", "outcome": "這句話被批評沒禮貌。隔天，他發了一篇文章：有人打電話找「京都人」，他說這邊沒有，對方就掛了，「現在只剩下：嘟嘟嘟⋯」。你請文化局長再打電話給他。", "effects": { "approval": -5, "media": 2, "integrity": -1 } },
       { "id": "thanks", "label": "說：「他願意來就很感謝，坐哪裡都可以。」", "outcome": "記者沒有追問。他後來真的來了，坐在台下，鼓掌鼓得很客氣。", "effects": { "approval": 2, "integrity": 1 } },
       { "id": "freedom", "label": "說：「出席誰的活動都是他的自由，任何人都不該因此被懲罰。」", "outcome": "這句話也是在說對岸的切割。你黨內有人不太高興，但很多中間選民記住了這一句。", "effects": { "integrity": 3, "approval": 2, "party": -2 } }
     ],
@@ -135,7 +135,7 @@
     "fact": "CLAIM",
     "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
     "options": [
-      { "id": "announce", "label": "選前宣布：機場遷走，蓋 AI 園區", "outcome": "頭版都是你的園區想像圖。對手說：四年都沒談，選前才宣布。", "effects": { "media": 5, "approval": 2, "integrity": -2, "achievement": -1 }, "delayed": { "afterTurns": 2, "effects": { "approval": -4 }, "text": "行政院說，這是市府四年來第一次來談；國防部說沒接到需求。你拿出三年前的公文，記者覺得，也勉強說得通。" } },
+      { "id": "announce", "label": "選前宣布：機場遷走，蓋 AI 園區", "outcome": "頭版都是你的園區想像圖。對手說：四年都沒談，選前才宣布。", "effects": { "media": 5, "approval": 2, "integrity": -2, "achievement": -1 }, "delayed": { "afterTurns": 2, "effects": { "approval": -5 }, "text": "行政院說，這是市府四年來第一次來談；國防部說沒接到需求。你拿出三年前的公文，記者覺得，也勉強說得通。" } },
       { "id": "plan", "label": "先把替代運量、醫療後送和國防需求算清楚，選後再提", "outcome": "沒有頭版，但交通學者說：這是第一次看到有人先算再講。", "effects": { "achievement": 3, "integrity": 2, "media": -1 } },
       { "id": "central", "label": "先去行政院和國防部談，談好再一起宣布", "outcome": "中央說可以先成立小組。黨內有人說，你把功勞讓給了別人。", "effects": { "achievement": 2, "integrity": 1, "approval": 1, "party": -1 } }
     ],
@@ -188,7 +188,7 @@
     "fact": "CLAIM",
     "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
     "options": [
-      { "id": "kings", "label": "請三位天王站台，場面要大", "outcome": "現場很滿，空拍很壯觀。電視上，三位天王的發言比你還長。", "effects": { "party": 4, "media": 1, "approval": -2, "team": -2 } },
+      { "id": "kings", "label": "請三位天王站台，場面要大", "outcome": "現場很滿，空拍很壯觀。電視上，三位天王的發言比你還長。", "effects": { "party": 4, "media": 1, "approval": -3, "team": -2 } },
       { "id": "young", "label": "讓年輕志工和市民上台，天王坐在台下", "outcome": "黨部有點不高興。網路上，一位第一次投票的大學生的發言，比整場大會還紅。", "effects": { "approval": 3, "media": 2, "party": -2 } },
       { "id": "policy", "label": "把成立大會改成一場政績說明會", "outcome": "場面冷了一點。但有記者說，這是今年唯一一場有附參考資料的成立大會。", "effects": { "achievement": 2, "approval": 1, "media": -2 } }
     ],
@@ -211,5 +211,107 @@
       { "id": "sorry", "label": "說：「這段時間，我做錯了一些事，我聽到了。」", "outcome": "廣場安靜了幾秒，然後掌聲比你預期的大。黨內有人覺得，你不該在最後一晚示弱。", "effects": { "approval": 4, "integrity": 3, "party": -1 } }
     ],
     "source": { "status": "placeholder", "prototype": "（架空）2026 年 11 月 28 日投票前一晚的選前之夜，尚未發生。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [] }
+  },
+  {
+    "id": "sp-incumbent-f01",
+    "phase": "campaign",
+    "title": "安鼠之亂",
+    "scenario": "職棒比賽打到一半，一隻老鼠衝進大巨蛋的球場，工作人員拿著紙箱和水桶追，全台都在看轉播。網友管這叫「安鼠之亂」。Puma 委員說：垃圾桶少了，老鼠還在。",
+    "tags": ["命運"],
+    "special": "capital-2026-incumbent",
+    "interlude": "backlash",
+    "fact": "FACT",
+    "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
+    "options": [
+      { "id": "clean", "label": "要求巨蛋業者全面清消", "outcome": "業者照做了。也有人問：你五月推出的鼠類偵防師，現在在哪裡？", "effects": { "approval": -1, "media": 1 } },
+      { "id": "map", "label": "親自去巡一趟，公布全市的鼠患通報地圖", "outcome": "地圖上的點很多，有點難看。但里長們說，這是第一次有人把問題攤開。", "effects": { "achievement": 2, "approval": 2, "team": -2 } },
+      { "id": "joke", "label": "開玩笑說：「牠只是也想看球。」", "outcome": "這句話很紅。被老鼠困擾的市民，沒有笑。", "effects": { "media": 3, "approval": -3 } }
+    ],
+    "source": { "status": "draft", "prototype": "2026 年 9 月大巨蛋中職比賽出現老鼠，蔣萬安要求業者全面清消；5 月北市府推出鼠類偵防師；沈伯洋批評鼠患問題未解決。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "公視：大巨蛋比賽出現老鼠", "url": "https://news.pts.org.tw/article/826539", "quote": "老鼠", "accessed": "2026-10-25" }, { "title": "中央社（2026-05-05）：北市鼠害防治記者會，推鼠類偵防師", "url": "https://www.cna.com.tw/news/aloc/202605050386.aspx", "quote": "鼠類偵防師", "accessed": "2026-10-25" }] }
+  },
+  {
+    "id": "sp-incumbent-f02",
+    "phase": "campaign",
+    "title": "市長下廚",
+    "scenario": "你答應上一個綜藝節目，挑戰炒蛤蜊。熱油已經在冒煙了，主持人提醒你：蔥白先下，蔥綠等一下再放。",
+    "tags": ["命運"],
+    "special": "capital-2026-incumbent",
+    "interlude": "amplifier",
+    "fact": "CLAIM",
+    "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
+    "options": [
+      { "id": "pan", "label": "一口氣把蔥全倒下去；油爆了，就說「這個鍋子我還不熟悉」", "outcome": "鍋子發爐，你把油鍋往旁邊挪，旁邊的來賓嚇了一跳。主持人笑說，那位來賓是你的提詞機。這段影片，比你的政見還紅。", "effects": { "media": 3, "approval": -2 } },
+      { "id": "follow", "label": "照主持人說的步驟，一步一步來", "outcome": "蛤蜊炒得普通。但觀眾說：這位市長，聽得進別人的話。", "effects": { "approval": 2, "media": 1 } },
+      { "id": "learn", "label": "承認自己很少下廚，請來賓教你", "outcome": "你被唸了一整段，現場笑成一團。很多人第一次覺得，你也是普通人。", "effects": { "approval": 3, "integrity": 1 } }
+    ],
+    "source": { "status": "draft", "prototype": "據 2026 年 10 月 13 日綜藝節目《11點熱吵店》錄影的報導（10 月 26 日播出）：蔣萬安挑戰炒蛤蜊，來賓提醒爆香順序後仍將蔥一次倒入熱油鍋，爆油時把油鍋往旁人方向挪，並說「製作單位的這個鍋子我還不熟悉」；主持人笑稱來賓白雲是他的「提詞機」。播出後待對照正片。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "自由時報：蔣萬安上綜藝炒蛤蜊爆油", "url": "https://news.ltn.com.tw/news/politics/breakingnews/5606362", "quote": "鍋子", "accessed": "2026-10-25" }] }
+  },
+  {
+    "id": "sp-incumbent-f03",
+    "phase": "campaign",
+    "title": "防彈背心",
+    "scenario": "Puma 委員在國外慢跑，衣服底下的防彈背心被拍了下來，網路上有人說他在演。記者問你怎麼看。",
+    "tags": ["命運"],
+    "special": "capital-2026-incumbent",
+    "interlude": "opportunity",
+    "fact": "CLAIM",
+    "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
+    "options": [
+      { "id": "safe", "label": "「台北很安全，日本也很安全，但我尊重每個人的考量。」", "outcome": "這句話很得體，也很快就被忘了。", "effects": { "approval": 1, "party": 1 }, "delayed": { "afterTurns": 2, "effects": { "approval": -2 }, "text": "地檢署起訴了：有人受境外委託，在 Puma 委員家門口的機車下藏攝影機，跟監他和家人一個多月。記者翻出你那句「台北很安全」。" } },
+      { "id": "protect", "label": "「任何候選人受到威脅，市府和警察都會全力保護。」", "outcome": "這句話沒有上頭條。幾週後起訴的新聞出來，記者又把它找了回來。", "effects": { "integrity": 2, "approval": 2 } },
+      { "id": "mock", "label": "跟著酸：「作秀也要看場合。」", "outcome": "支持者很開心。幾週後起訴的新聞出來，這句話被放在新聞的第一行。", "effects": { "party": 2, "approval": -3, "integrity": -2 } }
+    ],
+    "source": { "status": "draft", "prototype": "2026 年 9 月沈伯洋在東京慢跑穿防彈背心，蔣萬安回應「台北很安全，日本也很安全，但我尊重每個人的考量」；10 月 7 日北檢起訴受港人委託、在沈伯洋住家門口機車下裝針孔監控的徵信業者。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "聯合報：沈伯洋東京慢跑穿防彈背心，蔣萬安回應", "url": "https://udn.com/news/story/6656/9751404", "quote": "台北很安全", "accessed": "2026-10-25" }, { "title": "中央社（2026-10-07）：徵信業者收香港人36萬跟監沈伯洋，北檢起訴求刑1年半", "url": "https://cna.com.tw/news/asoc/202610070071.aspx", "quote": "跟監", "accessed": "2026-10-25" }] }
+  },
+  {
+    "id": "sp-incumbent-f04",
+    "phase": "campaign",
+    "title": "晶片大廠的電",
+    "scenario": "晶片大廠要在北邊的科技園區蓋總部，需要一座變電所。Puma 委員說，能源政策和變電所是兩回事，是你的市府拖了一年多。",
+    "tags": ["命運"],
+    "special": "capital-2026-incumbent",
+    "interlude": "backlash",
+    "fact": "CLAIM",
+    "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
+    "options": [
+      { "id": "energy", "label": "「沒有能源，哪有電力？」把問題丟回中央的能源政策", "outcome": "黨內很買單。工程師在網路上說：變電所和發電是兩件事。", "effects": { "party": 2, "media": 1, "approval": -1 } },
+      { "id": "schedule", "label": "公布變電所的時程：先蓋臨時的，永久的地下化", "outcome": "記者拿到了具體日期。對手說你早該這樣做。", "effects": { "achievement": 3, "approval": 1 } },
+      { "id": "blame", "label": "說這是電力公司的事，市府已經盡力了", "outcome": "電力公司隔天發了一份新聞稿，列出和市府開過的每一次會。", "effects": { "approval": -2, "party": 1 } }
+    ],
+    "source": { "status": "draft", "prototype": "2026 年 5 月下旬，沈伯洋說能源政策和變電所是兩回事、北市府拖延變電所；蔣萬安回應沒有能源就沒有穩定的電力；5 月 27 日市府與台電拍板永久變電所地下化，先蓋臨時變電所。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "世界新聞網（2026-05-26）：輝達進駐北士科引「用電」論戰，蔣萬安：沒有能源那有電力", "url": "https://www.worldjournal.com/wj/story/121347/9527740", "quote": "沒有能源", "accessed": "2026-10-25" }, { "title": "聯合報（2026-05-27）：輝達交鋒！民進黨：電力很充裕，是蔣萬安市府蓋不出變電所", "url": "https://udn.com/news/story/124652/9528602", "quote": "變電所", "accessed": "2026-10-25" }] }
+  },
+  {
+    "id": "sp-incumbent-f05",
+    "phase": "campaign",
+    "title": "對面的邀請",
+    "scenario": "一位被認為偏藍的資深製作人、一位電台主持人，都在節目上說：Puma 委員來過了，也邀了你，還在等你回覆。",
+    "tags": ["命運"],
+    "special": "capital-2026-incumbent",
+    "interlude": "opportunity",
+    "fact": "CLAIM",
+    "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
+    "options": [
+      { "id": "silent", "label": "先不回覆，行程太滿", "outcome": "主持人在節目上又說了一次：還在等。這句話被剪成了短影音。", "effects": { "approval": -2, "media": 1 } },
+      { "id": "go", "label": "去上，不先要題目", "outcome": "你被問到颱風假和機場，有兩題答得不太好。但很多人說，這是今年看你最自然的一次。", "effects": { "approval": 3, "media": 2, "team": -1 } },
+      { "id": "spokes", "label": "派發言人代替你去", "outcome": "發言人表現得很好。主持人說：下次還是希望市長本人來。", "effects": { "media": 1, "approval": -1 } }
+    ],
+    "source": { "status": "draft", "prototype": "2026 年 9 至 10 月，沈伯洋上王偉忠、吳淡如等人的節目；王偉忠表示多次邀請蔣萬安沒有回音；吳淡如在中廣專訪沈伯洋時說也邀了蔣萬安、尚未回應。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "自由時報：吳淡如中廣專訪沈伯洋，也邀蔣萬安", "url": "https://news.ltn.com.tw/news/politics/breakingnews/5610926", "quote": "邀請", "accessed": "2026-10-25" }] }
+  },
+  {
+    "id": "sp-incumbent-f06",
+    "phase": "campaign",
+    "title": "颱風後的停電",
+    "scenario": "（架空情節）颱風過後，幾個行政區突然停電一整晚。電力公司、市府、中央，大家都在等你說話。",
+    "tags": ["命運"],
+    "special": "capital-2026-incumbent",
+    "interlude": "wildcard",
+    "fact": "SIMULATION",
+    "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
+    "options": [
+      { "id": "lead", "label": "你先出面道歉，在現場待到復電", "outcome": "你在現場待到凌晨四點。照片沒有發，但里長們都看到了。", "effects": { "approval": 3, "team": -2 } },
+      { "id": "explain", "label": "說明這是電力公司的權責", "outcome": "說得沒錯，但停電的人聽不進去。", "effects": { "approval": -3, "party": 1 } },
+      { "id": "joint", "label": "和電力公司一起開記者會，每小時更新進度", "outcome": "沒有人覺得你做得特別好，但也沒有人罵得出口。", "effects": { "achievement": 2, "approval": 1 } }
+    ],
+    "source": { "status": "placeholder", "prototype": "（架空）遊戲虛構的突發事件，不指涉任何真實事件。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [] }
   }
 ]

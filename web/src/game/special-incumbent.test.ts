@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { ARCS, backgroundById, CRISES, EVENTS, PARTIES, partyById, specialSetup } from "@/content";
 import { choose, chooseInterlude, currentEvent, interludeEvent, newGame } from "./engine";
+import { VOTE_WEIGHTS } from "./model";
 import { mulberry32 } from "./rng";
 import { realityCheck, specialById, specialEnding } from "./special";
 import type { GameState } from "./types";
@@ -27,12 +28,17 @@ function play(seed: number, pick: (ids: string[], s: GameState, r: () => number)
   return s;
 }
 const random = (ids: string[], _s: GameState, r: () => number) => ids[Math.floor(r() * ids.length)];
-const real = (ids: string[], s: GameState, r: () => number) => {
-  const id = def.realChoices[s.deck[s.turn]];
-  return id && ids.includes(id) ? id : random(ids, s, r);
+/** 照現實選；沒有現實對照的回合與插曲，選對選票最有利的（和平衡模擬的「現實路線」相同） */
+const real = (ids: string[], s: GameState) => {
+  const id = def.realChoices[s.pendingInterlude ?? s.deck[s.turn]];
+  if (id && ids.includes(id)) return id;
+  const e = EVENTS.find((x) => x.id === (s.pendingInterlude ?? s.deck[s.turn]))!;
+  const score = (oid: string) =>
+    Object.entries(e.options.find((o) => o.id === oid)!.effects).reduce((a, [k, v]) => a + (VOTE_WEIGHTS[k as keyof typeof VOTE_WEIGHTS] ?? 0) * (v as number), 0);
+  return [...ids].sort((a, b) => score(b) - score(a))[0];
 };
 
-describe("特別篇：首都守城戰（萬安守城）", () => {
+describe("特別篇：首都保衛戰（萬安守城）", () => {
   it("十二回合各有一個固定事件，依序出場，投票後結束", () => {
     for (let t = 1; t <= 12; t++) expect(own.filter((e) => e.specialTurn === t)).toHaveLength(1);
     const g = play(1, random);
