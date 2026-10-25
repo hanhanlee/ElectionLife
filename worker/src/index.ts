@@ -84,14 +84,31 @@ async function savePlay(req: Request, env: Env): Promise<Response> {
   return json(req, { ok: true });
 }
 
+/** 真人局數到這個數字後，不再計入電腦模擬的基礎樣本 */
+const DROP_SIMULATED_AT = 300;
+
 async function readStats(req: Request, env: Env, scenario: string): Promise<PlayerStats> {
+  const real = await env.DB.prepare("SELECT COUNT(*) AS n FROM plays WHERE scenario = ? AND simulated = 0").bind(scenario).first<{ n: number }>();
+  // 真人夠多時只算真人；不夠時連同模擬樣本一起算
+  const only = (real?.n ?? 0) >= DROP_SIMULATED_AT ? " AND simulated = 0" : "";
   const [totals, endings, choices] = await env.DB.batch([
-    env.DB.prepare("SELECT COUNT(*) AS plays, COALESCE(SUM(won), 0) AS wins, COALESCE(SUM(same_real), 0) AS same FROM plays WHERE scenario = ?").bind(scenario),
-    env.DB.prepare("SELECT ending, COUNT(*) AS n FROM plays WHERE scenario = ? GROUP BY ending").bind(scenario),
-    env.DB.prepare("SELECT event_id, option_id, COUNT(*) AS n FROM picks WHERE scenario = ? GROUP BY event_id, option_id").bind(scenario),
+    env.DB.prepare(
+      `SELECT COUNT(*) AS plays, COALESCE(SUM(won), 0) AS wins, COALESCE(SUM(same_real), 0) AS same, COALESCE(SUM(simulated), 0) AS simulated FROM plays WHERE scenario = ?${only}`,
+    ).bind(scenario),
+    env.DB.prepare(`SELECT ending, COUNT(*) AS n FROM plays WHERE scenario = ?${only} GROUP BY ending`).bind(scenario),
+    env.DB.prepare(
+      `SELECT k.event_id, k.option_id, COUNT(*) AS n FROM picks k JOIN plays p ON p.id = k.play_id WHERE k.scenario = ?${only.replace("simulated", "p.simulated")} GROUP BY k.event_id, k.option_id`,
+    ).bind(scenario),
   ]);
-  const t = (totals.results[0] ?? { plays: 0, wins: 0, same: 0 }) as { plays: number; wins: number; same: number };
-  const stats: PlayerStats = { plays: t.plays, wins: t.wins, endings: {}, sameAsReal: { sum: t.same, plays: t.plays }, choices: {} };
+  const t = (totals.results[0] ?? { plays: 0, wins: 0, same: 0, simulated: 0 }) as { plays: number; wins: number; same: number; simulated: number };
+  const stats: PlayerStats = {
+    plays: t.plays,
+    wins: t.wins,
+    simulated: t.simulated,
+    endings: {},
+    sameAsReal: { sum: t.same, plays: t.plays },
+    choices: {},
+  };
   for (const r of endings.results as { ending: string; n: number }[]) stats.endings[r.ending] = r.n;
   for (const r of choices.results as { event_id: string; option_id: string; n: number }[]) {
     (stats.choices[r.event_id] ??= {})[r.option_id] = r.n;

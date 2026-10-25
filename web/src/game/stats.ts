@@ -31,6 +31,8 @@ export interface PlayRecord {
 export interface PlayerStats {
   plays: number;
   wins: number;
+  /** 其中電腦模擬的基礎樣本局數（真人局數夠多之後為 0） */
+  simulated: number;
   endings: Record<string, number>;
   /** 和現實選擇一樣的題數：加總與局數 */
   sameAsReal: { sum: number; plays: number };

@@ -29,3 +29,16 @@ npm run dev                              # http://127.0.0.1:8787
 ```
 
 遊戲端在 `web/.env.local` 設 `NEXT_PUBLIC_STATS_URL=http://127.0.0.1:8787`，再跑 `npm run dev`。沒有設定時，遊戲連 `https://api.beyondvote.com`；連不上時結局頁不顯示統計，不影響遊戲。
+
+## 基礎樣本（電腦模擬）
+
+上線初期統計是 0，先放入 100 局電腦模擬的對局，讓比例有個起點。這些局標記為 `simulated = 1`，結局頁會寫明「含 N 局電腦模擬的基礎樣本」；真人玩到 300 局後，統計自動不再計入模擬樣本（`DROP_SIMULATED_AT`）。
+
+```bash
+cd web
+SEED_N=100 SEED_OUT=../worker/seed.sql npx vitest run src/game/special.seed.test.ts
+cd ../worker
+npx wrangler d1 execute beyondvote-stats --remote --file=seed.sql
+```
+
+模擬的打法混合：四成半認真半隨興、兩成隨便選、一成五重視準備、一成五照現實、一成每題挑最好的；三成五是第二局起的分支模式。要移除：`DELETE FROM picks WHERE play_id LIKE 'sim-%'; DELETE FROM plays WHERE simulated = 1;`

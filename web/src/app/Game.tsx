@@ -827,7 +827,9 @@ function PlayerSummary({ stats, same }: { stats: PlayerStats; same: number }) {
     <section className={styles.card}>
       <h2>其他玩家的這場選戰</h2>
       <p>
-        玩家已經打完 <strong>{stats.plays.toLocaleString()}</strong> 局，其中 <strong>{percent(stats.wins, stats.plays)}%</strong> 當選。
+        玩家已經打完 <strong>{stats.plays.toLocaleString()}</strong> 局
+        {stats.simulated > 0 && `（含 ${stats.simulated.toLocaleString()} 局電腦模擬的基礎樣本）`}
+        ，其中 <strong>{percent(stats.wins, stats.plays)}%</strong> 當選。
       </p>
       <ul className={styles.endingBars}>
         {endings.map(([title, n]) => (
@@ -844,7 +846,10 @@ function PlayerSummary({ stats, same }: { stats: PlayerStats; same: number }) {
         和現實選擇一樣的題數，玩家平均 {avg.toFixed(1)} 題；你這一局 {same} 題。
       </p>
       <p>
-        <small>統計來自玩家匿名送出的遊戲紀錄，只記遊戲裡的選擇與結果，是遊戲數據，不是民調。</small>
+        <small>
+          統計來自玩家匿名送出的遊戲紀錄，只記遊戲裡的選擇與結果，是遊戲數據，不是民調。
+          {stats.simulated > 0 && "上線初期先放入電腦模擬的基礎樣本，讓比例有個起點；真人玩到 300 局後，模擬樣本就不再計入。"}
+        </small>
       </p>
     </section>
   );

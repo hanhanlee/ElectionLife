@@ -8,7 +8,9 @@ CREATE TABLE IF NOT EXISTS plays (
   same_real INTEGER NOT NULL,
   real_total INTEGER NOT NULL,
   ip_hash TEXT NOT NULL,
-  created_at INTEGER NOT NULL
+  created_at INTEGER NOT NULL,
+  -- 1：電腦模擬的基礎樣本（真人局數夠多之後不再計入）
+  simulated INTEGER NOT NULL DEFAULT 0
 );
 CREATE INDEX IF NOT EXISTS plays_scenario ON plays (scenario);
 CREATE INDEX IF NOT EXISTS plays_ip ON plays (ip_hash, created_at);

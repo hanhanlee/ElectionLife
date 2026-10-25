@@ -49,6 +49,7 @@ describe("玩家統計", () => {
     const stats: PlayerStats = {
       plays: 40,
       wins: 10,
+      simulated: 0,
       endings: {},
       sameAsReal: { sum: 0, plays: 40 },
       choices: { a: { x: 20, y: 9 }, b: { x: 30, y: 10 } },
