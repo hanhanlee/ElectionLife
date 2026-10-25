@@ -207,7 +207,7 @@
     "fact": "SIMULATION",
     "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
     "options": [
-      { "id": "family", "label": "講家族四代，和這座城市的故事", "outcome": "台下的長輩紅了眼眶。網路上卻吵成一團：有人貼出課本裡的那幾頁，問你是不是忘了那個年代發生過什麼；也有人翻出你父親改姓的往事，問這個家族故事，到底是誰的故事。年輕人留言：又是家族。", "effects": { "party": 2, "approval": -3, "media": 2, "integrity": -1 } },
+      { "id": "family", "label": "講家族四代，和這座城市的故事", "outcome": "台下的長輩紅了眼眶。網路上卻吵成一團：有人貼出課本裡的那幾頁，問你是不是忘了那個年代發生過什麼；也有人翻出你父親改姓的往事，問這個家族故事，到底是誰的故事。年輕人留言：不驗 DNA 嗎？", "effects": { "party": 2, "approval": -3, "media": 2, "integrity": -1 } },
       { "id": "record", "label": "一項一項念出四年做到的事", "outcome": "清單很長。有人聽到睡著，也有人第一次知道，原來那條路是你修的。", "effects": { "achievement": 2, "approval": 2 }, "variants": [{ "when": { "min": { "achievement": 70 } }, "outcome": "清單很長，每一項都有人在台下點頭。這一次，沒有人說你答非所問。", "effects": { "approval": 2 } }] },
       { "id": "sorry", "label": "說：「這段時間，我做錯了一些事，我聽到了。」", "outcome": "廣場安靜了幾秒，然後掌聲比你預期的大。黨內有人覺得，你不該在最後一晚示弱。", "effects": { "approval": 4, "integrity": 3, "party": -1 } }
     ],
