@@ -285,7 +285,7 @@
     "id": "sp-incumbent-f05",
     "phase": "campaign",
     "title": "對面的邀請",
-    "scenario": "一位被認為偏藍的資深製作人、一位電台主持人，都在節目上說：Puma 委員來過了，也邀了你，還在等你回覆。",
+    "scenario": "一位被認為偏藍的資深製作人說，他邀了你好幾次，都沒有回音。一位電台主持人在節目上說：Puma 委員來過了，她也邀了你，還在等你回覆。",
     "tags": ["命運"],
     "special": "capital-2026-incumbent",
     "interlude": "opportunity",
@@ -296,7 +296,7 @@
       { "id": "go", "label": "去上，不先要題目", "outcome": "你被問到颱風假和機場，有兩題答得不太好。但很多人說，這是今年看你最自然的一次。", "effects": { "approval": 3, "media": 2, "team": -1 } },
       { "id": "spokes", "label": "派發言人代替你去", "outcome": "發言人表現得很好。主持人說：下次還是希望市長本人來。", "effects": { "media": 1, "approval": -1 } }
     ],
-    "source": { "status": "draft", "prototype": "2026 年 9 至 10 月，沈伯洋上王偉忠、吳淡如等人的節目；王偉忠表示多次邀請蔣萬安沒有回音；吳淡如在中廣專訪沈伯洋時說也邀了蔣萬安、尚未回應。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "自由時報：吳淡如中廣專訪沈伯洋，也邀蔣萬安", "url": "https://news.ltn.com.tw/news/politics/breakingnews/5610926", "quote": "邀請", "accessed": "2026-10-25" }] }
+    "source": { "status": "draft", "prototype": "2026 年 9 至 10 月，沈伯洋上王偉忠、吳淡如等人的節目；王偉忠表示多次邀請蔣萬安沒有回音；吳淡如在中廣專訪沈伯洋時說也邀了蔣萬安、尚未回應。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "自由時報：吳淡如中廣專訪沈伯洋，也邀蔣萬安", "url": "https://news.ltn.com.tw/news/politics/breakingnews/5610926", "quote": "邀請", "accessed": "2026-10-25" }, { "title": "民視（Yahoo 轉載，2026-10-24）：王偉忠在《今周刊》發表〈有這麼一家周到的小店〉", "url": "https://tw.news.yahoo.com/%E6%AF%94%E8%94%A1%E5%BA%B7%E6%B0%B8%E9%82%84%E9%AB%98%E6%8B%9B-%E7%8E%8B%E5%81%89%E5%BF%A0-%E7%AA%81%E6%8B%8B760%E5%AD%97%E9%9C%87%E6%92%BC%E5%BD%88-%E7%96%91%E5%81%B7%E8%87%AD%E8%94%A3%E8%90%AC%E5%AE%89-%E4%BB%96%E7%9C%8B%E8%B7%AA-020310674.html", "quote": "多次邀請", "accessed": "2026-10-25" }] }
   },
   {
     "id": "sp-incumbent-f06",
