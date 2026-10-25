@@ -205,7 +205,7 @@ export const SPECIAL_SERIES: {
 } = {
   title: "2026 首都保衛戰",
   art: "capital-2026",
-  teaser: "同一場首都市長選戰，你要站在哪一邊？",
+  teaser: "有人盼望奇蹟，有人不能輸。你能將選戰帶向不同的結局嗎？",
   routes: [
     { title: "洋流慧聚", side: "挑戰者路線", teaser: "被對岸立案偵查的立委，落後二十八點，挑戰首都的現任市長。", art: "route-challenger", specialId: "capital-2026" },
     { title: "萬安守城", side: "現任市長路線", teaser: "民調一路領先的現任市長，要守住這座城。", art: "route-incumbent" },

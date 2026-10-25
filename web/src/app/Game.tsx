@@ -774,6 +774,7 @@ function CityImage({ id, name }: { id: string; name: string }) {
 function SeriesScreen({ onPick, onBack }: { onPick: (def: SpecialDef) => void; onBack: () => void }) {
   return (
     <main className={styles.main}>
+      <button className={styles.topBack} onClick={onBack}>← 上一頁</button>
       <p className={styles.turn}>特別篇</p>
       <h1 className={styles.title}>{SPECIAL_SERIES.title}</h1>
       <p className={styles.lead}>{SPECIAL_SERIES.teaser}</p>
@@ -1441,6 +1442,7 @@ function SpecialIntro({ def, onStart, onBack }: { def: SpecialDef; onStart: () =
   useEffect(() => setReplay(specialPlayed(def.id)), [def.id]);
   return (
     <main className={styles.main}>
+      <button className={styles.topBack} onClick={onBack}>← 上一頁</button>
       <p className={styles.turn}>
         特別篇・{setup.city.name}・{party.name}
       </p>
@@ -1469,7 +1471,7 @@ function SpecialIntro({ def, onStart, onBack }: { def: SpecialDef; onStart: () =
       </p>
       <div className={styles.stickyAction}>
         <button className={`${styles.primary} ${styles.glow}`} onClick={onStart}>接受徵召</button>
-        <button className={styles.quietLink} onClick={onBack}>回到開始畫面</button>
+        <button className={styles.quietLink} onClick={onBack}>選另一個陣營</button>
       </div>
     </main>
   );
