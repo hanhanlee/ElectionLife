@@ -828,7 +828,7 @@ function PlayerSummary({ stats, same }: { stats: PlayerStats; same: number }) {
       <h2>其他玩家的這場選戰</h2>
       <p>
         玩家已經打完 <strong>{stats.plays.toLocaleString()}</strong> 局
-        {stats.simulated > 0 && `（含 ${stats.simulated.toLocaleString()} 局電腦模擬的基礎樣本）`}
+        {stats.simulated > 0 && "（含電腦模擬的基礎樣本）"}
         ，其中 <strong>{percent(stats.wins, stats.plays)}%</strong> 當選。
       </p>
       <ul className={styles.endingBars}>
