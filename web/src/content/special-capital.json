@@ -762,11 +762,12 @@
     "fact": "SIMULATION",
     "conditions": { "flags": ["special-capital-2026", "party-green"], "min": { "media": 60 } },
     "options": [
-      { "id": "full", "label": "公布完整影片，說明前後文", "outcome": "完整影片的觀看次數，只有短影音的二十分之一。但記者有東西可以引用了。", "effects": { "integrity": 2, "approval": -1 } },
-      { "id": "counter", "label": "也剪一支短影音反擊", "outcome": "你的反擊影片也很紅。現在網路上有兩支短影音在吵架。", "effects": { "media": 3, "approval": -2 } },
-      { "id": "lowkey", "label": "減少曝光幾天，讓熱度退下去", "outcome": "三天後，大家開始討論別的事情。你的團隊說，這是對的。", "effects": { "media": -4, "team": 1 } }
+      { "id": "full", "label": "公布完整影片，說明前後文", "outcome": "完整影片的觀看次數，只有短影音的二十分之一。但記者有東西可以引用了。", "effects": { "integrity": 2, "approval": -2 }, "variants": [{ "when": { "min": { "integrity": 80 } }, "effects": { "approval": 3 }, "outcome": "你一路上很少說過頭的話，這次大家願意把完整影片看完。十五秒的版本，慢慢沒人轉了。" }] },
+      { "id": "counter", "label": "也剪一支短影音反擊", "outcome": "你的反擊影片也很紅。現在網路上有兩支短影音在吵架。", "effects": { "media": 2, "approval": -4, "integrity": -1 } },
+      { "id": "lowkey", "label": "減少曝光幾天，讓熱度退下去", "outcome": "三天後，大家開始討論別的事情。你的團隊說，這是對的。", "effects": { "media": -6, "approval": -1, "team": 1 } }
     ],
-    "source": { "status": "placeholder", "prototype": "遊戲虛構的插曲，用來呈現選戰中的機會、放大與反噬，不指涉任何真實人物的行為。", "adaptation": "遊戲虛構的政策情境，取材自首都長期的市政議題，不代表任何候選人的實際主張。", "refs": [] }
+    "source": { "status": "placeholder", "prototype": "遊戲虛構的插曲，用來呈現選戰中的機會、放大與反噬，不指涉任何真實人物的行為。", "adaptation": "遊戲虛構的政策情境，取材自首都長期的市政議題，不代表任何候選人的實際主張。", "refs": [] },
+    "interludeUrgent": { "min": { "media": 65 } }
   },
   {
     "id": "sp-capital-f14",

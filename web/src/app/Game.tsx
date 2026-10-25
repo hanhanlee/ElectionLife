@@ -50,7 +50,7 @@ import { buildEpilogue } from "@/game/epilogue";
 import { staffReport } from "@/game/feedback";
 import { arcProgress, fillArcText, openArcs } from "@/game/story";
 import { summarize, type FinalStage, type ReflectionItem } from "@/game/endings";
-import { fillSaid, specialById, specialEnding, SPECIALS, type SpecialDef } from "@/game/special";
+import { fillSaid, realityCheck, SPECIAL_SERIES, specialById, specialEnding, type SpecialDef } from "@/game/special";
 import {
   CAMPAIGN_SCALES,
   FATE_ENABLED,
@@ -247,14 +247,34 @@ export default function Game() {
           事件與政見取材自過去 20 年的選舉公報與公開報導，並已虛構化。
         </p>
         <button className={styles.primary} onClick={restart}>開始參選</button>
-        {SPECIALS.map((def) => (
-          <section key={def.id} className={`${styles.card} ${styles.specialEntry}`}>
-            <p className={styles.turn}>特別篇</p>
-            <h2>{def.title}</h2>
-            <p>{def.teaser}</p>
-            <button className={styles.secondary} onClick={() => setSpecial(def)}>挑戰特別篇</button>
-          </section>
-        ))}
+        <section className={`${styles.card} ${styles.specialEntry}`}>
+          <SpecialImage
+            art={SPECIAL_SERIES.art}
+            alt="首都保衛戰：兩位候選人在黃昏的首都兩側對峙，一邊是舉著藍綠手燈的人潮，一邊是燈火中的市府。"
+            className={styles.routeImage}
+          />
+          <p className={styles.turn}>特別篇</p>
+          <h2>{SPECIAL_SERIES.title}</h2>
+          <p>{SPECIAL_SERIES.teaser}</p>
+          <div className={styles.routes}>
+            {SPECIAL_SERIES.routes.map((route) => {
+              const def = route.specialId ? specialById(route.specialId) : undefined;
+              return (
+                <div key={route.title} className={def ? styles.route : styles.routeSoon}>
+                  <SpecialImage art={route.art} alt={`${route.title}的插畫`} className={styles.routeImage} />
+                  <p className={styles.turn}>{route.side}</p>
+                  <h3>{route.title}</h3>
+                  <p>{route.teaser}</p>
+                  {def ? (
+                    <button className={styles.secondary} onClick={() => setSpecial(def)}>進入這條路線</button>
+                  ) : (
+                    <button className={styles.secondary} disabled>即將推出</button>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </section>
         {stale && <p className={styles.notice}>遊戲更新了，上一局的存檔無法繼續。請開始新的一局。</p>}
         {saved && !saved.finished && (
           <button className={styles.secondary} onClick={() => start(saved)}>
@@ -729,6 +749,25 @@ function CityImage({ id, name }: { id: string; name: string }) {
       className={styles.cityImage}
       src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/cities/${id}.webp`}
       alt={`${name}的城市插畫`}
+      width={1200}
+      height={800}
+      loading="lazy"
+      decoding="async"
+      onError={() => setFailed(true)}
+    />
+  );
+}
+
+/** 特別篇插畫（web/public/specials/<art>.webp）；載入失敗時直接隱藏 */
+function SpecialImage({ art, alt, className }: { art: string; alt: string; className: string }) {
+  const [failed, setFailed] = useState(false);
+  if (failed) return null;
+  return (
+    // eslint-disable-next-line @next/next/no-img-element -- 靜態輸出不使用 next/image 的圖片最佳化
+    <img
+      className={className}
+      src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/specials/${art}.webp`}
+      alt={alt}
       width={1200}
       height={800}
       loading="lazy"
@@ -1346,6 +1385,7 @@ function SpecialIntro({ def, onStart, onBack }: { def: SpecialDef; onStart: () =
         特別篇・{setup.city.name}・{party.name}
       </p>
       <h1 className={styles.title}>{def.title}</h1>
+      <SpecialImage art={def.art} alt={`${def.title}：候選人站在宣傳車上，對著舉著手燈的人潮揮手。`} className={styles.hero} />
       <section className={styles.card}>
         <CardLabel label="你的處境" hint="特別篇的人設是固定的，事件依照真實選戰的時間順序出場" />
         <div className={styles.tags}>
@@ -1400,6 +1440,7 @@ function SpecialEndScreen({
   });
   const sourced = played.filter(({ event }) => event.fact !== "SIMULATION" || event.source.refs.length > 0);
   const reflected = played.filter(({ event }) => event.reflection);
+  const check = realityCheck(def, state, EVENTS, won);
   const result = won ? "當選" : "落選";
 
   useEffect(() => {
@@ -1427,6 +1468,15 @@ function SpecialEndScreen({
         </div>
         <p><small>這是遊戲裡的虛構結果，不是真實選情。原則不會直接換成選票，但決定了你用什麼方式贏，或用什麼方式輸。</small></p>
       </section>
+      <ShareCard
+        kind={won ? "capital-win" : "capital-loss"}
+        label={`特別篇・${def.title}`}
+        result={result}
+        headline={ending.headline}
+        story={`落後二十八點起步，${won ? "我當選了" : "最後沒能翻盤"}。${check.rows.length > 0 ? `我遇到的 ${check.rows.length} 個真實攻防裡，有 ${check.same} 題和現實的選擇一樣。` : ""}`}
+        line={check.closing[1]}
+        won={won}
+      />
       <section className={styles.card}>
         <p className={styles.lead}>{def.cta}</p>
         <button className={styles.primary} onClick={onMain}>繼續 BeyondVote 完整政治人生</button>
@@ -1471,6 +1521,38 @@ function SpecialEndScreen({
           ))}
         </section>
       )}
+      <section className={styles.card}>
+        <h2>你和現實的這一路</h2>
+        {def.realityNow.paragraphs.map((p) => <p key={p}>{p}</p>)}
+        {check.rows.length > 0 && (
+          <>
+            <ul className={styles.list}>
+              {check.rows.map(({ event, real, mine, same }) => (
+                <li key={event.id}>
+                  <strong>{event.title}</strong>
+                  {same ? (
+                    <div><small>✅ 你和他都選了：{real.label}</small></div>
+                  ) : (
+                    <>
+                      <div><small>現實中他選了：{real.label}</small></div>
+                      <div><small>你選了：{mine.label}</small></div>
+                    </>
+                  )}
+                </li>
+              ))}
+            </ul>
+            <p>這一局，你有 {check.same} 題和現實的選擇一樣（共 {check.rows.length} 題）。</p>
+          </>
+        )}
+        {check.closing.map((p) => <p key={p}><strong>{p}</strong></p>)}
+        <p>
+          <small>
+            {def.realityNow.refs.map((r) => (
+              <a key={r.url} href={r.url} target="_blank" rel="noreferrer">[{r.title}] </a>
+            ))}
+          </small>
+        </p>
+      </section>
       <section className={styles.card}>
         <h2>真實事件原型</h2>
         <p><small>{def.reality}</small></p>

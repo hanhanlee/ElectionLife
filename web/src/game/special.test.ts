@@ -1,9 +1,9 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { ARCS, backgroundById, CRISES, EVENTS, PARTIES, partyById, specialSetup } from "@/content";
-import { choose, chooseInterlude, currentEvent, interludeEvent, lacksFunds, newGame } from "./engine";
+import { choose, chooseInterlude, currentEvent, drawInterlude, interludeEvent, lacksFunds, newGame } from "./engine";
 import { mulberry32 } from "./rng";
-import { fillSaid, PRINCIPLED_LOSS_INTEGRITY, specialEnding, SPECIALS } from "./special";
+import { fillSaid, PRINCIPLED_LOSS_INTEGRITY, realityCheck, specialEnding, SPECIALS } from "./special";
 import type { GameState } from "./types";
 
 const def = SPECIALS[0];
@@ -155,6 +155,59 @@ describe("特別篇：首都逆轉戰", () => {
     for (let seed = 1; seed <= N; seed++) if (play(seed).firstElection!.won) wins++;
     expect(wins / N).toBeGreaterThan(0.03);
     expect(wins / N).toBeLessThan(0.25);
+  });
+
+  it("終章反思：現實的選擇都對得到選項；只對照這一局遇到的題目；最後一句依結果換", () => {
+    for (const [eventId, optionId] of Object.entries(def.realChoices)) {
+      const e = own.find((x) => x.id === eventId);
+      expect(e, eventId).toBeDefined();
+      expect(e!.options.some((o) => o.id === optionId), `${eventId}/${optionId}`).toBe(true);
+      expect(e!.interlude, `${eventId} 是插曲`).toBeUndefined();
+    }
+    const realPick = (s: GameState) => (ids: string[], r: () => number) => {
+      const id = def.realChoices[s.pendingInterlude ?? s.deck[s.turn]];
+      return ids.includes(id) ? id : ids[Math.floor(r() * ids.length)];
+    };
+    for (let seed = 1; seed <= 40; seed++) {
+      const g = play(seed, true);
+      const check = realityCheck(def, g, EVENTS, g.firstElection!.won);
+      for (const row of check.rows) expect(g.history.some((h) => h.eventId === row.event.id)).toBe(true);
+      expect(check.rows.length).toBeGreaterThan(0);
+      expect(check.closing).toHaveLength(2);
+    }
+    // 照現實選：每一題都和現實一樣
+    let s = newGame(EVENTS, 3, partyById(def.party), backgroundById(def.background), specialSetup(def), {
+      special: def.id,
+      startDelta: def.startDelta,
+      disabledCrises: def.disabledCrises,
+    });
+    const r = mulberry32(9);
+    while (!s.finished) {
+      const il = interludeEvent(s, EVENTS);
+      if (il) {
+        s = chooseInterlude(s, EVENTS, il.options[0].id, ARCS);
+        continue;
+      }
+      const e = currentEvent(s, EVENTS)!;
+      const ids = e.options.filter((o) => s.offered.includes(o.id) && !lacksFunds(s, o)).map((o) => o.id);
+      s = choose(s, EVENTS, realPick(s)(ids, r), CRISES, PARTIES, ARCS, []);
+    }
+    const check = realityCheck(def, s, EVENTS, true);
+    expect(check.same).toBe(check.rows.length);
+    expect(check.closing[0]).toContain("走過的路");
+    expect(realityCheck(def, s, EVENTS, false).closing[0]).toContain("你在哪幾題");
+  });
+
+  it("聲量很高時，F13〈短影音被斷章取義〉一定會出現（每局插曲上限內）", () => {
+    const f13 = own.find((e) => e.id === "sp-capital-f13")!;
+    expect(f13.interludeUrgent).toBeDefined();
+    let s = newGame(EVENTS, 5, partyById(def.party), backgroundById(def.background), specialSetup(def), {
+      special: def.id,
+      startDelta: def.startDelta,
+      disabledCrises: def.disabledCrises,
+    });
+    s = { ...s, stats: { ...s.stats, media: 80 } };
+    for (let seed = 1; seed <= 30; seed++) expect(drawInterlude({ ...s, seed }, EVENTS, 3)?.id).toBe("sp-capital-f13");
   });
 });
 

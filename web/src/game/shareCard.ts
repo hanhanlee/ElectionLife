@@ -6,7 +6,8 @@ import type { GameSummary } from "./endings";
 import { mulberry32 } from "./rng";
 import type { GameState, StatKey } from "./types";
 
-export type CardKind = "scandal" | "broke" | "win" | "dawn" | "loss";
+/** 底圖（web/public/cards/<kind>.webp）；capital-* 是特別篇《首都逆轉戰》專用 */
+export type CardKind = "scandal" | "broke" | "win" | "dawn" | "loss" | "capital-win" | "capital-loss";
 
 const SCANDAL_CRISES = ["x-vote-buying", "x-investigation", "x-collusion", "x-campaign-scandal"];
 /** 曝光時算醜聞的劇情（金錢與人事交換）；政見灌水被拆穿不算 */

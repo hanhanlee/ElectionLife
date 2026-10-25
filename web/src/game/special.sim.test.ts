@@ -20,31 +20,11 @@ const by = (w: Partial<Record<string, number>>): Pick => (opts) => [...opts].sor
 const best = by({ ...VOTE_WEIGHTS, achievement: 0.28 });
 
 /**
- * 現實路線：挑戰者在現實中的選擇（沒有對應的回合用高品質決策補）。
+ * 現實路線：挑戰者在現實中的選擇（`def.realChoices`，沒有對應的回合用高品質決策補）。
  * 用來檢查「照現實選，不會得到違反現實的結果」。
  */
-const REAL_PATH: Record<string, string> = {
-  "sp-capital-01": "defiant",
-  "sp-capital-02": "warrior",
-  "sp-capital-03": "local",
-  "sp-capital-04": "enemy",
-  "sp-capital-06": "earn",
-  "sp-capital-07": "law",
-  "sp-capital-08": "decouple",
-  "sp-capital-09": "challenger",
-  "sp-capital-m01": "explain",
-  "sp-capital-m03": "unscripted",
-  "sp-capital-m05": "substation",
-  "sp-capital-m07": "attack",
-  "sp-capital-n01": "same",
-  "sp-capital-n03": "lunch",
-  "sp-capital-n04": "soft",
-  "sp-capital-n05": "ask",
-  "sp-capital-n06": "more",
-  "sp-capital-n07": "books",
-};
 const real: Pick = (o, s, r) => {
-  const id = REAL_PATH[s.pendingInterlude ?? s.deck[s.turn]];
+  const id = def.realChoices[s.pendingInterlude ?? s.deck[s.turn]];
   return o.find((x) => x.id === id) ?? best(o, s, r);
 };
 

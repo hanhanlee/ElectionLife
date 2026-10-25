@@ -24,6 +24,8 @@ export interface SpecialDef {
   title: string;
   /** 開始畫面的一句介紹 */
   teaser: string;
+  /** 開場插畫（web/public/specials/<art>.webp） */
+  art: string;
   /** 開局說明，一段一句 */
   intro: string[];
   party: string;
@@ -45,6 +47,10 @@ export interface SpecialDef {
   endings: SpecialEnding[];
   /** 結局頁最後的提醒：現實中的選戰 */
   reality: string;
+  /** 現實中的挑戰者在各題的選擇（事件 id → 選項 id）；結局頁的終章反思和平衡模擬的「現實路線」都用這份 */
+  realChoices: Record<string, string>;
+  /** 終章反思開頭：現實的選戰走到哪裡（真名只出現在結局頁） */
+  realityNow: { paragraphs: string[]; refs: { title: string; url: string }[] };
   /** 結局頁導向主篇的一句話 */
   cta: string;
 }
@@ -65,6 +71,7 @@ export const SPECIALS: SpecialDef[] = [
     id: "capital-2026",
     title: "首都逆轉戰",
     teaser: "被對岸立案偵查的立委，落後二十八點，挑戰首都的現任市長。",
+    art: "route-challenger",
     intro: [
       "你是綠黨的立法委員，在大學教犯罪學，創辦了一間民防學院，教民眾在戰爭與災難中自救、識讀假訊息。",
       "對岸說你「分裂國家」，對你立案偵查。半年後，黨要你去挑戰首都的現任市長。",
@@ -148,11 +155,58 @@ export const SPECIALS: SpecialDef[] = [
       },
     ],
     reality: "現實中的這場選戰，在 2026 年 11 月 28 日投票。遊戲裡的結果，只是無數種可能中的一種，不代表任何預測或立場。",
+    realChoices: {
+      "sp-capital-01": "defiant",
+      "sp-capital-02": "warrior",
+      "sp-capital-03": "local",
+      "sp-capital-04": "enemy",
+      "sp-capital-06": "earn",
+      "sp-capital-07": "law",
+      "sp-capital-08": "decouple",
+      "sp-capital-09": "challenger",
+      "sp-capital-m01": "explain",
+      "sp-capital-m03": "unscripted",
+      "sp-capital-m05": "substation",
+      "sp-capital-m07": "attack",
+      "sp-capital-n01": "same",
+      "sp-capital-n03": "lunch",
+      "sp-capital-n04": "soft",
+      "sp-capital-n05": "ask",
+      "sp-capital-n06": "more",
+      "sp-capital-n07": "books",
+    },
+    realityNow: {
+      paragraphs: [
+        "沈伯洋被徵召後的第一份民調，落後蔣萬安二十八個百分點，很多人說這是垃圾時間。",
+        "十月二十日，信民協會公布的民調是沈伯洋 50.3%、蔣萬安 33.3%。做分析的民調專家也提醒：民調不是得票率，換算成得票，兩人可能非常接近。垃圾時間，打成了焦土戰。",
+      ],
+      refs: [
+        { title: "聯合報：北市最新民調，蔣萬安大贏沈伯洋 28 個百分點", url: "https://udn.com/news/story/124652/9529403" },
+        { title: "Newtalk（2026-10-20）：沈伯洋支持度領先 17%，戴立安分析", url: "https://newtalk.tw/news/view/2026-10-20/1066585" },
+      ],
+    },
     cta: "這場選舉結束了。如果你真的當上市長，接下來四年呢？",
   },
 ];
 
 export const specialById = (id: string) => SPECIALS.find((s) => s.id === id);
+
+/** 首頁的特別篇入口：同一場選戰，兩邊各一條路線；還沒做好的路線顯示「即將推出」 */
+export const SPECIAL_SERIES: {
+  title: string;
+  teaser: string;
+  /** 插畫（web/public/specials/<art>.webp） */
+  art: string;
+  routes: { title: string; side: string; teaser: string; art: string; specialId?: string }[];
+} = {
+  title: "2026 首都保衛戰",
+  art: "capital-2026",
+  teaser: "同一場首都市長選戰，你要站在哪一邊？",
+  routes: [
+    { title: "洋流慧聚", side: "挑戰者路線", teaser: "被對岸立案偵查的立委，落後二十八點，挑戰首都的現任市長。", art: "route-challenger", specialId: "capital-2026" },
+    { title: "萬安守城", side: "現任市長路線", teaser: "民調一路領先的現任市長，要守住這座城。", art: "route-incumbent" },
+  ],
+};
 
 /** 特別篇的完整人設：對手強度依資質與現任身分計算，和一般對手一樣 */
 export function specialProfile(def: SpecialDef, traits: Trait[]): Profile {
@@ -200,6 +254,28 @@ export function promiseLedger(state: GameState, events: GameEvent[]): PromiseLed
 export const PRINCIPLED_LOSS_INTEGRITY = 85;
 const PRINCIPLED_LOSS =
   "開票那晚，競選總部的人走得差不多了。你一路上沒有說過一句自己不相信的話，沒有剪過一支斷章取義的影片，也沒有答應過一件做不到的事。你坐在空下來的椅子上，想了很久：為什麼最後是這個下場？你想不通。也許選舉本來就不是在比誰比較誠實；也許，只是還不到時候。";
+
+/**
+ * 終章反思：這一局遇到、現實中也有選擇的題目，對照「現實中他選了什麼／你選了什麼」，最後一句依結果換。
+ * 插曲與架空的回合不列。
+ */
+export function realityCheck(def: SpecialDef, state: GameState, events: GameEvent[], won: boolean) {
+  const rows = state.history.flatMap((h) => {
+    const realId = def.realChoices[h.eventId];
+    const event = events.find((e) => e.id === h.eventId);
+    const real = event?.options.find((o) => o.id === realId);
+    const mine = event?.options.find((o) => o.id === h.optionId);
+    return event && real && mine ? [{ event, real, mine, same: real.id === mine.id }] : [];
+  });
+  const same = rows.filter((r) => r.same).length;
+  const mostlySame = same * 2 >= rows.length;
+  const closing = !won
+    ? "現實裡，他做了這些選擇，把落後二十八點追成拉鋸。你在哪幾題做了不一樣的決定？"
+    : mostlySame
+      ? "你走了他走過的路，也走到了終點。現實裡，這條路還沒走完。"
+      : "你用自己的方法贏了。他在現實裡為什麼沒這樣選？是他錯了，還是你漏看了什麼？";
+  return { rows, same, closing: [closing, "他的選擇裡，有哪些是你不會做的？"] };
+}
 
 export function specialEnding(def: SpecialDef, state: GameState, won: boolean, probability: number, events: GameEvent[]) {
   const promises = promiseLedger(state, events);

@@ -227,6 +227,8 @@ export interface GameEvent {
   specialCallback?: boolean;
   /** 特別篇的插曲（命運卡）：在第 3、6、9 回合後依條件插入，不佔回合 */
   interlude?: InterludeKind;
+  /** 插曲的必出條件：符合時跳過機率與類別抽選，直接出現（仍算進每局上限） */
+  interludeUrgent?: Condition;
   /** 資料分級：事實、某方說法、遊戲虛構（見特別篇手冊） */
   fact?: FactLevel;
   /** 結局頁「真實世界的這一題」：發生了什麼、兩邊各自省略或扭曲了什麼（特別篇，遊戲中途不顯示） */

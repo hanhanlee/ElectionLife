@@ -241,12 +241,11 @@ function specialEvent(state: GameState, events: GameEvent[], turn: number): Game
 /**
  * 特別篇的插曲（命運卡）：第 3、6、9 回合後各判斷一次，每局最多 2 張、黑天鵝最多 1 張。
  * 先依類別權重抽類別，再從該類別符合前置條件、還沒出現過的卡中抽一張；同一個種子結果相同。
+ * 符合必出條件（interludeUrgent）的卡優先，不經過機率判斷（例如聲量很高時的 F13）。
  */
 export function drawInterlude(state: GameState, events: GameEvent[], turn: number): GameEvent | undefined {
   const seen = state.interludes ?? [];
   if (seen.length >= INTERLUDE_MAX) return undefined;
-  const rng = turnRng(state.seed, turn, INTERLUDE_SALT);
-  if (rng() >= INTERLUDE_CHANCE) return undefined;
   const wildcards = seen.filter((i) => events.find((e) => e.id === i.eventId)?.interlude === "wildcard").length;
   const eligible = events.filter(
     (e) =>
@@ -256,6 +255,10 @@ export function drawInterlude(state: GameState, events: GameEvent[], turn: numbe
       !(e.interlude === "wildcard" && wildcards >= 1) &&
       meetsCondition(state, e.conditions),
   );
+  const urgent = eligible.find((e) => e.interludeUrgent && meetsCondition(state, e.interludeUrgent));
+  if (urgent) return urgent;
+  const rng = turnRng(state.seed, turn, INTERLUDE_SALT);
+  if (rng() >= INTERLUDE_CHANCE) return undefined;
   const kinds = (Object.keys(INTERLUDE_WEIGHTS) as InterludeKind[]).filter((k) => eligible.some((e) => e.interlude === k));
   if (kinds.length === 0) return undefined;
   const kind = weightedPick(kinds, (k) => INTERLUDE_WEIGHTS[k], rng());
