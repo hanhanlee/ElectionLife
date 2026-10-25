@@ -40,6 +40,8 @@ export interface SpecialDef {
   /** 特別篇裡換個名字的數值（例如還沒執政的挑戰者沒有「施政成果」，改看「政策準備」） */
   statLabels: Partial<Record<StatKey, string>>;
   statHints: Partial<Record<StatKey, string>>;
+  /** 特別篇顯示的數值：用不到的（市庫、議會、政商）不顯示；特別篇也不算錢 */
+  visibleStats: StatKey[];
   /** 開票前的說明：支持度是遊戲指數，不是真實民調 */
   voteNote: string;
   /** 特別篇關掉的通用突發事件：由特別篇自己的插曲處理同一類代價 */
@@ -60,7 +62,8 @@ const has = (s: GameState, flag: string) => s.flags.includes(flag);
 /** 結局的補充段落：讓前面的選擇在後日談裡被提到 */
 function echoes(s: GameState): string[] {
   const lines: string[] = [];
-  if (has(s, "sp-typhoon")) lines.push("檢討會上，幕僚把那段颱風夜的發言放了三遍。論點值得討論，只是說在了颱風夜，也沒先問在金融業上班的人怎麼想。");
+  // 已經在插曲 L02 被追問過的，結局不再重提颱風夜
+  if (has(s, "sp-typhoon") && !s.interludes?.some((i) => i.eventId === "sp-capital-l02")) lines.push("檢討會上，幕僚把那段颱風夜的發言放了三遍。論點值得討論，只是說在了颱風夜，也沒先問在金融業上班的人怎麼想。");
   if (has(s, "sp-local")) lines.push("那張老鼠通報地圖，後來被好幾個里長貼在辦公室的牆上。");
   if (has(s, "sp-courted")) lines.push("前副市長團隊的那兩位老幕僚，選後傳了一句訊息給你：「下次還可以再談。」");
   return lines.slice(0, 1);
@@ -90,13 +93,14 @@ export const SPECIALS: SpecialDef[] = [
     },
     opponentIntro:
       "家族四代都出現在課本裡。外型體面、形象乾淨，第一任做得四平八穩，民調一直很好看。批評的人說：很好看，但不知道做了什麼。",
-    opponentBonus: 0.45,
+    opponentBonus: 0.05,
     startDelta: { approval: -21, media: -4 },
     statLabels: { approval: "支持度", achievement: "政策準備" },
     statHints: {
       approval: "遊戲裡的聲勢指數，不是真實民調。",
       achievement: "你的政見有多少研究、財源和時程撐著。宣布政見不會增加，做功課才會。",
     },
+    visibleStats: ["approval", "media", "achievement", "team", "party"],
     // 挑戰者聲量高是現實（民調也一路追上來），不該固定扣分；衝聲量的代價改由插曲 F13〈短影音被斷章取義〉處理，玩家可以選擇怎麼回應
     disabledCrises: ["x-overexposure"],
     voteNote: "開票前，幕僚提醒你：支持度只是聲勢，不是票。公子市長的基本盤一直都在，很多人在電話裡不表態。",

@@ -138,7 +138,7 @@ export type Availability = "open" | "unlockable" | "locked";
 
 /** 經費不足以支付這個選項 */
 export function lacksFunds(state: GameState, option: GameOption): boolean {
-  return (option.funds ?? 0) < 0 && state.funds + option.funds! < 0;
+  return usesMoney(state) && (option.funds ?? 0) < 0 && state.funds + option.funds! < 0;
 }
 
 export function optionAvailability(state: GameState, option: GameOption): Availability {
@@ -147,8 +147,12 @@ export function optionAvailability(state: GameState, option: GameOption): Availa
   return option.unlockCost ? "unlockable" : "locked";
 }
 
+/** 特別篇不算錢：沒有經費、開銷、競選規模、貸款與選前動員，只看選擇與數值 */
+export const usesMoney = (state: GameState) => !state.special;
+
 /** 每 3 回合入帳：黨部撥款、政治獻金、小額捐款 */
 function withPayout(state: GameState): GameState {
+  if (!usesMoney(state)) return state;
   const p = payout(state.stats, state.income);
   const fmt = (n: number) => `${n.toLocaleString()} 萬`;
   const text = `黨部撥款：${fmt(p.party)}｜政治獻金：${fmt(p.donations)}｜小額捐款：${fmt(p.small)}`;
@@ -162,7 +166,7 @@ function withPayout(state: GameState): GameState {
 
 /** 可以申請個人貸款：整局一次，且這個階段還有回合可以分期還 */
 export function canTakeLoan(state: GameState): boolean {
-  return !state.finished && !state.loanTaken && stageEnd(state.turn) - state.turn >= 2;
+  return usesMoney(state) && !state.finished && !state.loanTaken && stageEnd(state.turn) - state.turn >= 2;
 }
 
 /** 申請個人貸款：拿到固定金額，之後每回合結束扣一期，在階段結束前還清 */
@@ -599,7 +603,9 @@ export function choose(
   let scale = state.scale;
   let arrears = state.arrears;
   let spending = { ...state.spending, options: state.spending.options + Math.max(0, -(option.funds ?? 0)) };
-  if (UPKEEP_PHASES.includes(TURN_PLAN[state.turn])) {
+  if (!usesMoney(state)) {
+    // 特別篇：不付開銷
+  } else if (UPKEEP_PHASES.includes(TURN_PLAN[state.turn])) {
     if (funds < scaleCost(scale) && scale !== "lean") {
       const fallback: CampaignScale = scale === "full" && funds >= scaleCost("standard") ? "standard" : "lean";
       notices.push({
@@ -886,7 +892,7 @@ export function runElection(state: GameState, which: "first" | "final" = "final"
     value: (VOTE_WEIGHTS[stat] * (voteMods[stat] ?? 1) * (state.stats[stat] - 50)) / 10,
   })).sort((a, b) => Math.abs(b.value) - Math.abs(a.value));
 
-  const mobilization = Math.min(state.funds, MOBILIZATION_CAP);
+  const mobilization = usesMoney(state) ? Math.min(state.funds, MOBILIZATION_CAP) : 0;
   const mobilizationValue = (MOBILIZATION_WEIGHT * mobilization) / 1000;
   const bias = which === "first" ? VOTE_BIAS : REELECTION_BIAS;
   const opponentStrength = state.opponent?.strength ?? 0;
@@ -912,7 +918,7 @@ export function totalDelta(state: GameState): Stats {
 }
 
 /** 這一回合可以調整競選規模嗎 */
-export const canSetScale = (state: GameState) => SCALE_TURNS.includes(state.turn) && !state.pendingFate;
+export const canSetScale = (state: GameState) => usesMoney(state) && SCALE_TURNS.includes(state.turn) && !state.pendingFate;
 
 /** 調整競選規模：從下一次開銷開始生效；不是可以調整的回合時不變 */
 export function setScale(state: GameState, scale: CampaignScale): GameState {

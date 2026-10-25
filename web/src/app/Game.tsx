@@ -38,6 +38,7 @@ import {
   optionAvailability,
   takeLoan,
   TURN_PLAN,
+  usesMoney,
 } from "@/game/engine";
 import { difficultyLabel, estimateFirstWinRate } from "@/game/difficulty";
 import { composeIntro, describeOpponent, drawCharacter, type DrawnCharacter } from "@/game/profile";
@@ -68,6 +69,7 @@ import { newSeed } from "@/game/rng";
 import { clearGame, hasStaleSave, loadGame, saveGame } from "@/game/storage";
 import {
   ALL_STATS,
+  HIDDEN_STATS,
   INTERLUDE_LABELS,
   ISSUE_LABELS,
   STAT_HINTS,
@@ -127,13 +129,20 @@ function characterLabel(state: GameState): string {
 }
 
 /** 數值的名稱與說明：特別篇會換掉其中幾個（例如「施政成果」改成「政策準備」） */
-const StatText = createContext<{ labels: Record<StatKey, string>; hints: Record<StatKey, string> }>({ labels: STAT_LABELS, hints: STAT_HINTS });
+const StatText = createContext<{
+  labels: Record<StatKey, string>;
+  hints: Record<StatKey, string>;
+  /** 這一局顯示的數值（特別篇只顯示用得到的） */
+  visible: readonly StatKey[];
+  /** 這一局算不算錢（特別篇不算） */
+  money: boolean;
+}>({ labels: STAT_LABELS, hints: STAT_HINTS, visible: VISIBLE_STATS, money: true });
 
 function statTextFor(state: GameState) {
   const def = state.special ? specialById(state.special) : undefined;
   return def
-    ? { labels: { ...STAT_LABELS, ...def.statLabels }, hints: { ...STAT_HINTS, ...def.statHints } }
-    : { labels: STAT_LABELS, hints: STAT_HINTS };
+    ? { labels: { ...STAT_LABELS, ...def.statLabels }, hints: { ...STAT_HINTS, ...def.statHints }, visible: def.visibleStats, money: false }
+    : { labels: STAT_LABELS, hints: STAT_HINTS, visible: VISIBLE_STATS, money: true };
 }
 
 const FACT_TAG: Record<FactLevel, string> = {
@@ -327,7 +336,7 @@ export default function Game() {
             {stageLabel(game, shownTurn)} 第 {(shownTurn % STAGE_LENGTH) + 1} / {STAGE_LENGTH} 回合
           </strong>
           <span>{phaseLabel(game, TURN_PLAN[shownTurn])}</span>
-          <span className={styles.funds}>💰 {formatFunds(game.funds)}</span>
+          {usesMoney(game) && <span className={styles.funds}>💰 {formatFunds(game.funds)}</span>}
         </p>
         <p className={styles.whoLine}>
           {characterLabel(game)}
@@ -403,7 +412,7 @@ export default function Game() {
           </section>
         )
       )}
-      {!outcome && <BudgetSummary state={game} />}
+      {!outcome && usesMoney(game) && <BudgetSummary state={game} />}
       {!outcome && Object.keys(game.arcs).length > 0 && <LedgerPanel state={game} />}
       {!outcome && !fate && canTakeLoan(game) && <LoanOffer state={game} onTake={() => setGame(takeLoan(game))} />}
       <StatHints />
@@ -656,7 +665,7 @@ function FirstElectionNotice({ state }: { state: GameState }) {
       <>
         <p className={styles.notice}>{specialById(state.special)?.voteNote}</p>
         <p className={styles.notice}>
-          🗳 {spent}開票結果：{vs}
+          🗳 開票結果：{vs}
           {won ? "當選！" : "落選。"}
         </p>
       </>
@@ -696,11 +705,11 @@ function FirstElectionNotice({ state }: { state: GameState }) {
 }
 
 function StatBar({ stats }: { stats: Stats }) {
-  const { labels: STAT_LABELS, hints: STAT_HINTS } = useContext(StatText);
+  const { labels: STAT_LABELS, hints: STAT_HINTS, visible } = useContext(StatText);
   return (
     <>
       <div className={styles.stats}>
-        {VISIBLE_STATS.map((k) => (
+        {visible.map((k) => (
           <div key={k} className={styles.stat} title={STAT_HINTS[k]}>
             <span>
               {STAT_LABELS[k]} <b>{stats[k]}</b>
@@ -717,21 +726,21 @@ function StatBar({ stats }: { stats: Stats }) {
 
 /** 每個數值的用途（放在畫面下方，需要時再展開） */
 function StatHints() {
-  const { labels: STAT_LABELS, hints: STAT_HINTS } = useContext(StatText);
+  const { labels: STAT_LABELS, hints: STAT_HINTS, visible, money } = useContext(StatText);
   return (
     <>
       <details className={styles.hints}>
         <summary>每個數值有什麼用？</summary>
         <ul className={styles.list}>
-          {[...VISIBLE_STATS, "integrity" as const].map((k) => (
+          {[...visible, "integrity" as const].map((k) => (
             <li key={k}>
               <strong>{STAT_LABELS[k]}</strong>：{STAT_HINTS[k]}
             </li>
           ))}
-          <li>
+          {money && (<li>
             <strong>競選經費</strong>：每 3 回合撥款一次（黨部、個人、募款）。辦活動要花錢，競選期每回合有總部開銷；
             投票前剩下的錢會自動投入選前動員（最多 4,000 萬），直接影響得票。
-          </li>
+          </li>)}
         </ul>
       </details>
     </>
@@ -1109,8 +1118,8 @@ function formatDelta(delta: Partial<Stats>, keys: readonly StatKey[] = ALL_STATS
 
 /** all：連隱藏的原則也顯示（突發事件的衝擊要讓玩家看清楚） */
 function DeltaList({ delta, funds, all }: { delta: Partial<Stats>; funds?: number; all?: boolean }) {
-  const { labels } = useContext(StatText);
-  const parts = [formatDelta(delta, all ? ALL_STATS : VISIBLE_STATS, labels)];
+  const { labels, visible } = useContext(StatText);
+  const parts = [formatDelta(delta, all ? [...visible, ...HIDDEN_STATS] : visible, labels)];
   if (funds) parts.push(`競選經費 ${funds > 0 ? "+" : "−"}${formatFunds(Math.abs(funds))}`);
   const text = parts.filter(Boolean).join("、");
   return text ? <p className={styles.delta}>{text}</p> : null;

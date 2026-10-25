@@ -3,7 +3,7 @@
 // 找不到原因的話就不說，避免出現跟玩家作為無關的閒話。
 // 全部是預先寫好的文案，依情境優先度挑選；同一個原因有多個版本，依 seed 與回合決定，重整不會變。
 
-import { nextPayout } from "./engine";
+import { nextPayout, usesMoney } from "./engine";
 import { CAMPAIGN_SCALES, scaleCost } from "./model";
 import { arcProgress } from "./story";
 import type { ArcDef, ArcState, GameEvent, GameState, HistoryEntry, StatKey } from "./types";
@@ -144,7 +144,9 @@ export function staffReport(state: GameState, arcDefs: ArcDef[], events: GameEve
 
   // 經費：照玩家選的競選規模，撐不撐得到下次撥款
   const scaleLabel = CAMPAIGN_SCALES[state.scale].label;
-  if (state.arrears > 0) {
+  if (!usesMoney(state)) {
+    // 特別篇不算錢
+  } else if (state.arrears > 0) {
     add(90, "arrears", [
       `${you}，照「${scaleLabel}」的規模，這個月的薪水發不出來，有兩個幕僚已經在投履歷了。`,
       `${you}，總部的人在問薪水的事。照「${scaleLabel}」的開銷，帳戶真的撐不住。`,

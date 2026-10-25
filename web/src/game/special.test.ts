@@ -198,6 +198,21 @@ describe("特別篇：首都逆轉戰", () => {
     expect(realityCheck(def, s, EVENTS, false).closing[0]).toContain("你在哪幾題");
   });
 
+  it("特別篇不算錢：沒有經費選項、撥款、開銷與選前動員；只動用得到的數值", () => {
+    for (const e of own) {
+      for (const o of e.options) {
+        expect(o.funds, `${e.id}/${o.id}`).toBeUndefined();
+        for (const k of Object.keys(o.effects)) expect(["approval", "media", "achievement", "team", "party", "integrity"]).toContain(k);
+      }
+    }
+    for (let seed = 1; seed <= 20; seed++) {
+      const g = play(seed, true);
+      expect(g.payouts).toHaveLength(0);
+      expect(g.firstElection!.mobilization).toBe(0);
+      expect(g.history.flatMap((h) => [h.delta.treasury, h.delta.council, h.delta.business]).every((v) => v === 0)).toBe(true);
+    }
+  });
+
   it("聲量很高時，F13〈短影音被斷章取義〉一定會出現（每局插曲上限內）", () => {
     const f13 = own.find((e) => e.id === "sp-capital-f13")!;
     expect(f13.interludeUrgent).toBeDefined();
