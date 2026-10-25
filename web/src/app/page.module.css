@@ -1004,49 +1004,218 @@
 }
 
 /* 開始畫面的特別篇入口 */
-.specialEntry {
-  margin-top: 16px;
-  border-left: 4px solid var(--accent);
+/*
+ * 首頁選票：每一種玩法是一位「候選人」。
+ * 粗框、號次欄、照片欄，右邊是圈選欄；按下（或滑過）時蓋上紅色的圈選章。
+ */
+.ballot {
+  border: 2px solid var(--foreground);
+  border-radius: 4px;
+  background: var(--surface);
 }
 
-/* 特別篇的路線：手機上下排，寬螢幕左右排 */
-.routes {
+.ballotHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  padding: 10px 14px;
+  border-bottom: 2px solid var(--foreground);
+}
+
+.ballotHead h2 {
+  font-size: 1.0625rem;
+  margin: 0;
+}
+
+.ballotHead span {
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.ballotRow,
+.ballotRoute {
   display: grid;
+  grid-template-columns: 2rem 76px 1fr 44px;
   gap: 12px;
-  margin-top: 12px;
+  align-items: start;
+  width: 100%;
+  padding: 14px;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 0;
 }
 
-@media (min-width: 640px) {
-  .routes {
-    grid-template-columns: 1fr 1fr;
+.ballotRow + .ballotRow {
+  border-top: 1px solid var(--foreground);
+}
+
+button.ballotRow,
+button.ballotRoute {
+  cursor: pointer;
+}
+
+button.ballotRow:hover,
+button.ballotRoute:hover {
+  background: color-mix(in srgb, var(--stamp) 6%, transparent);
+}
+
+button.ballotRow:focus-visible,
+button.ballotRoute:focus-visible {
+  outline: 3px solid var(--stamp);
+  outline-offset: -3px;
+}
+
+.ballotNo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  padding-top: 2px;
+}
+
+.ballotPhoto,
+.ballotPhotoSmall {
+  display: block;
+  width: 76px;
+  height: 92px;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  background: var(--border);
+}
+
+.ballotPhotoSmall {
+  width: 56px;
+  height: 56px;
+}
+
+.ballotBody {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.ballotName {
+  font-size: 1.25rem;
+  line-height: 1.3;
+}
+
+.ballotParty {
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.ballotText {
+  font-size: 0.9375rem;
+}
+
+.ballotAction {
+  color: var(--accent);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* 圈選欄：平常是空的虛線圈；按下或滑過時蓋上「卜」字圈選章 */
+.ballotStamp {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border: 1.5px dashed var(--muted);
+  border-radius: 50%;
+  align-self: center;
+}
+
+.ballotStamp::after {
+  content: "卜";
+  position: absolute;
+  inset: -2px;
+  display: grid;
+  place-items: center;
+  border: 3px solid var(--stamp);
+  border-radius: 50%;
+  color: var(--stamp);
+  font-weight: 700;
+  font-size: 1.25rem;
+  transform: rotate(-12deg) scale(1.4);
+  opacity: 0;
+  transition: opacity 120ms ease-out, transform 160ms ease-out;
+}
+
+button:hover > .ballotStamp::after,
+button:focus-visible > .ballotStamp::after,
+button:active > .ballotStamp::after {
+  opacity: 0.9;
+  transform: rotate(-12deg) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ballotStamp::after {
+    transition: none;
   }
 }
 
-.route,
-.routeSoon {
+/* 特別篇底下的兩條路線：從照片欄排到圈選欄，像選票裡的小欄位 */
+.ballotRoutes {
+  grid-column: 2 / -1;
+  display: flex;
+  flex-direction: column;
   border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 12px;
 }
 
-.route h3,
-.routeSoon h3 {
-  margin: 4px 0;
+.ballotRoute {
+  grid-template-columns: 56px 1fr 44px;
+  padding: 10px;
 }
 
-.routeSoon {
-  opacity: 0.6;
+.ballotRoute + .ballotRoute {
+  border-top: 1px solid var(--border);
 }
 
-/* 特別篇入口與路線的插畫 */
-.routeImage {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 3 / 2;
-  object-fit: cover;
-  border-radius: 8px;
-  background: var(--border);
+.ballotRouteSoon {
+  opacity: 0.55;
+}
+
+/* 窄螢幕：照片與圈選欄縮小，路線改成整列寬 */
+@media (max-width: 420px) {
+  .ballotRow {
+    grid-template-columns: 1.5rem 56px 1fr 34px;
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .ballotNo {
+    font-size: 1.25rem;
+  }
+
+  .ballotPhoto {
+    width: 56px;
+    height: 72px;
+  }
+
+  .ballotStamp {
+    width: 34px;
+    height: 34px;
+  }
+
+  .ballotStamp::after {
+    font-size: 1rem;
+  }
+
+  .ballotRoutes {
+    grid-column: 1 / -1;
+  }
+
+  .ballotRoute {
+    grid-template-columns: 48px 1fr 34px;
+  }
+
+  .ballotPhotoSmall {
+    width: 48px;
+    height: 48px;
+  }
 }
 
 /* 特別篇結局頁「真實世界的這一題」：每一題一個區塊 */

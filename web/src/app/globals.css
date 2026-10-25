@@ -6,6 +6,8 @@
   --muted: #6b6760;
   --accent: #c2410c;
   --accent-fg: #ffffff;
+  /* 首頁選票的圈選章 */
+  --stamp: #c8102e;
   --border: #e3dfd6;
   --warn: #9a3412;
   --tier-negative: #dc2626;
@@ -28,6 +30,7 @@
     --muted: #a39e94;
     --accent: #fb923c;
     --accent-fg: #1c1b19;
+  --stamp: #f2545b;
     --border: #34312c;
     --warn: #fdba74;
     --tier-negative: #f87171;
@@ -48,6 +51,7 @@
   --muted: #a39e94;
   --accent: #fb923c;
   --accent-fg: #1c1b19;
+  --stamp: #f2545b;
   --border: #34312c;
   --warn: #fdba74;
   --tier-negative: #f87171;

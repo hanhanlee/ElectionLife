@@ -242,45 +242,65 @@ export default function Game() {
           height={800}
           fetchPriority="high"
         />
-        <p className={styles.lead}>
-          你的城市、政黨、出身和個性，全部隨機決定。你只能決定接下來怎麼選。當選之後，還有四年任期和下一場選舉在等你。
-          事件與政見取材自過去 20 年的選舉公報與公開報導，並已虛構化。
-        </p>
-        <button className={styles.primary} onClick={restart}>開始參選</button>
-        <section className={`${styles.card} ${styles.specialEntry}`}>
-          <SpecialImage
-            art={SPECIAL_SERIES.art}
-            alt="首都保衛戰：兩位候選人在黃昏的首都兩側對峙，一邊是舉著藍綠手燈的人潮，一邊是燈火中的市府。"
-            className={styles.routeImage}
-          />
-          <p className={styles.turn}>特別篇</p>
-          <h2>{SPECIAL_SERIES.title}</h2>
-          <p>{SPECIAL_SERIES.teaser}</p>
-          <div className={styles.routes}>
-            {SPECIAL_SERIES.routes.map((route) => {
-              const def = route.specialId ? specialById(route.specialId) : undefined;
-              return (
-                <div key={route.title} className={def ? styles.route : styles.routeSoon}>
-                  <SpecialImage art={route.art} alt={`${route.title}的插畫`} className={styles.routeImage} />
-                  <p className={styles.turn}>{route.side}</p>
-                  <h3>{route.title}</h3>
-                  <p>{route.teaser}</p>
-                  {def ? (
-                    <button className={styles.secondary} onClick={() => setSpecial(def)}>進入這條路線</button>
-                  ) : (
-                    <button className={styles.secondary} disabled>即將推出</button>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </section>
+        <p className={styles.lead}>選一場選舉參選。事件取材自真實的選舉公報與報導，並已虛構化。</p>
         {stale && <p className={styles.notice}>遊戲更新了，上一局的存檔無法繼續。請開始新的一局。</p>}
         {saved && !saved.finished && (
-          <button className={styles.secondary} onClick={() => start(saved)}>
+          <button className={styles.primary} onClick={() => start(saved)}>
             繼續上一局（{characterLabel(saved)}，第 {saved.turn + 1} 回合）
           </button>
         )}
+        {/* 首頁是一張選票：每一種玩法是一位「候選人」，按下去就像蓋下圈選章 */}
+        <section className={styles.ballot} aria-labelledby="ballot-title">
+          <div className={styles.ballotHead}>
+            <h2 id="ballot-title">選擇你要參加的選舉</h2>
+            <span>請圈選一項</span>
+          </div>
+          <button className={styles.ballotRow} onClick={restart}>
+            <span className={styles.ballotNo}>1</span>
+            <BallotPhoto src="/title.webp" />
+            <span className={styles.ballotBody}>
+              <strong className={styles.ballotName}>市長篇</strong>
+              <span className={styles.ballotParty}>主線｜隨機人生</span>
+              <span className={styles.ballotText}>城市、政黨、出身和個性全部隨機。選上之後，還有四年任期和下一場選舉。</span>
+              <span className={styles.ballotAction}>開始參選</span>
+            </span>
+            <span className={styles.ballotStamp} aria-hidden="true" />
+          </button>
+          <div className={styles.ballotRow}>
+            <span className={styles.ballotNo}>2</span>
+            <BallotPhoto src={`/specials/${SPECIAL_SERIES.art}.webp`} />
+            <div className={styles.ballotBody}>
+              <strong className={styles.ballotName}>{SPECIAL_SERIES.title}</strong>
+              <span className={styles.ballotParty}>特別篇｜取材自進行中的選戰</span>
+              <span className={styles.ballotText}>{SPECIAL_SERIES.teaser}</span>
+            </div>
+            <div className={styles.ballotRoutes}>
+                {SPECIAL_SERIES.routes.map((route) => {
+                  const def = route.specialId ? specialById(route.specialId) : undefined;
+                  const inner = (
+                    <>
+                      <BallotPhoto src={`/specials/${route.art}.webp`} small />
+                      <span className={styles.ballotBody}>
+                        <strong>{route.title}</strong>
+                        <span className={styles.ballotParty}>{route.side}</span>
+                        <span className={styles.ballotAction}>{def ? "進入這條路線" : "即將推出"}</span>
+                      </span>
+                      {def && <span className={styles.ballotStamp} aria-hidden="true" />}
+                    </>
+                  );
+                  return def ? (
+                    <button key={route.title} className={styles.ballotRoute} onClick={() => setSpecial(def)}>
+                      {inner}
+                    </button>
+                  ) : (
+                    <div key={route.title} className={`${styles.ballotRoute} ${styles.ballotRouteSoon}`} aria-disabled="true">
+                      {inner}
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+        </section>
         <SiteFooter />
       </main>
     );
@@ -754,6 +774,22 @@ function CityImage({ id, name }: { id: string; name: string }) {
       loading="lazy"
       decoding="async"
       onError={() => setFailed(true)}
+    />
+  );
+}
+
+/** 首頁選票上的「候選人照片」：裝飾用，替代文字留空 */
+function BallotPhoto({ src, small }: { src: string; small?: boolean }) {
+  return (
+    // eslint-disable-next-line @next/next/no-img-element -- 靜態輸出不使用 next/image 的圖片最佳化
+    <img
+      className={small ? styles.ballotPhotoSmall : styles.ballotPhoto}
+      src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${src}`}
+      alt=""
+      width={1200}
+      height={800}
+      loading="lazy"
+      decoding="async"
     />
   );
 }
