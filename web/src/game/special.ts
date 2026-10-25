@@ -288,6 +288,7 @@ export const SPECIALS: SpecialDef[] = [
     ],
     reality: "現實中的這場選戰，在 2026 年 11 月 28 日投票。遊戲裡的結果，只是無數種可能中的一種，不代表任何預測或立場。",
     realChoices: {
+      "sp-incumbent-01": "steady",
       "sp-incumbent-02": "press",
       "sp-incumbent-03": "off",
       "sp-incumbent-04": "post",

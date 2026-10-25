@@ -3,18 +3,18 @@
     "id": "sp-incumbent-01",
     "phase": "launch",
     "title": "對手出爐",
-    "scenario": "綠黨終於決定了：徵召在大學教犯罪學、被對岸立案偵查的 Puma 委員，來挑戰你。你黨內的立委一聽就笑了：「靠他來拯救我們黨整場選舉。」兩週後，第一份民調出來，你領先二十八個百分點。幕僚問你：要怎麼回應這位對手？",
+    "scenario": "去年秋天，一位科技業大老喊話：綠黨應該徵召那位被對岸立案偵查的 Puma 委員，來挑戰你。記者追著你問，你只說了兩個字：「謝謝。」半年後，綠黨真的徵召了他。你黨內的立委一聽就笑了：「靠他來拯救我們黨整場選舉。」兩週後，第一份民調出來，你領先二十八個百分點。記者又來問你了。",
     "tags": ["選戰", "民調"],
     "special": "capital-2026-incumbent",
     "specialTurn": 1,
     "fact": "FACT",
     "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
     "options": [
-      { "id": "steady", "label": "「歡迎，選舉就是比市政。」說完繼續跑下一個行程", "outcome": "新聞只給了你十秒。你的支持者覺得很有市長的樣子，對手的支持者覺得你沒把他放在眼裡。", "effects": { "approval": 2, "integrity": 1, "team": 1 } },
+      { "id": "steady", "label": "「現在全力拚市政，沒在想選舉的事。」", "outcome": "新聞只給了你十秒。支持者覺得很有市長的樣子；也有人說，你沒把這場選舉放在眼裡。", "effects": { "approval": 1, "integrity": 1, "team": 1 }, "setFlags": ["si-relaxed"] },
       { "id": "mock", "label": "跟著黨內同事笑：「謝謝綠黨送的禮物」", "outcome": "黨部群組裡一片哈哈哈。這句話被做成梗圖，也被對手陣營拿去當募款文案。", "effects": { "party": 3, "media": 2, "approval": -2, "integrity": -2 } },
       { "id": "alert", "label": "把團隊找來：「不管民調，從今天起當作落後在打」", "outcome": "幕僚們嘴上說好，心裡覺得你想太多。不過，每一份政策白皮書都提早一個月交了。", "effects": { "achievement": 3, "team": -2, "party": 1 }, "setFlags": ["si-alert"] }
     ],
-    "source": { "status": "draft", "prototype": "2026 年 5 月 13 日民進黨徵召沈伯洋，國民黨立委徐巧芯說「靠沈伯洋來拯救國民黨整場選舉」；5 月 27 日電視台民調顯示現任市長領先 28 個百分點。現任市長當時的回應待查。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "關鍵評論網（2026-05-13）：民進黨拍板沈伯洋選台北市長，徐巧芯：拯救國民黨整場選舉", "url": "https://www.thenewslens.com/article/267624", "quote": "拯救國民黨", "accessed": "2026-10-25" }, { "title": "聯合報：北市最新民調，蔣萬安大贏沈伯洋 28 個百分點", "url": "https://udn.com/news/story/124652/9529403", "quote": "28個百分點", "accessed": "2026-10-25" }] }
+    "source": { "status": "draft", "prototype": "2025 年 11 月 12 日曹興誠喊話賴清德應徵召沈伯洋參選台北市長，蔣萬安受訪僅說「謝謝」；11 月 14 日被問到「川伯連線」時說：「我在議會就說過，我想現在大家就是全力拼市政，專注在市政上面，都沒在想選舉的事情」。2026 年 5 月 13 日民進黨徵召沈伯洋，國民黨立委徐巧芯說「靠沈伯洋來拯救國民黨整場選舉」；5 月 27 日電視台民調顯示現任市長領先 28 個百分點。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "NOWnews（2025-11-12）：曹興誠喊話徵召沈伯洋選台北，蔣萬安回應了", "url": "https://www.nownews.com/news/6753142", "quote": "謝謝", "accessed": "2026-10-25" }, { "title": "民視（Yahoo 轉載，2025-11-14）：有信心連任？綠「川伯連線」來勢洶洶，蔣萬安回應了", "url": "https://tw.news.yahoo.com/%E6%9C%89%E4%BF%A1%E5%BF%83%E9%80%A3%E4%BB%BB-%E7%B6%A0-%E5%B7%9D%E4%BC%AF%E9%80%A3%E7%B7%9A-%E4%BE%86%E5%8B%A2%E6%B4%B6%E6%B4%B6-%E8%94%A3%E8%90%AC%E5%AE%89%E5%9B%9E%E6%87%89%E4%BA%86-084506195.html", "quote": "全力拼市政", "accessed": "2026-10-25" }, { "title": "關鍵評論網（2026-05-13）：民進黨拍板沈伯洋選台北市長，徐巧芯：拯救國民黨整場選舉", "url": "https://www.thenewslens.com/article/267624", "quote": "拯救國民黨", "accessed": "2026-10-25" }, { "title": "聯合報：北市最新民調，蔣萬安大贏沈伯洋 28 個百分點", "url": "https://udn.com/news/story/124652/9529403", "quote": "28個百分點", "accessed": "2026-10-25" }] }
   },
   {
     "id": "sp-incumbent-02",
@@ -45,7 +45,7 @@
     "fact": "FACT",
     "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
     "options": [
-      { "id": "off", "label": "和隔壁三市一起宣布停班停課", "outcome": "隔天無風無雨。台指期夜盤大漲，股市卻休市，網路上有人喊「還我錢」。綠黨立委說：未達標準就放假，是沒有抗壓力。", "effects": { "approval": -5, "team": 1, "integrity": 1 } },
+      { "id": "off", "label": "和隔壁三市一起宣布停班停課", "outcome": "隔天無風無雨。台指期夜盤大漲，股市卻休市，網路上有人喊「還我錢」。綠黨立委說：未達標準就放假，是沒有抗壓力。", "effects": { "approval": -4, "team": 1, "integrity": 1 } },
       { "id": "work", "label": "照標準來：明天照常上班上課，你自己守在災害應變中心", "outcome": "颱風沒有造成大災情。有人說你有擔當，也有家長抱怨孩子淋雨上學。你在應變中心待了一整夜。", "effects": { "approval": 2, "achievement": 2, "team": -2 } },
       { "id": "half", "label": "宣布下午停班：股市上午照常交易", "outcome": "兩邊都有人罵，但罵得比較小聲。隔壁的市長們打電話來問，為什麼沒有一起。", "effects": { "approval": 1, "achievement": 1, "party": -1 } }
     ],
@@ -135,7 +135,7 @@
     "fact": "CLAIM",
     "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
     "options": [
-      { "id": "announce", "label": "選前宣布：機場遷走，蓋 AI 園區", "outcome": "頭版都是你的園區想像圖。對手說：四年都沒談，選前才宣布。", "effects": { "media": 5, "approval": 2, "integrity": -2, "achievement": -1 }, "delayed": { "afterTurns": 2, "effects": { "approval": -5 }, "text": "行政院說，這是市府四年來第一次來談；國防部說沒接到需求。你拿出三年前的公文，記者覺得，也勉強說得通。" } },
+      { "id": "announce", "label": "選前宣布：機場遷走，蓋 AI 園區", "outcome": "頭版都是你的園區想像圖。對手說：四年都沒談，選前才宣布。", "effects": { "media": 5, "approval": 2, "integrity": -2, "achievement": -1 }, "delayed": { "afterTurns": 2, "effects": { "approval": -4 }, "text": "行政院說，這是市府四年來第一次來談；國防部說沒接到需求。你拿出三年前的公文，記者覺得，也勉強說得通。" } },
       { "id": "plan", "label": "先把替代運量、醫療後送和國防需求算清楚，選後再提", "outcome": "沒有頭版，但交通學者說：這是第一次看到有人先算再講。", "effects": { "achievement": 3, "integrity": 2, "media": -1 } },
       { "id": "central", "label": "先去行政院和國防部談，談好再一起宣布", "outcome": "中央說可以先成立小組。黨內有人說，你把功勞讓給了別人。", "effects": { "achievement": 2, "integrity": 1, "approval": 1, "party": -1 } }
     ],
@@ -155,7 +155,7 @@
     "options": [
       { "id": "calm", "label": "「民調只是參考，我們會更努力。」", "outcome": "新聞標題很平淡。團隊鬆了一口氣，也鬆了一點勁。", "effects": { "approval": 1, "team": 1 } },
       { "id": "rosy", "label": "拿最看好你的那一份給支持者看：「大家放心」", "outcome": "支持者放心了。有些人放心到，覺得不用出門投票。", "effects": { "party": 2, "approval": -2 } },
-      { "id": "alarm", "label": "對內公開說：「我們現在就是落後，請大家出來表態」", "outcome": "黨部動起來了，志工也多了。對手說：現任市長終於緊張了。", "effects": { "party": 4, "approval": 2, "team": -2, "media": 1 }, "variants": [{ "when": { "flags": ["si-alert"] }, "outcome": "你從五月就說要當成落後在打，這一天團隊早有準備。黨部、志工、里長的名單，一個晚上就動起來了。", "effects": { "approval": 2, "team": 2 } }] }
+      { "id": "alarm", "label": "對內公開說：「我們現在就是落後，請大家出來表態」", "outcome": "黨部動起來了，志工也多了。對手說：現任市長終於緊張了。", "effects": { "party": 4, "approval": 2, "team": -2, "media": 1 }, "variants": [{ "when": { "flags": ["si-alert"] }, "outcome": "你從五月就說要當成落後在打，這一天團隊早有準備。黨部、志工、里長的名單，一個晚上就動起來了。", "effects": { "approval": 2, "team": 2 } }, { "when": { "flags": ["si-relaxed"] }, "outcome": "黨部動起來了，但花了一個禮拜：大家都記得你五月說過，現在沒在想選舉的事。對手說：現任市長終於緊張了。", "effects": { "approval": -1 } }] }
     ],
     "source": { "status": "draft", "prototype": "2026 年 10 月 20 日信民協會民調沈伯洋 50.3%、蔣萬安 33.3%；10 月 22 日震傳媒投票意向差距在誤差範圍內、當選看好度蔣萬安較高；趙少康在節目上說藍營支持者表態率下降。現任市長的回應待查。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "Newtalk（2026-10-20）：沈伯洋支持度領先17%，戴立安分析", "url": "https://newtalk.tw/news/view/2026-10-20/1066585", "quote": "50.3%", "accessed": "2026-10-25" }, { "title": "震傳媒：台北市長當選看好度（2026-10-22）", "url": "https://www.zmedia.com.tw/Document/PoolDetail/44790", "quote": "看好度", "accessed": "2026-10-25" }] }
   },
@@ -188,7 +188,7 @@
     "fact": "CLAIM",
     "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
     "options": [
-      { "id": "kings", "label": "請三位天王站台，場面要大", "outcome": "現場很滿，空拍很壯觀。電視上，三位天王的發言比你還長。", "effects": { "party": 4, "media": 1, "approval": -3, "team": -2 } },
+      { "id": "kings", "label": "請三位天王站台，場面要大", "outcome": "現場很滿，空拍很壯觀。電視上，三位天王的發言比你還長。", "effects": { "party": 4, "media": 1, "approval": -2, "team": -2 } },
       { "id": "young", "label": "讓年輕志工和市民上台，天王坐在台下", "outcome": "黨部有點不高興。網路上，一位第一次投票的大學生的發言，比整場大會還紅。", "effects": { "approval": 3, "media": 2, "party": -2 } },
       { "id": "policy", "label": "把成立大會改成一場政績說明會", "outcome": "場面冷了一點。但有記者說，這是今年唯一一場有附參考資料的成立大會。", "effects": { "achievement": 2, "approval": 1, "media": -2 } }
     ],
