@@ -74,18 +74,18 @@
     "id": "sp-incumbent-04",
     "phase": "campaign",
     "title": "生生喝鮮奶",
-    "scenario": "議員建議，生生喝鮮奶從每週一瓶加到兩瓶。對手笑說：「這跟手機背後的鏡頭一樣，越來越多。」他還提醒：開學前，還有一百五十二所學校的營養午餐沒招標完。",
+    "scenario": "開學前，Puma 委員提醒：你推的免費營養午餐九月就要上路，還有一百五十二所學校沒招標完，他不想看到「週週有鮮奶，班班沒午餐」。這週，議員建議生生喝鮮奶從每週一瓶加到兩瓶。記者問你怎麼看。",
     "tags": ["教育", "政見"],
     "special": "capital-2026-incumbent",
     "specialTurn": 4,
     "fact": "CLAIM",
     "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
     "options": [
-      { "id": "milk", "label": "說願意研究加碼到每週兩瓶", "outcome": "家長群組很開心。也有人在底下問：午餐招標完了沒？", "effects": { "approval": 3, "party": 1, "achievement": -1 } },
-      { "id": "lunch", "label": "先公布營養午餐的招標進度：月底前全部完成", "outcome": "教育局拿出進度表。對手的手機鏡頭梗，這次沒有接話的地方。", "effects": { "achievement": 3, "approval": 1 } },
+      { "id": "milk", "label": "說願意研究加碼到每週兩瓶", "outcome": "家長群組很開心。記者轉頭去問 Puma 委員，他笑說：「這跟手機背後的鏡頭一樣，越來越多。」也有人在底下問：午餐招標完了沒？", "effects": { "approval": 3, "party": 1, "achievement": -1 } },
+      { "id": "lunch", "label": "先公布營養午餐的招標進度：這個月二十一號前全部完成，鮮奶之後再說", "outcome": "教育局拿出進度表。Puma 委員準備好的鮮奶梗，這次沒有接話的地方。", "effects": { "achievement": 3, "approval": 1 } },
       { "id": "retort", "label": "反問：「只要是我們推的政策，再好你們都要先罵？」", "outcome": "支持者很解氣。新聞標題寫的是鮮奶的瓶數，沒有人在談午餐。", "effects": { "party": 2, "media": 2, "approval": -1 } }
     ],
-    "source": { "status": "draft", "prototype": "2026 年議員建議生生喝鮮奶由每週 1 瓶加碼至 2 瓶，蔣萬安表示願意研究規劃；沈伯洋以手機鏡頭比喻嘲諷，並指出免費營養午餐上路前仍有 152 校未完成招標。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "聯合報：沈伯洋笑稱鮮奶加碼像 iPhone 鏡頭", "url": "https://udn.com/news/story/6885/9665996", "quote": "iPhone", "accessed": "2026-10-25" }, { "title": "自由時報：152校營養午餐未招標，沈伯洋：不想週週有鮮奶、班班沒午餐", "url": "https://news.ltn.com.tw/news/politics/breakingnews/5525777", "quote": "週週有鮮奶", "accessed": "2026-10-25" }] },
+    "source": { "status": "draft", "prototype": "2026 年開學前，北市國中小免費營養午餐上路前仍有 152 校未完成招標，沈伯洋說不想看到「週週有鮮奶、但班班沒午餐」，教育局說往年招標進度本就不一、預計 21 日前完成；之後議員建議生生喝鮮奶由每週 1 瓶加碼至 2 瓶，蔣萬安表示願意研究規劃，沈伯洋以手機鏡頭比喻嘲諷。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "聯合報：沈伯洋笑稱鮮奶加碼像 iPhone 鏡頭", "url": "https://udn.com/news/story/6885/9665996", "quote": "iPhone", "accessed": "2026-10-25" }, { "title": "自由時報：152校營養午餐未招標，沈伯洋：不想週週有鮮奶、班班沒午餐", "url": "https://news.ltn.com.tw/news/politics/breakingnews/5525777", "quote": "週週有鮮奶", "accessed": "2026-10-25" }] },
     "reflection": ["發生了什麼：現任市長說願意研究把鮮奶加碼到每週兩瓶；挑戰者用手機鏡頭嘲諷，並指出營養午餐仍有學校未完成招標。", "宣傳的一方容易只講加碼；攻擊的一方容易只講笑點。", "孩子每天吃到什麼，你知道嗎？"]
   },
   {
