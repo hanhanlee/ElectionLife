@@ -163,6 +163,8 @@ export default function Game() {
   const [setup, setSetup] = useState<{ character: DrawnCharacter; rolling: boolean } | null>(null);
   /** 特別篇的開場說明 */
   const [special, setSpecial] = useState<SpecialDef | null>(null);
+  /** 特別篇的選邊頁：先選這場選舉，再選站哪一邊 */
+  const [series, setSeries] = useState(false);
 
   useEffect(() => {
     // 存檔只在瀏覽器端讀取，避免伺服器輸出與客戶端不一致
@@ -178,6 +180,7 @@ export default function Game() {
   function start(state: GameState) {
     setSetup(null);
     setSpecial(null);
+    setSeries(false);
     setOutcome(null);
     setGame(state);
   }
@@ -200,6 +203,7 @@ export default function Game() {
     setOutcome(null);
     setSetup(null);
     setSpecial(null);
+    setSeries(false);
   }
 
   function startSpecial(def: SpecialDef) {
@@ -213,7 +217,9 @@ export default function Game() {
     );
   }
 
-  if (special) return <SpecialIntro def={special} onStart={() => startSpecial(special)} onBack={withdraw} />;
+  // 返回只換頁，不會刪掉存檔
+  if (special) return <SpecialIntro def={special} onStart={() => startSpecial(special)} onBack={() => setSpecial(null)} />;
+  if (series) return <SeriesScreen onPick={setSpecial} onBack={() => setSeries(false)} />;
 
   if (setup) {
     const { character } = setup;
@@ -266,40 +272,17 @@ export default function Game() {
             </span>
             <span className={styles.ballotStamp} aria-hidden="true" />
           </button>
-          <div className={styles.ballotRow}>
+          <button className={styles.ballotRow} onClick={() => setSeries(true)}>
             <span className={styles.ballotNo}>2</span>
             <BallotPhoto src={`/specials/${SPECIAL_SERIES.art}.webp`} />
-            <div className={styles.ballotBody}>
+            <span className={styles.ballotBody}>
               <strong className={styles.ballotName}>{SPECIAL_SERIES.title}</strong>
               <span className={styles.ballotParty}>特別篇｜取材自進行中的選戰</span>
               <span className={styles.ballotText}>{SPECIAL_SERIES.teaser}</span>
-            </div>
-            <div className={styles.ballotRoutes}>
-                {SPECIAL_SERIES.routes.map((route) => {
-                  const def = route.specialId ? specialById(route.specialId) : undefined;
-                  const inner = (
-                    <>
-                      <BallotPhoto src={`/specials/${route.art}.webp`} small />
-                      <span className={styles.ballotBody}>
-                        <strong>{route.title}</strong>
-                        <span className={styles.ballotParty}>{route.side}</span>
-                        <span className={styles.ballotAction}>{def ? "進入這條路線" : "即將推出"}</span>
-                      </span>
-                      {def && <span className={styles.ballotStamp} aria-hidden="true" />}
-                    </>
-                  );
-                  return def ? (
-                    <button key={route.title} className={styles.ballotRoute} onClick={() => setSpecial(def)}>
-                      {inner}
-                    </button>
-                  ) : (
-                    <div key={route.title} className={`${styles.ballotRoute} ${styles.ballotRouteSoon}`} aria-disabled="true">
-                      {inner}
-                    </div>
-                  );
-                })}
-            </div>
-          </div>
+              <span className={styles.ballotAction}>選擇陣營</span>
+            </span>
+            <span className={styles.ballotStamp} aria-hidden="true" />
+          </button>
         </section>
         <SiteFooter />
       </main>
@@ -655,7 +638,7 @@ function CharacterReveal({ character, onStart }: { character: DrawnCharacter; on
         </p>
       </section>
       <div className={styles.stickyAction}>
-        <button className={styles.primary} onClick={onStart}>開始參選</button>
+        <button className={`${styles.primary} ${styles.glow}`} onClick={onStart}>開始參選</button>
       </div>
     </main>
   );
@@ -778,12 +761,44 @@ function CityImage({ id, name }: { id: string; name: string }) {
   );
 }
 
+/** 特別篇的選邊頁：同一場選戰的兩條路線，大圖並排；還沒做好的路線不能選 */
+function SeriesScreen({ onPick, onBack }: { onPick: (def: SpecialDef) => void; onBack: () => void }) {
+  return (
+    <main className={styles.main}>
+      <p className={styles.turn}>特別篇</p>
+      <h1 className={styles.title}>{SPECIAL_SERIES.title}</h1>
+      <p className={styles.lead}>{SPECIAL_SERIES.teaser}</p>
+      <div className={styles.sides}>
+        {SPECIAL_SERIES.routes.map((route) => {
+          const def = route.specialId ? specialById(route.specialId) : undefined;
+          return (
+            <section key={route.title} className={def ? styles.side : `${styles.side} ${styles.sideSoon}`}>
+              <SpecialImage art={route.art} alt={`${route.title}的插畫`} className={styles.sideImage} />
+              <div className={styles.sideBody}>
+                <p className={styles.turn}>{route.side}</p>
+                <h2>{route.title}</h2>
+                <p>{route.teaser}</p>
+                {def ? (
+                  <button className={`${styles.primary} ${styles.glow}`} onClick={() => onPick(def)}>站在這一邊</button>
+                ) : (
+                  <button className={styles.secondary} disabled>即將推出</button>
+                )}
+              </div>
+            </section>
+          );
+        })}
+      </div>
+      <button className={styles.quietLink} onClick={onBack}>回到開始畫面</button>
+    </main>
+  );
+}
+
 /** 首頁選票上的「候選人照片」：裝飾用，替代文字留空 */
-function BallotPhoto({ src, small }: { src: string; small?: boolean }) {
+function BallotPhoto({ src }: { src: string }) {
   return (
     // eslint-disable-next-line @next/next/no-img-element -- 靜態輸出不使用 next/image 的圖片最佳化
     <img
-      className={small ? styles.ballotPhotoSmall : styles.ballotPhoto}
+      className={styles.ballotPhoto}
       src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${src}`}
       alt=""
       width={1200}
@@ -1443,9 +1458,9 @@ function SpecialIntro({ def, onStart, onBack }: { def: SpecialDef; onStart: () =
           事件取材自公開報導，人名一律以身分影射；標示「🎭 遊戲虛構」的情節、對話與結果都是虛構的。{def.reality}
         </small>
       </p>
-      <button className={styles.secondary} onClick={onBack}>← 回到開始畫面</button>
       <div className={styles.stickyAction}>
-        <button className={styles.primary} onClick={onStart}>接受徵召</button>
+        <button className={`${styles.primary} ${styles.glow}`} onClick={onStart}>接受徵召</button>
+        <button className={styles.quietLink} onClick={onBack}>回到開始畫面</button>
       </div>
     </main>
   );

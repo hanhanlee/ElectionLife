@@ -843,6 +843,48 @@
   width: 100%;
 }
 
+/* 開始一局的按鈕：慢慢呼吸的光暈，提示這是下一步 */
+.glow {
+  animation: glow 2.4s ease-in-out infinite;
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 0%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 18px 4px color-mix(in srgb, var(--accent) 55%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow {
+    animation: none;
+    box-shadow: 0 0 12px 2px color-mix(in srgb, var(--accent) 40%, transparent);
+  }
+}
+
+/* 次要的離開動作：不搶主要按鈕的注意 */
+.quietLink {
+  display: block;
+  margin: 4px auto 0;
+  min-height: 44px;
+  padding: 0 12px;
+  background: none;
+  border: 0;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.875rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.stickyAction > .quietLink {
+  width: auto;
+}
+
 /* 小字最小 13px，手機上才讀得清楚 */
 .main small {
   font-size: max(0.8125rem, 0.85em);
@@ -1033,8 +1075,7 @@
   font-size: 0.875rem;
 }
 
-.ballotRow,
-.ballotRoute {
+.ballotRow {
   display: grid;
   grid-template-columns: 2rem 76px 1fr 44px;
   gap: 12px;
@@ -1052,18 +1093,15 @@
   border-top: 1px solid var(--foreground);
 }
 
-button.ballotRow,
-button.ballotRoute {
+button.ballotRow {
   cursor: pointer;
 }
 
-button.ballotRow:hover,
-button.ballotRoute:hover {
+button.ballotRow:hover {
   background: color-mix(in srgb, var(--stamp) 6%, transparent);
 }
 
-button.ballotRow:focus-visible,
-button.ballotRoute:focus-visible {
+button.ballotRow:focus-visible {
   outline: 3px solid var(--stamp);
   outline-offset: -3px;
 }
@@ -1076,19 +1114,13 @@ button.ballotRoute:focus-visible {
   padding-top: 2px;
 }
 
-.ballotPhoto,
-.ballotPhotoSmall {
+.ballotPhoto {
   display: block;
   width: 76px;
   height: 92px;
   object-fit: cover;
   border: 1px solid var(--border);
   background: var(--border);
-}
-
-.ballotPhotoSmall {
-  width: 56px;
-  height: 56px;
 }
 
 .ballotBody {
@@ -1157,28 +1189,7 @@ button:active > .ballotStamp::after {
   }
 }
 
-/* 特別篇底下的兩條路線：從照片欄排到圈選欄，像選票裡的小欄位 */
-.ballotRoutes {
-  grid-column: 2 / -1;
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--border);
-}
-
-.ballotRoute {
-  grid-template-columns: 56px 1fr 44px;
-  padding: 10px;
-}
-
-.ballotRoute + .ballotRoute {
-  border-top: 1px solid var(--border);
-}
-
-.ballotRouteSoon {
-  opacity: 0.55;
-}
-
-/* 窄螢幕：照片與圈選欄縮小，路線改成整列寬 */
+/* 窄螢幕：照片與圈選欄縮小 */
 @media (max-width: 420px) {
   .ballotRow {
     grid-template-columns: 1.5rem 56px 1fr 34px;
@@ -1203,19 +1214,66 @@ button:active > .ballotStamp::after {
   .ballotStamp::after {
     font-size: 1rem;
   }
+}
 
-  .ballotRoutes {
-    grid-column: 1 / -1;
+/* 特別篇選邊頁：兩條路線，手機上下排、寬螢幕左右對峙 */
+.sides {
+  display: grid;
+  gap: 16px;
+}
+
+@media (min-width: 720px) {
+  .main:has(.sides) {
+    max-width: 880px;
   }
 
-  .ballotRoute {
-    grid-template-columns: 48px 1fr 34px;
+  .sides {
+    grid-template-columns: 1fr 1fr;
   }
+}
 
-  .ballotPhotoSmall {
-    width: 48px;
-    height: 48px;
-  }
+.side {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.sideImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  background: var(--border);
+}
+
+.sideBody {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 20px 20px;
+  flex: 1;
+}
+
+.sideBody h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.sideBody button {
+  margin-top: auto;
+}
+
+.sideSoon .sideImage {
+  filter: grayscale(0.7);
+  opacity: 0.7;
+}
+
+.sideSoon .sideBody {
+  color: var(--muted);
 }
 
 /* 特別篇結局頁「真實世界的這一題」：每一題一個區塊 */
