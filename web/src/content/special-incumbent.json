@@ -301,19 +301,19 @@
   {
     "id": "sp-incumbent-f06",
     "phase": "campaign",
-    "title": "颱風後的停電",
-    "scenario": "（架空情節）颱風過後，幾個行政區突然停電一整晚。電力公司、市府、中央，大家都在等你說話。",
+    "title": "黨主席開口了",
+    "scenario": "（架空的時間點）選戰最後幾週，一直很少在選戰中露面的黨主席，接受外國媒體專訪，又說了一次：「台灣人應該接受自己是中國人。」記者還翻出她在黨內會議上說過的話：「美國曾經是我們的恩人，但大陸才是我們的親人。」所有記者都來找你。",
     "tags": ["命運"],
     "special": "capital-2026-incumbent",
     "interlude": "wildcard",
-    "fact": "SIMULATION",
+    "fact": "CLAIM",
     "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
     "options": [
-      { "id": "lead", "label": "你先出面道歉，在現場待到復電", "outcome": "你在現場待到凌晨四點。照片沒有發，但里長們都看到了。", "effects": { "approval": 3, "team": -2 } },
-      { "id": "explain", "label": "說明這是電力公司的權責", "outcome": "說得沒錯，但停電的人聽不進去。", "effects": { "approval": -3, "party": 1 } },
-      { "id": "joint", "label": "和電力公司一起開記者會，每小時更新進度", "outcome": "沒有人覺得你做得特別好，但也沒有人罵得出口。", "effects": { "achievement": 2, "approval": 1 } }
+      { "id": "respect", "label": "「黨主席有她的看法，我們專心做市政。」", "outcome": "你沒有說錯什麼，但標題寫的是：現任市長不願切割。Puma 委員只說了一句：「台灣就是台灣。」", "effects": { "party": 1, "approval": -2 } },
+      { "id": "split", "label": "清楚表態：「我是台灣人。台灣的前途，由兩千三百萬人決定。」", "outcome": "中間選民聽到了。黨部的電話響了一整晚，有幾位老黨員說，這次投票要在家休息。", "effects": { "approval": 2, "integrity": 2, "party": -4 } },
+      { "id": "silent", "label": "取消當天的公開行程，不回應", "outcome": "記者在你家樓下等了一天。隔天的新聞，是你沒有回答的那個問題。", "effects": { "approval": -3, "media": -1 } }
     ],
-    "source": { "status": "placeholder", "prototype": "（架空）遊戲虛構的突發事件，不指涉任何真實事件。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [] }
+    "source": { "status": "draft", "prototype": "發言為真實：2026 年 1 月 29 日《經濟學人》刊出國民黨主席鄭麗文專訪，她說「台灣人應接受自己是中國人」；1 月 28 日中常會上說「美國曾經是我們的恩人，但大陸才是我們的親人，我們絕對做不出骨肉相殘的事情」；沈伯洋回應「台灣就是台灣」。在選戰最後幾週再次發言、以及現任市長的回應為遊戲虛構（架空的時間點）。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "鏡新聞（Yahoo 轉載，2026-01-30）：鄭麗文：台灣人應接受自己是中國人，綠黨團喊尊重但社會難接受", "url": "https://tw.news.yahoo.com/%E9%84%AD%E9%BA%97%E6%96%87-%E5%8F%B0%E7%81%A3%E4%BA%BA%E6%87%89%E6%8E%A5%E5%8F%97%E8%87%AA%E5%B7%B1%E6%98%AF%E4%B8%AD%E5%9C%8B%E4%BA%BA-%E7%B6%A0%E9%BB%A8%E5%9C%98%E5%96%8A%E5%B0%8A%E9%87%8D%E4%BD%86%E7%A4%BE%E6%9C%83%E9%9B%A3%E6%8E%A5%E5%8F%97-110657354.html", "quote": "台灣人應接受自己是中國人", "accessed": "2026-10-25" }] }
   },
   {
     "id": "sp-incumbent-09",

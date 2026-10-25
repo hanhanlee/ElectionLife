@@ -47,7 +47,7 @@ describe("特別篇：首都保衛戰（萬安守城）", () => {
   });
 
   it("遊戲中途不出現真人姓名（只有結局頁的反思與來源可以）", () => {
-    const names = /沈伯洋|蔣萬安|徐巧芯|蔡康永|韓國瑜|盧秀燕|侯友宜|卓榮泰|趙少康|邱議瑩|蔡詩萍|戴立安|[沈蔣]稿機/;
+    const names = /沈伯洋|蔣萬安|徐巧芯|蔡康永|韓國瑜|盧秀燕|侯友宜|卓榮泰|趙少康|邱議瑩|蔡詩萍|戴立安|鄭麗文|王開武|[沈蔣]稿機/;
     for (const e of own) {
       const text = [e.title, e.scenario, ...e.options.flatMap((o) => [o.label, o.outcome, o.delayed?.text ?? "", ...(o.variants ?? []).map((v) => v.outcome)])].join("\n");
       expect(text, e.id).not.toMatch(names);
