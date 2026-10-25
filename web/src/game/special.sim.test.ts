@@ -19,8 +19,36 @@ const score = (o: GameOption, w: Partial<Record<string, number>>) =>
 const by = (w: Partial<Record<string, number>>): Pick => (opts) => [...opts].sort((a, b) => score(b, w) - score(a, w))[0];
 const best = by({ ...VOTE_WEIGHTS, achievement: 0.28 });
 
-/** 策略：隨機、穩健、最佳（依投票權重）、重視準備、只追聲量、一半最佳一半隨機 */
+/**
+ * 現實路線：挑戰者在現實中的選擇（沒有對應的回合用高品質決策補）。
+ * 用來檢查「照現實選，不會得到違反現實的結果」。
+ */
+const REAL_PATH: Record<string, string> = {
+  "sp-capital-01": "defiant",
+  "sp-capital-02": "warrior",
+  "sp-capital-03": "local",
+  "sp-capital-04": "enemy",
+  "sp-capital-06": "earn",
+  "sp-capital-07": "law",
+  "sp-capital-08": "decouple",
+  "sp-capital-09": "challenger",
+  "sp-capital-m01": "explain",
+  "sp-capital-m03": "unscripted",
+  "sp-capital-m05": "substation",
+  "sp-capital-m07": "attack",
+  "sp-capital-n01": "same",
+  "sp-capital-n03": "lunch",
+  "sp-capital-n04": "soft",
+  "sp-capital-n05": "ask",
+};
+const real: Pick = (o, s, r) => {
+  const id = REAL_PATH[s.pendingInterlude ?? s.deck[s.turn]];
+  return o.find((x) => x.id === id) ?? best(o, s, r);
+};
+
+/** 策略：隨機、穩健、最佳（依投票權重）、重視準備、只追聲量、一半最佳一半隨機、現實路線 */
 const STRATEGIES: Record<string, Pick> = {
+  現實路線: real,
   隨機遊玩: (o, _s, r) => o[Math.floor(r() * o.length)],
   保守穩健: by({ integrity: 1, team: 1, approval: 0.3 }),
   高品質決策: best,
@@ -34,6 +62,7 @@ function play(seed: number, pick: Pick, branch: boolean): GameState {
     special: def.id,
     specialBranch: branch,
     startDelta: def.startDelta,
+    disabledCrises: def.disabledCrises,
   });
   const r = mulberry32(seed * 7 + 1);
   while (!s.finished) {

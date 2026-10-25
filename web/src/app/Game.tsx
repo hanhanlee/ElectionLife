@@ -208,6 +208,7 @@ export default function Game() {
         special: def.id,
         specialBranch: specialPlayed(def.id),
         startDelta: def.startDelta,
+        disabledCrises: def.disabledCrises,
       }),
     );
   }
@@ -1398,6 +1399,7 @@ function SpecialEndScreen({
     return { event, option: event.options.find((o) => o.id === i.optionId)!, turn: i.turn };
   });
   const sourced = played.filter(({ event }) => event.fact !== "SIMULATION" || event.source.refs.length > 0);
+  const reflected = played.filter(({ event }) => event.reflection);
   const result = won ? "當選" : "落選";
 
   useEffect(() => {
@@ -1423,7 +1425,7 @@ function SpecialEndScreen({
         <div className={styles.epilogue}>
           {ending.paragraphs.map((p) => <p key={p}>{p}</p>)}
         </div>
-        <p><small>這是遊戲裡的虛構結果，不是真實選情。</small></p>
+        <p><small>這是遊戲裡的虛構結果，不是真實選情。原則不會直接換成選票，但決定了你用什麼方式贏，或用什麼方式輸。</small></p>
       </section>
       <section className={styles.card}>
         <p className={styles.lead}>{def.cta}</p>
@@ -1450,11 +1452,30 @@ function SpecialEndScreen({
           ))}
         </ol>
       </section>
+      {reflected.length > 0 && (
+        <section className={styles.card}>
+          <h2>真實世界的這一題</h2>
+          <p><small>你這一局遇到的攻防，在現實中是這樣發生的。兩邊各自省略或扭曲了什麼，留給你判斷。</small></p>
+          {reflected.map(({ event }) => (
+            <div key={event.id} className={styles.reflection}>
+              <h3>{event.title}</h3>
+              {event.reflection!.map((line) => <p key={line}>{line}</p>)}
+              <p>
+                <small>
+                  {event.source.refs.map((r) => (
+                    <a key={r.url + r.quote} href={r.url} target="_blank" rel="noreferrer">[{r.title}] </a>
+                  ))}
+                </small>
+              </p>
+            </div>
+          ))}
+        </section>
+      )}
       <section className={styles.card}>
         <h2>真實事件原型</h2>
         <p><small>{def.reality}</small></p>
         <ul className={styles.list}>
-          {sourced.map(({ event }) => (
+          {sourced.filter(({ event }) => !event.reflection).map(({ event }) => (
             <li key={event.id}>
               <strong>{event.title}</strong>：{event.source.prototype}
               {event.fact && <small>（{FACT_TAG[event.fact]}）</small>}

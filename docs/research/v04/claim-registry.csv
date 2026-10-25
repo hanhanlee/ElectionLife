@@ -1,0 +1,47 @@
+﻿claim_id,V,事件,命題,合併狀態,遊戲句是否需改,依據（研究員）,關鍵來源,風險,需人工覆核
+C01,V01,M01,2014-09-01 想想論壇文章署名撲馬、作者沈伯洋,建議 VERIFIED,否,B 讀原文；E 一致,https://www.thinkingtaiwan.net/content/3055,CRITICAL,是
+C02,V01,M01,原文列 A（非法化，作者稱最差）、B（除罪化並協助）、C（找社會原因再協助）三種政策；爭議句在 B 段落，是條件句裡「至少可以」的退而求其次選項；結論傾向 C（「類似C政策的長期規劃」）；沈伯洋 2026-10-07 上節目說明支持 C,原文建議 VERIFIED；遊戲引句 DISPUTED（截掉前後文與三方案結構）,是,B 讀原文；E 指出截句有偏頗風險；主 agent 依使用者要求重讀全文確認 A／B／C 結構與結論,https://www.thinkingtaiwan.net/content/3055 ; https://www.mirrormedia.mg/story/20261007edi026,CRITICAL,是
+C03,V01,M01,全文沒有「美沙冬」，也沒有「減害」兩字,建議 VERIFIED,否,B 讀原文,https://www.thinkingtaiwan.net/content/3055,CRITICAL,是
+C04,V01,M01,原文把除罪化列為一個選項，沒有明確主張台灣應除罪化,建議 VERIFIED,否（遊戲未寫除罪化主張）,B 讀原文,https://www.thinkingtaiwan.net/content/3055,HIGH,是
+C05,V01,M01,沈伯洋 10-02 發表校園反毒政見；隔天 10-03 議員楊植斗先翻出舊文，蔣萬安當晚發文,ATTRIBUTED（日期一致）,是（補上最先翻出者）,C；E,https://www.cna.com.tw/news/aloc/202610030206.aspx,HIGH,否
+C06,V01,M01,蔣萬安 10-03 臉書引用該句並提出四點質疑，稱美沙冬與社區中心不同,ATTRIBUTED,是（引句要附前後文；「十年前」改「十二年前」）,C；E,https://udn.com/vote2026/story/124652/9792955,CRITICAL,是
+C07,V01,M01,「當時談的是國外減害政策」是沈伯洋本人 10-03 受訪所說,ATTRIBUTED,是（說話者是本人，不是團隊）,C；B 指出原文確實建議台灣仿效，此說只對一半,https://news.pts.org.tw/article/829848,CRITICAL,是
+C08,V01,M01,衛福部 2026-10-05 新聞稿〈減害不是鼓勵用毒！〉,建議 VERIFIED,否,D 讀官方新聞稿,https://www.mohw.gov.tw/cp-7404-88143-1.html,HIGH,否
+C09,V02,M01／L05,2020-12 社福衛環委員會審 110 年度預算，蔣萬安提案凍結「強化藥癮治療服務」100 萬元、要求衛福部專案報告；連署徐志榮、吳斯懷；刊於公報 110 卷 9 期,公報文字建議 VERIFIED；頁碼未確認,是,B 從公報 Word 版讀到決議全文；E 從媒體轉述得到相同內容、目錄頁碼對不上（見 disputes.md D1）,https://ppg.ly.gov.tw/ppg/publications/official-gazettes/110/09/01/details,CRITICAL,是
+C10,V02,M01／L05,「提過強化藥癮治療的預算案」不精確；凍結案訴求是增加醫療戒治資源，與 2014 文章主張不可類比,DISPUTED（遊戲句不精確、對現任者不公平）,是,B；E,同 C09,CRITICAL,是
+C11,V03,R4,「父親是對岸台商」：沈說家裡是在中南美做進出口的台商；國民黨與陸委會稱父親公司多向中國採購再出口中南美,ATTRIBUTED（雙方說法）；遊戲寫成單純謠言 DISPUTED,是,C；E 認為遊戲框架偏向挑戰者,https://www.cna.com.tw/news/aipl/202506100126.aspx,CRITICAL,是
+C12,V03,R4,國台辦 2026-10-14 宣布懲戒 VWAY 公司（2025-06 已懲戒兆億公司）；陸委會稱干擾選舉；沈說舊謠言重炒,ATTRIBUTED（正式措施確有宣布；指控真偽未查）,是（遊戲漏掉正式措施）,C；E,https://www.cna.com.tw/news/acn/202610140296.aspx,CRITICAL,是
+C13,V04,M02,蔣萬安 10-03 臉書貼文 24 小時內留言超過 50 萬則（各報時點不同：中央社 10-04 報 43 萬、今周刊 10-04 稱逾 60 萬），媒體稱破金氏紀錄；留言多數指出台北市早已提供清潔針具、並翻出他過去的提案,ATTRIBUTED,是（M02 整題重寫：原本誤以為兩邊支持者都在搶勝利）,C；主 agent 依使用者指正補查,https://www.businesstoday.com.tw/article/category/183027/post/202610040004/ ; https://www.cna.com.tw/news/aipl/202610040099.aspx,HIGH,否
+C14,V04,M02,議員張斯綱出示一張來源不明的截圖，主張有人用程式洗留言,ATTRIBUTED；遊戲句「沒拿出證據」不精確,是,C；E,https://www.cna.com.tw/news/aipl/202610040099.aspx,HIGH,是
+C15,V05,M04,10-08 構想：約 300 公頃，100 公頃 AI 產業、110 公頃中央公園、90 公頃永續生活聚落,建議 VERIFIED（新聞）,小改（補住宅聚落）,D,https://www.cna.com.tw/news/aipl/202610080124.aspx,MEDIUM,否
+C16,V05,M04,國防部在質詢中說沒接到地方需求；交通部在質詢中未提溝通；「完全沒有溝通」是沈的轉述,DISPUTED（遊戲句主詞過寬）,是,C；E,https://www.cna.com.tw/news/aipl/202610150102.aspx,HIGH,是
+C17,V05,M04,北市府 2023-08-08 曾函中央表態支持遷建（只有新聞刊出的公文照片與轉述）,ATTRIBUTED；全文 UNVERIFIED,否,B；C,https://www.cna.com.tw/news/aipl/202610150260.aspx,HIGH,是
+C18,V05,M04,蔣萬安稱醫療後送可保留直升機並搭配高鐵,ATTRIBUTED,否,C,https://news.pts.org.tw/article/831632,MEDIUM,否
+C19,V06,R8／L02,沈伯洋 10-22 發《順報》時被問颱風假，主動提到股市要不要與停班停課脫鉤值得討論、需中央地方共同參與；沒有主張由市長決定開盤,ATTRIBUTED,小改（「記者問股市」改為「被問颱風假時提到股市」）,B；E,https://udn.com/news/story/124652/9832429,HIGH,否
+C20,V06,R8,薔琵颱風；台北市 10-22 晚宣布 10-23 停班停課，當天股市休市,建議 VERIFIED（新聞）,否,D,https://udn.com/news/story/7266/9832068,MEDIUM,否
+C21,V06,R8,證交所規則：台北市長宣布停班，集中市場休市；「股市不是市長能決定的」只對一半,DISPUTED（遊戲句方向錯一半）,是,D 讀證交所規則；E 一致,證交所〈天然災害停止上班之處理〉（見 agent-D）,HIGH,是
+C22,V07,R7,藝人 10-04 出席競總成立；10-06 解放軍系帳號不點名批評；10-09 官媒用「兩面人」；10-14 國台辦記者會未點名回應,遊戲句 FALSE（「隔天國台辦」時序錯誤）；「沒喊口號、沒上台」UNVERIFIED,是,C；E,https://udn.com/news/story/124652/9824228,HIGH,是
+C23,V07,R7,2026-10-22 行政院長在院會指示檢警調，將所有參選人及相關人士人身安全列為專案保護,建議 VERIFIED（措詞微調）,小改,D；E,https://www.cna.com.tw/news/aipl/202610220186.aspx,HIGH,否
+C24,V07,R7,「下一場活動，有兩位嘉賓說要再考慮一下」,SIMULATED,是（改寫成不像事實的遊戲情節）,主 agent,—,MEDIUM,否
+C25,V08,M03,10-20 年代《新聞面對面》主持人問是否背稿；蔣萬安說「我已經回答很清楚了，但是反反覆覆，好像我沒有回答」；「即問即答」是記者轉述,ATTRIBUTED；影音時間碼 UNVERIFIED,小改（「即問即答」不放引號）,B；C,https://news.tvbs.com.tw/politics/4038961,MEDIUM,否
+C26,V09,M05,蔣萬安專訪提到 YouBike 前 30 分鐘免費、機車退出人行道,ATTRIBUTED,否,D,https://news.ttv.com.tw/wbc/news/Views/11510200038800N,MEDIUM,否
+C27,V09,M05,大巨蛋 2006 簽約、2011 動工、2015 停工、2023 消防複檢與開放賽事,建議 VERIFIED（新聞）,否,D,https://www.cna.com.tw/news/aloc/202311180025.aspx,MEDIUM,否
+C28,V09,M05,輝達 T17、T18 於 2026-02-11 簽地上權，尚未動工，預定 2030 年啟用,DISPUTED（「進駐」說得太早）,是,D,https://udn.com/news/story/124626/9104370,MEDIUM,否
+C29,V11,R1,2025-10-28 重慶公安以涉嫌分裂國家犯罪立案偵查、請民眾提供線索；沈說「不知道第5次還是第6次」,立案與線索 ATTRIBUTED（中國官媒轉引通報）；「一年內第六次」FALSE,是,B；E,https://www.chinanews.com.cn/gn/2025/10-28/10505650.shtml,HIGH,是
+C30,—,R1,黑熊學院的宗旨：民防訓練（不只防災）,措詞小改,小改,D,（官網內文未讀到）,MEDIUM,否
+C31,—,R2,曹興誠 2025-11 主張徵召沈伯洋,ATTRIBUTED,否,C,https://news.tvbs.com.tw/politics/3042410,MEDIUM,否
+C32,—,R2,2025-11-17 專訪：「戰士沒有選擇戰場的權利」（另有「很難選擇自己的戰場」版本）；11-18 說選舉不在規劃內，並澄清那句話指無法選擇對岸是否通緝,ATTRIBUTED,是（補上本人澄清，不寫成單純改口）,C；E,https://www.nownews.com/news/6755328,HIGH,是
+C33,—,R2,2026-05-13 民進黨中執會通過徵召,建議 VERIFIED,否,C,https://tw.news.yahoo.com/,MEDIUM,否
+C34,—,R3,落後 28 點是 2026-05-27 發布、徵召後的 TVBS 民調；2025-12 已有含沈的 TVBS 民調,DISPUTED（「第一份」不精確）,是,D,https://news.tvbs.com.tw/politics/4033527,MEDIUM,否
+C35,—,R5,政策島 10-22 上線，14 主題、94 項政策；網友二創,ATTRIBUTED（新聞）,否,D,（民視轉載）,MEDIUM,否
+C36,—,R6,黃珊珊 2022 得票 342,141；以無黨籍登記參選、後來才入黨,票數建議 VERIFIED；「白黨的前副市長」FALSE,是,D,中選會（頁面未載入；多家新聞一致）,MEDIUM,否
+C37,—,R6,TVBS 10-08：上屆投黃珊珊者 53% 轉向沈、39% 轉向蔣,建議 VERIFIED（機構自述）,否,D,https://news.tvbs.com.tw/politics/4033530,MEDIUM,否
+C38,—,R9,信民協會 10-20：沈 50.3、蔣 33.3；震傳媒 10-22 同一份調查：投票意向沈 42.8、蔣 39.0，看好度蔣 46.4、沈 36.9,DISPUTED（遊戲寫成三份、且「多數人看好」不對）,是,D,https://www.zmedia.com.tw/Document/PoolDetail/44790,MEDIUM,否
+C39,—,R9,議員詹為元稱同一民調專家上次封關民調與開票差距大,ATTRIBUTED；2022 數字 UNVERIFIED,小改（寫成議員說）,C,https://udn.com/news/story/124652/9826302,MEDIUM,否
+C40,V10,R11／R10,選罷法第 53 條；10-31 首場辯論時間未變,建議 VERIFIED,否,B,https://law.cec.gov.tw/LawContent.aspx?id=GL000292,MEDIUM,否
+C41,V13,F07,事實查核中心 10-21：網傳故事「並非沈伯洋所述」，原為反串帳號的第一人稱故事；未指出是誰改寫,建議 VERIFIED；F07 標題說得太滿,是,B；主 agent,https://tfc-taiwan.org.tw/fact-check-reports/puma-shen-grandfather-battle-rumor/,MEDIUM,否
+C42,V03,R4,2026-10-20《鄉民監察院》王淺秋專訪：父親在厄瓜多經營貿易約 30 年；依客戶需求向日本、台灣、印尼、中國等地採購；中國限制出貨後客戶改向越南、印尼；VWAY 不知情、據其所知父親未在中國經商,ATTRIBUTED,是（R4 改依此重寫）,使用者提供影片與報導；主 agent 開啟放言報導確認內容一致,https://www.youtube.com/watch?v=qPPLZE1pHHI ; https://tw.news.yahoo.com/（放言 2026-10-21〈遭追問父親是否仍在中國經商！沈伯洋：父親是厄瓜多台商〉）,CRITICAL,是
+C43,V04,M02,台灣議題研究中心分析 10-03 至 10-10 的 45 萬 9,110 則留言，稱逾九成不像疑似假帳號,ATTRIBUTED（單一來源、該中心自己的分析）,是（寫進 M02 結果與結局頁）,主 agent,https://news.ltn.com.tw/news/Taipei/breakingnews/5604770,MEDIUM,否
+C44,V05,M04,2022-12-11 吳怡農提遷建時，現任市長回應國土規劃須嚴肅面對；「不應在選舉期間倉促提出」見於 2026 年評論轉述,ATTRIBUTED；原話 UNVERIFIED（2022 原始報導全文待核）,是（M04 重寫的核心）,主 agent 依使用者指正補查,https://news.pts.org.tw/hotTopic/756 ; https://newtalk.tw/news/view/2026-10-12/1064939,HIGH,是
+C45,V05,M04,2026-10-15 行政院發言人：北市府四年未提遷建計畫，此次是首度與中央討論；行政院長稱與四年前相比是「巨大轉折」並要求四年會議與評估資料；2023-08-08 公文是回覆國發會徵詢的書面意見,ATTRIBUTED,是,主 agent,https://www.businesstoday.com.tw/article/category/183027/post/202610150019/ ; https://www.worldjournal.com/wj/story/121218/9818819,HIGH,否
+C46,—,R1／開場,沈伯洋借調立法院擔任立委，台北大學留職停薪但仍有義務教書；115 學年度第 1 學期每週四排課；選戰期間仍回犯罪學研究所上課,ATTRIBUTED（當事人 2026-04《宵夜鏡來講》說法與多家報導一致）,否（「照常上課」「在大學教犯罪學」維持）,使用者提供；主 agent 開啟三篇報導確認,https://www.ftnn.com.tw/news/580602 ; https://www.setn.com/news/1916154 ; 太報（Yahoo 轉載）2026-10-02〈選戰衝刺照樣回校教書！沈伯洋北大開課〉,MEDIUM,否

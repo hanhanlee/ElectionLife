@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { ARCS, backgroundById, CRISES, EVENTS, PARTIES, partyById, specialSetup } from "@/content";
 import { choose, chooseInterlude, currentEvent, interludeEvent, lacksFunds, newGame } from "./engine";
 import { mulberry32 } from "./rng";
-import { fillSaid, SPECIALS } from "./special";
+import { fillSaid, PRINCIPLED_LOSS_INTEGRITY, specialEnding, SPECIALS } from "./special";
 import type { GameState } from "./types";
 
 const def = SPECIALS[0];
@@ -14,6 +14,7 @@ function play(seed: number, branch = false, pick?: (ids: string[], r: () => numb
     special: def.id,
     specialBranch: branch,
     startDelta: def.startDelta,
+    disabledCrises: def.disabledCrises,
   });
   const r = mulberry32(seed * 7 + 1);
   const choosePick = pick ?? ((ids: string[]) => ids[Math.floor(r() * ids.length)]);
@@ -69,17 +70,48 @@ describe("特別篇：首都逆轉戰", () => {
     expect([...swapped].sort((a, b) => a - b)).toEqual([4, 6, 7, 8, 10]);
   });
 
-  it("翻舊帳只引用玩家真的選過的話", () => {
+  it("翻舊帳只引用玩家真的選過的話，引用的是當時說出口的那句話", () => {
+    const quoted = new Set<string>();
     for (const e of own) {
       for (const [, flag] of e.scenario.matchAll(/\{said:([\w-]+)\}/g)) {
         expect(e.conditions?.flags, `${e.id} 引用 ${flag}，但出場條件沒有要求這個旗標`).toContain(flag);
+        quoted.add(flag);
+      }
+    }
+    // 每一個可能被引用的選項，都要有「當時說出口的話」
+    for (const e of own) {
+      for (const o of e.options) {
+        if (o.setFlags?.some((f) => quoted.has(f))) expect(o.recall, `${e.id}/${o.id} 會被翻舊帳，缺少 recall`).toBeTruthy();
       }
     }
     const g = play(3);
     const typhoon = EVENTS.find((e) => e.id === "sp-capital-08")!.options.find((o) => o.id === "decouple")!;
     const said = { ...g, history: [...g.history.slice(0, 7), { ...g.history[7], eventId: "sp-capital-08", optionId: "decouple" }] };
-    expect(fillSaid("{said:sp-typhoon}", said, EVENTS)).toContain(typhoon.label.slice(0, 8));
+    expect(fillSaid("{said:sp-typhoon}", said, EVENTS)).toBe(`「${typhoon.recall}」`);
     expect(fillSaid("{said:sp-typhoon}", { ...g, history: [] }, EVENTS)).toBe("之前說過的話");
+  });
+
+  it("遊戲中途的文字只影射、不點名真人（真名只能出現在來源與結局頁反思）", () => {
+    const REAL = /沈伯洋|蔣萬安|黃珊珊|徐巧芯|莊瑞雄|詹江村|曹興誠|吳怡農|殷瑋|卓榮泰|[沈蔣]稿機|沈也/;
+    for (const e of own) {
+      const texts = [e.title, e.scenario, ...e.options.flatMap((o) => [o.label, o.outcome, o.recall ?? "", ...(o.variants ?? []).map((v) => v.outcome)])];
+      for (const t of texts) expect(REAL.test(t), `${e.id}：${t}`).toBe(false);
+    }
+  });
+
+  it("原則很高卻落選時，結局有那段旁白；當選或原則不夠高時沒有", () => {
+    const g = play(5);
+    const lost = { ...g, firstElection: { ...g.firstElection!, won: false }, stats: { ...g.stats, integrity: PRINCIPLED_LOSS_INTEGRITY } };
+    expect(specialEnding(def, lost, false, 0.3, EVENTS).paragraphs.some((p) => p.includes("你想不通"))).toBe(true);
+    expect(specialEnding(def, lost, true, 0.6, EVENTS).paragraphs.some((p) => p.includes("你想不通"))).toBe(false);
+    const low = { ...lost, stats: { ...lost.stats, integrity: PRINCIPLED_LOSS_INTEGRITY - 1 } };
+    expect(specialEnding(def, low, false, 0.3, EVENTS).paragraphs.some((p) => p.includes("你想不通"))).toBe(false);
+  });
+
+  it("特別篇不會發生被關掉的通用突發事件（過度曝光改由 F13 處理）", () => {
+    for (let seed = 1; seed <= 300; seed++) {
+      for (const c of play(seed).crisisLog) expect(def.disabledCrises).not.toContain(c.id);
+    }
   });
 
   it("插曲每局最多 2 張、黑天鵝最多 1 張，同一個種子結果相同", () => {

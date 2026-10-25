@@ -40,6 +40,8 @@ export interface SpecialDef {
   statHints: Partial<Record<StatKey, string>>;
   /** 開票前的說明：支持度是遊戲指數，不是真實民調 */
   voteNote: string;
+  /** 特別篇關掉的通用突發事件：由特別篇自己的插曲處理同一類代價 */
+  disabledCrises: string[];
   endings: SpecialEnding[];
   /** 結局頁最後的提醒：現實中的選戰 */
   reality: string;
@@ -52,7 +54,7 @@ const has = (s: GameState, flag: string) => s.flags.includes(flag);
 /** 結局的補充段落：讓前面的選擇在後日談裡被提到 */
 function echoes(s: GameState): string[] {
   const lines: string[] = [];
-  if (has(s, "sp-typhoon")) lines.push("檢討會上，幕僚把那段颱風夜的發言放了三遍。論點沒有錯，只是說在了錯的時間，也說錯了該由誰決定。");
+  if (has(s, "sp-typhoon")) lines.push("檢討會上，幕僚把那段颱風夜的發言放了三遍。論點值得討論，只是說在了颱風夜，也沒先問在金融業上班的人怎麼想。");
   if (has(s, "sp-local")) lines.push("那張老鼠通報地圖，後來被好幾個里長貼在辦公室的牆上。");
   if (has(s, "sp-courted")) lines.push("前副市長團隊的那兩位老幕僚，選後傳了一句訊息給你：「下次還可以再談。」");
   return lines.slice(0, 1);
@@ -64,15 +66,15 @@ export const SPECIALS: SpecialDef[] = [
     title: "首都逆轉戰",
     teaser: "被對岸立案偵查的立委，落後二十八點，挑戰首都的現任市長。",
     intro: [
-      "你是綠黨的立法委員，在大學教犯罪學，創辦了一間教民眾防災、識讀假訊息的民防學院。",
+      "你是綠黨的立法委員，在大學教犯罪學，創辦了一間民防學院，教民眾在戰爭與災難中自救、識讀假訊息。",
       "對岸說你「分裂國家」，對你立案偵查。半年後，黨要你去挑戰首都的現任市長。",
-      "第一份民調，你落後二十八個百分點。所有人都說這是不可能的任務。",
+      "徵召後的第一份民調，你落後二十八個百分點。所有人都說這是不可能的任務。",
     ],
     party: "green",
     background: "legislator",
     profile: { city: "tianlong", traits: ["policy-wonk", "meme-lord", "principled"], burden: "activist-network", origin: 0 },
     opponent: {
-      name: "名門市長",
+      name: "公子市長",
       party: "blue",
       title: "尋求連任的現任市長",
       incumbent: true,
@@ -88,14 +90,16 @@ export const SPECIALS: SpecialDef[] = [
       approval: "遊戲裡的聲勢指數，不是真實民調。",
       achievement: "你的政見有多少研究、財源和時程撐著。宣布政見不會增加，做功課才會。",
     },
-    voteNote: "開票前，幕僚提醒你：支持度只是聲勢，不是票。名門市長的基本盤一直都在，很多人在電話裡不表態。",
+    // 挑戰者聲量高是現實（民調也一路追上來），不該固定扣分；衝聲量的代價改由插曲 F13〈短影音被斷章取義〉處理，玩家可以選擇怎麼回應
+    disabledCrises: ["x-overexposure"],
+    voteNote: "開票前，幕僚提醒你：支持度只是聲勢，不是票。公子市長的基本盤一直都在，很多人在電話裡不表態。",
     endings: [
       {
         when: (_s, won, _p, promises) => won && promises.debt === 0,
         title: "不可能的任務",
         headline: "落後二十八點的人，當選了",
         paragraphs: (s) => [
-          "開票到晚上九點，名門市長的競選總部關燈了。你上台的第一句話是：「明天早上，我要去看那幾個最常淹水的地方。」",
+          "開票到晚上九點，公子市長的競選總部關燈了。你上台的第一句話是：「明天早上，我要去看那幾個最常淹水的地方。」",
           ...echoes(s),
           "你答應過的事不多，但每一件都算過。接下來四年，才是真正難的部分。",
         ],
@@ -135,7 +139,7 @@ export const SPECIALS: SpecialDef[] = [
       {
         when: () => true,
         title: "沒有奇蹟",
-        headline: "首都還是名門市長的",
+        headline: "首都還是公子市長的",
         paragraphs: (s) => [
           "開票不到一小時，勝負就出來了。你走上台，謝謝每一位在雨中幫你發傳單的志工。",
           ...echoes(s),
@@ -168,7 +172,7 @@ function picked(state: GameState, events: GameEvent[]) {
 }
 
 /**
- * 翻舊帳：把 {said:旗標} 換成玩家最近一次設下這個旗標的選擇，例如「〈颱風天的股市〉時說的『……』」。
+ * 翻舊帳：把 {said:旗標} 換成玩家最近一次設下這個旗標時「說出口的話」（選項的 recall），例如「股市要不要跟停班停課脫鉤，值得討論。」。
  * 只引用玩家真的選過的話；找不到就保留成「之前說過的話」。
  */
 export function fillSaid(text: string, state: GameState, events: GameEvent[]): string {
@@ -176,7 +180,9 @@ export function fillSaid(text: string, state: GameState, events: GameEvent[]): s
     const hit = picked(state, events)
       .filter((p) => p.option?.setFlags?.includes(flag))
       .at(-1);
-    return hit ? `〈${hit.event!.title}〉時說的「${hit.option!.label.replace(/「/g, "『").replace(/」/g, "』")}」` : "之前說過的話";
+    if (!hit) return "之前說過的話";
+    const words = hit.option!.recall ?? hit.option!.label;
+    return `「${words.replace(/「/g, "『").replace(/」/g, "』")}」`;
   });
 }
 
@@ -190,8 +196,16 @@ export function promiseLedger(state: GameState, events: GameEvent[]): PromiseLed
   return { made, trimmed, debt: Math.max(0, made - trimmed) };
 }
 
+/** 原則很高卻落選時，結局加這段旁白：守原則的人，選戰往往不吃香 */
+export const PRINCIPLED_LOSS_INTEGRITY = 85;
+const PRINCIPLED_LOSS =
+  "開票那晚，競選總部的人走得差不多了。你一路上沒有說過一句自己不相信的話，沒有剪過一支斷章取義的影片，也沒有答應過一件做不到的事。你坐在空下來的椅子上，想了很久：為什麼最後是這個下場？你想不通。也許選舉本來就不是在比誰比較誠實；也許，只是還不到時候。";
+
 export function specialEnding(def: SpecialDef, state: GameState, won: boolean, probability: number, events: GameEvent[]) {
   const promises = promiseLedger(state, events);
   const ending = def.endings.find((e) => e.when(state, won, probability, promises))!;
-  return { ...ending, paragraphs: ending.paragraphs(state, promises) };
+  const paragraphs = ending.paragraphs(state, promises);
+  // 放在第一段之後、其他補充段落之前
+  if (!won && state.stats.integrity >= PRINCIPLED_LOSS_INTEGRITY) paragraphs.splice(1, 0, PRINCIPLED_LOSS);
+  return { ...ending, paragraphs };
 }

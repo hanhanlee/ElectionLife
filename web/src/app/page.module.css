@@ -1008,3 +1008,14 @@
   margin-top: 16px;
   border-left: 4px solid var(--accent);
 }
+
+/* 特別篇結局頁「真實世界的這一題」：每一題一個區塊 */
+.reflection {
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  margin-top: 12px;
+}
+
+.reflection h3 {
+  margin: 0 0 8px;
+}

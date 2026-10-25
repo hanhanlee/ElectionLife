@@ -3,24 +3,24 @@
     "id": "sp-capital-01",
     "phase": "launch",
     "title": "序章：對岸的立案偵查",
-    "scenario": "一年前，對岸公安宣布以「分裂國家罪」對你立案偵查，理由是你創辦了一間教民眾防災、識讀假訊息的民防學院，還呼籲民眾提供「線索」。這已經是一年內你第六次被對岸點名。記者把麥克風塞到你面前。",
+    "scenario": "一年前，對岸公安宣布以「分裂國家」罪嫌對你立案偵查，理由是你創辦了一間民防學院，教民眾在戰爭與災難中自救、識讀假訊息；通報還呼籲民眾提供「線索」。你數了數，這已經不知道是第五次還是第六次被對岸點名了。記者把麥克風塞到你面前。",
     "tags": ["國安", "兩岸"],
     "special": "capital-2026",
     "specialTurn": 1,
     "fact": "FACT",
     "conditions": { "flags": ["special-capital-2026", "party-green"] },
     "options": [
-      { "id": "defiant", "label": "強硬回應：「下一步大概是通緝吧，我們沒在怕」", "outcome": "你的回應被剪成短影音，三天破百萬觀看。從今天起，每一個鏡頭都會對著你，好的壞的都是。", "effects": { "approval": 3, "media": 6, "party": 3, "team": -2 }, "skill": "media", "setFlags": ["sp-defiant"] },
+      { "id": "defiant", "label": "強硬回應：「下一步大概是通緝吧，我們沒在怕」", "outcome": "你的回應被剪成短影音，三天破百萬觀看。從今天起，每一個鏡頭都會對著你，好的壞的都是。", "effects": { "media": 7, "party": 4, "team": -2 }, "skill": "media", "setFlags": ["sp-defiant"] },
       { "id": "report", "label": "把這件事整理成一份跨境鎮壓的研究報告", "outcome": "報告很長，新聞只引用了一段。但幾位學者和記者，從此會先打電話問你。", "effects": { "achievement": 3, "integrity": 2, "media": 1 }, "skill": "policy", "setFlags": ["policy-evidence"] },
-      { "id": "calm", "label": "照常開會、照常上課，不多做回應", "outcome": "新聞只播了十秒。學生說，你那天的課跟平常一樣準時。", "effects": { "team": 3, "integrity": 1, "approval": 1 } }
+      { "id": "calm", "label": "照常開會、照常上課，不多做回應", "outcome": "新聞只播了十秒。學生說，你那天的課跟平常一樣準時。", "effects": { "team": 3, "integrity": 2 } }
     ],
-    "source": { "status": "draft", "prototype": "2025 年 10 月 28 日，對岸公安以「分裂國家犯罪」對創辦民防學院的立委立案偵查；當事人表示這是一年內第六次被點名，並說「下一步大概是通緝」。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "聯合報：遭重慶公安立案偵查 沈伯洋喊沒在怕：下一步大概是通緝", "url": "https://udn.com/news/story/6656/9100825", "quote": "下一步大概是通緝", "accessed": "2026-10-25" }, { "title": "TVBS：總統促韓國瑜聲援沈 綠委拍桌轟邱垂正", "url": "https://news.tvbs.com.tw/politics/3042410", "quote": "總統促韓國瑜聲援沈", "accessed": "2026-10-25" }], "realCase": "2025 年中國重慶公安對立委沈伯洋立案偵查" }
+    "source": { "status": "draft", "prototype": "2025 年 10 月 28 日，對岸公安以涉嫌「分裂國家犯罪」對創辦黑熊學院的立委立案偵查，並請民眾提供線索；當事人說下一步大概是通緝，「這已經是不知道第5次還是第6次了」。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "聯合報：遭重慶公安立案偵查 沈伯洋喊沒在怕：下一步大概是通緝", "url": "https://udn.com/news/story/6656/9100825", "quote": "下一步大概是通緝", "accessed": "2026-10-25" }, { "title": "TVBS：總統促韓國瑜聲援沈 綠委拍桌轟邱垂正", "url": "https://news.tvbs.com.tw/politics/3042410", "quote": "總統促韓國瑜聲援沈", "accessed": "2026-10-25" }], "realCase": "2025 年中國重慶公安對立委沈伯洋立案偵查" }
   },
   {
     "id": "sp-capital-02",
     "phase": "platform",
     "title": "被推上火線",
-    "scenario": "立案之後，一位科技業大老公開喊話，要黨徵召你選首都市長。你當時說「戰士沒有選擇戰場的權利」，隔天又說選舉不在規劃內。半年後，黨中央正式徵召你。這一次，你要給答案了。",
+    "scenario": "立案之後，一位科技業大老公開喊話，要黨徵召你選首都市長。那一週，你先說「我的戰場在立法院」；上節目時又說「戰士沒有選擇戰場的權利」，新聞標題寫你鬆口了；隔天你趕緊解釋：那句話講的是沒辦法選擇對岸要不要通緝你，選舉目前不在規劃內。半年後，黨中央正式徵召你。這一次，你要給答案了。",
     "tags": ["參選", "黨內"],
     "special": "capital-2026",
     "specialTurn": 2,
@@ -31,47 +31,48 @@
       { "id": "staff", "label": "接受徵召，同時要黨中央派出輔選人力", "outcome": "黨中央答應派人。錢要等下一次撥款，人倒是下週就到了。", "effects": { "team": 5, "party": -2 } },
       { "id": "elders", "label": "接受徵召，先請過去參選過的人一起討論政見", "outcome": "有人來開了會，有人只傳了訊息說「加油」。會議紀錄寫了二十頁。", "effects": { "achievement": 3, "team": 2, "party": 1 }, "skill": "policy" }
     ],
-    "source": { "status": "draft", "prototype": "2025 年 11 月，企業家主張徵召遭立案的立委參選首都市長；當事人說「戰士沒有選擇戰場的權利」，隔天又表示選舉不在規劃內。2026 年 5 月 13 日，黨正式徵召。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "三立新聞網：把他留在立法院才是糟蹋！曹興誠：投沈伯洋一票就是投民主自由一票", "url": "https://tw.news.yahoo.com/%E6%8A%8A%E4%BB%96%E7%95%99%E5%9C%A8%E7%AB%8B%E6%B3%95%E9%99%A2%E6%89%8D%E6%98%AF%E7%B3%9F%E8%B9%8B-%E6%9B%B9%E8%88%88%E8%AA%A0-%E6%8A%95%E6%B2%88%E4%BC%AF%E6%B4%8B-%E7%A5%A8%E5%B0%B1%E6%98%AF%E6%8A%95%E6%B0%91%E4%B8%BB%E8%87%AA%E7%94%B1-%E7%A5%A8-011900478.html", "quote": "把他留在立法院才是糟蹋", "accessed": "2026-10-25" }, { "title": "三立新聞網：憂選台北市長遭抹黑 負面聲量外溢 沈伯洋：戰士沒有選擇戰場的權利", "url": "https://tw.news.yahoo.com/%E6%86%82%E9%81%B8%E5%8F%B0%E5%8C%97%E5%B8%82%E9%95%B7%E9%81%AD%E6%8A%B9%E9%BB%91-%E8%B2%A0%E9%9D%A2%E8%81%B2%E9%87%8F%E5%A4%96%E6%BA%A2-%E6%B2%88%E4%BC%AF%E6%B4%8B-%E6%88%B0%E5%A3%AB%E6%B2%92%E6%9C%89%E9%81%B8%E6%93%87%E6%88%B0%E5%A0%B4%E7%9A%84%E6%AC%8A%E5%88%A9-015500071.html", "quote": "戰士沒有選擇戰場的權利", "accessed": "2026-10-25" }, { "title": "Yahoo 新聞：沈伯洋正式參選對戰蔣萬安 賴清德讚台北市長不二人選", "url": "https://tw.news.yahoo.com/%E6%B2%88%E4%BC%AF%E6%B4%8B%E6%AD%A3%E5%BC%8F%E5%8F%83%E9%81%B8%E5%B0%8D%E6%88%B0%E8%94%A3%E8%90%AC%E5%AE%89-%E8%B3%B4%E6%B8%85%E5%BE%B7%E8%AE%9A%E5%8F%B0%E5%8C%97%E5%B8%82%E9%95%B7%E4%B8%8D%E4%BA%8C%E4%BA%BA%E9%81%B8-105042647.html", "quote": "台北市長不二人選", "accessed": "2026-10-25" }], "realCase": "2025–2026 年民進黨徵召沈伯洋參選臺北市長" }
+    "source": { "status": "draft", "prototype": "2025 年 11 月 12 日企業家主張徵召；11 月 14 日當事人說戰場在立法院；11 月 17 日專訪說「戰士沒有選擇戰場的權利，就像我沒有辦法選擇中國要不要通緝我」；11 月 18 日說選舉不在規劃內。2026 年 5 月 13 日，黨正式徵召。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "三立新聞網：把他留在立法院才是糟蹋！曹興誠：投沈伯洋一票就是投民主自由一票", "url": "https://tw.news.yahoo.com/%E6%8A%8A%E4%BB%96%E7%95%99%E5%9C%A8%E7%AB%8B%E6%B3%95%E9%99%A2%E6%89%8D%E6%98%AF%E7%B3%9F%E8%B9%8B-%E6%9B%B9%E8%88%88%E8%AA%A0-%E6%8A%95%E6%B2%88%E4%BC%AF%E6%B4%8B-%E7%A5%A8%E5%B0%B1%E6%98%AF%E6%8A%95%E6%B0%91%E4%B8%BB%E8%87%AA%E7%94%B1-%E7%A5%A8-011900478.html", "quote": "把他留在立法院才是糟蹋", "accessed": "2026-10-25" }, { "title": "三立新聞網：憂選台北市長遭抹黑 負面聲量外溢 沈伯洋：戰士沒有選擇戰場的權利", "url": "https://tw.news.yahoo.com/%E6%86%82%E9%81%B8%E5%8F%B0%E5%8C%97%E5%B8%82%E9%95%B7%E9%81%AD%E6%8A%B9%E9%BB%91-%E8%B2%A0%E9%9D%A2%E8%81%B2%E9%87%8F%E5%A4%96%E6%BA%A2-%E6%B2%88%E4%BC%AF%E6%B4%8B-%E6%88%B0%E5%A3%AB%E6%B2%92%E6%9C%89%E9%81%B8%E6%93%87%E6%88%B0%E5%A0%B4%E7%9A%84%E6%AC%8A%E5%88%A9-015500071.html", "quote": "戰士沒有選擇戰場的權利", "accessed": "2026-10-25" }, { "title": "Yahoo 新聞：沈伯洋正式參選對戰蔣萬安 賴清德讚台北市長不二人選", "url": "https://tw.news.yahoo.com/%E6%B2%88%E4%BC%AF%E6%B4%8B%E6%AD%A3%E5%BC%8F%E5%8F%83%E9%81%B8%E5%B0%8D%E6%88%B0%E8%94%A3%E8%90%AC%E5%AE%89-%E8%B3%B4%E6%B8%85%E5%BE%B7%E8%AE%9A%E5%8F%B0%E5%8C%97%E5%B8%82%E9%95%B7%E4%B8%8D%E4%BA%8C%E4%BA%BA%E9%81%B8-105042647.html", "quote": "台北市長不二人選", "accessed": "2026-10-25" }], "realCase": "2025–2026 年民進黨徵召沈伯洋參選臺北市長" }
   },
   {
     "id": "sp-capital-03",
     "phase": "campaign",
     "title": "落後二十八點",
-    "scenario": "第一份電視台民調出爐：你落後名門市長二十八個百分點。名嘴說這是「送頭」。幕僚分成兩派：一派要你繼續主打國安，一派說首都選民在意的，是巷口的老鼠和下雨就淹的地下道。",
+    "scenario": "徵召當天，藍黨一位立委就說：「靠他來拯救我們整場選舉。」兩週後，徵召後的第一份電視台民調出爐：你落後公子市長二十八個百分點。幕僚分成兩派：一派要你繼續主打國安，一派說首都選民在意的，是巷口的老鼠和下雨就淹的地下道。",
     "tags": ["選戰", "民調"],
     "special": "capital-2026",
     "specialTurn": 3,
     "fact": "FACT",
     "conditions": { "flags": ["special-capital-2026", "party-green"] },
     "options": [
-      { "id": "security", "label": "主打國安：「首都是滲透的第一線」", "outcome": "基本盤很興奮，造勢場的人變多了。但民調上那二十八點，幾乎沒動。", "effects": { "party": 5, "media": 3, "approval": 1 }, "setFlags": ["sp-security"] },
-      { "id": "local", "label": "不談兩岸，一區一區談鼠患、淹水和老公寓", "outcome": "你在記者會上拿出一張全市老鼠通報地圖。記者第一次問你兩岸以外的問題。", "effects": { "approval": 4, "achievement": 2, "media": -1 }, "skill": "policy", "setFlags": ["sp-local"] },
-      { "id": "poll", "label": "公布自己委託的民調，但只公布對你有利的那一題", "outcome": "支持者的士氣回來了。有記者問：問卷的其他題目呢？", "effects": { "approval": 2, "media": 2, "integrity": -4 }, "setFlags": ["sp-opaque-poll"], "delayed": { "afterTurns": 3, "effects": { "approval": -3, "integrity": -2 }, "text": "你開局時只公布一題的那份民調，被記者追問完整問卷。團隊拿不出來，新聞標題是「選擇性公布」。" } }
+      { "id": "security", "label": "主打國安：「首都是滲透的第一線」", "outcome": "基本盤很興奮，造勢場的人變多了。但民調上那二十八點，幾乎沒動。", "effects": { "party": 5, "media": 3, "approval": 1 }, "setFlags": ["sp-security"], "recall": "首都是滲透的第一線。" },
+      { "id": "local", "label": "把重心放到市政：一區一區談鼠患、淹水和老公寓", "outcome": "你在記者會上拿出一張全市老鼠通報地圖。記者第一次問你兩岸以外的問題。", "effects": { "approval": 4, "achievement": 2, "media": -1 }, "skill": "policy", "setFlags": ["sp-local"] },
+      { "id": "poll", "label": "公布自己委託的民調，但只公布對你有利的那一題", "outcome": "支持者的士氣回來了。有記者問：問卷的其他題目呢？", "effects": { "approval": 2, "media": 2, "integrity": -4 }, "setFlags": ["sp-opaque-poll"], "delayed": { "afterTurns": 3, "effects": { "approval": -3, "integrity": -2 }, "text": "你開局時只公布一題的那份民調，被記者追問完整問卷。團隊拿不出來，新聞標題是「選擇性公布」。" }, "recall": "我們自己的民調，差距只剩個位數。" }
     ],
-    "source": { "status": "draft", "prototype": "2026 年 5 月下旬，電視台民調顯示挑戰者落後現任市長 28 個百分點；10 月同一機構的調查差距縮小為 8 個百分點。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "TVBS：台北市長民調（2026-10-08）", "url": "https://news.tvbs.com.tw/politics/4033527", "quote": "差距由28個百分點縮小為8個百分點", "accessed": "2026-10-25" }], "realCase": "2026 年臺北市長選舉民調" }
+    "source": { "status": "draft", "prototype": "2026 年 5 月 13 日徵召當天，國民黨立委徐巧芯說「靠沈伯洋來拯救國民黨整場選舉」；5 月 27 日電視台民調顯示挑戰者落後現任市長 28 個百分點；10 月同一機構的調查差距縮小為 8 個百分點。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "關鍵評論網（2026-05-13）：民進黨拍板沈伯洋選台北市長，徐巧芯：拯救國民黨整場選舉", "url": "https://www.thenewslens.com/article/267624", "quote": "拯救國民黨整場選舉", "accessed": "2026-10-25" }, { "title": "TVBS：台北市長民調（2026-10-08）", "url": "https://news.tvbs.com.tw/politics/4033527", "quote": "差距由28個百分點縮小為8個百分點", "accessed": "2026-10-25" }], "realCase": "2026 年臺北市長選舉民調" }
   },
   {
     "id": "sp-capital-04",
     "phase": "campaign",
-    "title": "去年的謠言又回來了",
-    "scenario": "群組裡又開始流傳：你的父親是在對岸做生意的台商，所以「反中是演的」。你說過，父親是在中南美洲做貿易，這則消息一兩年前就有人炒過。現在，它又被翻出來了。",
+    "title": "父親的生意",
+    "scenario": "對岸國台辦宣布懲戒一家叫 VWAY 的公司，說它跟你家有關，不准在大陸「牟利」。群組裡馬上傳開：「他爸是對岸台商，反中是演的！」你疑惑地想：家裡做的是貿易，客戶要什麼就向哪裡買，挖土機從日本、布料從台灣、零件從印尼，當然也有從中國訂的。對岸限制出貨以後，客戶早就改向越南、印尼買了。至於 VWAY，你從來沒聽家裡提過。記者已經在樓下等你。",
     "tags": ["選戰", "假訊息"],
     "special": "capital-2026",
     "specialTurn": 4,
     "fact": "CLAIM",
     "conditions": { "flags": ["special-capital-2026", "party-green"] },
     "options": [
-      { "id": "timeline", "label": "公開父親的貿易經歷時間線，附上過去的澄清", "outcome": "澄清的觸及率只有謠言的十分之一。但記者終於有了可以引用的東西。", "effects": { "integrity": 2, "approval": 2, "achievement": 1 }, "setFlags": ["policy-evidence"] },
-      { "id": "enemy", "label": "說這是敵方作戰，請對手一起表態", "outcome": "對手陣營說：「什麼都怪對岸。」你的支持者說：「本來就是。」", "effects": { "media": 5, "party": 3, "approval": -1 }, "variants": [{ "when": { "flags": ["sp-defiant"] }, "outcome": "你提醒大家：這就是你被立案偵查之後一直在講的事。這次，很多中間選民聽進去了。", "effects": { "approval": 3 } }] },
+      { "id": "timeline", "label": "公開家裡生意的時間線：客戶在哪、向哪些國家採購", "outcome": "澄清的觸及率只有謠言的十分之一。但記者終於有了可以引用的東西。", "effects": { "integrity": 2, "approval": 2, "achievement": 1 }, "setFlags": ["policy-evidence"] },
+      { "id": "enemy", "label": "說這是對岸干擾選舉，請對手一起表態", "outcome": "對手陣營說：「什麼都怪對岸。」你的支持者說：「本來就是。」", "effects": { "media": 5, "party": 3, "approval": -1 }, "variants": [{ "when": { "flags": ["sp-defiant"] }, "outcome": "你提醒大家：這就是你被立案偵查之後一直在講的事。這次，很多中間選民聽進去了。", "effects": { "approval": 3 } }] },
       { "id": "ignore", "label": "不回應，把時間拿去跑市場", "outcome": "你一天跑了六個市場。豬肉攤老闆說他不看網路。", "effects": { "approval": 1, "team": 2 }, "delayed": { "afterTurns": 3, "effects": { "approval": -3 }, "text": "你當初沒有回應的「父親是台商」謠言，沒人澄清，就變成了某些群組裡的「大家都知道」。" } }
     ],
-    "source": { "status": "draft", "prototype": "2026 年 10 月，挑戰者表示「父親是台商」的謠言已流傳一兩年、最早由港媒炒作，父親實際上在中南美洲做貿易。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "聯合報（中央社）：「出席造勢就被出征」 沈伯洋指影響選舉公平性", "url": "https://udn.com/news/story/124652/9824228", "quote": "出席造勢就被出征", "accessed": "2026-10-25" }], "realCase": "2026 年臺北市長選舉中的謠言" }
+    "source": { "status": "draft", "prototype": "2025 年 6 月與 2026 年 10 月 14 日，國台辦兩度懲戒據稱與挑戰者家族有關的公司（兆億、VWAY），陸委會稱干擾選舉；挑戰者 10 月 20 日受訪說明家中在厄瓜多經營貿易，依客戶需求向多國採購，VWAY 不知情。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "中央社（2026-10-14）：國台辦對沈伯洋父親另家公司懲戒，陸委會：干擾民主選舉", "url": "https://www.cna.com.tw/news/acn/202610140296.aspx", "quote": "干擾民主選舉", "accessed": "2026-10-25" }, { "title": "放言（Yahoo 轉載，2026-10-21）：遭追問父親是否仍在中國經商！沈伯洋：父親是厄瓜多台商", "url": "https://tw.news.yahoo.com/%E9%81%AD%E8%BF%BD%E5%95%8F%E7%88%B6%E8%A6%AA%E6%98%AF%E5%90%A6%E4%BB%8D%E5%9C%A8%E4%B8%AD%E5%9C%8B%E7%B6%93%E5%95%86-%E6%B2%88%E4%BC%AF%E6%B4%8B-%E7%88%B6%E8%A6%AA%E6%98%AF%E5%8E%84%E7%93%9C%E5%A4%9A%E5%8F%B0%E5%95%86-%E5%8F%8D%E5%B0%8D%E8%B7%9F%E7%9B%A3%E5%AE%B6%E4%BA%BA-%E6%8A%8A%E5%AD%A9%E5%AD%90%E6%8D%B2%E5%85%A5%E9%81%B8%E6%88%B0-090759349.html", "quote": "父親是厄瓜多台商", "accessed": "2026-10-25" }, { "title": "《鄉民監察院》王淺秋專訪沈伯洋（2026-10-20）", "url": "https://www.youtube.com/watch?v=qPPLZE1pHHI", "quote": "專訪沈伯洋", "accessed": "2026-10-25" }, { "title": "中央社（2025-06-10）：國民黨質疑沈父公司交易多來自中國", "url": "https://www.cna.com.tw/news/aipl/202506100126.aspx", "quote": "中南美的台商", "accessed": "2026-10-25" }], "realCase": "2026 年臺北市長選舉中的謠言" },
+    "reflection": ["發生了什麼：對岸國台辦兩度懲戒據稱與挑戰者家族有關的公司，說不准「台獨」的關聯企業在大陸牟利；陸委會說這是在干擾選舉。", "指控的一方說：父親公司的交易多數來自中國，所以是「對岸台商」。", "挑戰者說：家裡在厄瓜多做跨國貿易，依客戶需求向日本、台灣、印尼、中國等地採購；向中國廠商訂貨不等於在中國經營事業；對方限制出貨後，客戶改向其他國家採購；VWAY 他不知情。", "「向中國採購的比例高」和「在中國經營的台商」是兩件事。對岸的懲戒是正式措施，但它的目的、指控是否屬實，是另一個問題。"]
   },
   {
     "id": "sp-capital-05",
     "phase": "campaign",
     "title": "政策島",
-    "scenario": "競選團隊把政見做成一張像桌遊的地圖：14 座小島、94 項政策。上線第一天就被網友玩壞了：有人做了名門市長版，把市政爭議一座一座標上去；有人做了別的城市的「恐怖島」。流量很大，但看懂政見的人有多少？",
+    "scenario": "競選團隊把政見做成一張像桌遊的地圖：14 座小島、94 項政策。上線第一天就被網友玩壞了：有人做了公子市長版，把市政爭議一座一座標上去；有人做了別的城市的「恐怖島」。流量很大，但看懂政見的人有多少？",
     "tags": ["選戰", "網路"],
     "special": "capital-2026",
     "specialTurn": 5,
@@ -88,24 +89,25 @@
     "id": "sp-capital-06",
     "phase": "campaign",
     "title": "上一屆的第三勢力",
-    "scenario": "上一屆，白黨的前副市長拿了三十四萬票。電視台民調說，這些選民有一半以上正在往你這邊移動。但上一屆的票不是這一屆的票，他們最討厭的，就是被當成「可以搶的票」。",
+    "scenario": "上一屆，以無黨籍參選、後來加入白黨的前副市長，拿了三十四萬票。今年白黨沒有推人，還和藍黨簽了合作協議。電視台的民調說，這些選民有一半以上正往你這邊移動。前副市長自己出來說話了：「那三十四萬票不是我的，是三十四萬位會自己判斷的市民。」",
     "tags": ["選戰", "第三勢力"],
     "special": "capital-2026",
     "specialTurn": 6,
     "fact": "CLAIM",
     "conditions": { "flags": ["special-capital-2026", "party-green"] },
     "options": [
-      { "id": "invite", "label": "邀請前副市長團隊的老幕僚，一起討論交通與都更政見", "outcome": "前副市長沒有表態，兩位老幕僚來開了會。白黨支持者的論壇裡，罵你的文章少了一點。", "effects": { "approval": 3, "achievement": 2, "party": -2 }, "setFlags": ["sp-courted", "sp-cross"] },
-      { "id": "ads", "label": "花錢下精準廣告，鎖定上一屆投第三勢力的人", "outcome": "廣告點擊率很高。也有人截圖說：「我被當成票倉了。」", "effects": { "approval": 3, "media": 2, "integrity": -2 }, "funds": -300 },
-      { "id": "earn", "label": "不搶、不喊，把政見做到讓人自己選", "outcome": "沒有新聞。但有一位白黨的里長，私下把你的政見印給里民看。", "effects": { "integrity": 3, "approval": 1 } }
+      { "id": "invite", "label": "邀請前副市長團隊的老幕僚，私下討論交通與都更政見", "outcome": "兩位老幕僚私下來開了會，請你別公開。白黨支持者的論壇裡，罵你的文章少了一點。", "effects": { "approval": 3, "achievement": 2, "party": -2 }, "setFlags": ["sp-courted", "sp-cross"] },
+      { "id": "ads", "label": "花錢下精準廣告，鎖定上一屆投第三勢力的人", "outcome": "廣告點擊率很高。也有人截圖，配上前副市長那句話：「選民不是貨物。」", "effects": { "approval": 3, "media": 2, "integrity": -2 }, "funds": -300 },
+      { "id": "earn", "label": "不分陣營：「不管上一屆投誰，我都要讓大家知道，相對於公子市長，我是更好的選擇。」", "outcome": "這句話沒有討好誰，也沒有得罪誰。有白黨支持者留言：「至少他沒有把我們當票倉。」", "effects": { "approval": 2, "integrity": 3 } }
     ],
-    "source": { "status": "draft", "prototype": "2026 年 10 月電視台民調：上屆投給第三位候選人的選民，53% 轉向挑戰者、39% 轉向現任市長。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "TVBS：上屆黃珊珊票源53％轉向沈伯洋", "url": "https://news.tvbs.com.tw/politics/4033530", "quote": "上屆黃珊珊票源53％轉向沈伯洋", "accessed": "2026-10-25" }], "realCase": "2026 年臺北市長選舉的第三勢力票源" }
+    "source": { "status": "draft", "prototype": "2022 年第三位候選人以無黨籍參選得 34 萬票；2026 年白黨未推人選；10 月電視台民調稱其選民過半轉向挑戰者，另一份民調結果相反；前副市長說「那34萬票不是黃珊珊的票」；挑戰者說各陣營支持者都要爭取。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "TVBS：上屆黃珊珊票源53％轉向沈伯洋", "url": "https://news.tvbs.com.tw/politics/4033530", "quote": "上屆黃珊珊票源53％轉向沈伯洋", "accessed": "2026-10-25" }, { "title": "上報（LINE TODAY 轉載，2026-10-13）：黃珊珊的票源53%轉向沈伯洋，本人發聲：這些票不是我的", "url": "https://today.line.me/tw/v3/article/Nv5Jrqn", "quote": "這些票不是我的", "accessed": "2026-10-25" }, { "title": "民視（LINE TODAY 轉載，2026-10-07）：「黃珊珊25%選票」怎麼拿？沈伯洋：「他們」也要說服", "url": "https://today.line.me/tw/v3/article/kEp7RLJ", "quote": "我是更好的選擇", "accessed": "2026-10-25" }], "realCase": "2026 年臺北市長選舉的第三勢力票源" },
+    "reflection": ["發生了什麼：一份民調說上一屆投前副市長的選民過半轉向挑戰者，另一份民調說多數轉向現任市長；前副市長說，選民不是可以按比例轉移的數據。", "挑戰者說，不鎖定、不切割，每個陣營的支持者都要說服。", "把選民當成可以搶的票倉，是兩邊陣營都容易犯的錯。"]
   },
   {
     "id": "sp-capital-07",
     "phase": "campaign",
-    "title": "站台的人被點名",
-    "scenario": "一位藝人出席了你的競選總部成立大會，沒有喊口號、也沒有上台講話。隔天，對岸的國台辦說他是「兩面人」，官媒也跟著批評。行政院宣布對參選人及相關人士提供專案保護。下一場活動，有兩位嘉賓說要再考慮一下。",
+    "title": "參加的人被點名",
+    "scenario": "一位藝人來參加你的競選總部成立大會，坐在觀眾席拿著加油棒，婉拒了記者的訪問。幾天後，對岸的帳號開始不點名罵人，官媒說這叫「兩面人」，國台辦也在記者會上說，任何人都不能做「兩面人」。和他合作的對岸車廠連夜切割，他的帳號被清空。公子市長說，歡迎他也來自己的競總，「一定安排在搖滾區」。同一個月，行政院要求檢警調保護所有參選人的人身安全。你的幕僚在排下一場活動的嘉賓名單，邊排邊嘆氣：「還有誰敢來？」",
     "tags": ["選戰", "國安"],
     "special": "capital-2026",
     "specialTurn": 7,
@@ -113,33 +115,34 @@
     "conditions": { "flags": ["special-capital-2026", "party-green"] },
     "options": [
       { "id": "law", "label": "要求立法院修《反滲透法》，把跨境恐嚇納進去", "outcome": "連署很快就湊齊了。法案什麼時候排審，還沒有人知道。", "effects": { "integrity": 1, "party": 3, "media": 2 }, "variants": [{ "when": { "flags": ["sp-security"] }, "outcome": "你從選戰一開始就在講這件事。這一次，連中間選民都覺得你說的是真的。", "effects": { "approval": 3 } }] },
-      { "id": "thank", "label": "公開感謝那位來站台的人，承諾保護願意出面的人", "outcome": "那位藝人沒有回應，但轉發了你的貼文。有兩位嘉賓說，下一場還是會來。", "effects": { "approval": 3, "team": 2, "media": 1 } },
-      { "id": "jointly", "label": "公開邀請對手：一起譴責對選舉的恐嚇", "outcome": "名門市長回應：「本來就反對任何干預。」記者注意到，他沒有說是誰在干預。", "effects": { "approval": 2, "media": 3 }, "skill": "debate" }
+      { "id": "thank", "label": "公開感謝那位來參加的人，說明參加選舉活動是民主社會裡很平常的小事", "outcome": "你說：「來參加一場活動，是民主社會裡很平常的小事。」這句話被轉了很多次，有兩位嘉賓說，下一場還是會來。也有人提醒你：謝得太大聲，反而讓他更顯眼。", "effects": { "approval": 3, "team": 2, "media": 1 } },
+      { "id": "jointly", "label": "公開邀請對手：一起譴責對選舉的恐嚇", "outcome": "公子市長回應：「本來就反對任何干預。」兩邊的支持者都說，對方講得不夠清楚。", "effects": { "approval": 2, "media": 3 }, "skill": "debate" }
     ],
-    "source": { "status": "draft", "prototype": "2026 年 10 月，藝人出席挑戰者競選總部成立後遭國台辦批評「兩面人」；10 月 22 日行政院將參選人及相關人士列為專案保護，挑戰者呼籲修《反滲透法》。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "聯合報（中央社）：「出席造勢就被出征」 沈伯洋指影響選舉公平性", "url": "https://udn.com/news/story/124652/9824228", "quote": "出席造勢就被出征", "accessed": "2026-10-25" }, { "title": "聯合報（中央社）：防跨境鎮壓政院專案保護參選人 沈伯洋盼修反滲透法", "url": "https://udn.com/news/story/124652/9831444", "quote": "專案保護參選人", "accessed": "2026-10-25" }], "realCase": "2026 年臺北市長選舉的跨境鎮壓爭議" }
+    "source": { "status": "draft", "prototype": "2026 年 10 月 4 日藝人出席挑戰者競總成立；10 月 6 日起對岸軍方背景帳號與官媒批評，10 月 14 日國台辦不點名回應「兩面人」；10 月 22 日行政院長在院會指示檢警調將所有參選人及相關人士列為專案保護。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "聯合報（中央社）：「出席造勢就被出征」 沈伯洋指影響選舉公平性", "url": "https://udn.com/news/story/124652/9824228", "quote": "出席造勢就被出征", "accessed": "2026-10-25" }, { "title": "聯合報（中央社）：防跨境鎮壓政院專案保護參選人 沈伯洋盼修反滲透法", "url": "https://udn.com/news/story/124652/9831444", "quote": "專案保護參選人", "accessed": "2026-10-25" }, { "title": "商業周刊（2026-10-04）：藝人現身沈伯洋競總成立大會", "url": "https://www.businesstoday.com.tw/article/category/183027/post/202610040012/", "quote": "就是來見識一下", "accessed": "2026-10-25" }], "realCase": "2026 年臺北市長選舉的跨境鎮壓爭議" }
   },
   {
     "id": "sp-capital-08",
     "phase": "campaign",
     "title": "颱風天的股市",
-    "scenario": "颱風逼近，全市宣布停班停課。記者問你：「颱風天，股市要不要開盤？」首都是金融重鎮，這題你其實有想法。但股市歸中央的金融主管機關管，不是市長能決定的。",
+    "scenario": "颱風逼近，全城都在等今晚市府會不會宣布放颱風假。你在捷運站口發文宣，記者問你：「當選以後，颱風假怎麼放？」你看著手上的文宣，突然想到一題更大的：首都是金融重鎮，照現在的規定，台北一停班，股市就跟著休市。股市一定要跟著停班停課一起放假嗎？",
     "tags": ["選戰", "防災"],
     "special": "capital-2026",
     "specialTurn": 8,
     "fact": "FACT",
     "conditions": { "flags": ["special-capital-2026", "party-green"] },
     "options": [
-      { "id": "decouple", "label": "說出你的想法：股市開盤和停班停課，可以分開訂標準", "outcome": "你的論點值得討論，但颱風夜沒人想聽討論。對手陣營說你「搞錯中央地方權責」。", "effects": { "media": 5, "approval": -4 }, "setFlags": ["sp-typhoon"] },
+      { "id": "decouple", "label": "說出你的想法：股市要不要跟停班停課脫鉤，值得討論", "outcome": "你的論點值得討論，但颱風夜沒人想聽討論。群組裡開始傳：「所以以後颱風天，證券公司跟銀行要照常上班？」在金融業上班的支持者私訊你：「拜託不要。」對手陣營說你「搞錯中央地方權責」。", "effects": { "media": 5, "approval": -4 }, "setFlags": ["sp-typhoon"], "recall": "股市要不要跟停班停課脫鉤，值得討論。" },
       { "id": "relay", "label": "今天只談防災：整理低窪地區資訊，轉給里長和志工", "outcome": "你不是市長，能做的有限。但有三個里的志工，用了你整理的資料。", "effects": { "approval": 3, "integrity": 1, "team": -2 } },
       { "id": "listen", "label": "颱風過後，到淹水的社區聽住戶說，回來寫成排水政策", "outcome": "住戶帶你看地下室的水痕。三天後，政策團隊交出一份排水改善的草案。", "effects": { "achievement": 3, "approval": 1, "team": -2 }, "skill": "policy", "setFlags": ["policy-evidence"] }
     ],
-    "source": { "status": "draft", "prototype": "2026 年 10 月 23 日颱風期間，挑戰者提出颱風天股市開盤與停班停課可「個別設標準」，遭現任陣營批評搞錯中央地方權責。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "聯合報：沈伯洋發言惹議 藍轟「颱風脫鉤論」狀況外", "url": "https://udn.com/news/story/124652/9832429", "quote": "颱風脫鉤論", "accessed": "2026-10-25" }], "realCase": "2026 年颱風脫鉤論爭議" }
+    "source": { "status": "draft", "prototype": "2026 年 10 月 22 日早上，挑戰者發競選文宣時被問颱風假，提到股市與停班停課可否脫鉤「值得討論」、需中央地方共同參與；依證交所規則，台北市長宣布停班則集中市場休市；現任陣營批評搞錯中央地方權責。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "聯合報：沈伯洋發言惹議 藍轟「颱風脫鉤論」狀況外", "url": "https://udn.com/news/story/124652/9832429", "quote": "颱風脫鉤論", "accessed": "2026-10-25" }], "realCase": "2026 年颱風脫鉤論爭議" },
+    "reflection": ["發生了什麼：挑戰者被問颱風假時，提到股市要不要和停班停課脫鉤，值得討論。", "批評的一方說他「搞錯權責」：股市的規則確實歸中央，但依證交所規定，台北市長宣布停班，股市就跟著休市；市長的決定本來就會影響股市。", "提議的一方：他說需要中央和地方一起討論，沒有主張由市長決定；但在颱風當前提出，很多人聽到的是「颱風天要上班」。"]
   },
   {
     "id": "sp-capital-09",
     "phase": "campaign",
-    "title": "三份民調，三種答案",
-    "scenario": "同一個星期，三份民調：一份說你領先十七點，一份說你們差不多，還有一份說多數人看好名門市長連任。有議員提醒，同一位民調專家上一次的封關民調，跟開票結果差很多。支持者在群組裡，只轉傳領先的那一份。",
+    "title": "兩份民調，三種答案",
+    "scenario": "同一個星期，兩份民調：一份說你領先十七點；另一份說你們差距在誤差範圍內，但同一份調查裡，看好公子市長連任的人比較多。有議員說，同一位民調專家上一次的封關民調，跟開票結果差很多。支持者在群組裡，只轉傳領先的那一份。",
     "tags": ["選戰", "民調"],
     "special": "capital-2026",
     "specialTurn": 9,
@@ -148,7 +151,7 @@
     "options": [
       { "id": "challenger", "label": "「民調都是參考，我永遠是挑戰者」", "outcome": "團隊鬆了一口氣：最後一個月，沒有人敢放鬆。", "effects": { "integrity": 2, "team": 3, "approval": 1 } },
       { "id": "brag", "label": "在造勢場上大聲念出「領先十七點」", "outcome": "全場歡呼。對手陣營的幕僚，默默把這段影片存了下來。", "effects": { "approval": 3, "media": 3, "integrity": -2, "team": -1 }, "setFlags": ["sp-poll-brag"], "delayed": { "afterTurns": 2, "effects": { "approval": -3, "team": -2 }, "text": "你在造勢場上念的「領先十七點」，被名嘴拿來和其他民調對照。新聞開始說你的選情「虛胖」，志工也開始鬆懈。" } },
-      { "id": "compare", "label": "請團隊比較三份民調：投票意向和看好度不一樣", "outcome": "研究的結論是：有人支持你，但不相信你會贏；也有人在電話裡不表態。你的優勢，可能沒有看起來那麼大。", "effects": { "achievement": 2, "team": 2, "party": 1 }, "skill": "policy", "setFlags": ["policy-evidence"] }
+      { "id": "compare", "label": "請團隊比較兩份民調：投票意向和看好度不一樣", "outcome": "研究的結論是：有人支持你，但不相信你會贏；也有人在電話裡不表態。你的優勢，可能沒有看起來那麼大。", "effects": { "achievement": 2, "team": 2, "party": 1 }, "skill": "policy", "setFlags": ["policy-evidence"] }
     ],
     "source": { "status": "draft", "prototype": "2026 年 10 月下旬，各家民調結果差距大：一份顯示挑戰者領先 17 個百分點，一份顯示差距在誤差範圍內，另一份「當選看好度」則是現任市長較高；評論提醒「沉默螺旋」。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "聯合報：沈伯洋民調反超蔣萬安17％", "url": "https://udn.com/news/story/124652/9826302", "quote": "民調反超蔣萬安17％", "accessed": "2026-10-25" }, { "title": "震傳媒：台北市長投票意向民調（2026-10-22）", "url": "https://www.zmedia.com.tw/Document/PoolDetail/44789", "quote": "沈伯洋42.8%、蔣萬安39.0%", "accessed": "2026-10-25" }, { "title": "震傳媒：台北市長當選看好度（2026-10-22）", "url": "https://www.zmedia.com.tw/Document/PoolDetail/44790", "quote": "看好度", "accessed": "2026-10-25" }, { "title": "風傳媒：沈伯洋高民調是虛胖？", "url": "https://www.storm.mg/article/11175272", "quote": "高民調是虛胖", "accessed": "2026-10-25" }], "realCase": "2026 年臺北市長選舉民調爭議" }
   },
@@ -156,17 +159,17 @@
     "id": "sp-capital-10",
     "phase": "campaign",
     "title": "第一場電視辯論（架空）",
-    "scenario": "第一場電視辯論。名門市長準備了一整頁你的「爭議發言」，你準備了一整頁他任內的淹水地圖和鼠患通報數。（真實的辯論尚未舉行，以下對白與結果全部是遊戲虛構。）",
+    "scenario": "第一場電視辯論。公子市長準備了一整頁你的「爭議發言」，你準備了一整頁他任內的淹水地圖和鼠患通報數。（真實的辯論尚未舉行，以下對白與結果全部是遊戲虛構。）",
     "tags": ["選戰", "辯論"],
     "special": "capital-2026",
     "specialTurn": 10,
     "fact": "SIMULATION",
     "conditions": { "flags": ["special-capital-2026", "party-green"] },
     "options": [
-      { "id": "map", "label": "把淹水與鼠患的數據攤在鏡頭前，一題一題問", "outcome": "名門市長說「這些都在改善中」說了四次。辯論結束後，「改善中」上了熱搜。", "effects": { "approval": 4, "media": 3 }, "skill": "debate", "variants": [{ "when": { "flags": ["sp-typhoon", "policy-evidence"] }, "outcome": "名門市長反問颱風天的股市。你拿出一頁中央與地方的權責分工表，說這題你回去做了功課。全場安靜了兩秒。", "effects": { "approval": 1 } }, { "when": { "flags": ["sp-typhoon"] }, "outcome": "你才剛攤開淹水地圖，名門市長就問：「颱風天要開盤的人，也要談淹水？」全場笑了。你後面的問題，沒有人記得。", "effects": { "approval": -4, "media": 1 } }] },
-      { "id": "plan", "label": "不攻擊，只講政見、財源和時程", "outcome": "你講得很清楚。收視率最高的片段，是名門市長的一個笑容。", "effects": { "approval": 2, "integrity": 2, "achievement": 1 }, "skill": "policy", "variants": [{ "when": { "flags": ["sp-local"] }, "outcome": "你把半年來跑過的每一區，用三分鐘講完。主持人說這是今晚唯一有數字的發言。", "effects": { "approval": 3 } }] },
-      { "id": "security", "label": "把話題拉到跨境鎮壓與城市韌性", "outcome": "你講了三分鐘的國安。名門市長回答：「市長要管的是市民的生活。」", "effects": { "media": 3, "party": 3, "approval": -1 }, "variants": [{ "when": { "flags": ["sp-security"] }, "outcome": "你從立案偵查一路講到首都的防災演練。這是你準備最久的題目，對手只能說「我們也很重視」。", "effects": { "approval": 4 } }] },
-      { "id": "evidence", "label": "逐題拿出你的政策研究，請對手回應", "outcome": "你每回答一題，就翻出一頁資料。名門市長第一次說：「這個我們可以研究。」", "effects": { "approval": 5, "achievement": 2, "media": 2 }, "skill": "policy", "appearsIf": { "flags": ["policy-evidence"] } }
+      { "id": "map", "label": "把淹水與鼠患的數據攤在鏡頭前，一題一題問", "outcome": "公子市長說「這些都在改善中」說了四次。辯論結束後，「改善中」上了熱搜。", "effects": { "approval": 4, "media": 3 }, "skill": "debate", "variants": [{ "when": { "flags": ["sp-typhoon", "policy-evidence"] }, "outcome": "公子市長反問颱風天的股市。你拿出一頁中央與地方的權責分工表，說這題你回去做了功課。全場安靜了兩秒。", "effects": { "approval": 1 } }, { "when": { "flags": ["sp-typhoon"] }, "outcome": "你才剛攤開淹水地圖，公子市長就問：「颱風天要開盤的人，也要談淹水？」全場笑了。你後面的問題，沒有人記得。", "effects": { "approval": -4, "media": 1 } }] },
+      { "id": "plan", "label": "不攻擊，只講政見、財源和時程", "outcome": "你講得很清楚。收視率最高的片段，是公子市長的一個笑容。", "effects": { "approval": 2, "integrity": 2, "achievement": 1 }, "skill": "policy", "variants": [{ "when": { "flags": ["sp-local"] }, "outcome": "你把半年來跑過的每一區，用三分鐘講完。主持人說這是今晚唯一有數字的發言。", "effects": { "approval": 3 } }] },
+      { "id": "security", "label": "把話題拉到跨境鎮壓與城市韌性", "outcome": "你講了三分鐘的國安。公子市長回答：「市長要管的是市民的生活。」", "effects": { "media": 3, "party": 3, "approval": -1 }, "variants": [{ "when": { "flags": ["sp-security"] }, "outcome": "你從立案偵查一路講到首都的防災演練。這是你準備最久的題目，對手只能說「我們也很重視」。", "effects": { "approval": 4 } }] },
+      { "id": "evidence", "label": "逐題拿出你的政策研究，請對手回應", "outcome": "你每回答一題，就翻出一頁資料。公子市長第一次說：「這個我們可以研究。」", "effects": { "approval": 5, "achievement": 2, "media": 2 }, "skill": "policy", "appearsIf": { "flags": ["policy-evidence"] } }
     ],
     "source": { "status": "draft", "prototype": "兩陣營同意 2026 年 10 月 31 日舉行首場電視辯論；辯論尚未舉行，遊戲中的辯論內容全部虛構。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "鏡報：台北市長辯論 10/31 舉行", "url": "https://www.mirrordaily.news/story/91836", "quote": "10月31日中午12時至下午2時", "accessed": "2026-10-25" }, { "title": "中央社：台北市長辯論協商", "url": "https://www.cna.com.tw/news/aipl/202610130219.aspx", "quote": "辯論協商", "accessed": "2026-10-25" }], "realCase": "2026 年臺北市長選舉辯論" }
   },
@@ -191,7 +194,7 @@
     "id": "sp-capital-12",
     "phase": "eve",
     "title": "選前之夜",
-    "scenario": "投票前一晚。名門市長的晚會請來好幾位老市長站台，你的晚會在另一個廣場。電視台兩邊切換轉播。你上台，準備講最後一段話。",
+    "scenario": "投票前一晚。公子市長的晚會請來好幾位老市長站台，你的晚會在另一個廣場。電視台兩邊切換轉播。你上台，準備講最後一段話。",
     "tags": ["選戰", "選前之夜"],
     "special": "capital-2026",
     "specialTurn": 12,
@@ -218,7 +221,7 @@
     "options": [
       { "id": "process", "label": "倡議檢討都更程序，縮短審議時間", "outcome": "建築師公會說你講到重點了。阿嬤的鄰居說：「所以還是要等。」", "effects": { "achievement": 2, "integrity": 2 } },
       { "id": "mediate", "label": "增加調解人力，處理卡住的少數住戶", "outcome": "這是最慢、最不上新聞的方法。政策團隊花了一週算出需要多少人。", "effects": { "achievement": 3, "team": -1 }, "skill": "policy" },
-      { "id": "subsidy", "label": "承諾補助每一棟老公寓做安全檢測", "outcome": "現場一片掌聲。財源的問題，記者第二天才問。", "effects": { "approval": 3 }, "setFlags": ["promise-debt"] }
+      { "id": "subsidy", "label": "承諾補助每一棟老公寓做安全檢測", "outcome": "現場一片掌聲。財源的問題，記者第二天才問。", "effects": { "approval": 3 }, "setFlags": ["promise-debt"], "recall": "每一棟老公寓的安全檢測，市府補助。" }
     ],
     "source": { "status": "placeholder", "prototype": "遊戲虛構的政策情境，取材自首都長期的市政議題，不代表任何候選人的實際主張。", "adaptation": "遊戲虛構的政策情境，取材自首都長期的市政議題，不代表任何候選人的實際主張。", "refs": [] }
   },
@@ -285,7 +288,7 @@
     "conditions": { "flags": ["special-capital-2026", "party-green"] },
     "options": [
       { "id": "funding", "label": "提出明確的財源方案，一項一項算給大家看", "outcome": "沒有人為財源方案鼓掌。但財經記者說，你是第一個把數字攤開的人。", "effects": { "achievement": 3, "approval": 1 }, "skill": "policy" },
-      { "id": "universal", "label": "承諾全面普發育兒和長照津貼", "outcome": "現場掌聲最大的一次。至於錢從哪裡來，你說「當選後會找到」。", "effects": { "approval": 4, "integrity": -2 }, "setFlags": ["promise-debt"] },
+      { "id": "universal", "label": "承諾全面普發育兒和長照津貼", "outcome": "現場掌聲最大的一次。至於錢從哪裡來，你說「當選後會找到」。", "effects": { "approval": 4, "integrity": -2 }, "setFlags": ["promise-debt"], "recall": "育兒和長照津貼，全面普發！" },
       { "id": "services", "label": "優先投資托育和長照的服務體系", "outcome": "這個政策沒辦法拍成一張好看的圖卡。但照顧服務員工會打電話來說謝謝。", "effects": { "achievement": 3, "approval": 1, "team": -1 } }
     ],
     "source": { "status": "placeholder", "prototype": "遊戲虛構的政策情境，取材自首都長期的市政議題，不代表任何候選人的實際主張。", "adaptation": "遊戲虛構的政策情境，取材自首都長期的市政議題，不代表任何候選人的實際主張。", "refs": [] }
@@ -320,32 +323,33 @@
     "options": [
       { "id": "narrow", "label": "把看板改成做得到的數字", "outcome": "看板上的數字變小了，志工有點失望。政策團隊說：「這個我們算得出來。」", "effects": { "integrity": 3, "approval": -1 }, "setFlags": ["promise-trimmed"] },
       { "id": "model", "label": "花錢請團隊公開完整的財務試算", "outcome": "試算報告很厚，沒有人看完。但對手陣營也找不到可以打的地方。", "effects": { "achievement": 3, "integrity": 1 }, "funds": -200, "skill": "policy", "setFlags": ["policy-evidence"] },
-      { "id": "hang", "label": "照原樣掛上去，數字大才有人記得", "outcome": "看板很成功，大家都記得「三萬戶」。三萬戶要怎麼來，之後再說。", "effects": { "approval": 3, "integrity": -2 }, "setFlags": ["promise-debt"] }
+      { "id": "hang", "label": "照原樣掛上去，數字大才有人記得", "outcome": "看板很成功，大家都記得「三萬戶」。三萬戶要怎麼來，之後再說。", "effects": { "approval": 3, "integrity": -2 }, "setFlags": ["promise-debt"], "recall": "四年蓋好三萬戶社會住宅。" }
     ],
     "source": { "status": "placeholder", "prototype": "遊戲虛構的政策情境，取材自首都長期的市政議題，不代表任何候選人的實際主張。", "adaptation": "遊戲虛構的政策情境，取材自首都長期的市政議題，不代表任何候選人的實際主張。", "refs": [] }
   },
   {
     "id": "sp-capital-m01",
     "phase": "campaign",
-    "title": "十年前的那句話",
-    "scenario": "你推出校園反毒政見的隔天，名門市長在社群貼出你十年前文章裡的一句話：「建立社區中心，提供吸毒者毒品與乾淨的針頭」，問市民能不能接受。你的團隊說，那篇文章談的是國外的減害做法；也有人翻出名門市長幾年前提過強化藥癮治療的預算案。衛福部發了一份說明：減害不是鼓勵用毒。記者問你：不同的政策，到底差在哪裡？",
+    "title": "十二年前的那句話",
+    "scenario": "你推出校園反毒政見的隔天，公子市長貼出你十二年前文章裡的一句話：「建立社區中心，提供吸毒者毒品與乾淨的針頭」，問市民：這種社區要設在哪裡？你能接受嗎？當晚，你家巷口大樓的管委會群組炸了：「我們社區絕對不能設！」幕僚翻了資料：台北市現在本來就在發清潔針具，醫院也在做美沙冬替代治療。問題是，十二年前的你，只寫了「毒品」兩個字。",
     "tags": ["選戰", "政策", "公衛"],
     "special": "capital-2026",
     "specialSlots": [4, 6],
     "fact": "CLAIM",
     "conditions": { "flags": ["special-capital-2026", "party-green"] },
     "options": [
-      { "id": "context", "label": "公開那篇文章的全文，說明當年談什麼、現在主張什麼，請公衛學者檢視", "outcome": "全文比一句話長很多，願意看完的人不多。但公衛學者說，你把清潔針具、替代治療和除罪化分清楚了。", "effects": { "integrity": 3, "achievement": 1, "approval": -1, "team": -1 }, "setFlags": ["sp-drug", "sp-drug-context"] },
-      { "id": "policy", "label": "把清潔針具、替代治療、轉介和校園預防分開，各自提出執行方案", "outcome": "政策團隊熬了兩個晚上。方案很完整，只是記者會上大家還是只問那一句話。", "effects": { "achievement": 3, "approval": 1, "team": -2 }, "skill": "policy", "setFlags": ["sp-drug", "policy-evidence"] },
-      { "id": "clip", "label": "剪一支對照影片：對手以前的提案和現在的說法", "outcome": "影片很紅，支持者轉得很開心。對手陣營回應：「那是預算案，不是同一件事。」", "effects": { "media": 5, "approval": 1, "integrity": -2 }, "setFlags": ["sp-drug", "sp-drug-clip"] }
+      { "id": "explain", "label": "承認當年寫得太省，說清楚：指的是醫院裡的替代治療，社區中心是醫療據點，不是你家大樓", "outcome": "有人說你在補破網。但多數人第一次聽懂：原來台北市現在就在做。管委會群組安靜了。", "effects": { "approval": 4, "integrity": 2, "team": -1 }, "setFlags": ["sp-drug", "sp-drug-explain"], "recall": "十二年前我寫得太短了。我說的是醫院裡的替代治療。" },
+      { "id": "counter", "label": "反擊：「台北市現在就在發針具和美沙冬，你的市府就在做」", "outcome": "這句話很有力。對手反問：「那你當年為什麼寫毒品？」兩邊吵了一整週，管委會群組也吵了一整週。", "effects": { "media": 5, "approval": 1, "team": -1 }, "setFlags": ["sp-drug", "sp-drug-counter"], "recall": "台北市現在就在做，你的市府就在做。" },
+      { "id": "silent", "label": "不回應這句話，只談你的校園反毒政見", "outcome": "你的政見記者會很順利，沒有人問政見。散場時，記者還是只問那一句話。", "effects": { "team": 2, "approval": -1 }, "setFlags": ["sp-drug"], "recall": "我們今天只談校園反毒。" }
     ],
-    "source": { "status": "draft", "prototype": "2026 年 10 月 3 日，現任市長在臉書引用挑戰者 2014 年文章中「提供吸毒者毒品與乾淨的針頭」一句提出質疑；挑戰者回應當時談的是國外減害政策，並提到現任市長 2021 年任立委時的藥癮治療預算提案；衛福部 10 月 5 日說明減害不是鼓勵用毒。2014 年原文未提到美沙冬；2021 年提案內容以《立法院公報》第 110 卷第 9 期為準，遊戲不認定兩者是相同政策。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "想想論壇（2014-09-01）：【撲馬想想】柯震東震出我國毒品政策的爛瘡", "url": "https://www.thinkingtaiwan.net/content/3055", "quote": "提供吸毒者毒品與乾淨的針頭", "accessed": "2026-10-25" }, { "title": "聯合報（2026-10-03）：蔣萬安籲沈伯洋不要拿美沙冬計畫遮掩", "url": "https://udn.com/vote2026/story/124652/9792955", "quote": "反毒沒有模糊空間", "accessed": "2026-10-25" }, { "title": "中央社（2026-10-03）：雙方毒品減害政策攻防", "url": "https://www.cna.com.tw/news/aloc/202610030206.aspx", "quote": "針頭交換和美沙冬治療計畫", "accessed": "2026-10-25" }, { "title": "公視（2026-10-04）：雙方回應毒品減害說法", "url": "https://news.pts.org.tw/article/829848", "quote": "當時談的是國外毒品減害政策", "accessed": "2026-10-25" }, { "title": "壹蘋新聞網（2026-10-04）：沈伯洋回應並提到蔣萬安 2021 年提案", "url": "https://news.nextapple.com/politics/20261004/6C2701EE4D940152A2F7E348E753F3B1", "quote": "不要把過去的減害政策說成鼓勵吸毒", "accessed": "2026-10-25" }, { "title": "衛生福利部（2026-10-05）：減害不是鼓勵用毒", "url": "https://www.mohw.gov.tw/cp-7404-88143-1.html", "quote": "減害不是鼓勵用毒", "accessed": "2026-10-25" }, { "title": "中央社（2026-10-05）：衛福部長談減害政策成效", "url": "https://www.cna.com.tw/news/ahel/202610050043.aspx", "quote": "毒品零容忍", "accessed": "2026-10-25" }], "realCase": "2026 年臺北市長選舉的毒品減害政策攻防" }
+    "source": { "status": "draft", "prototype": "2014 年 9 月 1 日的文章列出三種毒品政策（非法化、除罪化並協助、找出社會原因再協助），結論傾向第三種；爭議句在第二種的段落，是「至少可以」的選項。2026 年 10 月 3 日，現任市長引用這句話質疑；挑戰者 10 月 7 日上節目說明支持第三種、沒有要推除罪化。現任市長任立委時，曾於 2020 年 12 月審查預算時提案凍結藥癮治療預算 100 萬元、要求衛福部改善戒治資源。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "想想論壇（2014-09-01）：【撲馬想想】柯震東震出我國毒品政策的爛瘡", "url": "https://www.thinkingtaiwan.net/content/3055", "quote": "提供吸毒者毒品與乾淨的針頭", "accessed": "2026-10-25" }, { "title": "聯合報（2026-10-03）：蔣萬安籲沈伯洋不要拿美沙冬計畫遮掩", "url": "https://udn.com/vote2026/story/124652/9792955", "quote": "反毒沒有模糊空間", "accessed": "2026-10-25" }, { "title": "中央社（2026-10-03）：雙方毒品減害政策攻防", "url": "https://www.cna.com.tw/news/aloc/202610030206.aspx", "quote": "針頭交換和美沙冬治療計畫", "accessed": "2026-10-25" }, { "title": "公視（2026-10-04）：雙方回應毒品減害說法", "url": "https://news.pts.org.tw/article/829848", "quote": "當時談的是國外毒品減害政策", "accessed": "2026-10-25" }, { "title": "壹蘋新聞網（2026-10-04）：沈伯洋回應並提到蔣萬安 2021 年提案", "url": "https://news.nextapple.com/politics/20261004/6C2701EE4D940152A2F7E348E753F3B1", "quote": "不要把過去的減害政策說成鼓勵吸毒", "accessed": "2026-10-25" }, { "title": "衛生福利部（2026-10-05）：減害不是鼓勵用毒", "url": "https://www.mohw.gov.tw/cp-7404-88143-1.html", "quote": "減害不是鼓勵用毒", "accessed": "2026-10-25" }, { "title": "中央社（2026-10-05）：衛福部長談減害政策成效", "url": "https://www.cna.com.tw/news/ahel/202610050043.aspx", "quote": "毒品零容忍", "accessed": "2026-10-25" }, { "title": "鏡週刊（2026-10-07）：沈伯洋上《少康戰情室》親讀12年文章重申反毒立場", "url": "https://www.mirrormedia.mg/story/20261007edi026", "quote": "我沒有要推毒品的除罪化", "accessed": "2026-10-25" }], "realCase": "2026 年臺北市長選舉的毒品減害政策攻防" },
+    "reflection": ["發生了什麼：2014 年的一篇文章列了三種毒品政策：非法化、除罪化並協助、找出吸毒的社會原因再協助，結論傾向第三種。爭議句「建立社區中心，提供吸毒者毒品與乾淨的針頭」，是在第二種的段落裡，作者認為「至少可以」做的事。2026 年競選時，這句話被拿出來攻擊。", "兩邊現在要的其實一樣：醫院裡的美沙冬替代治療與清潔針具，台北市現在就在做；對手當立委時，也曾以戒治資源不足為由，提案要求衛福部改善藥癮治療。", "寫的一方太省：只寫「毒品」與「針頭」，沒說明指的是醫療監督下的替代藥物，也沒說社區中心是什麼樣的據點；第一時間回應「談的是國外做法」也只說對一半，那句話確實建議台灣仿效。", "讀的一方太歪：拿掉了「如果除罪化過於偏激」的條件、「導入社工協助」與三種做法的結構；把減害的「社區」問成住家社區；略過台北市現在就在做。衛福部也說明：減害不是鼓勵用毒。", "一句話寫得太省，另一邊讀得太歪。你第一次聽到這句話時，是怎麼理解的？"]
   },
   {
     "id": "sp-capital-m02",
     "phase": "campaign",
-    "title": "留言區的四十萬則",
-    "scenario": "那篇貼文底下的留言超過四十萬則。有人貼你的原文，有人只貼一句話，有人貼立法院的舊紀錄，還有議員說有人用程式洗留言，但沒拿出證據。你的幕僚提醒：留言再多，也不等於支持。",
+    "title": "留言區的五十萬則",
+    "scenario": "公子市長那篇貼文底下，二十四小時湧進五十多萬則留言，破了世界紀錄。大部分在說同一件事：「台北市衛生局本來就在發針頭了啊？」也有人貼出他當立委時的舊提案。隔天，對手陣營的一位議員舉著一張網友自稱「寫程式補留言」的截圖，說有人在洗留言，矛頭指向你們陣營；截圖是誰傳的，沒人知道。你的支持者在群組裡歡呼：「我們贏了！」你的幕僚看著數字說：「留言再多，也不等於選票。」",
     "tags": ["選戰", "網路"],
     "special": "capital-2026",
     "specialSlots": [6, 7],
@@ -353,62 +357,66 @@
     "fact": "CLAIM",
     "conditions": { "flags": ["special-capital-2026", "party-green", "sp-drug"] },
     "options": [
-      { "id": "explain", "label": "整理逐字稿和制度圖解：清潔針具、替代治療、除罪化各是什麼", "outcome": "圖解被轉傳了幾千次，比你的任何一張宣傳圖都多。留言區有人說：「原來不一樣。」", "effects": { "achievement": 2, "integrity": 2, "media": -1 }, "setFlags": ["policy-evidence"] },
-      { "id": "meme", "label": "回應熱門迷因，用梗回擊", "outcome": "你的回擊很好笑，留言數又多了十萬則。吵得更兇了。", "effects": { "media": 4, "approval": 1, "team": -1 }, "variants": [{ "when": { "flags": ["sp-drug-clip"] }, "outcome": "留言區有人貼出那份預算案的完整內容，說你的對照影片剪得不完整。你的回擊被一起截圖。", "effects": { "approval": -4 } }] },
-      { "id": "forum", "label": "暫停口水戰，改辦一場公衛專業論壇", "outcome": "論壇沒有上熱搜。但幾位第一線的社工說，終於有人在講他們的工作。", "effects": { "integrity": 2, "approval": 1, "media": -2 }, "variants": [{ "when": { "flags": ["sp-drug-context"] }, "outcome": "因為你公開過那篇文章的全文，幾位原本批評你的公衛學者也願意來。論壇的結論被好幾家媒體引用。", "effects": { "approval": 2 } }] }
+      { "id": "share", "label": "順勢轉發：「連網友都知道台北市在做」", "outcome": "支持者更興奮，留言又多了十萬則。對手陣營說：「你看，果然在帶風向。」", "effects": { "media": 4, "approval": 1, "team": -1 }, "variants": [{ "when": { "flags": ["sp-drug-counter"] }, "outcome": "你兩週前才反擊過，對手說你們跟留言區連成一氣。支持者更興奮，中間選民開始覺得吵。", "effects": { "approval": -2 } }] },
+      { "id": "probe", "label": "回應洗留言的指控：「拿一張來路不明的截圖就說我們洗留言？歡迎查。」", "outcome": "幾天後，有研究單位分析這些留言，說九成以上不像假帳號。這則新聞，比「洗留言」三個字小很多。", "effects": { "integrity": 2, "approval": 1, "media": 1 } },
+      { "id": "offline", "label": "請支持者別再去留言，把力氣放回市政", "outcome": "有些支持者覺得你太客氣。但留言區退燒以後，記者終於開始問你的校園反毒政見了。", "effects": { "integrity": 2, "approval": 1, "media": -2 } }
     ],
-    "source": { "status": "draft", "prototype": "2026 年 10 月 3 日起，現任市長的貼文留言超過 43 萬則；藍營議員質疑有人用程式洗留言，但報導未見證據。社群討論量不等於民意。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "中央社（2026-10-04）：藍營記者會與留言攻防", "url": "https://www.cna.com.tw/news/aipl/202610040099.aspx", "quote": "留言超過43萬則", "accessed": "2026-10-25" }, { "title": "QSearch：2026 台北市長選戰社群時間線", "url": "https://www.qsearch.cc/events/2026-taipei-election", "quote": "討論量不等於民意", "accessed": "2026-10-25" }], "realCase": "2026 年毒品減害攻防的社群擴散" }
+    "source": { "status": "draft", "prototype": "2026 年 10 月 3 日現任市長的貼文 24 小時內留言超過 50 萬則，多數指出台北市早已提供清潔針具；藍營議員出示來源不明的截圖指控洗留言；研究單位分析稱逾九成留言不像假帳號。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "今周刊（2026-10-04）：蔣萬安喊台北能給針頭？為何引爆留言破世界紀錄", "url": "https://www.businesstoday.com.tw/article/category/183027/post/202610040004/", "quote": "早已提供清潔針具", "accessed": "2026-10-25" }, { "title": "中央社（2026-10-04）：藍營記者會與留言攻防", "url": "https://www.cna.com.tw/news/aipl/202610040099.aspx", "quote": "留言超過43萬則", "accessed": "2026-10-25" }, { "title": "自由時報：台灣議題研究中心分析蔣萬安臉書留言", "url": "https://news.ltn.com.tw/news/Taipei/breakingnews/5604770", "quote": "逾九成留言並非來自疑似假帳號", "accessed": "2026-10-25" }], "realCase": "2026 年毒品減害攻防的社群擴散" },
+    "reflection": ["發生了什麼：現任市長的貼文 24 小時內湧進超過 50 萬則留言，多數在指出台北市早已提供清潔針具，以及他過去的提案。", "對手陣營出示一張來源不明的截圖，指控有人洗留言，未經證實；有研究單位分析，逾九成留言不像假帳號（該單位自己的分析）。", "留言數破紀錄，說明這句話引起多大的反彈；但留言數不等於人數，也不等於選票。"]
   },
   {
     "id": "sp-capital-m03",
     "phase": "campaign",
-    "title": "同一張答案卡",
-    "scenario": "網路上有人把名門市長在不同訪問裡的回答剪成合輯，說他「問 A 答 B」、背稿。名門市長在專訪裡回應：議會備詢都是即問即答，「我已經回答很清楚了」。記者問你怎麼看。",
+    "title": "講稿機",
+    "scenario": "議會備詢時，公子市長面前放著一台平板。你的黨內立委說，研考會主委就在後面即時打答案。網友封了兩個外號：市長是「講稿機」，主委是「地下市長」。上週，公子市長上節目，主持人當面問：「你有沒有背稿？」他說：「我已經回答很清楚了，但是反反覆覆，好像我沒有回答。」記者轉頭問你怎麼看。",
     "tags": ["選戰", "網路"],
     "special": "capital-2026",
     "specialSlots": [6, 7],
     "fact": "CLAIM",
     "conditions": { "flags": ["special-capital-2026", "party-green"] },
     "options": [
-      { "id": "transcript", "label": "對照完整逐字稿，只追問他沒回答到的那一題市政", "outcome": "你的追問很具體，標題卻是「沈也加入戰局」。不過那一題，名門市長隔天真的回答了。", "effects": { "integrity": 2, "achievement": 1, "approval": 1 } },
-      { "id": "unscripted", "label": "自己辦一場沒有稿子的公開問答", "outcome": "你站在台上兩個小時，什麼都可以問。", "effects": { "approval": 2, "media": 2, "team": -2 }, "variants": [{ "when": { "flags": ["policy-evidence"] }, "outcome": "你做過的功課都派上用場了。有人說，這才是即問即答。", "effects": { "approval": 2 } }, { "when": { "max": { "achievement": 30 } }, "effects": { "approval": -5 }, "outcome": "第三個問題你就卡住了。你的十五秒停頓，被剪進了另一支合輯。" }] },
-      { "id": "mock", "label": "轉發合輯，加一句「問 A 答 B」", "outcome": "支持者笑得很開心。中間選民覺得，這場選舉越來越像在比誰比較會酸。", "effects": { "media": 4, "approval": 1, "integrity": -2 }, "setFlags": ["sp-mock-qa"] }
+      { "id": "transcript", "label": "對照完整逐字稿，只追問他沒回答到的那一題市政", "outcome": "你的追問很具體，標題卻是「挑戰者也加入戰局」。不過那一題，公子市長隔天真的回答了。", "effects": { "integrity": 2, "achievement": 1, "approval": 1 } },
+      { "id": "unscripted", "label": "辦一場「市長，你給我聽好了」：市民站上肥皂箱直接問，你當場答", "outcome": "三百張提問單半小時就被拿光。有人問捷運票價，有人問家門口的老鼠。答不出來的，你記在本子上，說兩週內回覆。", "effects": { "approval": 3, "media": 2, "team": -2 }, "variants": [{ "when": { "flags": ["policy-evidence"] }, "outcome": "你做過的功課都派上用場了。三百張提問單半小時就被拿光，你一題一題答，答不出來的記在本子上。有人說：這才是即問即答。", "effects": { "approval": 1 } }] },
+      { "id": "mock", "label": "轉發合輯，加一句「講稿機」", "outcome": "支持者笑得很開心。隔天，對手的幕僚貼出一排照片：你、你的黨主席、前總統，全都在看稿。中間選民覺得，這場選舉越來越像在比誰比較會酸。", "effects": { "media": 4, "approval": 1, "integrity": -2 }, "setFlags": ["sp-mock-qa"], "recall": "講稿機，大家自己看。" }
     ],
-    "source": { "status": "draft", "prototype": "2026 年 10 月 20 日，現任市長在電視專訪被主持人問是否背稿，回應議會備詢都是即問即答；「問 A 答 B」是網路上的批評用語，不代表已查明其所有回答都答非所問。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "TVBS（2026-10-21）：專訪中被問是否背稿，蔣萬安回應", "url": "https://news.tvbs.com.tw/politics/4038961", "quote": "我已經回答很清楚了", "accessed": "2026-10-25" }], "realCase": "2026 年臺北市長選舉的「背稿」爭議" }
+    "source": { "status": "draft", "prototype": "2026 年 6 月，綠營立委指現任市長議會備詢時看 iPad、由研考會主委即時提供答案，網友稱「蔣稿機」；研考會主委貼出綠營政治人物看稿的照片反擊；10 月 20 日現任市長上節目被問是否背稿。挑戰者 9 月起舉辦「市長，你給我聽好了」市民提問活動。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "TVBS（2026-10-21）：專訪中被問是否背稿，蔣萬安回應", "url": "https://news.tvbs.com.tw/politics/4038961", "quote": "我已經回答很清楚了", "accessed": "2026-10-25" }, { "title": "ETtoday（2026-06-14）：分析／市政靠幕僚答、局處上火線，蔣萬安要防被「蔣稿機」定性", "url": "https://www.ettoday.net/news/20260614/3183301.htm", "quote": "蔣稿機", "accessed": "2026-10-25" }, { "title": "中央社（2026-09-09）：沈伯洋推平台廣蒐民意", "url": "https://cna.com.tw/news/aipl/202609090125.aspx", "quote": "廣蒐民意", "accessed": "2026-10-25" }], "realCase": "2026 年臺北市長選舉的「背稿」爭議" },
+    "reflection": ["發生了什麼：綠營立委指現任市長備詢時看平板、由幕僚即時提供答案，網友稱他「蔣稿機」（遊戲裡寫作「講稿機」）；他上節目回應已經回答得很清楚。", "嘲諷的一方容易忽略：幾段合輯不代表所有回答都答非所問；對方也貼出了挑戰者陣營政治人物看稿的照片。", "被嘲諷的一方說：背稿和看字幕機的指控不可能同時成立。", "你看過合輯嗎？看過完整的訪問嗎？"]
   },
   {
     "id": "sp-capital-m04",
     "phase": "campaign",
-    "title": "三年前的公文",
-    "scenario": "名門市長宣布要讓市區的機場遷走，三百公頃腹地改成 AI 園區和中央公園。你質疑國防、醫療後送和離島交通的配套，並說交通部和國防部在質詢時表示事前沒有溝通。名門市長拿出三年前市府回覆中央的公文，說市府立場一直很清楚，醫療後送可以靠直升機和高鐵。記者問：到底誰說的對？",
+    "title": "四年前的自己",
+    "scenario": "公子市長宣布要讓市區的機場遷走，三百公頃腹地改成 AI 產業聚落、中央公園和住宅聚落。你的幕僚翻出四年前的新聞：當年你的黨內同志提出遷建，公子市長說這種國土規劃要嚴肅面對，不該在選舉期間倉促提出。現在，離投票不到兩個月。行政院說，這四年市府從沒提出遷建計畫，這是第一次來談。公子市長拿出一份三年前的公文：「我們早就表態了。」那是國發會來函徵詢時，市府回覆的書面意見。記者問你：這算不算早就提過？",
     "tags": ["政策", "交通"],
     "special": "capital-2026",
     "specialSlots": [7, 8],
     "fact": "CLAIM",
     "conditions": { "flags": ["special-capital-2026", "party-green"] },
     "options": [
-      { "id": "documents", "label": "要求公開歷次公文和中央地方的會議紀錄", "outcome": "公文公開了一部分。兩邊都說公文證明自己是對的。", "effects": { "integrity": 2, "media": 2, "approval": 1 }, "setFlags": ["sp-airport"] },
-      { "id": "study", "label": "自己做一份醫療後送的可行性研究", "outcome": "研究算了機場附近九家醫院的車程。有醫師在社群上轉發，說這是他們每天在處理的事。", "effects": { "achievement": 3, "approval": 1, "team": -1 }, "skill": "policy", "setFlags": ["sp-airport", "policy-evidence"] },
-      { "id": "phase", "label": "提出分階段方案：先改善周邊交通，機場功能暫時保留", "outcome": "建商打電話來問細節，離島鄉親鬆了一口氣。想要大公園的年輕家庭有點失望。", "effects": { "approval": 2, "achievement": 2, "business": 1 }, "setFlags": ["sp-airport"] }
+      { "id": "past", "label": "把四年前那段話找出來：「選舉期間倉促提出，是他自己說的」", "outcome": "支持者轉得很開心。公子市長回應：「時空背景不同，四年前還沒有 AI。」記者覺得，也勉強說得通。", "effects": { "media": 5, "approval": 2, "team": -1 }, "setFlags": ["sp-airport"], "recall": "選舉期間倉促提出，是他自己說的。" },
+      { "id": "documents", "label": "要求市府公開這四年的會議紀錄與評估資料", "outcome": "市府說資料會整理。行政院長也在院會上，要了同一份資料。", "effects": { "integrity": 2, "media": 2, "approval": 1 }, "setFlags": ["sp-airport"], "recall": "請市府公開這四年的會議紀錄。" },
+      { "id": "study", "label": "自己做一份醫療後送的可行性研究", "outcome": "研究算了機場附近九家醫院的車程。有醫師在社群上轉發，說這是他們每天在處理的事。", "effects": { "achievement": 3, "approval": 1, "team": -1 }, "skill": "policy", "setFlags": ["sp-airport", "policy-evidence"], "recall": "醫療後送，要先算給大家看。" }
     ],
-    "source": { "status": "draft", "prototype": "2026 年 10 月 8 日現任市長宣布松山機場遷移構想；10 月 14 日挑戰者提出國防、離島醫療後送、離島交通與救災等配套問題，並稱交通部與國防部表示事前未溝通；10 月 15 日現任市長回應北市府 2023 年 8 月已回函中央，醫療後送可保留直升機並搭配高鐵。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "中央社（2026-10-08）：松山機場遷移與 AI 園區構想", "url": "https://www.cna.com.tw/news/aipl/202610080124.aspx", "quote": "約300公頃腹地", "accessed": "2026-10-25" }, { "title": "中央社：松山機場遷移 沈伯洋提配套質疑", "url": "https://www.cna.com.tw/news/aipl/202610140154.aspx", "quote": "國防、離島醫療後送", "accessed": "2026-10-25" }, { "title": "中央社（2026-10-15）：松山機場遷建與沈伯洋回應", "url": "https://www.cna.com.tw/news/aipl/202610150102.aspx", "quote": "事前完全沒有溝通", "accessed": "2026-10-25" }, { "title": "中央社（2026-10-15）：蔣萬安回應舊公文、替代運量與醫療後送", "url": "https://www.cna.com.tw/news/aipl/202610150260.aspx", "quote": "112年8月已回函中央", "accessed": "2026-10-25" }, { "title": "公視（2026-10-16）：醫療後送攻防與辯論安排", "url": "https://news.pts.org.tw/article/831632", "quote": "取代醫療後送的功能", "accessed": "2026-10-25" }], "realCase": "2026 年松山機場遷移爭議" }
+    "source": { "status": "draft", "prototype": "2026 年 10 月 8 日現任市長宣布松山機場遷移構想；2022 年 12 月其曾回應他人提出的遷建，國土規劃須嚴肅面對（「不應在選舉期間倉促提出」見於評論轉述，原話待核）；10 月 15 日行政院稱北市府四年來未提出遷建計畫、此次為首度討論；現任市長出示 2023 年回覆國發會徵詢的公文。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "中央社（2026-10-08）：松山機場遷移與 AI 園區構想", "url": "https://www.cna.com.tw/news/aipl/202610080124.aspx", "quote": "約300公頃腹地", "accessed": "2026-10-25" }, { "title": "公視：2022 年吳怡農拋松山機場遷建，蔣萬安：國土規劃須嚴肅面對", "url": "https://news.pts.org.tw/hotTopic/756", "quote": "國土規劃須嚴肅面對", "accessed": "2026-10-25" }, { "title": "今周刊（2026-10-15）：松機遷建，行政院：北市府四年未提計畫", "url": "https://www.businesstoday.com.tw/article/category/183027/post/202610150019/", "quote": "首度就此與中央討論", "accessed": "2026-10-25" }, { "title": "世界新聞網（2026-10-16）：蔣萬安秀公文：遷松機3年前已提", "url": "https://www.worldjournal.com/wj/story/121218/9818819", "quote": "巨大轉折", "accessed": "2026-10-25" }, { "title": "中央社（2026-10-15）：蔣萬安回應舊公文、替代運量與醫療後送", "url": "https://www.cna.com.tw/news/aipl/202610150260.aspx", "quote": "112年8月已回函中央", "accessed": "2026-10-25" }], "realCase": "2026 年松山機場遷移爭議" },
+    "reflection": ["發生了什麼：現任市長在選前不到兩個月宣布遷移市區機場；行政院說這是市府四年來第一次來談；他出示一份三年前回覆中央徵詢的公文。", "現任市長這邊：四年前說這類國土規劃要嚴肅面對、不該在選舉期間提出（據報導轉述），這次在選前宣布；公文是回覆徵詢時的書面意見，不是市府主動提出的計畫。他的理由是時空背景不同。", "挑戰者這邊：說中央「完全沒有、是零」溝通，但國防部說的是「沒接到需求」；遷建也是挑戰者所屬政黨多年的主張。", "立場可以改變。重點是改變時，有沒有交代理由和評估。"]
   },
   {
     "id": "sp-capital-m05",
     "phase": "campaign",
-    "title": "誰的政績清單",
-    "scenario": "名門市長在專訪裡舉的政績，是 YouBike 前 30 分鐘免費、機車退出人行道。支持者再加上大巨蛋開幕，和國際科技公司進駐科技園區。你的幕僚翻了資料：大巨蛋從簽約、動工、停工到開幕，前後經歷了好幾任市長。",
+    "title": "輝達的電",
+    "scenario": "國際晶片大廠要在首都蓋總部，地上權簽了，全城都在等。公子市長在記者會上說：「沒有能源，哪來的電力？」矛頭指向中央的能源政策。你的幕僚翻了資料：電夠不夠是一回事；園區要的變電所，台電提了好幾套方案，你們陣營說市府拖了一年多；公子市長說，從去年就開始討論，已經進入最後方案。記者問你：晶片廠的電，到底卡在哪裡？",
     "tags": ["政策", "政績"],
     "special": "capital-2026",
     "specialSlots": [6, 7, 8],
-    "fact": "FACT",
+    "fact": "CLAIM",
     "conditions": { "flags": ["special-capital-2026", "party-green"] },
     "options": [
-      { "id": "status", "label": "把每項政績標成規劃、動工、完工、營運中，各自比較", "outcome": "表格很公平：有的真的做完了，有的還在路上。你的支持者覺得太客氣，記者覺得終於有人在算。", "effects": { "achievement": 3, "integrity": 1 }, "skill": "policy", "setFlags": ["policy-evidence"] },
-      { "id": "shared", "label": "說大巨蛋是好幾任市長的共同成果，誰都有功勞", "outcome": "對手陣營沒有反駁。你的支持者在群組裡問：「為什麼要幫他講話？」", "effects": { "integrity": 2, "approval": 1, "party": -1 } },
-      { "id": "attack", "label": "只攻擊：「四年只有這幾項？」", "outcome": "對手陣營隔天列出一份長長的清單。這一回合，大家都在數清單有多長。", "effects": { "media": 3, "approval": -1, "integrity": -1 } }
+      { "id": "substation", "label": "「電夠，是送不進去」：追問變電所為什麼拖了一年", "outcome": "公子市長回：「沒有能源，哪來的電力？」話題變成能源政策的口水戰。隔週，市府和台電宣布變電所拍板地下化，兩邊都說是自己催出來的。", "effects": { "media": 4, "approval": 2, "team": -1 } },
+      { "id": "schedule", "label": "不罵人，提出你的版本：園區的供電與交通時程表", "outcome": "不罵人的政見沒上新聞。但工程師社群轉了你的時程表，留言說：「終於有人算給我們看。」", "effects": { "achievement": 3, "approval": 1 }, "skill": "policy", "setFlags": ["policy-evidence"] },
+      { "id": "credit", "label": "只攻擊：「晶片廠是中央談來的，不是你的功勞」", "outcome": "對手隔天放出三方會談的照片。大家開始吵功勞是誰的，沒有人在談電。", "effects": { "media": 3, "approval": -1, "integrity": -1 } }
     ],
-    "source": { "status": "draft", "prototype": "2026 年 10 月 20 日現任市長在專訪中提到 YouBike 前 30 分鐘免費、機車退出人行道等施政；大巨蛋自 2006 年簽約、2011 年動工、2015 年停工，到 2023 年完成消防複檢並開放賽事。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "台視（2026-10-21）：蔣萬安專訪談施政成果", "url": "https://news.ttv.com.tw/wbc/news/Views/11510200038800N", "quote": "YouBike前30分鐘免費", "accessed": "2026-10-25" }, { "title": "中央社（2023-11-18）：大巨蛋建設時間線", "url": "https://www.cna.com.tw/news/aloc/202311180025.aspx", "quote": "歷經6名台北市長", "accessed": "2026-10-25" }, { "title": "聯合報：輝達選址確定落腳北士科T17、T18", "url": "https://udn.com/news/story/124626/9104370", "quote": "三方談得非常清楚", "accessed": "2026-10-25" }], "realCase": "2026 年臺北市長選舉的政績攻防" }
+    "source": { "status": "draft", "prototype": "2026 年 5 月下旬，挑戰者說能源政策和變電所是兩回事、北市府拖延變電所；現任市長回應沒有能源就沒有穩定的電力；5 月 27 日市府與台電拍板永久變電所地下化，先蓋臨時變電所。晶片大廠已於 2026 年 2 月簽地上權，尚未動工。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "世界新聞網（2026-05-26）：輝達進駐北士科引「用電」論戰，蔣萬安：沒有能源那有電力", "url": "https://www.worldjournal.com/wj/story/121347/9527740", "quote": "沒有能源那有電力", "accessed": "2026-10-25" }, { "title": "聯合報（2026-05-27）：輝達交鋒！民進黨：電力很充裕，是蔣萬安市府蓋不出變電所", "url": "https://udn.com/news/story/124652/9528602", "quote": "蓋不出變電所", "accessed": "2026-10-25" }, { "title": "聯合報：輝達選址確定落腳北士科T17、T18", "url": "https://udn.com/news/story/124626/9104370", "quote": "三方談得非常清楚", "accessed": "2026-10-25" }, { "title": "聯合報（2026-05-27）：台北市長選戰攻防，蔣萬安：沒能源沒電力", "url": "https://udn.com/news/story/124652/9527504", "quote": "最後方案研議", "accessed": "2026-10-25" }], "realCase": "2026 年臺北市長選舉的政績攻防" },
+    "reflection": ["發生了什麼：晶片大廠總部要進駐，挑戰者說電夠、是市府拖延變電所；現任市長說沒有能源就沒有電力，要中央檢討能源政策；之後市府與台電拍板變電所地下化。", "兩邊都對一半：能源政策和變電所都是問題，但各自只講對自己有利的那一半。"]
   },
   {
     "id": "sp-capital-m06",
@@ -421,10 +429,10 @@
     "fact": "SIMULATION",
     "conditions": { "flags": ["special-capital-2026", "party-green"], "anyFlags": ["sp-drug", "sp-airport", "sp-typhoon", "sp-security", "promise-debt"] },
     "options": [
-      { "id": "files", "label": "拿出對手的舊公文和舊發言，一題一題問", "outcome": "名門市長每一題都有回答，只是答案都很長。", "effects": { "approval": 3, "media": 3 }, "skill": "debate", "variants": [{ "when": { "flags": ["sp-drug-clip"] }, "outcome": "名門市長反問：「你剪的那支影片，有放預算案的全文嗎？」你準備的資料，突然沒有人想聽了。", "effects": { "approval": -4 } }, { "when": { "flags": ["policy-evidence"] }, "outcome": "你每問一題，就附上一頁原始文件。主持人說，今晚的資料都可以查得到出處。", "effects": { "approval": 2 } }] },
+      { "id": "files", "label": "拿出對手的舊公文和舊發言，一題一題問", "outcome": "公子市長每一題都有回答，只是答案都很長。", "effects": { "approval": 3, "media": 3 }, "skill": "debate", "variants": [{ "when": { "flags": ["sp-drug-explain"] }, "outcome": "主持人問到十二年前那句話，你從容地說：「我早就說清楚了，你的市府也在做。」接著翻出對手的舊公文，一題一題問。", "effects": { "approval": 2 } }, { "when": { "flags": ["policy-evidence"] }, "outcome": "你每問一題，就附上一頁原始文件。主持人說，今晚的資料都可以查得到出處。", "effects": { "approval": 2 } }] },
       { "id": "own", "label": "先交代自己前後說法的差異：哪裡改了、為什麼改", "outcome": "沒有人預期候選人會先講自己的舊帳。現場安靜了一下，然後有人鼓掌。", "effects": { "integrity": 3, "approval": 2 }, "variants": [{ "when": { "flags": ["sp-typhoon"] }, "outcome": "你從颱風夜的那段發言講起：論點沒變，但那天說錯了時機，也搞錯了誰能決定。這段話，被剪成了今晚最多人轉的片段。", "effects": { "approval": 2 } }] },
       { "id": "plan", "label": "不翻舊帳，只講政見、財源和時程", "outcome": "你講得很清楚。收視率最高的片段，是兩邊互翻舊帳的那幾分鐘，不是你。", "effects": { "approval": 2, "achievement": 1 }, "variants": [{ "when": { "flags": ["sp-local"] }, "outcome": "你把半年來跑過的每一區，用三分鐘講完。主持人說這是今晚唯一有數字的發言。", "effects": { "approval": 3 } }] },
-      { "id": "evidence", "label": "逐題拿出你的政策研究，請對手回應", "outcome": "你每回答一題，就翻出一頁資料。名門市長第一次說：「這個我們可以研究。」", "effects": { "approval": 5, "achievement": 2, "media": 2 }, "skill": "policy", "appearsIf": { "flags": ["policy-evidence"] } }
+      { "id": "evidence", "label": "逐題拿出你的政策研究，請對手回應", "outcome": "你每回答一題，就翻出一頁資料。公子市長第一次說：「這個我們可以研究。」", "effects": { "approval": 5, "achievement": 2, "media": 2 }, "skill": "policy", "appearsIf": { "flags": ["policy-evidence"] } }
     ],
     "source": { "status": "draft", "prototype": "兩陣營同意 2026 年 10 月 31 日舉行首場電視辯論，含交叉詰問；辯論尚未舉行，遊戲中的辯論內容全部虛構。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "鏡報：台北市長辯論 10/31 舉行", "url": "https://www.mirrordaily.news/story/91836", "quote": "10月31日中午12時至下午2時", "accessed": "2026-10-25" }, { "title": "公視（2026-10-16）：醫療後送攻防與辯論安排", "url": "https://news.pts.org.tw/article/831632", "quote": "取代醫療後送的功能", "accessed": "2026-10-25" }], "realCase": "2026 年臺北市長選舉辯論" }
   },
@@ -432,7 +440,7 @@
     "id": "sp-capital-l01",
     "phase": "campaign",
     "title": "你說過的第一線",
-    "scenario": "一位記者翻出你在{said:sp-security}，問你：「首都是滲透的第一線，那巷口的老鼠和淹水，是第幾線？」",
+    "scenario": "一位記者翻出你說過的那句：{said:sp-security}，問你：「首都是滲透的第一線，那巷口的老鼠和淹水，是第幾線？」",
     "tags": ["選戰", "舊帳"],
     "special": "capital-2026",
     "specialSlots": [6, 7],
@@ -450,14 +458,14 @@
     "id": "sp-capital-l02",
     "phase": "campaign",
     "title": "颱風夜的發言回來了",
-    "scenario": "金融主管機關宣布要檢討颱風天的交易規則。記者翻出你在{said:sp-typhoon}，問你：「所以你當初是對的嗎？」",
+    "scenario": "金融主管機關宣布要檢討颱風天的交易規則。記者翻出你在颱風夜說的：{said:sp-typhoon}，問你：「所以你當初是對的嗎？」",
     "tags": ["選戰", "舊帳"],
     "special": "capital-2026",
     "fact": "SIMULATION",
     "conditions": { "flags": ["special-capital-2026", "party-green", "sp-typhoon"] },
     "options": [
-      { "id": "study", "label": "拿出你事後做的中央地方權責研究", "outcome": "你沒有說自己是對的，只說這題本來就不歸市長決定，但市長可以提出建議。", "effects": { "achievement": 2, "integrity": 2 }, "variants": [{ "when": { "flags": ["policy-evidence"] }, "outcome": "你的團隊早就整理好權責分工表。記者直接引用了你們的整理。", "effects": { "approval": 2 } }] },
-      { "id": "timing", "label": "承認那天說錯了時機", "outcome": "你說：「論點我還是一樣，但颱風夜應該先談防災。」有人說這是認錯，有人說這是成熟。", "effects": { "integrity": 3, "approval": 1 } },
+      { "id": "study", "label": "拿出你事後做的中央地方權責研究", "outcome": "你拿出權責分工表：股市的規則歸中央，但市長的停班決定，本來就會連動股市。你沒有說自己是對的，只說這題值得中央和地方一起談。", "effects": { "achievement": 2, "integrity": 2 }, "variants": [{ "when": { "flags": ["policy-evidence"] }, "outcome": "你的團隊早就整理好權責分工表。記者直接引用了你們的整理。", "effects": { "approval": 2 } }] },
+      { "id": "timing", "label": "承認那天說錯了時機", "outcome": "你說：「論點我還是一樣，但颱風夜應該先談防災，也應該先問在金融業上班的人怎麼想。」有人說這是認錯，有人說這是成熟。", "effects": { "integrity": 3, "approval": 1 } },
       { "id": "told", "label": "說「我早就說過了」", "outcome": "支持者很開心。對手陣營說：「颱風夜談股市，現在還要邀功。」", "effects": { "media": 3, "approval": -2 } }
     ],
     "source": { "status": "placeholder", "prototype": "遊戲虛構：只引用玩家在 R8 的選擇；金融主管機關檢討交易規則為虛構情節。", "adaptation": "遊戲虛構的政策情境，取材自首都長期的市政議題，不代表任何候選人的實際主張。", "refs": [] },
@@ -467,7 +475,7 @@
     "id": "sp-capital-l03",
     "phase": "campaign",
     "title": "看板上的數字",
-    "scenario": "一個公民團體把你在{said:promise-debt}做成一張卡片，下面只有一個問題：「錢從哪裡來？」",
+    "scenario": "一個公民團體把你說過的 {said:promise-debt} 做成一張卡片，下面只有一個問題：「錢從哪裡來？」",
     "tags": ["選戰", "舊帳", "承諾"],
     "special": "capital-2026",
     "specialSlots": [6, 7, 8],
@@ -485,7 +493,7 @@
     "id": "sp-capital-l04",
     "phase": "campaign",
     "title": "那份民調的問卷",
-    "scenario": "一位民調學者在節目上舉例：候選人引用民調時，應該公開完整問卷和抽樣方法。他舉的例子，是你在{said:sp-opaque-poll}。",
+    "scenario": "一位民調學者在節目上舉例：候選人引用民調時，應該公開完整問卷和抽樣方法。他舉的例子，是你說過的那句：{said:sp-opaque-poll}",
     "tags": ["選戰", "舊帳", "民調"],
     "special": "capital-2026",
     "specialSlots": [6, 7, 8],
@@ -502,26 +510,26 @@
   {
     "id": "sp-capital-l05",
     "phase": "campaign",
-    "title": "完整的預算案被貼出來了",
-    "scenario": "有人把那份藥癮治療預算案的完整內容貼上網，旁邊放著你在{said:sp-drug-clip}剪的那支影片。留言區開始比對：兩件事真的一樣嗎？",
+    "title": "吵了兩週之後",
+    "scenario": "這場吵架吵了兩週。你家附近的衛生所門口，本來就有一台清潔針具的自動服務機，擺了十幾年沒人注意。這週，它被管委會拍照貼上網，標題是：「社區中心已經來了？」衛生所主任在群組裡回覆：這是市政府的計畫。社工說，這兩週來諮詢的人變少了。兩週前你說過：{said:sp-drug}。記者問你：吵到最後，你們兩邊到底哪裡不一樣？",
     "tags": ["選戰", "舊帳"],
     "special": "capital-2026",
     "specialSlots": [6, 7, 8],
     "specialCallback": true,
     "fact": "SIMULATION",
-    "conditions": { "flags": ["special-capital-2026", "party-green", "sp-drug-clip"] },
+    "conditions": { "flags": ["special-capital-2026", "party-green", "sp-drug"] },
     "options": [
-      { "id": "correct", "label": "公開更正：影片少放了上下文，補上完整版", "outcome": "更正的觸及率只有原影片的五分之一。但對手陣營少了一個可以打的地方。", "effects": { "integrity": 3, "approval": -1 } },
-      { "id": "policy", "label": "把話題拉回政策差異，說明兩件事哪裡不同", "outcome": "你講得很清楚，但大家只記得「剪輯」這兩個字。", "effects": { "achievement": 2, "approval": -1 } },
-      { "id": "double", "label": "說「本來就是他前後不一」，再剪一支", "outcome": "第二支影片也很紅。中間選民開始覺得，兩邊都在剪對方。", "effects": { "media": 3, "approval": -3, "integrity": -2 } }
+      { "id": "together", "label": "邀公子市長一起去那間衛生所，公開說「這題我們其實同意」", "outcome": "公子市長沒來，派了衛生局長。照片裡，兩個陣營的人站在同一台機器前。網路上有人說，這是今年最荒謬也最正常的一張照片。", "effects": { "integrity": 3, "approval": 2 }, "variants": [{ "when": { "flags": ["sp-drug-explain"] }, "outcome": "你兩週前就把話說清楚了，這張照片讓更多人相信你。公子市長沒來，派了衛生局長；兩個陣營的人站在同一台機器前。", "effects": { "approval": 2 } }] },
+      { "id": "gazette", "label": "拿出公報：「他自己當年也支持醫療戒治，現在卻拿來嚇大家」", "outcome": "你說的沒錯，但留言區又吵了一週。衛生所主任拜託大家，不要再來拍他們的機器了。", "effects": { "media": 4, "approval": 1, "team": -2 } },
+      { "id": "quiet", "label": "不再回應，把時間還給市政", "outcome": "爭議慢慢退燒。但「要在社區發毒品」這句話，有些群組會一直留著。", "effects": { "team": 2 } }
     ],
-    "source": { "status": "placeholder", "prototype": "遊戲虛構：只引用玩家在〈十年前的那句話〉的選擇。", "adaptation": "遊戲虛構的政策情境，取材自首都長期的市政議題，不代表任何候選人的實際主張。", "refs": [] }
+    "source": { "status": "placeholder", "prototype": "遊戲虛構：只在玩過〈十二年前的那句話〉之後出現；清潔針具自動服務機與衛生所的情節為虛構。", "adaptation": "遊戲虛構的政策情境，取材自首都長期的市政議題，不代表任何候選人的實際主張。", "refs": [] }
   },
   {
     "id": "sp-capital-l06",
     "phase": "campaign",
     "title": "你自己的採訪也被剪了",
-    "scenario": "你在{said:sp-mock-qa}之後，有網友把你在不同訪問裡的回答也剪成一支合輯。標題是：「問 B 答 A」。",
+    "scenario": "你轉發合輯時說了一句：{said:sp-mock-qa}。現在，有網友把你在不同訪問裡的回答也剪成一支合輯，標題是：「問 B 答 A」。",
     "tags": ["選戰", "舊帳", "網路"],
     "special": "capital-2026",
     "specialSlots": [7, 8],
@@ -563,7 +571,7 @@
     "fact": "SIMULATION",
     "conditions": { "flags": ["special-capital-2026", "party-green", "sp-local"] },
     "options": [
-      { "id": "data", "label": "把政策團隊整理的資料都給記者", "outcome": "專題的第三集，引用了你們的資料。名門市長的團隊被追問了。", "effects": { "achievement": 2, "approval": 2 } },
+      { "id": "data", "label": "把政策團隊整理的資料都給記者", "outcome": "專題的第三集，引用了你們的資料。公子市長的團隊被追問了。", "effects": { "achievement": 2, "approval": 2 } },
       { "id": "site", "label": "陪記者到現場，一起採訪住戶", "outcome": "畫面很好看。有人說你是在作秀，住戶說你上個月就來過了。", "effects": { "approval": 3, "media": 2, "team": -1 } },
       { "id": "distance", "label": "保持距離，讓報導自己說話", "outcome": "報導裡沒有你的名字。但看完報導的人，都想起了你講過的那些地方。", "effects": { "integrity": 2, "approval": 1 } }
     ],
@@ -573,7 +581,7 @@
     "id": "sp-capital-f03",
     "phase": "campaign",
     "title": "跨陣營的政策論壇",
-    "scenario": "一位長期關注地方議題的公共人物，提議辦一場不分黨派的公開政策論壇。你和名門市長都收到了邀請。",
+    "scenario": "一位長期關注地方議題的公共人物，提議辦一場不分黨派的公開政策論壇。你和公子市長都收到了邀請。",
     "tags": ["命運"],
     "special": "capital-2026",
     "interlude": "opportunity",
@@ -581,7 +589,7 @@
     "conditions": { "flags": ["special-capital-2026", "party-green", "sp-cross"] },
     "options": [
       { "id": "accept", "label": "接受，並公開你和對手所有的政策差異", "outcome": "論壇開了三個小時。有一半的時間，你們在討論同一個問題的不同解法。", "effects": { "achievement": 3, "integrity": 1, "team": -1 } },
-      { "id": "decline", "label": "婉拒，避免立場被混在一起", "outcome": "你的團隊鬆了一口氣。論壇照樣辦了，名門市長一個人講了三個小時。", "effects": { "team": 1, "media": -2 } },
+      { "id": "decline", "label": "婉拒，避免立場被混在一起", "outcome": "你的團隊鬆了一口氣。論壇照樣辦了，公子市長一個人講了三個小時。", "effects": { "team": 1, "media": -2 } },
       { "id": "principles", "label": "先談共同原則，再決定要不要參加", "outcome": "主辦人說這是個好主意。前副市長團隊的老幕僚，也來參加了籌備會。", "effects": { "approval": 2, "team": -1 }, "variants": [{ "when": { "flags": ["sp-courted"] }, "outcome": "籌備會上，前副市長團隊的老幕僚幫你說了一句話：「他上次真的有聽。」", "effects": { "approval": 2, "achievement": 1 } }] }
     ],
     "source": { "status": "placeholder", "prototype": "遊戲虛構的插曲，用來呈現選戰中的機會、放大與反噬，不指涉任何真實人物的行為。", "adaptation": "遊戲虛構的政策情境，取材自首都長期的市政議題，不代表任何候選人的實際主張。", "refs": [] }
@@ -590,7 +598,7 @@
     "id": "sp-capital-f04",
     "phase": "campaign",
     "title": "二創變成公共討論",
-    "scenario": "二創大賽的一件作品，把捷運站的無障礙設施畫成一座「爬不上去的島」。這件作品被轉傳了十萬次，連名門市長都被問到。",
+    "scenario": "二創大賽的一件作品，把捷運站的無障礙設施畫成一座「爬不上去的島」。這件作品被轉傳了十萬次，連公子市長都被問到。",
     "tags": ["命運"],
     "special": "capital-2026",
     "interlude": "opportunity",
@@ -640,19 +648,20 @@
   {
     "id": "sp-capital-f07",
     "phase": "campaign",
-    "title": "事實查核還了你清白",
-    "scenario": "一則社群上的感人故事，在轉傳時被換了主角，變成了「你說的故事」。對手陣營拿來說你造假。第三方事實查核中心公布報告：故事原本是網友寫自己的家人，被轉傳的人改錯了主角。",
+    "title": "民生社區的爺爺",
+    "scenario": "一則貼文在群組瘋傳：你介紹了一位住在民生社區、七十八歲、打過古寧頭和八二三的爺爺，還把你的文宣貼在社區門口。對手陣營說你在編故事。問題是，你根本不認識這位爺爺，你家也不在民生社區。三天後，事實查核中心公布報告：這段故事原本是一個反串帳號寫自己爺爺的貼文，轉傳時被換成了你。報告只說這段故事不是你說的，沒有評論其他事。",
     "tags": ["命運"],
     "special": "capital-2026",
     "interlude": "amplifier",
-    "fact": "SIMULATION",
+    "fact": "CLAIM",
     "conditions": { "flags": ["special-capital-2026", "party-green", "policy-evidence"] },
     "options": [
-      { "id": "share", "label": "完整分享查核報告，附上原始來源", "outcome": "你沒有多說什麼。查核報告的轉傳數，第一次比謠言多。", "effects": { "integrity": 2, "approval": 2 }, "variants": [{ "when": { "flags": ["policy-evidence"] }, "outcome": "你的團隊一直有保存查證資料，這次一小時就整理好了時間線。記者直接引用了你們的整理。", "effects": { "approval": 2 } }] },
+      { "id": "share", "label": "完整分享查核報告，附上原始來源", "outcome": "你沒有多說什麼。查核報告的轉傳數，第一次比謠言多。", "effects": { "integrity": 2, "approval": 2 }, "variants": [{ "when": { "min": { "integrity": 80 } }, "effects": { "approval": 2 }, "outcome": "你一路上很少說過頭的話，這次大家比較願意相信你。查核報告的轉傳數，第一次比謠言多。" }, { "when": { "flags": ["policy-evidence"] }, "outcome": "你的團隊一直有保存查證資料，這次一小時就整理好了時間線。記者直接引用了你們的整理。", "effects": { "approval": 2 } }] },
       { "id": "live", "label": "開直播，一條一條反駁", "outcome": "直播開了兩個小時，聲量很高。有人說你太在意了。", "effects": { "media": 4, "approval": 1 } },
       { "id": "skip", "label": "不蹭這個話題，繼續原本的行程", "outcome": "查核報告自己傳開了。你的團隊省下了一整天。", "effects": { "team": 2 } }
     ],
-    "source": { "status": "placeholder", "prototype": "遊戲虛構的插曲，用來呈現選戰中的機會、放大與反噬，不指涉任何真實人物的行為。", "adaptation": "遊戲虛構的政策情境，取材自首都長期的市政議題，不代表任何候選人的實際主張。", "refs": [] }
+    "source": { "status": "draft", "prototype": "2026 年 10 月 21 日台灣事實查核中心判定：網傳挑戰者介紹民生社區參戰爺爺的故事為錯誤，原為反串帳號以第一人稱寫自己爺爺的貼文，轉傳時被改成挑戰者所述。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "台灣事實查核中心（2026-10-21）：網傳沈伯洋介紹參戰爺爺？", "url": "https://tfc-taiwan.org.tw/fact-check-reports/puma-shen-grandfather-battle-rumor/", "quote": "並非沈伯洋所述", "accessed": "2026-10-25" }], "realCase": "2026 年臺北市長選舉中的移花接木傳言" },
+    "reflection": ["發生了什麼：一則反串帳號寫自己爺爺的貼文，轉傳時被改成「候選人說的故事」，再被拿來質疑他編故事；事實查核中心判定錯誤。", "查核只證明「這段話不是他說的」；誰改寫的，報告沒有說。", "轉傳之前，你會先看是誰說的嗎？"]
   },
   {
     "id": "sp-capital-f08",
@@ -683,7 +692,7 @@
     "conditions": { "flags": ["special-capital-2026", "party-green", "policy-evidence"] },
     "options": [
       { "id": "research", "label": "政策團隊逐題整理資料", "outcome": "政策團隊整理了一百頁。你說，每一題都要能講出一個數字。", "effects": { "achievement": 3, "team": -1 }, "skill": "policy" },
-      { "id": "drill", "label": "高密度模擬練習，請幕僚扮演對手", "outcome": "幕僚扮演的名門市長，比本人還難纏。你練到聲音都啞了。", "effects": { "approval": 1, "team": -2 }, "skill": "debate" },
+      { "id": "drill", "label": "高密度模擬練習，請幕僚扮演對手", "outcome": "幕僚扮演的公子市長，比本人還難纏。你練到聲音都啞了。", "effects": { "approval": 1, "team": -2 }, "skill": "debate" },
       { "id": "hook", "label": "準備幾句會被轉傳的金句", "outcome": "你準備了五句金句。政策團隊問：那題目本身呢？", "effects": { "media": 3 } }
     ],
     "source": { "status": "placeholder", "prototype": "遊戲虛構的插曲，用來呈現選戰中的機會、放大與反噬，不指涉任何真實人物的行為。", "adaptation": "遊戲虛構的政策情境，取材自首都長期的市政議題，不代表任何候選人的實際主張。", "refs": [] }
@@ -818,7 +827,7 @@
     "fact": "SIMULATION",
     "conditions": { "flags": ["special-capital-2026", "party-green"], "anyFlags": ["sp-opaque-poll", "sp-poll-brag"] },
     "options": [
-      { "id": "publish", "label": "公開你們手上所有民調的完整資料", "outcome": "資料公開了，有幾題對你不太有利。學會說，這才是應該有的做法。", "effects": { "integrity": 3, "approval": -1 } },
+      { "id": "publish", "label": "公開你們手上所有民調的完整資料", "outcome": "資料公開了，有幾題對你不太有利。學會說，這才是應該有的做法。", "effects": { "integrity": 3, "approval": -1 }, "variants": [{ "when": { "min": { "integrity": 80 } }, "effects": { "approval": 2 }, "outcome": "資料公開了，有幾題對你不太有利。但你一路上很少說過頭的話，學會說這才是應該有的做法，記者也沒再追。" }] },
       { "id": "silent", "label": "不回應，等這件事過去", "outcome": "這件事過去了，花了一週。這一週，你的支持者在群組裡都很安靜。", "effects": { "approval": -2 } },
       { "id": "blame", "label": "說是支持者自己轉傳的，不是你公布的", "outcome": "學會的理事長說：「但你在造勢場上念過。」影片在下面。", "effects": { "approval": -3, "integrity": -2 } }
     ],
@@ -874,5 +883,150 @@
       { "id": "protest", "label": "抗議規則改太晚，要求延期", "outcome": "主辦單位沒有延期。新聞說你「怕了」。", "effects": { "approval": -2, "media": 2 } }
     ],
     "source": { "status": "placeholder", "prototype": "遊戲虛構的插曲，用來呈現選戰中的機會、放大與反噬，不指涉任何真實人物的行為。", "adaptation": "遊戲虛構的政策情境，取材自首都長期的市政議題，不代表任何候選人的實際主張。", "refs": [] }
+  },
+  {
+    "id": "sp-capital-m07",
+    "phase": "campaign",
+    "title": "安鼠之亂",
+    "scenario": "九月的一場職棒比賽打到一半，一隻老鼠衝進大巨蛋的球場，工作人員拿著紙箱和水桶追，全台都在看轉播。幾個月前，百貨美食街的天花板也掉下一隻老鼠，影片傳遍網路。網友管這叫「安鼠之亂」。公子市長要求巨蛋業者全面清消，市府也推出了「鼠類偵防師」。你看著新聞想：垃圾桶少了，老鼠還在。偏偏這時，你的黨內立委在節目上說：「他當市長，兩天就處理掉了。」",
+    "tags": ["政策", "市政"],
+    "special": "capital-2026",
+    "specialSlots": [4, 6, 7],
+    "fact": "CLAIM",
+    "conditions": { "flags": ["special-capital-2026", "party-green"] },
+    "options": [
+      { "id": "attack", "label": "追著現任打：「垃圾桶少了，老鼠還在」；鼠類偵防師是把基層人力當耗材", "outcome": "很多市民點頭，這句話上了晚間新聞。對手陣營回應：鼠患不是一天造成的。", "effects": { "approval": 3, "media": 3 } },
+      { "id": "plan", "label": "提出可核算的計畫：哪幾區、多少人力、多少預算；「兩天不可能，四年內你會看得到」", "outcome": "沒有前一個選項熱鬧，但記者第一次拿到具體的數字；藍黨的「兩天」梗也打不到你。", "effects": { "achievement": 3, "approval": 2, "integrity": 1 }, "skill": "policy", "setFlags": ["policy-evidence"], "variants": [{ "when": { "flags": ["sp-local"] }, "outcome": "你從選戰一開始就在跑每一區的老鼠和淹水，計畫裡的每個數字都有出處。記者把你的計畫和市府的做法並排比較。", "effects": { "approval": 2 } }] },
+      { "id": "joke", "label": "順著黨內立委的梗：「兩天是開始，不是結束」", "outcome": "支持者笑翻。藍黨議員回：「那當總統兩年，就能反攻大陸？」全網都在笑，笑的已經不是老鼠了。", "effects": { "media": 4, "approval": 1, "integrity": -2 }, "setFlags": ["promise-debt"], "recall": "兩天是開始，不是結束。" },
+      { "id": "hormone", "label": "提出新方法：改用干擾老鼠繁殖的荷爾蒙藥劑，你願意幫市府媒合廠商", "outcome": "有專家說值得一試，但藥還沒拿到許可。藍黨議員說：你們一邊叫市府別灑藥，一邊叫市府灑別的藥。", "effects": { "achievement": 2, "approval": 1, "media": 1 } }
+    ],
+    "source": { "status": "draft", "prototype": "2026 年 5 月百貨美食街有老鼠從天花板掉落、9 月 9 日大巨蛋中職比賽出現老鼠；現任市長 5 月推出鼠類偵防師；挑戰者批評問題未解決；5 月 8 日綠營立委稱挑戰者當市長兩天就能處理，藍營議員反諷。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "公視：大巨蛋比賽出現老鼠", "url": "https://news.pts.org.tw/article/826539", "quote": "大巨蛋", "accessed": "2026-10-25" }, { "title": "ETtoday（2026-05-08）：綠委稱沈伯洋當市長2天解決鼠患，詹江村酸：當總統2年反攻大陸？", "url": "https://www.ettoday.net/news/20260508/3162673.htm", "quote": "兩天就處理掉了", "accessed": "2026-10-25" }, { "title": "ETtoday（2026-05-10）：南西誠品天降老鼠，北市府聯合稽查", "url": "https://www.ettoday.net/news/20260510/3163637.htm", "quote": "天降老鼠", "accessed": "2026-10-25" }, { "title": "中央社（2026-05-05）：北市鼠害防治記者會，推鼠類偵防師", "url": "https://www.cna.com.tw/news/aloc/202605050386.aspx", "quote": "鼠類偵防師", "accessed": "2026-10-25" }, { "title": "鏡週刊（2026-05-06）：沈伯洋提荷爾蒙藥劑滅鼠", "url": "https://www.mirrormedia.mg/story/20260506edi073", "quote": "荷爾蒙藥劑", "accessed": "2026-10-25" }], "realCase": "2026 年臺北市鼠患爭議" },
+    "reflection": ["發生了什麼：大巨蛋比賽中出現老鼠、百貨美食街掉下老鼠，市府推出鼠類偵防師；挑戰者批評問題沒有解決；網友稱「安鼠之亂」。", "挑戰者這邊：「兩天解決」是黨內同志的大話，不是政策（現實中是綠營立委莊瑞雄說的，藍營議員詹江村以「兩年反攻大陸」反諷）。", "現任這邊：要求業者清消、設偵防師，處理的是個案；鼠患的成因與整體防治，雙方都還沒拿出可以核算的數字。"]
+  },
+  {
+    "id": "sp-capital-n01",
+    "phase": "campaign",
+    "title": "破口還是窗口",
+    "scenario": "四個月前，你說雙城論壇是「滲透的破口」，被問要不要取消，你說：「當然取消！」改辦和東京、紐約、巴黎的「無限城論壇」。上個月記者再問，你說：效益夠、主題好、不碰國安，當然可以續辦。今天，市府大陸小組發了新聞稿：「請問候選人，到底是破口還是窗口？」",
+    "tags": ["兩岸", "舊帳"],
+    "special": "capital-2026",
+    "specialSlots": [4, 6],
+    "fact": "CLAIM",
+    "conditions": { "flags": ["special-capital-2026", "party-green"] },
+    "options": [
+      { "id": "same", "label": "說明沒有改口：「我反對的是沒效益、有國安風險的交流，不是交流本身」", "outcome": "你講得很完整。標題還是寫「挑戰者改口？」，但市府追問的力道小了一點。", "effects": { "integrity": 2, "approval": 1 } },
+      { "id": "changed", "label": "承認想法有調整，說明為什麼：「我聽了很多市民的意見」", "outcome": "有支持者說你軟了；也有中間選民說，這是第一次聽到候選人承認自己想法變了。", "effects": { "integrity": 3, "party": -2, "approval": 1 } },
+      { "id": "results", "label": "反問：「市府說有成果，那就把十六屆的成果攤出來」", "outcome": "市府隔天真的列了一張成果清單。兩邊開始吵清單算不算成果，沒人再問你改沒改口。", "effects": { "media": 3, "approval": 1, "integrity": -1 } }
+    ],
+    "source": { "status": "draft", "prototype": "2026 年 4 月，挑戰者說雙城論壇是「滲透的破口」、主張取消並改辦「無限城論壇」；之後受訪改說效益夠、不涉國安可續辦；北市府要求說明證據並追問是否改口。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "新頭殼（2026-04-28）：沈伯洋主張取消雙城論壇", "url": "https://newtalk.tw/news/view/2026-04-28/1032144", "quote": "無限城論壇", "accessed": "2026-10-25" }, { "title": "聯合報：沒效益？沈伯洋當選停辦雙城論壇，北市府反擊", "url": "https://udn.com/news/story/124652/9502690", "quote": "沒效益應問中央", "accessed": "2026-10-25" }, { "title": "NOWnews：沈伯洋談雙城論壇續辦條件", "url": "https://www.nownews.com/news/6812504", "quote": "當然可以續辦", "accessed": "2026-10-25" }], "realCase": "2026 年臺北市長選舉的雙城論壇攻防" },
+    "reflection": ["發生了什麼：挑戰者先說雙城論壇是「滲透的破口」、要取消，之後改說有效益、不碰國安就可以續辦；市府追問他是否改口。", "立場可以調整；被追問時，有沒有說清楚調整的理由，比有沒有改更重要。", "另一邊：市府說論壇有成果，但成果是什麼、值不值得，也該攤開來讓市民判斷。"]
+  },
+  {
+    "id": "sp-capital-n02",
+    "phase": "campaign",
+    "title": "自導自演？",
+    "scenario": "你在國外慢跑，衣服底下的防彈背心被拍了下來。網路上笑翻了：「演到國外不累嗎？」公子市長說：「台北很安全，日本也很安全。」更早之前，你說家門口的機車下被裝了針孔，也被說是「被害妄想」。這週，地檢署起訴了：兩名港人花了三十六萬，請徵信社在你家門口的機車下藏攝影機，拍了你和家人一個多月。",
+    "tags": ["國安", "選戰"],
+    "special": "capital-2026",
+    "specialSlots": [7, 8],
+    "fact": "FACT",
+    "conditions": { "flags": ["special-capital-2026", "party-green"] },
+    "options": [
+      { "id": "calm", "label": "平靜地說：「希望這種事不要再發生在任何一個候選人身上」", "outcome": "你沒有討公道，只講了一句話。當初說你「想太多」的議員，發文承認錯了。", "effects": { "integrity": 3, "approval": 3 } },
+      { "id": "receipts", "label": "把當初笑你的貼文一則一則截圖，請他們道歉", "outcome": "支持者很解氣。也有人說，你把一件國安案件，變成了一場算帳。", "effects": { "media": 4, "approval": 1, "integrity": -1 } },
+      { "id": "law", "label": "要求修法：跨境委託跟監，要有更重的罰則", "outcome": "法案的連署很快湊齊。記者寫：「這次，他拿出的是證據。」", "effects": { "integrity": 2, "party": 2, "approval": 1 }, "variants": [{ "when": { "flags": ["sp-security"] }, "outcome": "你從選戰一開始就在講跨境滲透。這一次，起訴書替你把話說完了。法案的連署很快湊齊。", "effects": { "approval": 2 } }] }
+    ],
+    "source": { "status": "draft", "prototype": "2026 年 9 月挑戰者出國慢跑穿防彈背心被嘲諷作秀，現任市長回應台北和日本都很安全；10 月 7 日北檢起訴受港人委託、於 2024 年在挑戰者住家門口機車下裝針孔監控的徵信業者；曾質疑他的議員事後承認錯誤。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "中央社（2026-10-07）：徵信業者收香港人36萬跟監沈伯洋，北檢起訴求刑1年半", "url": "https://cna.com.tw/news/asoc/202610070071.aspx", "quote": "跟監沈伯洋", "accessed": "2026-10-25" }, { "title": "聯合報：沈伯洋東京慢跑穿防彈背心，蔣萬安回應", "url": "https://udn.com/news/story/6656/9751404", "quote": "台北很安全", "accessed": "2026-10-25" }], "realCase": "2026 年臺北市長選舉的跨境跟監案" },
+    "reflection": ["發生了什麼：挑戰者穿防彈背心被嘲諷是作秀；他說家門口被裝針孔，被說是被害妄想。之後地檢署起訴受境外委託、在他家門口裝針孔跟監的徵信業者。", "嘲諷的一方：有人事後承認錯誤。", "一個人說自己被威脅時，你第一個反應是相信、懷疑，還是等證據？"]
+  },
+  {
+    "id": "sp-capital-n03",
+    "phase": "campaign",
+    "title": "生生喝鮮奶",
+    "scenario": "公子市長宣布：生生喝鮮奶，明年從每週一瓶加碼到兩瓶。記者問你怎麼看，你愣了半秒，說：「這跟手機背後的鏡頭一樣，越來越多。」全場笑了。笑完，記者拿出另一份資料：開學前，還有一百五十二所學校的營養午餐沒招標完。",
+    "tags": ["政策", "教育"],
+    "special": "capital-2026",
+    "specialSlots": [4, 6, 7],
+    "fact": "CLAIM",
+    "conditions": { "flags": ["special-capital-2026", "party-green"] },
+    "options": [
+      { "id": "lunch", "label": "接著講：「我不希望週週有鮮奶，班班沒午餐」", "outcome": "這句話比手機鏡頭還紅。教育局隔天說，招標本來就有進度不一，月底前會完成。", "effects": { "approval": 3, "media": 2 } },
+      { "id": "swap", "label": "提出替代方案：鮮奶的錢先拿去提升午餐品質，寒暑假把鮮奶送到弱勢學童家", "outcome": "方案很具體。藍黨議員說這是「膝反射解方」，但有家長在社團轉了你的方案。", "effects": { "achievement": 3, "approval": 1 }, "skill": "policy", "setFlags": ["policy-evidence"] },
+      { "id": "mock", "label": "只酸：「市府的政績，就是越加越多的鮮奶」", "outcome": "支持者笑得很開心。市府回應：午餐招標已經完成了一大半。這一回合，大家都在算鮮奶的瓶數。", "effects": { "media": 3, "approval": -1, "integrity": -1 } }
+    ],
+    "source": { "status": "draft", "prototype": "2026 年現任市長提議「生生喝鮮奶」由每週 1 瓶加碼至 2 瓶，挑戰者以手機鏡頭比喻嘲諷；免費營養午餐上路前仍有 152 校未完成招標，教育局稱進度往年本就不一。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "自由時報：152校營養午餐未招標，沈伯洋：不想週週有鮮奶、班班沒午餐", "url": "https://news.ltn.com.tw/news/politics/breakingnews/5525777", "quote": "週週有鮮奶", "accessed": "2026-10-25" }, { "title": "聯合報：沈伯洋笑稱鮮奶加碼像 iPhone 鏡頭", "url": "https://udn.com/news/story/6885/9665996", "quote": "iPhone", "accessed": "2026-10-25" }], "realCase": "2026 年臺北市長選舉的營養午餐與鮮奶攻防" },
+    "reflection": ["發生了什麼：現任市長提議鮮奶加碼；挑戰者用手機鏡頭比喻嘲諷，並指出營養午餐仍有學校未完成招標。", "攻擊的一方容易只講笑點；宣傳的一方容易只講加碼。孩子每天吃到什麼，才是兩邊都該拿出數字的事。"]
+  },
+  {
+    "id": "sp-capital-n04",
+    "phase": "campaign",
+    "title": "看面相",
+    "scenario": "你的後援會上，一位德高望重的前部長拿起麥克風，說對手「面相難看」，又說他是牙醫，看你牙齒這麼白，選你就對了。台下笑成一片。隔天，市府發言人說這是容貌羞辱，藍黨議員說你們在「看相、比牙齒」。記者等你表態。",
+    "tags": ["選戰", "支持者"],
+    "special": "capital-2026",
+    "specialSlots": [4, 6, 7],
+    "fact": "CLAIM",
+    "conditions": { "flags": ["special-capital-2026", "party-green"] },
+    "options": [
+      { "id": "soft", "label": "替前部長緩頰，但說清楚：「之後的活動，我們會注意用詞」", "outcome": "前部長沒有不高興，對手陣營也少了一個題目。有支持者覺得你太客氣。", "effects": { "integrity": 2, "approval": 1 } },
+      { "id": "firm", "label": "公開說：「選舉比的是市政，不是長相。我請大家都別再這樣講」", "outcome": "你的支持者有點尷尬，前部長的電話打來了。中間選民記住了這一句。", "effects": { "integrity": 3, "approval": 2, "party": -2 } },
+      { "id": "joke", "label": "不回應，說那只是玩笑", "outcome": "新聞又多播了兩天。對手陣營把那段影片剪了三個版本。", "effects": { "approval": -2, "media": 2 } }
+    ],
+    "source": { "status": "draft", "prototype": "2026 年 8 月，前衛福部長在挑戰者後援會說現任市長「面目有些猙獰」、不要選「面相難看的」；市府批評容貌羞辱；挑戰者緩頰並說之後會注意用詞。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "ETtoday（2026-08-16）：陳時中嗆蔣萬安：面目猙獰、往臉上貼金", "url": "https://www.ettoday.net/news/20260816/3220129.htm", "quote": "面目猙獰", "accessed": "2026-10-25" }, { "title": "世界新聞網：陳時中「面相」言論，沈伯洋緩頰", "url": "https://www.worldjournal.com/wj/story/121218/9739072", "quote": "注意用詞", "accessed": "2026-10-25" }], "realCase": "2026 年臺北市長選舉的容貌言論爭議" },
+    "reflection": ["發生了什麼：挑戰者陣營的前部長在後援會評論現任市長的長相；市府批評容貌羞辱；挑戰者緩頰並說之後會注意用詞。", "支持者越線時，候選人要不要切割、切割到什麼程度，是每一場選戰都會遇到的事。", "你會因為候選人的長相投票嗎？"]
+  },
+  {
+    "id": "sp-capital-n05",
+    "phase": "campaign",
+    "title": "留時間給你質詢",
+    "scenario": "立法院的委員會排了機場遷建的專案報告，正好是你的選戰主題。你人還在電台錄節目。藍黨召委宣布：「把發言登記延到中午，等這位很關心首都的委員來質詢。」你的黨內同事當場拍桌，說召委不公正。你趕到會場時，會議正在休息，所有鏡頭都對著你。",
+    "tags": ["選戰", "國會"],
+    "special": "capital-2026",
+    "specialSlots": [7, 8],
+    "fact": "FACT",
+    "conditions": { "flags": ["special-capital-2026", "party-green"] },
+    "options": [
+      { "id": "ask", "label": "笑著坐下，拿出準備好的題目：「謝謝召委，那我們就來談機場」", "outcome": "你問了國防部和交通部事前有沒有被找去談。這段質詢，比剛才的拍桌更多人看。", "effects": { "approval": 2, "achievement": 2, "integrity": 1 } },
+      { "id": "protest", "label": "跟著同事抗議召委不公正", "outcome": "支持者很開心，但新聞標題是「候選人遲到、立院吵成一團」。", "effects": { "party": 2, "approval": -1, "media": 2 } },
+      { "id": "cancel", "label": "宣布選前暫停一部分電台通告，委員會一定到", "outcome": "你少了幾個曝光的機會。藍黨說你早該這樣；你的團隊說，行程排不過來了。", "effects": { "integrity": 2, "media": -2, "team": -2 } }
+    ],
+    "source": { "status": "draft", "prototype": "2026 年 10 月 14 日，立法院外交及國防委員會排定松山機場遷建專案報告，召委延長發言登記時間讓正在上電台節目的挑戰者來得及質詢；同黨立委抗議召委不公正；挑戰者當天下午出席質詢。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "聯合報（2026-10-14）：徐巧芯「留時間給沈伯洋來質詢」王義川不滿罵「爛召委」", "url": "https://udn.com/news/story/6656/9813524", "quote": "留時間給沈伯洋來質詢", "accessed": "2026-10-25" }, { "title": "商業周刊（2026-10-15）：立法院外交國防委員會攻防", "url": "https://www.businesstoday.com.tw/article/category/183027/post/202610150030/", "quote": "延長發言登記", "accessed": "2026-10-25" }], "realCase": "2026 年帶職參選與立法院攻防" },
+    "reflection": ["發生了什麼：挑戰者帶職參選；對手陣營的召委延長登記時間等他質詢，他的黨內同事認為召委不公正而抗議。", "帶職參選，兩邊都有話可說：一邊說選舉影響問政，一邊說召委拿議程做選舉文章。", "你希望一位立委參選市長時，是辭職、請假，還是兩邊都顧？"]
+  },
+  {
+    "id": "sp-capital-n06",
+    "phase": "campaign",
+    "title": "老市民發問",
+    "scenario": "一位被認為偏藍的資深製作人，邀你上他的節目。訪談裡沒有吵架，你聊小時候、聊老公寓、聊長照。影片上線幾天，觀看次數衝破六十萬。然後，製作人被自己的觀眾罵翻了，有人說他是「無辜的幫手」。他在專欄裡只寫了一句：「我只是做了一場訪問。」",
+    "tags": ["選戰", "媒體"],
+    "special": "capital-2026",
+    "specialSlots": [6, 7, 8],
+    "fact": "CLAIM",
+    "conditions": { "flags": ["special-capital-2026", "party-green"] },
+    "options": [
+      { "id": "thank", "label": "公開謝謝製作人，請大家別再罵他", "outcome": "製作人回了一個貼圖。有藍黨的長輩留言：「這個年輕人還算有禮貌。」", "effects": { "integrity": 2, "approval": 2 } },
+      { "id": "dare", "label": "順勢喊話：「公子市長也去上吧」", "outcome": "這句話很有效，記者每天都去問對手要不要上節目。製作人說：「拜託，別把我拉進來。」", "effects": { "media": 3, "approval": 1, "integrity": -1 } },
+      { "id": "more", "label": "趁熱再上三個偏藍的節目", "outcome": "你上了三個節目，有兩個很順，一個主持人整集都在問你的舊文章。", "effects": { "approval": 2, "media": 2, "team": -2 } }
+    ],
+    "source": { "status": "draft", "prototype": "2026 年 9 月 10 日，挑戰者上被視為親藍的製作人王偉忠節目受訪，觀看數破六十萬；前立委沈富雄質疑製作人成了「無辜的幫手」，製作人回應「我只是做了一場訪問」。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "自由時報：沈伯洋上王偉忠節目，觀看數創頻道新高", "url": "https://news.ltn.com.tw/news/politics/paper/1770370", "quote": "最高觀看數", "accessed": "2026-10-25" }, { "title": "NOWnews：王偉忠回應「我只是做了一場訪問」", "url": "https://www.nownews.com/news/6874314", "quote": "我只是做了一場訪問", "accessed": "2026-10-25" }], "realCase": "2026 年臺北市長選舉的異溫層媒體" },
+    "reflection": ["發生了什麼：挑戰者上了一位偏藍製作人的節目，觀看數很高；製作人因此被部分觀眾批評。", "異溫層對話的代價，有時候是讓願意對話的人承擔。", "你最近一次看完和自己立場不同的人的完整訪談，是什麼時候？"]
+  },
+  {
+    "id": "sp-capital-n07",
+    "phase": "campaign",
+    "title": "青年 AI 卡",
+    "scenario": "你在記者會上說：長輩有敬老卡，小孩有親子卡，年輕人也該有一張「AI 卡」。隔天，市府青年局發了一份聲明：你講錯了現在的補助，還幫你算了一筆帳：一年二十九億五千萬，錢從哪裡來？",
+    "tags": ["政策", "青年"],
+    "special": "capital-2026",
+    "specialSlots": [6, 7, 8],
+    "fact": "CLAIM",
+    "conditions": { "flags": ["special-capital-2026", "party-green"] },
+    "options": [
+      { "id": "fix", "label": "承認補助的說法講錯了，同時公開完整的財源試算", "outcome": "你更正了一句話，補上一份試算表。工程師社群說：「至少他有算。」", "effects": { "achievement": 3, "integrity": 2, "approval": 1 }, "skill": "policy", "setFlags": ["policy-evidence"] },
+      { "id": "neutral", "label": "反批：「市府機關，什麼時候變成競選總部了？」", "outcome": "你的支持者很有感。也有人說，你沒有回答錢從哪裡來。", "effects": { "media": 3, "approval": 1 } },
+      { "id": "push", "label": "照原樣推，數字大才有人記得", "outcome": "「AI 卡」這三個字很紅。錢從哪裡來，你說當選後會找到。", "effects": { "approval": 3, "integrity": -2 }, "setFlags": ["promise-debt"], "recall": "年輕人也該有一張 AI 卡。" }
+    ],
+    "source": { "status": "draft", "prototype": "2026 年 8 月 18 日挑戰者提出青年 AI 使用支持方案（「AI 卡」）；台北市青年局反駁其對現行補助的描述，並質疑一年約 29.5 億元的財源。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "數位時代：2026 台北市長選舉 沈伯洋、蔣萬安政見比較：北士科、AI", "url": "https://www.bnext.com.tw/article/92509/taipei-mayor-2026-shen-chiang-tech-policy", "quote": "AI", "accessed": "2026-10-25" }, { "title": "NOWnews：沈伯洋青年政策", "url": "https://www.nownews.com/news/6866832", "quote": "AI卡", "accessed": "2026-10-25" }], "realCase": "2026 年臺北市長選舉的青年政策攻防" },
+    "reflection": ["發生了什麼：挑戰者提出青年 AI 卡；市府青年局發聲明說他講錯了現行補助，並質疑一年約 29.5 億元的財源。", "挑戰者這邊：政見要有財源，說錯現行政策要更正。", "現任這邊：市府機關回應候選人政見，可以澄清事實；要不要替對手算帳、算到什麼程度，是行政中立的問題。"]
   }
 ]

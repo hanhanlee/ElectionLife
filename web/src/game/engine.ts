@@ -344,7 +344,7 @@ export function newGame(
   party: Party,
   background: Background,
   setup?: ProfileSetup,
-  options: { fate?: boolean; special?: string; specialBranch?: boolean; startDelta?: StatDelta } = {},
+  options: { fate?: boolean; special?: string; specialBranch?: boolean; startDelta?: StatDelta; disabledCrises?: string[] } = {},
 ): GameState {
   let stats = addDelta(addDelta({ ...START_STATS }, party.startDelta), background.startDelta);
   if (setup) stats = addDelta(stats, setup.city.startDelta);
@@ -391,6 +391,7 @@ export function newGame(
     arcs: {},
     ...(options.fate ? { fateOn: true, fateEffects: [], fateHistory: [] } : {}),
     ...(options.special ? { special: options.special, specialBranch: !!options.specialBranch, interludes: [] } : {}),
+    ...(options.disabledCrises?.length ? { disabledCrises: options.disabledCrises } : {}),
     finished: false,
   };
   return withNextEvent(withPayout(base), events);
@@ -504,7 +505,13 @@ function crisisReady(state: GameState, crisis: Crisis): boolean {
 export function checkCrisis(state: GameState, crises: Crisis[], phase: Phase): Crisis | undefined {
   return [...crises]
     .sort((a, b) => a.priority - b.priority)
-    .find((c) => crisisReady(state, c) && (!c.phases || c.phases.includes(phase)) && meetsCondition(state, c.when));
+    .find(
+      (c) =>
+        !state.disabledCrises?.includes(c.id) &&
+        crisisReady(state, c) &&
+        (!c.phases || c.phases.includes(phase)) &&
+        meetsCondition(state, c.when),
+    );
 }
 
 export function choose(

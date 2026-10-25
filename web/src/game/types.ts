@@ -77,6 +77,8 @@ export interface GameOption {
   unlockCost?: StatDelta;
   /** 標示涉及違法風險的選項 */
   legalRisk?: string;
+  /** 翻舊帳時引用的話：玩家選這個選項時「說出口」的那句話（特別篇） */
+  recall?: string;
   /** 動用現任才有的行政資源（剪綵、市政廣告、加碼福利等），結局會統計其效果 */
   perk?: boolean;
   /** 選項池：符合條件才可能被抽到（例如只有素人會出現「不分藍綠」） */
@@ -227,6 +229,8 @@ export interface GameEvent {
   interlude?: InterludeKind;
   /** 資料分級：事實、某方說法、遊戲虛構（見特別篇手冊） */
   fact?: FactLevel;
+  /** 結局頁「真實世界的這一題」：發生了什麼、兩邊各自省略或扭曲了什麼（特別篇，遊戲中途不顯示） */
+  reflection?: string[];
   source: EventSource;
 }
 
@@ -693,6 +697,8 @@ export interface GameState {
   special?: string;
   /** 特別篇的分支模式：部分回合可能換成替換事件（第二局起） */
   specialBranch?: boolean;
+  /** 這一局不會發生的通用突發事件（特別篇用自己的插曲取代，例如「過度曝光」改由 F13 處理） */
+  disabledCrises?: string[];
   /** 等待玩家回應的插曲事件 id；有值時不會出現下一個事件 */
   pendingInterlude?: string;
   interludes?: InterludeEntry[];
