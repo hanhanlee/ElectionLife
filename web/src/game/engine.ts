@@ -58,6 +58,7 @@ import {
   type ArcDef,
   type CampaignScale,
   type FateCard,
+  type InterludeKind,
 } from "./types";
 
 export const STATE_VERSION = 16;
@@ -89,6 +90,16 @@ const OPTION_DRAW_SALT = 0x0b7;
 const FATE_DRAW_SALT = 0xfa7e;
 const FATE_ROLL_SALT = 0xd1ce;
 const FATE_TEXT_SALT = 0x7e47;
+const SPECIAL_SWAP_SALT = 0x5a4b;
+const INTERLUDE_SALT = 0x1e7d;
+
+/** 特別篇分支模式：可替換的回合換成替換事件的機率 */
+const SPECIAL_SWAP_CHANCE = 0.5;
+const SPECIAL_SWAP_MAX = 3;
+/** 特別篇插曲：每次判斷時出現的機率、每局上限、各類別權重（不是現實發生率） */
+const INTERLUDE_CHANCE = 0.6;
+const INTERLUDE_MAX = 2;
+const INTERLUDE_WEIGHTS: Record<InterludeKind, number> = { opportunity: 45, amplifier: 30, backlash: 20, wildcard: 5 };
 
 const clamp = (n: number) => Math.max(0, Math.min(100, n));
 
@@ -192,12 +203,97 @@ function drawEvent(state: GameState, events: GameEvent[], turn: number, arcs: Ar
   // 到期的劇情節點優先出場；劇情節點事件不會被隨機抽到
   const due = dueArcEvent(state, events, turn, TURN_PLAN, arcs);
   if (due) return due;
+  if (state.special) return specialEvent(state, events, turn);
   const phase = TURN_PLAN[turn];
-  const unused = events.filter((e) => e.phase === phase && !e.arc && !state.deck.includes(e.id));
+  const unused = events.filter((e) => e.phase === phase && !e.arc && !e.special && !state.deck.includes(e.id));
   const eligible = unused.filter((e) => meetsCondition(state, e.conditions));
   const pool = eligible.length > 0 ? eligible : unused;
   if (pool.length === 0) throw new Error(`事件池不足：phase=${phase}, turn=${turn}`);
   return weightedPick(pool, drawWeight, turnRng(state.seed, turn)());
+}
+
+/**
+ * 特別篇：每回合有固定事件；可替換的回合有一半機會換成替換池的事件，每局最多換 3 次，避免時事梗稀釋主線。
+ * 第一局只會換成翻舊帳卡（引用玩家自己說過的話），第二局起整個替換池都可能出現。
+ */
+function specialEvent(state: GameState, events: GameEvent[], turn: number): GameEvent {
+  const slot = turn + 1;
+  const own = events.filter((e) => e.special === state.special && !e.interlude);
+  const core = own.find((e) => e.specialTurn === slot);
+  if (!core) throw new Error(`特別篇缺少第 ${slot} 回合的事件`);
+  const swapped = state.deck.filter((id) => own.find((e) => e.id === id)?.specialSlots).length;
+  if (swapped >= SPECIAL_SWAP_MAX) return core;
+  const pool = own.filter(
+    (e) =>
+      e.specialSlots?.includes(slot) &&
+      (state.specialBranch || e.specialCallback) &&
+      !state.deck.includes(e.id) &&
+      meetsCondition(state, e.conditions),
+  );
+  const rng = turnRng(state.seed, turn, SPECIAL_SWAP_SALT);
+  if (pool.length === 0 || rng() >= SPECIAL_SWAP_CHANCE) return core;
+  // 翻舊帳卡優先：玩家說過的話，比新的時事梗更值得回頭找他
+  const callbacks = pool.filter((e) => e.specialCallback);
+  const from = callbacks.length > 0 ? callbacks : pool;
+  return from[Math.floor(rng() * from.length)];
+}
+
+/**
+ * 特別篇的插曲（命運卡）：第 3、6、9 回合後各判斷一次，每局最多 2 張、黑天鵝最多 1 張。
+ * 先依類別權重抽類別，再從該類別符合前置條件、還沒出現過的卡中抽一張；同一個種子結果相同。
+ */
+export function drawInterlude(state: GameState, events: GameEvent[], turn: number): GameEvent | undefined {
+  const seen = state.interludes ?? [];
+  if (seen.length >= INTERLUDE_MAX) return undefined;
+  const rng = turnRng(state.seed, turn, INTERLUDE_SALT);
+  if (rng() >= INTERLUDE_CHANCE) return undefined;
+  const wildcards = seen.filter((i) => events.find((e) => e.id === i.eventId)?.interlude === "wildcard").length;
+  const eligible = events.filter(
+    (e) =>
+      e.special === state.special &&
+      e.interlude &&
+      !seen.some((i) => i.eventId === e.id) &&
+      !(e.interlude === "wildcard" && wildcards >= 1) &&
+      meetsCondition(state, e.conditions),
+  );
+  const kinds = (Object.keys(INTERLUDE_WEIGHTS) as InterludeKind[]).filter((k) => eligible.some((e) => e.interlude === k));
+  if (kinds.length === 0) return undefined;
+  const kind = weightedPick(kinds, (k) => INTERLUDE_WEIGHTS[k], rng());
+  const cards = eligible.filter((e) => e.interlude === kind);
+  return cards[Math.floor(rng() * cards.length)];
+}
+
+export function interludeEvent(state: GameState, events: GameEvent[]): GameEvent | undefined {
+  return state.pendingInterlude ? events.find((e) => e.id === state.pendingInterlude) : undefined;
+}
+
+/** 回應插曲：套用選項效果，不推進回合、不付開銷；回應完才抽下一個事件 */
+export function chooseInterlude(state: GameState, events: GameEvent[], optionId: string, arcDefs: ArcDef[] = []): GameState {
+  const event = interludeEvent(state, events);
+  if (!event) throw new Error("現在沒有插曲要回應");
+  const option = event.options.find((o) => o.id === optionId);
+  if (!option) throw new Error(`選項不存在：${optionId}`);
+  if (lacksFunds(state, option)) throw new Error(`經費不足：${optionId}`);
+  const resolved = resolveOption(state, option, event);
+  const stats = addDelta(state.stats, withStatScaling(state, resolved.effects));
+  const funds = state.funds + (option.funds ?? 0);
+  const pending = resolved.delayed
+    ? [...state.pending, { ...resolved.delayed, dueTurn: state.turn + resolved.delayed.afterTurns, fromEventId: event.id }]
+    : state.pending;
+  const next: GameState = {
+    ...state,
+    stats,
+    funds,
+    flags: [...new Set([...state.flags, ...(option.setFlags ?? [])])],
+    pending,
+    notices: [],
+    interludes: [
+      ...(state.interludes ?? []),
+      { turn: state.turn - 1, eventId: event.id, optionId, outcome: resolved.outcome, delta: diff(stats, state.stats), funds: option.funds ?? 0 },
+    ],
+    pendingInterlude: undefined,
+  };
+  return withNextEvent(next, events, arcDefs);
 }
 
 /** 不花經費、沒有數值門檻、也不動用公家資源的選項：保證玩家永遠有一條乾淨的路可走 */
@@ -248,11 +344,13 @@ export function newGame(
   party: Party,
   background: Background,
   setup?: ProfileSetup,
-  options: { fate?: boolean } = {},
+  options: { fate?: boolean; special?: string; specialBranch?: boolean; startDelta?: StatDelta } = {},
 ): GameState {
   let stats = addDelta(addDelta({ ...START_STATS }, party.startDelta), background.startDelta);
   if (setup) stats = addDelta(stats, setup.city.startDelta);
-  const flags = [...party.flags, ...background.flags];
+  // 特別篇的開局處境（例如民調大幅落後）
+  if (options.startDelta) stats = addDelta(stats, options.startDelta);
+  const flags = [...party.flags, ...background.flags, ...(options.special ? [`special-${options.special}`] : [])];
   if (setup) {
     for (const t of setup.traits) stats = addDelta(stats, t.startDelta);
     stats = addDelta(stats, setup.burden.startDelta);
@@ -292,6 +390,7 @@ export function newGame(
     opponent,
     arcs: {},
     ...(options.fate ? { fateOn: true, fateEffects: [], fateHistory: [] } : {}),
+    ...(options.special ? { special: options.special, specialBranch: !!options.specialBranch, interludes: [] } : {}),
     finished: false,
   };
   return withNextEvent(withPayout(base), events);
@@ -418,6 +517,7 @@ export function choose(
   fates: FateCard[] = [],
 ): GameState {
   if (state.pendingFate) throw new Error("請先選擇政治命運");
+  if (state.pendingInterlude) throw new Error("請先回應插曲");
   const event = currentEvent(state, events);
   if (!event) throw new Error("遊戲已結束或事件不存在");
   const option = event.options.find((o) => o.id === optionId);
@@ -652,7 +752,8 @@ export function choose(
   if (turn === FIRST_ELECTION_TURN) {
     const { won, probability, mobilization } = runElection(next, "first");
     next = { ...next, funds: next.funds - mobilization, firstElection: { won, probability, mobilization } };
-    if (!won) return { ...next, flags: withArcFlags(next.flags, next.arcs, arcDefs), finished: true };
+    // 特別篇只打第一場選戰：不論輸贏，投票完就結束
+    if (!won || next.special) return { ...next, flags: withArcFlags(next.flags, next.arcs, arcDefs), finished: true };
     next = withElectionPromises(withSecondOpponent(next, probability));
   }
   // 過了階段還沒排上議程的劇情節點，以快報結算（第一次投票落選時不結算任期劇情，留給後日談）
@@ -665,6 +766,11 @@ export function choose(
   };
   if (turn >= TURN_PLAN.length) return { ...next, finished: true };
   if (turn % BIG_ROUND === 0) next = withPayout(next);
+  // 特別篇的插曲：第 3、6、9 回合後判斷，回應完才抽下一個事件
+  if (next.special && isFateTurn(turn, STAGE_LENGTH)) {
+    const interlude = drawInterlude(next, events, turn);
+    if (interlude) return { ...next, pendingInterlude: interlude.id };
+  }
   // 政治命運：階段的第 3、6、9 回合結束後三選一；選完才抽下一個事件
   if (next.fateOn && fates.length && isFateTurn(turn, STAGE_LENGTH)) {
     const meets = (c?: Condition) => meetsCondition(next, c);

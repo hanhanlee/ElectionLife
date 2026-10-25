@@ -39,8 +39,9 @@ export function validateEvents(events: GameEvent[], opts: ValidationOptions = {}
       optIds.add(o.id);
       if (o.skill && !(SKILLS as readonly string[]).includes(o.skill)) errors.push(`${at}/${o.id}：未知能力 ${o.skill}`);
       // 競選期只是提出政策與承諾：挑戰者還沒執政，施政成果與市庫要當選後才變（onElected）
+      // 特別篇把「施政成果」改成「政策準備」，做政策研究可以增加
       const incumbentOnly = [e.conditions?.flags, o.appearsIf?.flags].some((f) => f?.includes("bg-incumbent"));
-      if (CAMPAIGN_PHASES.includes(e.phase) && !o.perk && !incumbentOnly) {
+      if (CAMPAIGN_PHASES.includes(e.phase) && !o.perk && !incumbentOnly && !e.special) {
         for (const k of ["achievement", "treasury"] as const) {
           if (o.effects[k]) errors.push(`${at}/${o.id}：競選期的選項不能直接改「${k}」，請改用 onElected（當選後才兌現）`);
         }
@@ -68,6 +69,14 @@ export function validateEvents(events: GameEvent[], opts: ValidationOptions = {}
     }
     if (e.phase === "incumbency" && e.options.every((o) => o.perk)) {
       errors.push(`${at}：現任限定事件要保留不動用資源的選項`);
+    }
+
+    if (e.special) {
+      if (!e.fact) errors.push(`${at}：特別篇事件要標示資料分級（fact）`);
+      if (!e.specialTurn && !e.specialSlots && !e.interlude) errors.push(`${at}：特別篇事件要指定回合、替換回合或插曲類別`);
+      if (e.special && events.filter((x) => x.special === e.special && e.specialTurn && x.specialTurn === e.specialTurn).length > 1) {
+        errors.push(`${at}：特別篇第 ${e.specialTurn} 回合有兩個固定事件`);
+      }
     }
 
     const src = e.source;

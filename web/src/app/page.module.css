@@ -1002,3 +1002,9 @@
     transition: none;
   }
 }
+
+/* 開始畫面的特別篇入口 */
+.specialEntry {
+  margin-top: 16px;
+  border-left: 4px solid var(--accent);
+}

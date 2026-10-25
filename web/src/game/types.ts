@@ -187,6 +187,18 @@ export interface Notice {
   funds?: number;
 }
 
+/** 插曲類別：破局、放大、反噬、黑天鵝 */
+export type InterludeKind = "opportunity" | "amplifier" | "backlash" | "wildcard";
+export const INTERLUDE_LABELS: Record<InterludeKind, string> = {
+  opportunity: "破局",
+  amplifier: "放大",
+  backlash: "反噬",
+  wildcard: "黑天鵝",
+};
+
+/** FACT 可直接查證、CLAIM 某方說法、SIMULATION 遊戲虛構 */
+export type FactLevel = "FACT" | "CLAIM" | "SIMULATION";
+
 export interface GameEvent {
   id: string;
   phase: Phase;
@@ -203,6 +215,18 @@ export interface GameEvent {
   drawOptions?: number;
   /** 劇情鏈節點：只由劇情排程安排出場，不會被隨機抽到 */
   arc?: string;
+  /** 特別篇事件：只在這個特別篇出場，不會被一般局抽到 */
+  special?: string;
+  /** 特別篇的固定回合（1–12） */
+  specialTurn?: number;
+  /** 特別篇的替換事件：第二局起，可能取代這些回合的固定事件 */
+  specialSlots?: number[];
+  /** 翻舊帳卡：引用玩家前面真的選過的話（{said:旗標}），第一局只要條件符合也會出現 */
+  specialCallback?: boolean;
+  /** 特別篇的插曲（命運卡）：在第 3、6、9 回合後依條件插入，不佔回合 */
+  interlude?: InterludeKind;
+  /** 資料分級：事實、某方說法、遊戲虛構（見特別篇手冊） */
+  fact?: FactLevel;
   source: EventSource;
 }
 
@@ -606,6 +630,16 @@ export interface Spending extends SpendingItems {
   loan: number;
 }
 
+export interface InterludeEntry {
+  /** 插曲發生在這一回合結束之後 */
+  turn: number;
+  eventId: string;
+  optionId: string;
+  outcome: string;
+  delta: Stats;
+  funds: number;
+}
+
 export interface GameState {
   version: number;
   seed: number;
@@ -655,5 +689,12 @@ export interface GameState {
   pendingFate?: PendingFate;
   fateEffects?: ActiveFate[];
   fateHistory?: FateHistoryEntry[];
+  /** 特別篇 id：固定人設與對手、事件依劇本出場，第一次投票後結束 */
+  special?: string;
+  /** 特別篇的分支模式：部分回合可能換成替換事件（第二局起） */
+  specialBranch?: boolean;
+  /** 等待玩家回應的插曲事件 id；有值時不會出現下一個事件 */
+  pendingInterlude?: string;
+  interludes?: InterludeEntry[];
   finished: boolean;
 }

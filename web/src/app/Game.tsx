@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import {
   ARCS,
   backgroundById,
@@ -16,6 +16,7 @@ import {
   PARTIES,
   partyById,
   profileSetup,
+  specialSetup,
   TRAITS,
 } from "@/content";
 import {
@@ -23,7 +24,9 @@ import {
   canTakeLoan,
   choose,
   chooseFate,
+  chooseInterlude,
   currentEvent,
+  interludeEvent,
   FIRST_ELECTION_TURN,
   newGame,
   offeredOptions,
@@ -47,6 +50,7 @@ import { buildEpilogue } from "@/game/epilogue";
 import { staffReport } from "@/game/feedback";
 import { arcProgress, fillArcText, openArcs } from "@/game/story";
 import { summarize, type FinalStage, type ReflectionItem } from "@/game/endings";
+import { fillSaid, specialById, specialEnding, SPECIALS, type SpecialDef } from "@/game/special";
 import {
   CAMPAIGN_SCALES,
   FATE_ENABLED,
@@ -64,6 +68,7 @@ import { newSeed } from "@/game/rng";
 import { clearGame, hasStaleSave, loadGame, saveGame } from "@/game/storage";
 import {
   ALL_STATS,
+  INTERLUDE_LABELS,
   ISSUE_LABELS,
   STAT_HINTS,
   STAT_LABELS,
@@ -77,6 +82,8 @@ import {
   type Notice,
   type Opponent,
   type GameState,
+  type FactLevel,
+  type GameOption,
   type Issue,
   type Phase,
   type SourceStatus,
@@ -119,6 +126,32 @@ function characterLabel(state: GameState): string {
   return `${city}${partyName}・${backgroundById(background).name}`;
 }
 
+/** 數值的名稱與說明：特別篇會換掉其中幾個（例如「施政成果」改成「政策準備」） */
+const StatText = createContext<{ labels: Record<StatKey, string>; hints: Record<StatKey, string> }>({ labels: STAT_LABELS, hints: STAT_HINTS });
+
+function statTextFor(state: GameState) {
+  const def = state.special ? specialById(state.special) : undefined;
+  return def
+    ? { labels: { ...STAT_LABELS, ...def.statLabels }, hints: { ...STAT_HINTS, ...def.statHints } }
+    : { labels: STAT_LABELS, hints: STAT_HINTS };
+}
+
+const FACT_TAG: Record<FactLevel, string> = {
+  FACT: "📰 改編自真實事件",
+  CLAIM: "🗣 取材自某方說法，不是查證過的結論",
+  SIMULATION: "🎭 遊戲虛構",
+};
+
+/** 玩過特別篇之後，部分回合會換成替換事件（只記在這個瀏覽器） */
+const specialPlayedKey = (id: string) => `election-life:special-played:${id}`;
+function specialPlayed(id: string): boolean {
+  try {
+    return localStorage.getItem(specialPlayedKey(id)) === "1";
+  } catch {
+    return false;
+  }
+}
+
 const CHARACTER_CONTENT = { cities: CITIES, parties: PARTIES, backgrounds: BACKGROUNDS, traits: TRAITS, burdens: BURDENS, legends: LEGENDS };
 
 export default function Game() {
@@ -128,6 +161,8 @@ export default function Game() {
   const [outcome, setOutcome] = useState<Outcome | null>(null);
   /** 開局設定：先播放「正在隨機你的人生」，再顯示角色卡 */
   const [setup, setSetup] = useState<{ character: DrawnCharacter; rolling: boolean } | null>(null);
+  /** 特別篇的開場說明 */
+  const [special, setSpecial] = useState<SpecialDef | null>(null);
 
   useEffect(() => {
     // 存檔只在瀏覽器端讀取，避免伺服器輸出與客戶端不一致
@@ -142,6 +177,7 @@ export default function Game() {
 
   function start(state: GameState) {
     setSetup(null);
+    setSpecial(null);
     setOutcome(null);
     setGame(state);
   }
@@ -163,7 +199,20 @@ export default function Game() {
     setGame(null);
     setOutcome(null);
     setSetup(null);
+    setSpecial(null);
   }
+
+  function startSpecial(def: SpecialDef) {
+    start(
+      newGame(EVENTS, newSeed(), partyById(def.party), backgroundById(def.background), specialSetup(def), {
+        special: def.id,
+        specialBranch: specialPlayed(def.id),
+        startDelta: def.startDelta,
+      }),
+    );
+  }
+
+  if (special) return <SpecialIntro def={special} onStart={() => startSpecial(special)} onBack={withdraw} />;
 
   if (setup) {
     const { character } = setup;
@@ -197,6 +246,14 @@ export default function Game() {
           事件與政見取材自過去 20 年的選舉公報與公開報導，並已虛構化。
         </p>
         <button className={styles.primary} onClick={restart}>開始參選</button>
+        {SPECIALS.map((def) => (
+          <section key={def.id} className={`${styles.card} ${styles.specialEntry}`}>
+            <p className={styles.turn}>特別篇</p>
+            <h2>{def.title}</h2>
+            <p>{def.teaser}</p>
+            <button className={styles.secondary} onClick={() => setSpecial(def)}>挑戰特別篇</button>
+          </section>
+        ))}
         {stale && <p className={styles.notice}>遊戲更新了，上一局的存檔無法繼續。請開始新的一局。</p>}
         {saved && !saved.finished && (
           <button className={styles.secondary} onClick={() => start(saved)}>
@@ -208,15 +265,36 @@ export default function Game() {
     );
   }
 
-  if (game.finished && !outcome) return <EndScreen state={game} onRestart={restart} />;
+  if (game.finished && !outcome) {
+    const def = game.special ? specialById(game.special) : undefined;
+    if (def) return <SpecialEndScreen def={def} state={game} onRetry={() => startSpecial(def)} onHome={withdraw} onMain={restart} />;
+    return <EndScreen state={game} onRestart={restart} />;
+  }
 
   const fate = outcome ? undefined : game.pendingFate;
-  const event = outcome || fate ? undefined : currentEvent(game, EVENTS);
+  const interlude = outcome || fate ? undefined : interludeEvent(game, EVENTS);
+  const event = outcome || fate ? undefined : interlude ?? currentEvent(game, EVENTS);
+  const options = interlude ? interlude.options : event ? offeredOptions(game, event) : [];
+
+  function pick(o: GameOption) {
+    if (interlude) {
+      const next = chooseInterlude(game!, EVENTS, o.id, ARCS);
+      const last = next.interludes![next.interludes!.length - 1];
+      setOutcome({ title: `🃏 ${interlude.title}`, text: last.outcome, delta: last.delta, funds: last.funds || undefined, notices: [] });
+      setGame(next);
+      return;
+    }
+    const next = choose(game!, EVENTS, o.id, CRISES, PARTIES, ARCS, FATES);
+    const last = next.history[next.history.length - 1];
+    setOutcome({ text: last.outcome, delta: last.optionDelta, funds: o.funds, notices: next.notices });
+    setGame(next);
+  }
   // 顯示結果時 turn 已前進，標題仍停在剛做完的那一回合
   const shownTurn = outcome ? game.turn - 1 : game.turn;
   const justVoted = outcome && game.turn === FIRST_ELECTION_TURN && game.firstElection;
 
   return (
+    <StatText.Provider value={statTextFor(game)}>
     <main className={styles.main}>
       {/* 手機優先：頂端只放「我是誰、第幾回合、有多少錢」與數值，這一回合要做的決定緊接在後 */}
       <header className={styles.gameHeader}>
@@ -265,23 +343,20 @@ export default function Game() {
         event && (
           <section className={styles.card}>
             {game.turn === 0 && game.notices.map((n) => <NoticeView key={n.text} notice={n} />)}
+            {interlude?.interlude && <p className={styles.turn}>🃏 命運插曲｜{INTERLUDE_LABELS[interlude.interlude]}</p>}
             <h2>{event.title}</h2>
             {event.arc && <p className={styles.arcTag}>📒 {ARCS.find((a) => a.id === event.arc)?.title}</p>}
-            <p>{fillArcText(event.scenario, game.arcs)}</p>
+            {event.fact && <p className={styles.arcTag}>{FACT_TAG[event.fact]}</p>}
+            <p>{fillSaid(fillArcText(event.scenario, game.arcs), game, EVENTS)}</p>
             <div className={styles.options}>
-              {offeredOptions(game, event).map((o) => {
+              {options.map((o) => {
                 const avail = optionAvailability(game, o);
                 return (
                   <button
                     key={o.id}
                     className={avail === "open" ? styles.option : styles.optionLocked}
                     disabled={avail === "locked"}
-                    onClick={() => {
-                      const next = choose(game, EVENTS, o.id, CRISES, PARTIES, ARCS, FATES);
-                      const last = next.history[next.history.length - 1];
-                      setOutcome({ text: last.outcome, delta: last.optionDelta, funds: o.funds, notices: next.notices });
-                      setGame(next);
-                    }}
+                    onClick={() => pick(o)}
                   >
                     {fillArcText(o.label, game.arcs)}
                     {avail === "unlockable" && (
@@ -311,6 +386,7 @@ export default function Game() {
       {!game.finished && <WithdrawButton onConfirm={withdraw} />}
       <SiteFooter />
     </main>
+    </StatText.Provider>
   );
 }
 
@@ -551,6 +627,17 @@ function FirstElectionNotice({ state }: { state: GameState }) {
   const spent = mobilization > 0 ? `投票前投入選前動員 ${formatFunds(mobilization)}。` : "你沒有剩下任何經費做選前動員。";
   const rival = state.character.profile?.rivals?.first;
   const vs = rival ? `對上${rival.name}，` : "";
+  if (state.special) {
+    return (
+      <>
+        <p className={styles.notice}>{specialById(state.special)?.voteNote}</p>
+        <p className={styles.notice}>
+          🗳 {spent}開票結果：{vs}
+          {won ? "當選！" : "落選。"}
+        </p>
+      </>
+    );
+  }
   if (!won) {
     return (
       <p className={styles.notice}>
@@ -585,6 +672,7 @@ function FirstElectionNotice({ state }: { state: GameState }) {
 }
 
 function StatBar({ stats }: { stats: Stats }) {
+  const { labels: STAT_LABELS, hints: STAT_HINTS } = useContext(StatText);
   return (
     <>
       <div className={styles.stats}>
@@ -605,6 +693,7 @@ function StatBar({ stats }: { stats: Stats }) {
 
 /** 每個數值的用途（放在畫面下方，需要時再展開） */
 function StatHints() {
+  const { labels: STAT_LABELS, hints: STAT_HINTS } = useContext(StatText);
   return (
     <>
       <details className={styles.hints}>
@@ -660,7 +749,7 @@ function CardLabel({ label, hint, children }: { label: string; hint: string; chi
 }
 
 /** 對手卡片：身分、資質（依品質上色）與介紹 */
-function OpponentCard({ opponent, heading }: { opponent: Opponent; heading: string }) {
+function OpponentCard({ opponent, heading, intro }: { opponent: Opponent; heading: string; intro?: string }) {
   const party = partyById(opponent.party);
   const traits = opponent.traits.map((id) => TRAITS.find((t) => t.id === id)!);
   const level =
@@ -681,7 +770,7 @@ function OpponentCard({ opponent, heading }: { opponent: Opponent; heading: stri
           </span>
         ))}
       </div>
-      <p className={styles.intro}>{describeOpponent(opponent, party.name, TRAITS, LEGENDS)}</p>
+      <p className={styles.intro}>{intro ?? describeOpponent(opponent, party.name, TRAITS, LEGENDS)}</p>
     </section>
   );
 }
@@ -760,6 +849,7 @@ const turnName = (turn: number) => `${turn < STAGE_LENGTH ? "" : "第二階段"}
 function ScalePicker({ state, onScale }: { state: GameState; onScale: (scale: CampaignScale) => void }) {
   const upcoming = nextScaleTurn(state.turn);
   const reelection = !isCampaignTurn(state.turn);
+  const { labels } = useContext(StatText);
   return (
     <section className={styles.budget}>
       <p className={styles.budgetTitle}>
@@ -771,7 +861,7 @@ function ScalePicker({ state, onScale }: { state: GameState; onScale: (scale: Ca
       <div className={styles.scaleRow} role="radiogroup" aria-label="競選規模">
         {SCALE_ORDER.map((k) => {
           const plan = CAMPAIGN_SCALES[k];
-          const effect = formatDelta(plan.effects);
+          const effect = formatDelta(plan.effects, ALL_STATS, labels);
           return (
             <button
               key={k}
@@ -851,6 +941,7 @@ function FundsSummary({ state }: { state: GameState }) {
 }
 
 function stageLabel(state: GameState, turn: number): string {
+  if (state.special) return `特別篇：${specialById(state.special)?.title ?? ""}`;
   if (turn < STAGE_LENGTH) return "第一階段：競選";
   return state.flags.includes("bg-incumbent") ? "第二階段：第二任與接班" : "第二階段：任期與連任";
 }
@@ -918,16 +1009,17 @@ function NoticeView({ notice }: { notice: Notice }) {
   );
 }
 
-function formatDelta(delta: Partial<Stats>, keys: readonly StatKey[] = ALL_STATS): string {
+function formatDelta(delta: Partial<Stats>, keys: readonly StatKey[] = ALL_STATS, labels = STAT_LABELS): string {
   return keys
     .filter((k) => delta[k])
-    .map((k) => `${STAT_LABELS[k]} ${delta[k]! > 0 ? "+" : ""}${delta[k]}`)
+    .map((k) => `${labels[k]} ${delta[k]! > 0 ? "+" : ""}${delta[k]}`)
     .join("、");
 }
 
 /** all：連隱藏的原則也顯示（突發事件的衝擊要讓玩家看清楚） */
 function DeltaList({ delta, funds, all }: { delta: Partial<Stats>; funds?: number; all?: boolean }) {
-  const parts = [formatDelta(delta, all ? ALL_STATS : VISIBLE_STATS)];
+  const { labels } = useContext(StatText);
+  const parts = [formatDelta(delta, all ? ALL_STATS : VISIBLE_STATS, labels)];
   if (funds) parts.push(`競選經費 ${funds > 0 ? "+" : "−"}${formatFunds(Math.abs(funds))}`);
   const text = parts.filter(Boolean).join("、");
   return text ? <p className={styles.delta}>{text}</p> : null;
@@ -1237,5 +1329,144 @@ function EndScreen({ state, onRestart }: { state: GameState; onRestart: () => vo
       <button className={styles.primary} onClick={onRestart}>再來一局</button>
       <SiteFooter />
     </main>
+  );
+}
+
+/** 特別篇的開場：固定的人設與對手，不抽籤 */
+function SpecialIntro({ def, onStart, onBack }: { def: SpecialDef; onStart: () => void; onBack: () => void }) {
+  const setup = specialSetup(def);
+  const party = partyById(def.party);
+  const [replay, setReplay] = useState(false);
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => setReplay(specialPlayed(def.id)), [def.id]);
+  return (
+    <main className={styles.main}>
+      <p className={styles.turn}>
+        特別篇・{setup.city.name}・{party.name}
+      </p>
+      <h1 className={styles.title}>{def.title}</h1>
+      <section className={styles.card}>
+        <CardLabel label="你的處境" hint="特別篇的人設是固定的，事件依照真實選戰的時間順序出場" />
+        <div className={styles.tags}>
+          {setup.traits.map((t) => (
+            <span key={t.id} className={styles.tierTag} data-tier={t.tier} title={`${TRAIT_TIER_LABELS[t.tier]}資質`}>
+              {t.name}
+            </span>
+          ))}
+          <span className={styles.tag}>{setup.burden.name}</span>
+        </div>
+        {def.intro.map((p) => (
+          <p key={p} className={styles.intro}>{p}</p>
+        ))}
+        {replay && <p><small>你玩過這一篇了。這一局，有些回合會出現不一樣的事件。</small></p>}
+      </section>
+      <OpponentCard opponent={setup.profile.rivals!.first} heading="你的對手" intro={def.opponentIntro} />
+      <p>
+        <small>
+          事件取材自公開報導，人名一律以身分影射；標示「🎭 遊戲虛構」的情節、對話與結果都是虛構的。{def.reality}
+        </small>
+      </p>
+      <button className={styles.secondary} onClick={onBack}>← 回到開始畫面</button>
+      <div className={styles.stickyAction}>
+        <button className={styles.primary} onClick={onStart}>接受徵召</button>
+      </div>
+    </main>
+  );
+}
+
+function SpecialEndScreen({
+  def,
+  state,
+  onRetry,
+  onHome,
+  onMain,
+}: {
+  def: SpecialDef;
+  state: GameState;
+  onRetry: () => void;
+  onHome: () => void;
+  onMain: () => void;
+}) {
+  const { won, probability } = state.firstElection!;
+  const ending = specialEnding(def, state, won, probability, EVENTS);
+  const played = state.history.map((h) => {
+    const event = EVENTS.find((e) => e.id === h.eventId)!;
+    return { event, option: event.options.find((o) => o.id === h.optionId)!, turn: h.turn };
+  });
+  const interludes = (state.interludes ?? []).map((i) => {
+    const event = EVENTS.find((e) => e.id === i.eventId)!;
+    return { event, option: event.options.find((o) => o.id === i.optionId)!, turn: i.turn };
+  });
+  const sourced = played.filter(({ event }) => event.fact !== "SIMULATION" || event.source.refs.length > 0);
+  const result = won ? "當選" : "落選";
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(specialPlayedKey(def.id), "1");
+    } catch {
+      // 記不住也沒關係，下一局只是不會出現替換事件
+    }
+  }, [def.id]);
+
+  return (
+    <StatText.Provider value={statTextFor(state)}>
+    <main className={styles.main}>
+      <ResultBanner
+        won={won}
+        result={result}
+        character={`特別篇・${def.title}`}
+        opponent={state.opponent && `對手：${state.opponent.name}（${partyById(state.opponent.party).name}）`}
+      />
+      <section className={styles.card}>
+        <p className={styles.turn}>結局｜{ending.title}</p>
+        <h1 className={styles.epilogueHeadline}>{ending.headline}</h1>
+        <div className={styles.epilogue}>
+          {ending.paragraphs.map((p) => <p key={p}>{p}</p>)}
+        </div>
+        <p><small>這是遊戲裡的虛構結果，不是真實選情。</small></p>
+      </section>
+      <section className={styles.card}>
+        <p className={styles.lead}>{def.cta}</p>
+        <button className={styles.primary} onClick={onMain}>繼續 BeyondVote 完整政治人生</button>
+        <div className={styles.endActions}>
+          <button className={styles.secondary} onClick={onRetry}>再挑戰一次</button>
+          <button className={styles.secondary} onClick={onHome}>回到開始畫面</button>
+        </div>
+      </section>
+      <section className={styles.card}>
+        <h2>你的選擇</h2>
+        <ol className={styles.list}>
+          {played.map(({ event, option, turn }) => (
+            <li key={event.id}>
+              <strong>{event.title}</strong>：{option.label}
+              {interludes
+                .filter((i) => i.turn === turn)
+                .map((i) => (
+                  <div key={i.event.id}>
+                    <small>🃏 {i.event.title}：{i.option.label}</small>
+                  </div>
+                ))}
+            </li>
+          ))}
+        </ol>
+      </section>
+      <section className={styles.card}>
+        <h2>真實事件原型</h2>
+        <p><small>{def.reality}</small></p>
+        <ul className={styles.list}>
+          {sourced.map(({ event }) => (
+            <li key={event.id}>
+              <strong>{event.title}</strong>：{event.source.prototype}
+              {event.fact && <small>（{FACT_TAG[event.fact]}）</small>}
+              {event.source.refs.map((r) => (
+                <a key={r.url + r.quote} href={r.url} target="_blank" rel="noreferrer"> [{r.title}]</a>
+              ))}
+            </li>
+          ))}
+        </ul>
+      </section>
+      <SiteFooter />
+    </main>
+    </StatText.Provider>
   );
 }

@@ -73,7 +73,17 @@ const CALLBACKS: Partial<Record<StatKey, [string[], string[]]>> = {
   ],
 };
 
+/** 特別篇把「施政成果」當作「政策準備」：回顧時講的是研究，不是工程 */
+const SPECIAL_CALLBACKS: typeof CALLBACKS = {
+  ...CALLBACKS,
+  achievement: [
+    ["「{t}」之後，政策團隊的資料夾又厚了一點。", "「{t}」做的功課，記者追問時派上用場了。"],
+    ["「{t}」之後，政策團隊的進度落後了。", "「{t}」那陣子，政策研究幾乎停擺。"],
+  ],
+};
+
 export function staffReport(state: GameState, arcDefs: ArcDef[], events: GameEvent[] = []): StaffReport {
+  const callbacks = state.special ? SPECIAL_CALLBACKS : CALLBACKS;
   const served = state.turn >= 12 || state.flags.includes("bg-incumbent");
   const you = served ? "市長" : "老闆";
   const s = state.stats;
@@ -195,9 +205,9 @@ export function staffReport(state: GameState, arcDefs: ArcDef[], events: GameEve
   if (recent.length) {
     const h = recent[(hash(String(state.seed)) + state.turn) % recent.length];
     const [key, value] = (Object.entries(h.optionDelta) as [StatKey, number][])
-      .filter(([k]) => CALLBACKS[k])
+      .filter(([k]) => callbacks[k])
       .sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]))[0] ?? [];
-    const pool = key && CALLBACKS[key]?.[value > 0 ? 0 : 1];
+    const pool = key && callbacks[key]?.[value > 0 ? 0 : 1];
     if (pool) add(10, `recall-${h.turn}`, pool.map((t) => `${you}，${t.replace("{t}", title(h))}`));
   }
 

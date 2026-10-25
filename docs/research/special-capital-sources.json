@@ -1,0 +1,518 @@
+{
+  "description": "《首都逆轉戰》來源登記表。status：CHECKED_ONLINE＝2026-10-25 以工具開啟原文並摘要比對；NOT_OPENED＝列為研究入口但未開啟；NOT_USED＝已查但遊戲未直接引用。沒有任何一筆是人工逐字核對過的 VERIFIED。",
+  "generated": "2026-10-25",
+  "sources": [
+    {
+      "id": "SRC-001",
+      "category": "PARTISAN",
+      "title": "國民黨知識庫：2014 原文、2021 議案爭點整理",
+      "url": "https://knowledge.kmt.org.tw/articles/a2f4e561-6de7-4412-bf16-62cce0765815/",
+      "accessed": "2026-10-25",
+      "status": "NOT_USED",
+      "quote": "",
+      "usedBy": [],
+      "note": "政黨立場整理，不作唯一佐證；指出 2021 提案見《立法院公報》第 110 卷第 9 期（媒體標示第 165 頁），該頁也說明未直接核對公報原文"
+    },
+    {
+      "id": "SRC-002",
+      "category": "PRIMARY",
+      "title": "全國法規資料庫（中選會）：公職人員選舉罷免法第 53 條",
+      "url": "https://law.cec.gov.tw/LawContent.aspx?id=GL000292&kw=114-1%25u540d%25u55ae&media=print",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "自投票日前十日起至投票時間截止前",
+      "usedBy": [
+        "sp-capital-11"
+      ]
+    },
+    {
+      "id": "SRC-003",
+      "category": "PRIMARY",
+      "title": "台灣事實查核中心：沈伯洋爺爺參戰傳言（2026-10-21，報告 4364）",
+      "url": "https://tfc-taiwan.org.tw/fact-check-reports/puma-shen-grandfather-battle-rumor/",
+      "accessed": "2026-10-25",
+      "status": "NOT_USED",
+      "quote": "",
+      "usedBy": [],
+      "note": "F07 的原型；遊戲不寫出人名與細節"
+    },
+    {
+      "id": "SRC-004",
+      "category": "PRIMARY",
+      "title": "想想論壇（2014-09-01）：【撲馬想想】柯震東震出我國毒品政策的爛瘡",
+      "url": "https://www.thinkingtaiwan.net/content/3055",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "提供吸毒者毒品與乾淨的針頭",
+      "usedBy": [
+        "sp-capital-m01"
+      ]
+    },
+    {
+      "id": "SRC-005",
+      "category": "PRIMARY",
+      "title": "疾管署：藥癮愛滋減害計畫與執行點",
+      "url": "https://www.cdc.gov.tw/Category/MPage/BVGmgum1evkhTprNSeSjNQ",
+      "accessed": "2026-10-25",
+      "status": "NOT_OPENED",
+      "quote": "",
+      "usedBy": [],
+      "note": "未開啟；衛福部 10/5 說明已涵蓋遊戲需要的制度區分"
+    },
+    {
+      "id": "SRC-006",
+      "category": "PRIMARY",
+      "title": "衛生福利部（2026-10-05）：減害不是鼓勵用毒",
+      "url": "https://www.mohw.gov.tw/cp-7404-88143-1.html",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "減害不是鼓勵用毒",
+      "usedBy": [
+        "sp-capital-m01"
+      ]
+    },
+    {
+      "id": "SRC-007",
+      "category": "REPORT",
+      "title": "TVBS（2026-10-21）：專訪中被問是否背稿，蔣萬安回應",
+      "url": "https://news.tvbs.com.tw/politics/4038961",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "我已經回答很清楚了",
+      "usedBy": [
+        "sp-capital-m03"
+      ]
+    },
+    {
+      "id": "SRC-008",
+      "category": "REPORT",
+      "title": "TVBS：上屆黃珊珊票源53％轉向沈伯洋",
+      "url": "https://news.tvbs.com.tw/politics/4033530",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "上屆黃珊珊票源53％轉向沈伯洋",
+      "usedBy": [
+        "sp-capital-06"
+      ]
+    },
+    {
+      "id": "SRC-009",
+      "category": "REPORT",
+      "title": "TVBS：台北市長民調（2026-10-08）",
+      "url": "https://news.tvbs.com.tw/politics/4033527",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "差距由28個百分點縮小為8個百分點",
+      "usedBy": [
+        "sp-capital-03"
+      ]
+    },
+    {
+      "id": "SRC-010",
+      "category": "REPORT",
+      "title": "TVBS：總統促韓國瑜聲援沈 綠委拍桌轟邱垂正",
+      "url": "https://news.tvbs.com.tw/politics/3042410",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "總統促韓國瑜聲援沈",
+      "usedBy": [
+        "sp-capital-01"
+      ]
+    },
+    {
+      "id": "SRC-011",
+      "category": "REPORT",
+      "title": "Yahoo 新聞：沈伯洋正式參選對戰蔣萬安 賴清德讚台北市長不二人選",
+      "url": "https://tw.news.yahoo.com/%E6%B2%88%E4%BC%AF%E6%B4%8B%E6%AD%A3%E5%BC%8F%E5%8F%83%E9%81%B8%E5%B0%8D%E6%88%B0%E8%94%A3%E8%90%AC%E5%AE%89-%E8%B3%B4%E6%B8%85%E5%BE%B7%E8%AE%9A%E5%8F%B0%E5%8C%97%E5%B8%82%E9%95%B7%E4%B8%8D%E4%BA%8C%E4%BA%BA%E9%81%B8-105042647.html",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "台北市長不二人選",
+      "usedBy": [
+        "sp-capital-02"
+      ]
+    },
+    {
+      "id": "SRC-012",
+      "category": "REPORT",
+      "title": "三立新聞網：憂選台北市長遭抹黑 負面聲量外溢 沈伯洋：戰士沒有選擇戰場的權利",
+      "url": "https://tw.news.yahoo.com/%E6%86%82%E9%81%B8%E5%8F%B0%E5%8C%97%E5%B8%82%E9%95%B7%E9%81%AD%E6%8A%B9%E9%BB%91-%E8%B2%A0%E9%9D%A2%E8%81%B2%E9%87%8F%E5%A4%96%E6%BA%A2-%E6%B2%88%E4%BC%AF%E6%B4%8B-%E6%88%B0%E5%A3%AB%E6%B2%92%E6%9C%89%E9%81%B8%E6%93%87%E6%88%B0%E5%A0%B4%E7%9A%84%E6%AC%8A%E5%88%A9-015500071.html",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "戰士沒有選擇戰場的權利",
+      "usedBy": [
+        "sp-capital-02"
+      ]
+    },
+    {
+      "id": "SRC-013",
+      "category": "REPORT",
+      "title": "三立新聞網：把他留在立法院才是糟蹋！曹興誠：投沈伯洋一票就是投民主自由一票",
+      "url": "https://tw.news.yahoo.com/%E6%8A%8A%E4%BB%96%E7%95%99%E5%9C%A8%E7%AB%8B%E6%B3%95%E9%99%A2%E6%89%8D%E6%98%AF%E7%B3%9F%E8%B9%8B-%E6%9B%B9%E8%88%88%E8%AA%A0-%E6%8A%95%E6%B2%88%E4%BC%AF%E6%B4%8B-%E7%A5%A8%E5%B0%B1%E6%98%AF%E6%8A%95%E6%B0%91%E4%B8%BB%E8%87%AA%E7%94%B1-%E7%A5%A8-011900478.html",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "把他留在立法院才是糟蹋",
+      "usedBy": [
+        "sp-capital-02"
+      ]
+    },
+    {
+      "id": "SRC-014",
+      "category": "REPORT",
+      "title": "中央社（2023-11-18）：大巨蛋建設時間線",
+      "url": "https://www.cna.com.tw/news/aloc/202311180025.aspx",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "歷經6名台北市長",
+      "usedBy": [
+        "sp-capital-m05"
+      ]
+    },
+    {
+      "id": "SRC-015",
+      "category": "REPORT",
+      "title": "中央社（2026-10-03）：雙方毒品減害政策攻防",
+      "url": "https://www.cna.com.tw/news/aloc/202610030206.aspx",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "針頭交換和美沙冬治療計畫",
+      "usedBy": [
+        "sp-capital-m01"
+      ]
+    },
+    {
+      "id": "SRC-016",
+      "category": "REPORT",
+      "title": "中央社（2026-10-04）：藍營記者會與留言攻防",
+      "url": "https://www.cna.com.tw/news/aipl/202610040099.aspx",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "留言超過43萬則",
+      "usedBy": [
+        "sp-capital-m02"
+      ]
+    },
+    {
+      "id": "SRC-017",
+      "category": "REPORT",
+      "title": "中央社（2026-10-05）：衛福部長談減害政策成效",
+      "url": "https://www.cna.com.tw/news/ahel/202610050043.aspx",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "毒品零容忍",
+      "usedBy": [
+        "sp-capital-m01"
+      ]
+    },
+    {
+      "id": "SRC-018",
+      "category": "REPORT",
+      "title": "中央社（2026-10-08）：松山機場遷移與 AI 園區構想",
+      "url": "https://www.cna.com.tw/news/aipl/202610080124.aspx",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "約300公頃腹地",
+      "usedBy": [
+        "sp-capital-m04"
+      ]
+    },
+    {
+      "id": "SRC-019",
+      "category": "REPORT",
+      "title": "中央社（2026-10-15）：松山機場遷建與沈伯洋回應",
+      "url": "https://www.cna.com.tw/news/aipl/202610150102.aspx",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "事前完全沒有溝通",
+      "usedBy": [
+        "sp-capital-m04"
+      ]
+    },
+    {
+      "id": "SRC-020",
+      "category": "REPORT",
+      "title": "中央社（2026-10-15）：蔣萬安回應舊公文、替代運量與醫療後送",
+      "url": "https://www.cna.com.tw/news/aipl/202610150260.aspx",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "112年8月已回函中央",
+      "usedBy": [
+        "sp-capital-m04"
+      ]
+    },
+    {
+      "id": "SRC-021",
+      "category": "REPORT",
+      "title": "中央社：台北市長辯論協商",
+      "url": "https://www.cna.com.tw/news/aipl/202610130219.aspx",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "辯論協商",
+      "usedBy": [
+        "sp-capital-10"
+      ]
+    },
+    {
+      "id": "SRC-022",
+      "category": "REPORT",
+      "title": "中央社：松山機場遷移 沈伯洋提配套質疑",
+      "url": "https://www.cna.com.tw/news/aipl/202610140154.aspx",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "國防、離島醫療後送",
+      "usedBy": [
+        "sp-capital-m04"
+      ]
+    },
+    {
+      "id": "SRC-023",
+      "category": "REPORT",
+      "title": "公視（2026-10-04）：雙方回應毒品減害說法",
+      "url": "https://news.pts.org.tw/article/829848",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "當時談的是國外毒品減害政策",
+      "usedBy": [
+        "sp-capital-m01"
+      ]
+    },
+    {
+      "id": "SRC-024",
+      "category": "REPORT",
+      "title": "公視（2026-10-16）：醫療後送攻防與辯論安排",
+      "url": "https://news.pts.org.tw/article/831632",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "取代醫療後送的功能",
+      "usedBy": [
+        "sp-capital-m04",
+        "sp-capital-m06"
+      ]
+    },
+    {
+      "id": "SRC-025",
+      "category": "REPORT",
+      "title": "台視（2026-10-21）：蔣萬安專訪談施政成果",
+      "url": "https://news.ttv.com.tw/wbc/news/Views/11510200038800N",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "YouBike前30分鐘免費",
+      "usedBy": [
+        "sp-capital-m05"
+      ]
+    },
+    {
+      "id": "SRC-026",
+      "category": "REPORT",
+      "title": "壹蘋新聞網（2026-10-04）：沈伯洋回應並提到蔣萬安 2021 年提案",
+      "url": "https://news.nextapple.com/politics/20261004/6C2701EE4D940152A2F7E348E753F3B1",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "不要把過去的減害政策說成鼓勵吸毒",
+      "usedBy": [
+        "sp-capital-m01"
+      ]
+    },
+    {
+      "id": "SRC-027",
+      "category": "REPORT",
+      "title": "壹蘋新聞網（2026-10-21）：謝震武提出質疑、蔣萬安回應",
+      "url": "https://news.nextapple.com/politics/20261021/2CED1B6C5DD4A6D5CCBE8A7304CE4BB3",
+      "accessed": "2026-10-25",
+      "status": "NOT_OPENED",
+      "quote": "",
+      "usedBy": [],
+      "note": "未開啟；內容與 TVBS 同一專訪"
+    },
+    {
+      "id": "SRC-028",
+      "category": "REPORT",
+      "title": "民視新聞（Yahoo 轉載）：沈伯洋推政策島爆紅！網友二創台中「恐怖島」",
+      "url": "https://tw.news.yahoo.com/%E6%B2%88%E4%BC%AF%E6%B4%8B%E6%8E%A8%E6%94%BF%E7%AD%96%E5%B3%B6%E7%88%86%E7%B4%85-%E7%B6%B2%E5%8F%8B%E4%BA%8C%E5%89%B5%E5%8F%B0%E4%B8%AD-%E6%81%90%E6%80%96%E5%B3%B6-%E9%8D%8B%E7%83%A4%E7%AF%80-%E5%BB%9A%E9%A4%98%E6%B9%96%E9%83%BD%E5%85%A5%E5%88%97-095739836.html",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "政策島爆紅",
+      "usedBy": [
+        "sp-capital-05"
+      ]
+    },
+    {
+      "id": "SRC-029",
+      "category": "REPORT",
+      "title": "聯合報（2026-10-03）：蔣萬安籲沈伯洋不要拿美沙冬計畫遮掩",
+      "url": "https://udn.com/vote2026/story/124652/9792955",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "反毒沒有模糊空間",
+      "usedBy": [
+        "sp-capital-m01"
+      ]
+    },
+    {
+      "id": "SRC-030",
+      "category": "REPORT",
+      "title": "聯合報（中央社）：「出席造勢就被出征」 沈伯洋指影響選舉公平性",
+      "url": "https://udn.com/news/story/124652/9824228",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "出席造勢就被出征",
+      "usedBy": [
+        "sp-capital-04",
+        "sp-capital-07"
+      ]
+    },
+    {
+      "id": "SRC-031",
+      "category": "REPORT",
+      "title": "聯合報（中央社）：防跨境鎮壓政院專案保護參選人 沈伯洋盼修反滲透法",
+      "url": "https://udn.com/news/story/124652/9831444",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "專案保護參選人",
+      "usedBy": [
+        "sp-capital-07"
+      ]
+    },
+    {
+      "id": "SRC-032",
+      "category": "REPORT",
+      "title": "聯合報：沈伯洋民調反超蔣萬安17％",
+      "url": "https://udn.com/news/story/124652/9826302",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "民調反超蔣萬安17％",
+      "usedBy": [
+        "sp-capital-09"
+      ]
+    },
+    {
+      "id": "SRC-033",
+      "category": "REPORT",
+      "title": "聯合報：沈伯洋發言惹議 藍轟「颱風脫鉤論」狀況外",
+      "url": "https://udn.com/news/story/124652/9832429",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "颱風脫鉤論",
+      "usedBy": [
+        "sp-capital-08"
+      ]
+    },
+    {
+      "id": "SRC-034",
+      "category": "REPORT",
+      "title": "聯合報：輝達選址確定落腳北士科T17、T18",
+      "url": "https://udn.com/news/story/124626/9104370",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "三方談得非常清楚",
+      "usedBy": [
+        "sp-capital-m05"
+      ]
+    },
+    {
+      "id": "SRC-035",
+      "category": "REPORT",
+      "title": "聯合報：遭重慶公安立案偵查 沈伯洋喊沒在怕：下一步大概是通緝",
+      "url": "https://udn.com/news/story/6656/9100825",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "下一步大概是通緝",
+      "usedBy": [
+        "sp-capital-01"
+      ]
+    },
+    {
+      "id": "SRC-036",
+      "category": "REPORT",
+      "title": "鏡報：台北市長辯論 10/31 舉行",
+      "url": "https://www.mirrordaily.news/story/91836",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "10月31日中午12時至下午2時",
+      "usedBy": [
+        "sp-capital-10",
+        "sp-capital-m06"
+      ]
+    },
+    {
+      "id": "SRC-037",
+      "category": "REPORT",
+      "title": "震傳媒：台北市長投票意向民調（2026-10-22）",
+      "url": "https://www.zmedia.com.tw/Document/PoolDetail/44789",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "沈伯洋42.8%、蔣萬安39.0%",
+      "usedBy": [
+        "sp-capital-09"
+      ]
+    },
+    {
+      "id": "SRC-038",
+      "category": "REPORT",
+      "title": "震傳媒：台北市長當選看好度（2026-10-22）",
+      "url": "https://www.zmedia.com.tw/Document/PoolDetail/44790",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "看好度",
+      "usedBy": [
+        "sp-capital-09"
+      ]
+    },
+    {
+      "id": "SRC-039",
+      "category": "REPORT",
+      "title": "風傳媒：沈伯洋高民調是虛胖？",
+      "url": "https://www.storm.mg/article/11175272",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "高民調是虛胖",
+      "usedBy": [
+        "sp-capital-09"
+      ]
+    },
+    {
+      "id": "SRC-040",
+      "category": "SOCIAL",
+      "title": "QSearch 10/12–18 社群話題整理",
+      "url": "https://www.qsearch.cc/blog/2026/10/taipei-mayor-2026-social-volume-1012-1018/",
+      "accessed": "2026-10-25",
+      "status": "NOT_OPENED",
+      "quote": "",
+      "usedBy": [],
+      "note": "未開啟"
+    },
+    {
+      "id": "SRC-041",
+      "category": "SOCIAL",
+      "title": "QSearch 8/31–9/6 社群話題整理",
+      "url": "https://www.qsearch.cc/blog/2026/09/taipei-mayor-2026-social-volume-0831-0906/",
+      "accessed": "2026-10-25",
+      "status": "NOT_OPENED",
+      "quote": "",
+      "usedBy": [],
+      "note": "未開啟"
+    },
+    {
+      "id": "SRC-042",
+      "category": "SOCIAL",
+      "title": "QSearch：2026 台北市長選戰社群時間線",
+      "url": "https://www.qsearch.cc/events/2026-taipei-election",
+      "accessed": "2026-10-25",
+      "status": "CHECKED_ONLINE",
+      "quote": "討論量不等於民意",
+      "usedBy": [
+        "sp-capital-m02"
+      ]
+    },
+    {
+      "id": "SRC-043",
+      "category": "SOCIAL",
+      "title": "QSearch：三平台市政議題、資料方法與限制",
+      "url": "https://www.qsearch.cc/events/2026-taipei-election/platforms.html",
+      "accessed": "2026-10-25",
+      "status": "NOT_OPENED",
+      "quote": "",
+      "usedBy": [],
+      "note": "未開啟"
+    }
+  ]
+}

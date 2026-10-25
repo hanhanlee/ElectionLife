@@ -7,7 +7,8 @@ interface Props {
   /** 大字：當選、連任成功、落選…… */
   result: string;
   character: string;
-  vote: number;
+  /** 模型估計勝選機率；特別篇不顯示 */
+  vote?: number;
   /** 例如「對手：王志明（綠黨）」 */
   opponent?: string;
 }
@@ -101,7 +102,8 @@ export default function ResultBanner({ won, result, character, vote, opponent }:
       <p className={styles.bannerLabel}>{character}</p>
       <p className={won ? styles.bannerSash : styles.bannerStamp}>{result}</p>
       <p className={styles.bannerVote}>
-        {opponent && `${opponent}｜`}模型估計勝選機率 {vote}%
+        {opponent}
+        {vote !== undefined && `${opponent ? "｜" : ""}模型估計勝選機率 ${vote}%`}
       </p>
     </section>
   );
