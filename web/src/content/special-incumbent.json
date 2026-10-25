@@ -27,7 +27,7 @@
     "fact": "CLAIM",
     "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
     "options": [
-      { "id": "press", "label": "讓大陸小組繼續追打：「請拿出證據」", "outcome": "大陸小組又發了兩份新聞稿。藍黨的長輩很滿意；也有記者問：市府的機關，什麼時候變成競選總部了？", "effects": { "party": 3, "media": 2, "integrity": -2 }, "delayed": { "afterTurns": 2, "effects": { "approval": -3 }, "text": "大陸小組的新聞稿被記者整理成一張時間表：市府的機關，替市長回了五次競選對手。中間選民開始問：這是市府，還是競總？" } },
+      { "id": "press", "label": "讓大陸小組繼續追打：「請拿出證據」", "outcome": "大陸小組又發了兩份新聞稿。藍黨的長輩很滿意；也有記者問：市府的機關，什麼時候變成競選總部了？", "effects": { "party": 3, "media": 2, "integrity": -2 }, "delayed": { "afterTurns": 2, "effects": { "approval": -2 }, "text": "大陸小組的新聞稿被記者整理成一張時間表：市府的機關，替市長回了五次競選對手。中間選民開始問：這是市府，還是競總？" } },
       { "id": "open", "label": "公開歷屆論壇的成果清單，讓市民自己判斷", "outcome": "清單很長，有些成果很實在，有些只是一張合照。記者說：至少這次大家吵的是內容。", "effects": { "achievement": 3, "integrity": 2, "approval": 1 } },
       { "id": "pivot", "label": "說論壇照辦，但這次的主題改成防災與公衛", "outcome": "對手一時找不到可以打的地方。黨內有人說你軟了。", "effects": { "approval": 2, "achievement": 1, "party": -1 } }
     ],
@@ -117,7 +117,7 @@
     "fact": "FACT",
     "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
     "options": [
-      { "id": "never", "label": "說：「本來就沒有要邀請他上台。」", "outcome": "這句話被批評沒禮貌。隔天，他發了一篇文章：有人打電話找「京都人」，他說這邊沒有，對方就掛了，「現在只剩下：嘟嘟嘟⋯」。當天晚上，你請文化局長再打電話給他。", "effects": { "approval": -4, "media": 2, "integrity": -1 } },
+      { "id": "never", "label": "說：「本來就沒有要邀請他上台。」", "outcome": "這句話被批評沒禮貌。隔天，他發了一篇文章：有人打電話找「京都人」，他說這邊沒有，對方就掛了，「現在只剩下：嘟嘟嘟⋯」。當天晚上，你請文化局長再打電話給他。", "effects": { "approval": -3, "media": 2, "integrity": -1 } },
       { "id": "thanks", "label": "說：「他願意來就很感謝，坐哪裡都可以。」", "outcome": "記者沒有追問。他後來真的來了，坐在台下，鼓掌鼓得很客氣。", "effects": { "approval": 2, "integrity": 1 } },
       { "id": "freedom", "label": "說：「出席誰的活動都是他的自由，任何人都不該因此被懲罰。」", "outcome": "這句話也是在說對岸的出征。你黨內有人不太高興，但很多中間選民記住了這一句。", "effects": { "integrity": 3, "approval": 2, "party": -2 } }
     ],
@@ -163,15 +163,16 @@
     "id": "sp-incumbent-11",
     "phase": "campaign",
     "title": "電視辯論（架空）",
-    "scenario": "（架空情節）電視辯論。對手的第一題問颱風假，第二題問機場，第三題問你：「四年了，你自己最滿意的一件事是什麼？」",
+    "scenario": "（架空情節）電視辯論。對手的第一題問七月那次沒風沒雨的颱風假，第二題問機場，第三題問你：「四年了，你自己最滿意的一件事是什麼？」",
     "tags": ["辯論"],
     "special": "capital-2026-incumbent",
     "specialTurn": 11,
     "fact": "SIMULATION",
     "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
     "options": [
-      { "id": "record", "label": "逐題拿出政績數字：捷運、社宅、鼠患", "outcome": "你準備得很充分。數字很多，有人說聽不太懂，但沒有人說你答非所問。", "effects": { "achievement": 2, "approval": 2 }, "variants": [{ "when": { "min": { "achievement": 70 } }, "outcome": "你準備得很充分，每一題都有數字，也都有地方可以去看。記者說：今晚的你，不像講稿機。", "effects": { "approval": 3 } }] },
+      { "id": "record", "label": "逐題拿出政績數字：捷運、社宅、托育", "outcome": "你準備得很充分。數字很多，有人說聽不太懂，但沒有人說你答非所問。", "effects": { "achievement": 2, "approval": 2 }, "variants": [{ "when": { "min": { "achievement": 70 } }, "outcome": "你準備得很充分，每一題都有數字，也都有地方可以去看。記者說：今晚的你，每一題都答在題目上。", "effects": { "approval": 3 } }] },
       { "id": "needle", "label": "把對手十二年前那句話，再問一次", "outcome": "全場安靜了一下。對手說：「台北市現在就在發針頭，是你的衛生局在發。」", "effects": { "media": 3, "party": 2, "approval": -2 }, "variants": [{ "when": { "flags": ["si-needle"] }, "outcome": "全場安靜了一下。對手說：「這題你在臉書上問過了，五十萬人回答過你。」觀眾席有人笑出聲。", "effects": { "approval": -3 } }] },
+      { "id": "pivot", "label": "聽智囊的建議：不管被問什麼，都帶回鮮奶、營養午餐、大巨蛋和輝達", "outcome": "第一題問颱風假，你講到大巨蛋；第二題問機場，你講到輝達；第三題問你最滿意什麼，你講到鮮奶和營養午餐。整場辯論，你沒有被任何一題問倒。隔天，網路上的「問 A 答 B」合輯，多了一部。", "effects": { "party": 2, "achievement": 1, "approval": -2, "media": 1 } },
       { "id": "admit", "label": "承認幾件做得不夠好的事，說明接下來怎麼補", "outcome": "你說了颱風假、說了機場。對手準備好的攻擊，好幾題用不上了。", "effects": { "integrity": 3, "approval": 3, "party": -1 } }
     ],
     "source": { "status": "placeholder", "prototype": "（架空）2026 年 10 月 31 日的電視辯論尚未舉行；題目取自選戰中真實的爭議。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [] },
@@ -188,7 +189,7 @@
     "fact": "CLAIM",
     "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
     "options": [
-      { "id": "kings", "label": "請三位天王站台，場面要大", "outcome": "現場很滿，空拍很壯觀。電視上，三位天王的發言比你還長。", "effects": { "party": 4, "media": 1, "approval": -2, "team": -2 } },
+      { "id": "kings", "label": "請三位天王站台，場面要大", "outcome": "現場很滿，空拍很壯觀。電視上，三位天王的發言比你還長。", "effects": { "party": 4, "media": 1, "approval": -1, "team": -2 } },
       { "id": "young", "label": "讓年輕志工和市民上台，天王坐在台下", "outcome": "黨部有點不高興。網路上，一位第一次投票的大學生的發言，比整場大會還紅。", "effects": { "approval": 3, "media": 2, "party": -2 } },
       { "id": "policy", "label": "把成立大會改成一場政績說明會", "outcome": "場面冷了一點。但有記者說，這是今年唯一一場有附參考資料的成立大會。", "effects": { "achievement": 2, "approval": 1, "media": -2 } }
     ],
@@ -207,7 +208,7 @@
     "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
     "options": [
       { "id": "family", "label": "講家族四代，和這座城市的故事", "outcome": "台下的長輩紅了眼眶。網路上，有年輕人留言：又是家族。", "effects": { "party": 3, "approval": 1, "media": 1 } },
-      { "id": "record", "label": "一項一項念出四年做到的事", "outcome": "清單很長。有人聽到睡著，也有人第一次知道，原來那條路是你修的。", "effects": { "achievement": 2, "approval": 2 }, "variants": [{ "when": { "min": { "achievement": 70 } }, "outcome": "清單很長，每一項都有人在台下點頭。這一次，沒有人說你是講稿機。", "effects": { "approval": 2 } }] },
+      { "id": "record", "label": "一項一項念出四年做到的事", "outcome": "清單很長。有人聽到睡著，也有人第一次知道，原來那條路是你修的。", "effects": { "achievement": 2, "approval": 2 }, "variants": [{ "when": { "min": { "achievement": 70 } }, "outcome": "清單很長，每一項都有人在台下點頭。這一次，沒有人說你答非所問。", "effects": { "approval": 2 } }] },
       { "id": "sorry", "label": "說：「這段時間，我做錯了一些事，我聽到了。」", "outcome": "廣場安靜了幾秒，然後掌聲比你預期的大。黨內有人覺得，你不該在最後一晚示弱。", "effects": { "approval": 4, "integrity": 3, "party": -1 } }
     ],
     "source": { "status": "placeholder", "prototype": "（架空）2026 年 11 月 28 日投票前一晚的選前之夜，尚未發生。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [] }

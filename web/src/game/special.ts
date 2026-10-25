@@ -298,6 +298,7 @@ export const SPECIALS: SpecialDef[] = [
       "sp-incumbent-08": "calm",
       "sp-incumbent-09": "experience",
       "sp-incumbent-10": "kings",
+      "sp-incumbent-11": "pivot",
       "sp-incumbent-p01": "show",
       "sp-incumbent-f07": "broom",
     },
