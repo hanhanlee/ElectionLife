@@ -27,7 +27,7 @@
     "fact": "CLAIM",
     "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
     "options": [
-      { "id": "press", "label": "讓大陸小組繼續追打：「請拿出證據」", "outcome": "大陸小組又發了兩份新聞稿。藍黨的長輩很滿意；也有記者問：市府的機關，什麼時候變成競選總部了？", "effects": { "party": 3, "media": 2, "integrity": -2 }, "delayed": { "afterTurns": 2, "effects": { "approval": -4 }, "text": "大陸小組的新聞稿被記者整理成一張時間表：市府的機關，替市長回了五次競選對手。中間選民開始問：這是市府，還是競總？" } },
+      { "id": "press", "label": "讓大陸小組繼續追打：「請拿出證據」", "outcome": "大陸小組又發了兩份新聞稿。藍黨的長輩很滿意；也有記者問：市府的機關，什麼時候變成競選總部了？", "effects": { "party": 3, "media": 2, "integrity": -2 }, "delayed": { "afterTurns": 2, "effects": { "approval": -3 }, "text": "大陸小組的新聞稿被記者整理成一張時間表：市府的機關，替市長回了五次競選對手。中間選民開始問：這是市府，還是競總？" } },
       { "id": "open", "label": "公開歷屆論壇的成果清單，讓市民自己判斷", "outcome": "清單很長，有些成果很實在，有些只是一張合照。記者說：至少這次大家吵的是內容。", "effects": { "achievement": 3, "integrity": 2, "approval": 1 } },
       { "id": "pivot", "label": "說論壇照辦，但這次的主題改成防災與公衛", "outcome": "對手一時找不到可以打的地方。黨內有人說你軟了。", "effects": { "approval": 2, "achievement": 1, "party": -1 } }
     ],
@@ -146,18 +146,18 @@
     "id": "sp-incumbent-08",
     "phase": "campaign",
     "title": "兩份民調",
-    "scenario": "一份民調說，你落後十七個百分點；另一份說，差距在誤差範圍內；還有一份說，大家還是比較看好你會當選。藍營資深主持人在節目上說：藍營的支持者，不敢表態了。",
+    "scenario": "上個月，一個協會的民調說你只領先一點二個百分點。你黨內的議員說，這個協會是那位推動大罷免的科技業大老出的錢；記者問你，你反問：「你說那位大罷免的大老嗎？」這個月，同一個協會說你落後十七點。另一份民調說差距在誤差範圍內；還有一份說，大家還是比較看好你。藍營資深主持人在節目上說：藍營的支持者，不敢表態了。記者又來問你。",
     "tags": ["民調", "選戰"],
     "special": "capital-2026-incumbent",
     "specialTurn": 8,
     "fact": "CLAIM",
     "conditions": { "flags": ["special-capital-2026-incumbent", "party-blue"] },
     "options": [
-      { "id": "calm", "label": "「民調只是參考，我們會更努力。」", "outcome": "新聞標題很平淡。團隊鬆了一口氣，也鬆了一點勁。", "effects": { "approval": 1, "team": 1 } },
-      { "id": "rosy", "label": "拿最看好你的那一份給支持者看：「大家放心」", "outcome": "支持者放心了。有些人放心到，覺得不用出門投票。", "effects": { "party": 2, "approval": -2 } },
+      { "id": "calm", "label": "「民調都參考，我們一步一腳印，用政績說話。也請肯定這四年的人，十一月二十八日勇敢站出來。」", "outcome": "標題很平淡，但「勇敢站出來」這四個字，被很多支持者轉貼。也有人問：要勇敢站出來，是因為不敢說嗎？", "effects": { "approval": 1, "party": 2, "team": 1 } },
+      { "id": "slap", "label": "跟著黨內同事說：「十一月二十八日，用選票打臉那位大老。」", "outcome": "黨部群組很振奮。中間選民聽到的是：民調輸了，就怪出錢的人。", "effects": { "party": 3, "media": 2, "approval": -2, "integrity": -1 } },
       { "id": "alarm", "label": "對內公開說：「我們現在就是落後，請大家出來表態」", "outcome": "黨部動起來了，志工也多了。對手說：現任市長終於緊張了。", "effects": { "party": 4, "approval": 2, "team": -2, "media": 1 }, "variants": [{ "when": { "flags": ["si-alert"] }, "outcome": "你從五月就說要當成落後在打，這一天團隊早有準備。黨部、志工、里長的名單，一個晚上就動起來了。", "effects": { "approval": 2, "team": 2 } }, { "when": { "flags": ["si-relaxed"] }, "outcome": "黨部動起來了，但花了一個禮拜：大家都記得你五月說過，現在沒在想選舉的事。對手說：現任市長終於緊張了。", "effects": { "approval": -1 } }] }
     ],
-    "source": { "status": "draft", "prototype": "2026 年 10 月 20 日信民協會民調沈伯洋 50.3%、蔣萬安 33.3%；10 月 22 日震傳媒投票意向差距在誤差範圍內、當選看好度蔣萬安較高；趙少康在節目上說藍營支持者表態率下降。現任市長的回應待查。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "Newtalk（2026-10-20）：沈伯洋支持度領先17%，戴立安分析", "url": "https://newtalk.tw/news/view/2026-10-20/1066585", "quote": "50.3%", "accessed": "2026-10-25" }, { "title": "震傳媒：台北市長當選看好度（2026-10-22）", "url": "https://www.zmedia.com.tw/Document/PoolDetail/44790", "quote": "看好度", "accessed": "2026-10-25" }] }
+    "source": { "status": "draft", "prototype": "2026 年 9 月 22 日信民協會民調蔣萬安 41.7%、沈伯洋 40.5%，國民黨議員楊植斗質疑協會由曹興誠出資，蔣萬安反問「你說那位大罷免的曹興誠嗎？」並說任何數字都是參考；10 月 20 日同一協會民調沈伯洋 50.3%、蔣萬安 33.3%，蔣萬安回應各項民調都參考、持續一步一腳印、用政績說話，並呼籲支持者 11/28「勇敢站出來」；徐巧芯說要「11/28 用選票打臉曹興誠」；10 月 22 日震傳媒投票意向差距在誤差範圍內、當選看好度蔣萬安較高；趙少康說藍營支持者表態率下降。", "adaptation": "改編自 2026 年首都市長選戰的公開報導；人名以身分影射，對話與選項為遊戲虛構。", "refs": [{ "title": "三立（2026-09-22）：跟沈伯洋僅差1.2%！蔣萬安諷民調「大罷免的曹興誠？」", "url": "https://www.setn.com/ampnews/1911070", "quote": "大罷免的曹興誠", "accessed": "2026-10-25" }, { "title": "NOWnews（Yahoo 轉載，2026-10-20）：民調落後沈伯洋17%！蔣萬安回應了", "url": "https://tw.news.yahoo.com/%E6%B0%91%E8%AA%BF%E8%90%BD%E5%BE%8C%E6%B2%88%E4%BC%AF%E6%B4%8B17-%E8%94%A3%E8%90%AC%E5%AE%89%E5%9B%9E%E6%87%89%E4%BA%86-031612533.html", "quote": "勇敢站出來", "accessed": "2026-10-25" }, { "title": "Newtalk（2026-10-20）：沈伯洋支持度領先17%，戴立安分析", "url": "https://newtalk.tw/news/view/2026-10-20/1066585", "quote": "50.3%", "accessed": "2026-10-25" }, { "title": "震傳媒：台北市長當選看好度（2026-10-22）", "url": "https://www.zmedia.com.tw/Document/PoolDetail/44790", "quote": "看好度", "accessed": "2026-10-25" }] }
   },
   {
     "id": "sp-incumbent-11",

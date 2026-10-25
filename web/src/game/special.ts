@@ -295,6 +295,7 @@ export const SPECIALS: SpecialDef[] = [
       "sp-incumbent-05": "post",
       "sp-incumbent-06": "never",
       "sp-incumbent-07": "announce",
+      "sp-incumbent-08": "calm",
       "sp-incumbent-09": "experience",
       "sp-incumbent-10": "kings",
       "sp-incumbent-p01": "show",
