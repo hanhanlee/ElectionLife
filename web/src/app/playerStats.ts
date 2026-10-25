@@ -9,6 +9,12 @@ import type { GameState } from "@/game/types";
 
 const STATS_URL = process.env.NEXT_PUBLIC_STATS_URL ?? "https://api.beyondvote.com";
 
+/** 這一局的隨機編號：舊瀏覽器（例如 iOS 15.4 以前）沒有 crypto.randomUUID，改用時間加亂數 */
+function newPlayId(): string {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") return crypto.randomUUID();
+  return `p-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`;
+}
+
 export function usePlayerStats(state: GameState, won: boolean, ending: string, sameAsReal: number, realTotal: number): PlayerStats | null {
   const [stats, setStats] = useState<PlayerStats | null>(null);
   useEffect(() => {
@@ -23,13 +29,13 @@ export function usePlayerStats(state: GameState, won: boolean, ending: string, s
       id = localStorage.getItem(idKey);
       sent = localStorage.getItem(sentKey) === "1";
       if (!id) {
-        id = crypto.randomUUID();
+        id = newPlayId();
         localStorage.setItem(idKey, id);
       }
     } catch {
       // 記不住也沒關係，最多這一局之後重新整理會再送一次
     }
-    const record = buildPlay(id ?? crypto.randomUUID(), state, won, ending, sameAsReal, realTotal);
+    const record = buildPlay(id ?? newPlayId(), state, won, ending, sameAsReal, realTotal);
     const send = sent
       ? Promise.resolve()
       : fetch(`${STATS_URL}/plays`, {
