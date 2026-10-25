@@ -1,5 +1,6 @@
 // 特別篇平衡模擬：平常不跑，設定 SIM_N 才會執行並輸出報表。
 // SIM_N=10000 SIM_OUT=../docs/research/special-capital-sim.md npx vitest run src/game/special.sim.test.ts
+// SIM_SPECIAL=1 SIM_N=10000 SIM_OUT=../docs/research/special-incumbent-sim.md npx vitest run src/game/special.sim.test.ts
 
 import { writeFileSync } from "node:fs";
 import { test } from "vitest";
@@ -10,7 +11,8 @@ import { mulberry32 } from "./rng";
 import { SPECIALS, specialEnding } from "./special";
 import type { GameOption, GameState } from "./types";
 
-const def = SPECIALS[0];
+// SIM_SPECIAL=1：守城路線（預設 0：挑戰者路線）
+const def = SPECIALS[Number(process.env.SIM_SPECIAL ?? 0)];
 const N = Number(process.env.SIM_N ?? 0);
 type Pick = (opts: GameOption[], s: GameState, r: () => number) => GameOption;
 

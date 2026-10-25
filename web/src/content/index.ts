@@ -8,6 +8,7 @@ import cities from "./cities.json";
 import crises from "./crises.json";
 import raw from "./events.json";
 import specialCapital from "./special-capital.json";
+import specialIncumbent from "./special-incumbent.json";
 import fates from "./fates.json";
 // 由 scripts/derive_mayor_stats.py 產生，請勿手動修改
 import history from "./history.json";
@@ -16,7 +17,7 @@ import parties from "./parties.json";
 import traits from "./traits.json";
 
 // 特別篇的事件也放進事件庫：只有特別篇會依劇本叫出它們，不會被隨機抽到
-export const EVENTS = [...raw, ...specialCapital] as GameEvent[];
+export const EVENTS = [...raw, ...specialCapital, ...specialIncumbent] as GameEvent[];
 export const HISTORY = history;
 export const PARTIES = parties as Party[];
 export const BACKGROUNDS = backgrounds as Background[];

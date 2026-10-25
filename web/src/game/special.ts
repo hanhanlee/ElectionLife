@@ -2,6 +2,7 @@
 // 取材自正在進行的真實選戰，人名一律以身分或綽號影射。
 
 import { opponentStrength } from "./profile";
+import type { CardKind } from "./shareCard";
 import type { GameEvent, GameState, Opponent, Profile, StatDelta, StatKey, Trait } from "./types";
 
 /** 結局判斷用的承諾帳：做過幾個沒有財源的承諾、具體縮減或補上試算了幾次 */
@@ -26,6 +27,8 @@ export interface SpecialDef {
   teaser: string;
   /** 開場插畫（web/public/specials/<art>.webp） */
   art: string;
+  /** 開場頁的開始按鈕 */
+  startLabel: string;
   /** 開局說明，一段一句 */
   intro: string[];
   party: string;
@@ -51,6 +54,11 @@ export interface SpecialDef {
   reality: string;
   /** 現實中的挑戰者在各題的選擇（事件 id → 選項 id）；結局頁的終章反思和平衡模擬的「現實路線」都用這份 */
   realChoices: Record<string, string>;
+  /** 終章反思的最後一句：依輸贏與和現實相同的題數換一句，再加一句兩條路線共同的問題 */
+  closings: { lost: string; wonSame: string; wonDifferent: string; always: string };
+  /** 分享圖卡：底圖與小故事 */
+  cards: { win: CardKind; loss: CardKind };
+  shareStory: (won: boolean, same: number, total: number) => string;
   /** 終章反思開頭：現實的選戰走到哪裡（真名只出現在結局頁） */
   realityNow: { paragraphs: string[]; refs: { title: string; url: string }[] };
   /** 結局頁導向主篇的一句話 */
@@ -75,6 +83,7 @@ export const SPECIALS: SpecialDef[] = [
     title: "首都逆轉戰",
     teaser: "被對岸立案偵查的立委，落後二十八點，挑戰首都的現任市長。",
     art: "route-challenger",
+    startLabel: "接受徵召",
     intro: [
       "你是綠黨的立法委員，在大學教犯罪學，創辦了一間民防學院，教民眾在戰爭與災難中自救、識讀假訊息。",
       "對岸說你「分裂國家」，對你立案偵查。半年後，黨要你去挑戰首都的現任市長。",
@@ -179,6 +188,15 @@ export const SPECIALS: SpecialDef[] = [
       "sp-capital-n06": "more",
       "sp-capital-n07": "books",
     },
+    closings: {
+      lost: "現實裡，他做了這些選擇，把落後二十八點追成拉鋸。你在哪幾題做了不一樣的決定？",
+      wonSame: "你走了他走過的路，也走到了終點。現實裡，這條路還沒走完。",
+      wonDifferent: "你用自己的方法贏了。他在現實裡為什麼沒這樣選？是他錯了，還是你漏看了什麼？",
+      always: "他的選擇裡，有哪些是你不會做的？",
+    },
+    cards: { win: "capital-win", loss: "capital-loss" },
+    shareStory: (won, same, total) =>
+      `落後二十八點起步，${won ? "我當選了" : "最後沒能翻盤"}。${total > 0 ? `我遇到的 ${total} 個真實攻防裡，有 ${same} 題和現實的選擇一樣。` : ""}`,
     realityNow: {
       paragraphs: [
         "沈伯洋被徵召後的第一份民調，落後蔣萬安二十八個百分點，很多人說這是垃圾時間。",
@@ -190,6 +208,115 @@ export const SPECIALS: SpecialDef[] = [
       ],
     },
     cta: "這場選舉結束了。如果你真的當上市長，接下來四年呢？",
+  },
+  {
+    id: "capital-2026-incumbent",
+    title: "首都守城戰",
+    teaser: "民調一路領先的現任市長，要守住這座城。",
+    art: "route-incumbent",
+    startLabel: "爭取連任",
+    intro: [
+      "你是藍黨的首都市長，律師出身。家族四代都出現在課本裡，四年前你第一次選市長就贏了。",
+      "第一任做得四平八穩，民調一直很好看。綠黨徵召了一位被對岸立案偵查的教授立委來挑戰你。",
+      "對手徵召後的第一份民調，你領先二十八個百分點。所有人都說，這場選舉躺著選就好。",
+    ],
+    party: "blue",
+    background: "incumbent",
+    profile: { city: "tianlong", traits: ["photogenic", "connected", "clean-image"], burden: "dynasty", origin: 0 },
+    opponent: {
+      name: "教授立委",
+      party: "green",
+      title: "挑戰首都的立法委員",
+      incumbent: false,
+      traits: ["policy-wonk", "meme-lord", "principled"],
+      burden: "activist-network",
+    },
+    opponentIntro: "大學犯罪學教授、民防學院創辦人，被對岸立案偵查。網路梗很多，政見很長。批評的人說：學者從政，懂理論不懂市政。",
+    opponentBonus: -0.25,
+    startDelta: {},
+    statLabels: { approval: "支持度" },
+    statHints: { approval: "遊戲裡的聲勢指數，不是真實民調。" },
+    visibleStats: ["approval", "media", "achievement", "team", "party"],
+    disabledCrises: ["x-overexposure"],
+    voteNote: "開票前，幕僚提醒你：支持度只是聲勢，不是票。很多人在電話裡不表態，這一次，不表態的是誰的人？",
+    endings: [
+      {
+        when: (s, won) => won && s.stats.integrity >= 80,
+        title: "守住了",
+        headline: "城守住了，你也沒有變",
+        paragraphs: () => [
+          "開票到晚上九點，對手打電話來祝賀。你在台上說的第一句話是：「謝謝願意給我第二次機會的每一個人，也謝謝沒有投給我的人，我聽到了。」",
+          "第二任開始了。這一次，沒有人說你是躺著選上的。",
+        ],
+      },
+      {
+        when: (_s, won) => won,
+        title: "險勝",
+        headline: "你守住了城，但城裡的人看你的眼神不一樣了",
+        paragraphs: () => [
+          "開票開到最後一刻，你以些微差距勝出。慶功宴上，黨部的人說：「好險。」",
+          "領先二十八點的選舉，最後贏了幾個百分點。接下來四年，每一個市民都會記得，這座城差一點就換人了。",
+        ],
+      },
+      {
+        when: (s, won) => !won && s.stats.integrity >= 75,
+        title: "城破，但你沒有失態",
+        headline: "你輸了，但你一路上沒有說過一句自己不相信的話",
+        paragraphs: () => [
+          "你輸了。敗選記者會上，你向對手道賀，也向市府同仁道謝：「市政不會因為選舉停下來，交接的每一份資料，我們都會準備好。」",
+          "很多人說，這是你這四年最像市長的一天。",
+        ],
+      },
+      {
+        when: (s, won) => !won && s.stats.party >= 76,
+        title: "基本盤還在",
+        headline: "深藍的票都投給你了，只是不夠",
+        paragraphs: () => [
+          "開票時，你在幾個老社區一路領先，但其他地方一路落後。黨部的人說：「基本盤都在。」你知道問題不在基本盤。",
+          "那些在電話裡不表態的人，最後去投票了，只是沒有投給你。",
+        ],
+      },
+      {
+        when: () => true,
+        title: "城破",
+        headline: "領先二十八點的人，輸了",
+        paragraphs: () => [
+          "開票不到一小時，勝負就出來了。你走上台，看著比四年前少了一半的支持者。",
+          "幕僚把整場選戰的新聞剪報攤在桌上，從五月那份領先二十八點的民調，一路翻到昨天。你想找出是哪一天開始輸的，翻了很久，翻不到。",
+        ],
+      },
+    ],
+    reality: "現實中的這場選戰，在 2026 年 11 月 28 日投票。遊戲裡的結果，只是無數種可能中的一種，不代表任何預測或立場。",
+    realChoices: {
+      "sp-incumbent-02": "press",
+      "sp-incumbent-03": "off",
+      "sp-incumbent-04": "post",
+      "sp-incumbent-05": "milk",
+      "sp-incumbent-06": "show",
+      "sp-incumbent-07": "never",
+      "sp-incumbent-08": "announce",
+      "sp-incumbent-11": "kings",
+    },
+    closings: {
+      lost: "現實裡，他從領先二十八點走到這一步。你在哪幾題，和他做了一樣的決定？",
+      wonSame: "你走了他走過的路，最後守住了。現實裡，這條路還沒走完。",
+      wonDifferent: "你贏了。但你的選擇和現實為什麼總是不同？如果你支持的是他的政黨，這還是你本來想支持的樣子嗎？要怎麼讓它改變？",
+      always: "他的選擇裡，有哪些是你不會做的？",
+    },
+    cards: { win: "win", loss: "loss" },
+    shareStory: (won, same, total) =>
+      `領先二十八點起步，${won ? "我守住了這座城" : "最後還是輸了"}。${total > 0 ? `我遇到的 ${total} 個真實攻防裡，有 ${same} 題和現實的選擇一樣。` : ""}`,
+    realityNow: {
+      paragraphs: [
+        "沈伯洋被徵召後的第一份民調，蔣萬安領先二十八個百分點，很多人說這場選舉躺著選就好。",
+        "十月二十日，信民協會公布的民調是沈伯洋 50.3%、蔣萬安 33.3%。做分析的民調專家也提醒：民調不是得票率，換算成得票，兩人可能非常接近。躺著選，選成了焦土戰。",
+      ],
+      refs: [
+        { title: "聯合報：北市最新民調，蔣萬安大贏沈伯洋 28 個百分點", url: "https://udn.com/news/story/124652/9529403" },
+        { title: "Newtalk（2026-10-20）：沈伯洋支持度領先 17%，戴立安分析", url: "https://newtalk.tw/news/view/2026-10-20/1066585" },
+      ],
+    },
+    cta: "這場選舉結束了。如果你真的連任了，第二個任期要怎麼做？",
   },
 ];
 
@@ -208,7 +335,7 @@ export const SPECIAL_SERIES: {
   teaser: "有人盼望奇蹟，有人不能輸。你能將選戰帶向不同的結局嗎？",
   routes: [
     { title: "洋流慧聚", side: "挑戰者路線", teaser: "被對岸立案偵查的立委，落後二十八點，挑戰首都的現任市長。", art: "route-challenger", specialId: "capital-2026" },
-    { title: "萬安守城", side: "現任市長路線", teaser: "民調一路領先的現任市長，要守住這座城。", art: "route-incumbent" },
+    { title: "萬安守城", side: "現任市長路線", teaser: "民調一路領先的現任市長，要守住這座城。", art: "route-incumbent", specialId: "capital-2026-incumbent" },
   ],
 };
 
@@ -273,12 +400,9 @@ export function realityCheck(def: SpecialDef, state: GameState, events: GameEven
   });
   const same = rows.filter((r) => r.same).length;
   const mostlySame = same * 2 >= rows.length;
-  const closing = !won
-    ? "現實裡，他做了這些選擇，把落後二十八點追成拉鋸。你在哪幾題做了不一樣的決定？"
-    : mostlySame
-      ? "你走了他走過的路，也走到了終點。現實裡，這條路還沒走完。"
-      : "你用自己的方法贏了。他在現實裡為什麼沒這樣選？是他錯了，還是你漏看了什麼？";
-  return { rows, same, closing: [closing, "他的選擇裡，有哪些是你不會做的？"] };
+  const c = def.closings;
+  const closing = !won ? c.lost : mostlySame ? c.wonSame : c.wonDifferent;
+  return { rows, same, closing: [closing, c.always] };
 }
 
 export function specialEnding(def: SpecialDef, state: GameState, won: boolean, probability: number, events: GameEvent[]) {

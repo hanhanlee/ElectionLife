@@ -1522,7 +1522,7 @@ function SpecialIntro({ def, onStart, onBack }: { def: SpecialDef; onStart: () =
         </small>
       </p>
       <div className={styles.stickyAction}>
-        <button className={`${styles.primary} ${styles.glow}`} onClick={onStart}>接受徵召</button>
+        <button className={`${styles.primary} ${styles.glow}`} onClick={onStart}>{def.startLabel}</button>
         <button className={styles.quietLink} onClick={onBack}>選另一個陣營</button>
       </div>
     </main>
@@ -1584,11 +1584,11 @@ function SpecialEndScreen({
         <p><small>這是遊戲裡的虛構結果，不是真實選情。原則不會直接換成選票，但決定了你用什麼方式贏，或用什麼方式輸。</small></p>
       </section>
       <ShareCard
-        kind={won ? "capital-win" : "capital-loss"}
+        kind={won ? def.cards.win : def.cards.loss}
         label={`特別篇・${def.title}`}
         result={result}
         headline={ending.headline}
-        story={`落後二十八點起步，${won ? "我當選了" : "最後沒能翻盤"}。${check.rows.length > 0 ? `我遇到的 ${check.rows.length} 個真實攻防裡，有 ${check.same} 題和現實的選擇一樣。` : ""}`}
+        story={def.shareStory(won, check.same, check.rows.length)}
         line={check.closing[1]}
         won={won}
       />

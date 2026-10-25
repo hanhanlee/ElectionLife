@@ -1,0 +1,98 @@
+import { describe, expect, it } from "vitest";
+import { ARCS, backgroundById, CRISES, EVENTS, PARTIES, partyById, specialSetup } from "@/content";
+import { choose, chooseInterlude, currentEvent, interludeEvent, newGame } from "./engine";
+import { mulberry32 } from "./rng";
+import { realityCheck, specialById, specialEnding } from "./special";
+import type { GameState } from "./types";
+
+const def = specialById("capital-2026-incumbent")!;
+const own = EVENTS.filter((e) => e.special === def.id);
+
+function play(seed: number, pick: (ids: string[], s: GameState, r: () => number) => string): GameState {
+  let s = newGame(EVENTS, seed, partyById(def.party), backgroundById(def.background), specialSetup(def), {
+    special: def.id,
+    startDelta: def.startDelta,
+    disabledCrises: def.disabledCrises,
+  });
+  const r = mulberry32(seed * 7 + 1);
+  while (!s.finished) {
+    const il = interludeEvent(s, EVENTS);
+    if (il) {
+      s = chooseInterlude(s, EVENTS, pick(il.options.map((o) => o.id), s, r), ARCS);
+      continue;
+    }
+    const e = currentEvent(s, EVENTS)!;
+    s = choose(s, EVENTS, pick(e.options.filter((o) => s.offered.includes(o.id)).map((o) => o.id), s, r), CRISES, PARTIES, ARCS, []);
+  }
+  return s;
+}
+const random = (ids: string[], _s: GameState, r: () => number) => ids[Math.floor(r() * ids.length)];
+const real = (ids: string[], s: GameState, r: () => number) => {
+  const id = def.realChoices[s.deck[s.turn]];
+  return id && ids.includes(id) ? id : random(ids, s, r);
+};
+
+describe("特別篇：首都守城戰（萬安守城）", () => {
+  it("十二回合各有一個固定事件，依序出場，投票後結束", () => {
+    for (let t = 1; t <= 12; t++) expect(own.filter((e) => e.specialTurn === t)).toHaveLength(1);
+    const g = play(1, random);
+    expect(g.finished).toBe(true);
+    expect(g.history.map((h) => own.find((e) => e.id === h.eventId)?.specialTurn)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+  });
+
+  it("遊戲中途不出現真人姓名（只有結局頁的反思與來源可以）", () => {
+    const names = /沈伯洋|蔣萬安|徐巧芯|蔡康永|韓國瑜|盧秀燕|侯友宜|卓榮泰|趙少康|邱議瑩|蔡詩萍|戴立安|[沈蔣]稿機/;
+    for (const e of own) {
+      const text = [e.title, e.scenario, ...e.options.flatMap((o) => [o.label, o.outcome, o.delayed?.text ?? "", ...(o.variants ?? []).map((v) => v.outcome)])].join("\n");
+      expect(text, e.id).not.toMatch(names);
+    }
+    expect([...def.intro, def.opponentIntro, def.opponent.name, def.voteNote].join("\n")).not.toMatch(names);
+  });
+
+  it("現實的選擇都對得到選項；照現實選，每一題都和現實一樣", () => {
+    for (const [eventId, optionId] of Object.entries(def.realChoices)) {
+      const e = own.find((x) => x.id === eventId);
+      expect(e, eventId).toBeDefined();
+      expect(e!.options.some((o) => o.id === optionId), `${eventId}/${optionId}`).toBe(true);
+    }
+    const g = play(3, real);
+    const check = realityCheck(def, g, EVENTS, true);
+    expect(check.rows.length).toBe(Object.keys(def.realChoices).length);
+    expect(check.same).toBe(check.rows.length);
+    expect(check.closing[1]).toBe("他的選擇裡，有哪些是你不會做的？");
+  });
+
+  it("每個選項的效果只動用顯示的數值與原則；架空以外的事件都有來源或標明待補", () => {
+    const allowed = [...def.visibleStats, "integrity"];
+    for (const e of own) {
+      for (const o of e.options) {
+        for (const k of Object.keys(o.effects)) expect(allowed, `${e.id}/${o.id}`).toContain(k);
+        expect(o.funds).toBeUndefined();
+      }
+      if (e.fact !== "SIMULATION") expect(e.source.refs.length > 0 || /待補/.test(e.source.prototype), e.id).toBe(true);
+    }
+  });
+
+  it("結局：五種都遇得到", () => {
+    const seen = new Set<string>();
+    for (let seed = 1; seed <= 400; seed++) {
+      const g = play(seed, seed % 2 ? random : real);
+      seen.add(specialEnding(def, g, g.firstElection!.won, g.firstElection!.probability, EVENTS).title);
+    }
+    expect([...seen].sort()).toEqual(def.endings.map((e) => e.title).sort());
+  });
+
+  it("難度：照現實選會選成拉鋸，隨便選也多半守得住", () => {
+    const N = 600;
+    let randomWins = 0;
+    let realWins = 0;
+    for (let seed = 1; seed <= N; seed++) {
+      if (play(seed, random).firstElection!.won) randomWins++;
+      if (play(seed, real).firstElection!.won) realWins++;
+    }
+    expect(randomWins / N).toBeGreaterThan(0.45);
+    expect(randomWins / N).toBeLessThan(0.75);
+    expect(realWins / N).toBeGreaterThan(0.2);
+    expect(realWins / N).toBeLessThan(randomWins / N);
+  });
+});
