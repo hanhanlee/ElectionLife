@@ -51,6 +51,8 @@ import { buildEpilogue } from "@/game/epilogue";
 import { staffReport } from "@/game/feedback";
 import { arcProgress, fillArcText, openArcs } from "@/game/story";
 import { summarize, type FinalStage, type ReflectionItem } from "@/game/endings";
+import { choiceShare, percent, STATS_MIN_SAMPLE, type PlayerStats } from "@/game/stats";
+import { usePlayerStats } from "./playerStats";
 import { fillSaid, realityCheck, SPECIAL_SERIES, specialById, specialEnding, type SpecialDef } from "@/game/special";
 import {
   CAMPAIGN_SCALES,
@@ -803,6 +805,51 @@ function SeriesScreen({ onPick, onBack }: { onPick: (def: SpecialDef) => void; o
   );
 }
 
+/** 「你的選擇」旁邊的小字：有多少玩家在這一題選了一樣的；樣本不夠時不顯示 */
+function PlayerShare({ stats, eventId, optionId }: { stats: PlayerStats | null; eventId: string; optionId: string }) {
+  const share = stats ? choiceShare(stats, eventId, optionId) : undefined;
+  return share === undefined ? null : <small className={styles.playerShare}>（{share}% 的玩家也這樣選）</small>;
+}
+
+/** 其他玩家的這場選戰：局數、當選率、結局分布、和現實一樣的題數 */
+function PlayerSummary({ stats, same }: { stats: PlayerStats; same: number }) {
+  if (stats.plays < STATS_MIN_SAMPLE) {
+    return (
+      <section className={styles.card}>
+        <h2>其他玩家的這場選戰</h2>
+        <p className={styles.lead}>目前累積 {stats.plays.toLocaleString()} 局。滿 {STATS_MIN_SAMPLE} 局之後，這裡會顯示其他玩家的結果，以及每一題有多少人和你選得一樣。</p>
+      </section>
+    );
+  }
+  const endings = Object.entries(stats.endings).sort((a, b) => b[1] - a[1]);
+  const avg = stats.sameAsReal.plays ? stats.sameAsReal.sum / stats.sameAsReal.plays : 0;
+  return (
+    <section className={styles.card}>
+      <h2>其他玩家的這場選戰</h2>
+      <p>
+        玩家已經打完 <strong>{stats.plays.toLocaleString()}</strong> 局，其中 <strong>{percent(stats.wins, stats.plays)}%</strong> 當選。
+      </p>
+      <ul className={styles.endingBars}>
+        {endings.map(([title, n]) => (
+          <li key={title}>
+            <span>{title}</span>
+            <span className={styles.endingBar}>
+              <span style={{ width: `${percent(n, stats.plays)}%` }} />
+            </span>
+            <span>{percent(n, stats.plays)}%</span>
+          </li>
+        ))}
+      </ul>
+      <p>
+        和現實選擇一樣的題數，玩家平均 {avg.toFixed(1)} 題；你這一局 {same} 題。
+      </p>
+      <p>
+        <small>統計來自玩家匿名送出的遊戲紀錄，只記遊戲裡的選擇與結果，是遊戲數據，不是民調。</small>
+      </p>
+    </section>
+  );
+}
+
 /** 首頁選票上的「候選人照片」：裝飾用，替代文字留空 */
 function BallotPhoto({ src }: { src: string }) {
   return (
@@ -1504,6 +1551,7 @@ function SpecialEndScreen({
   const reflected = played.filter(({ event }) => event.reflection);
   const check = realityCheck(def, state, EVENTS, won);
   const result = won ? "當選" : "落選";
+  const players = usePlayerStats(state, won, ending.title, check.same, check.rows.length);
 
   useEffect(() => {
     try {
@@ -1553,17 +1601,20 @@ function SpecialEndScreen({
           {played.map(({ event, option, turn }) => (
             <li key={event.id}>
               <strong>{event.title}</strong>：{option.label}
+              <PlayerShare stats={players} eventId={event.id} optionId={option.id} />
               {interludes
                 .filter((i) => i.turn === turn)
                 .map((i) => (
                   <div key={i.event.id}>
                     <small>🃏 {i.event.title}：{i.option.label}</small>
+                    <PlayerShare stats={players} eventId={i.event.id} optionId={i.option.id} />
                   </div>
                 ))}
             </li>
           ))}
         </ol>
       </section>
+      {players && <PlayerSummary stats={players} same={check.same} />}
       {reflected.length > 0 && (
         <section className={styles.card}>
           <h2>真實世界的這一題</h2>

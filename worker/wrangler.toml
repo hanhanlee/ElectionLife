@@ -1,0 +1,12 @@
+# 玩家統計後端：Cloudflare Worker + D1
+# 部署步驟見 README.md
+name = "beyondvote-stats"
+main = "src/index.ts"
+compatibility_date = "2025-06-01"
+routes = [{ pattern = "api.beyondvote.com", custom_domain = true }]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "beyondvote-stats"
+# 執行 `npx wrangler d1 create beyondvote-stats` 後，把回傳的 database_id 填在這裡
+database_id = "00000000-0000-0000-0000-000000000000"
