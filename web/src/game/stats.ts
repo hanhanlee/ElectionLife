@@ -5,7 +5,7 @@
 import type { GameState } from "./types";
 
 /** 收統計的特別篇 */
-export const STATS_SCENARIOS = ["capital-2026"] as const;
+export const STATS_SCENARIOS = ["capital-2026", "capital-2026-incumbent"] as const;
 /** 樣本少於這個數字時不顯示比例，避免「100% 的玩家都選了這個」 */
 export const STATS_MIN_SAMPLE = 30;
 
