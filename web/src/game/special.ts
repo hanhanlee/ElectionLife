@@ -58,7 +58,10 @@ export interface SpecialDef {
   closings: { lost: string; wonSame: string; wonDifferent: string; always: string };
   /** 分享圖卡：底圖與小故事 */
   cards: { win: CardKind; loss: CardKind };
-  shareStory: (won: boolean, same: number, total: number) => string;
+  /** turning：這一局的轉折點（事件標題），讓每個人分享的小故事不一樣 */
+  shareStory: (won: boolean, same: number, total: number, turning?: string) => string;
+  /** 選擇的回響：玩家這一局做過的選擇，在後日談裡被提到（每局最多兩句） */
+  recaps: { eventId: string; optionId: string; text: string }[];
   /** 終章反思開頭：現實的選戰走到哪裡（真名只出現在結局頁） */
   realityNow: { paragraphs: string[]; refs: { title: string; url: string }[] };
   /** 結局頁導向主篇的一句話 */
@@ -195,8 +198,30 @@ export const SPECIALS: SpecialDef[] = [
       always: "他的選擇裡，有哪些是你不會做的？",
     },
     cards: { win: "capital-win", loss: "capital-loss" },
-    shareStory: (won, same, total) =>
-      `落後二十八點起步，${won ? "我當選了" : "最後沒能翻盤"}。${total > 0 ? `我遇到的 ${total} 個真實攻防裡，有 ${same} 題和現實的選擇一樣。` : ""}`,
+    shareStory: (won, same, total, turning) =>
+      `落後二十八點起步，${won ? "我當選了" : "最後沒能翻盤"}。${turning ? `轉折點是〈${turning}〉。` : ""}${total > 0 ? `${total} 個真實攻防裡，我有 ${same} 題和現實選得一樣。` : ""}`,
+    recaps: [
+      { eventId: "sp-capital-m01", optionId: "explain", text: "你承認十二年前寫得太省的那段話，是整場選戰被轉傳最多次的澄清。" },
+      { eventId: "sp-capital-m01", optionId: "counter", text: "「你的市府就在做」那句反擊，到投票那天都還在留言區被引用。" },
+      { eventId: "sp-capital-01", optionId: "defiant", text: "那句「下一步大概是通緝吧」，後來被志工印在了背心上。" },
+      { eventId: "sp-capital-01", optionId: "report", text: "那份跨境鎮壓的研究報告，選後被翻譯成了三種語言。" },
+      { eventId: "sp-capital-03", optionId: "poll", text: "那份只公布一題的民調，選後還是有人在問完整的問卷。" },
+      { eventId: "sp-capital-05", optionId: "remix", text: "二創大賽的得獎作品，到投票那天都還在被轉傳。" },
+      { eventId: "sp-capital-05", optionId: "costs", text: "政策島上每一頁的財源表，選後被好幾個公民團體拿去對照。" },
+      { eventId: "sp-capital-06", optionId: "earn", text: "「不管上一屆投誰」那段話，被剪成了好幾支短影音。" },
+      { eventId: "sp-capital-07", optionId: "thank", text: "你說參加選舉活動是很正常的小事，那位藝人後來傳了一句謝謝。" },
+      { eventId: "sp-capital-09", optionId: "brag", text: "造勢場上念出的「領先十七點」，選後被拿來對照開票結果。" },
+      { eventId: "sp-capital-11", optionId: "rest", text: "選前那兩天的輪休，讓志工在選前之夜還有力氣喊到最後。" },
+      { eventId: "sp-capital-12", optionId: "fear", text: "選前之夜那句「我不怕，是因為有你們」，很多人錄了下來。" },
+      { eventId: "sp-capital-12", optionId: "trim", text: "選前之夜縮成的三件事，後來被貼在競總的牆上。" },
+      { eventId: "sp-capital-m03", optionId: "unscripted", text: "「市長，你給我聽好了」的那幾場，有市民選後還在問什麼時候再辦。" },
+      { eventId: "sp-capital-m07", optionId: "attack", text: "「垃圾桶少了，老鼠還在」，成了這場選戰最常被引用的一句話。" },
+      { eventId: "sp-capital-m07", optionId: "joke", text: "「兩天是開始，不是結束」，選後還是有人在問：第幾天了？" },
+      { eventId: "sp-capital-n03", optionId: "mock", text: "「市府是賣鮮奶的廠商嗎？」那句話，被做成了好幾張梗圖。" },
+      { eventId: "sp-capital-n06", optionId: "more", text: "那幾集偏藍節目的專訪，選後觀看數還在漲。" },
+      { eventId: "sp-capital-n07", optionId: "books", text: "那張青年政策的試算表，被工程師社群整理成了一個網頁。" },
+      { eventId: "sp-capital-n07", optionId: "push", text: "「AI 卡」三個字很紅。錢從哪裡來，到現在還是沒有人知道。" },
+    ],
     realityNow: {
       paragraphs: [
         "沈伯洋被徵召後的第一份民調，落後蔣萬安二十八個百分點，很多人說這是垃圾時間。",
@@ -308,9 +333,27 @@ export const SPECIALS: SpecialDef[] = [
       wonDifferent: "你贏了。但你的選擇和現實為什麼總是不同？如果你支持的是他的政黨，這還是你本來想支持的樣子嗎？要怎麼讓它改變？",
       always: "他的選擇裡，有哪些是你不會做的？",
     },
-    cards: { win: "win", loss: "loss" },
-    shareStory: (won, same, total) =>
-      `領先二十八點起步，${won ? "我守住了這座城" : "最後還是輸了"}。${total > 0 ? `我遇到的 ${total} 個真實攻防裡，有 ${same} 題和現實的選擇一樣。` : ""}`,
+    cards: { win: "incumbent-win", loss: "incumbent-loss" },
+    shareStory: (won, same, total, turning) =>
+      `領先二十八點起步，${won ? "我守住了這座城" : "最後還是輸了"}。${turning ? `轉折點是〈${turning}〉。` : ""}${total > 0 ? `${total} 個真實攻防裡，我有 ${same} 題和現實選得一樣。` : ""}`,
+    recaps: [
+      { eventId: "sp-incumbent-05", optionId: "post", text: "那篇貼文底下的五十萬則留言，到投票那天都還在。" },
+      { eventId: "sp-incumbent-05", optionId: "read", text: "你沒有出手的那一週，戒治座談的紀錄後來被很多人轉傳。" },
+      { eventId: "sp-incumbent-11", optionId: "pivot", text: "辯論上的鮮奶、午餐、大巨蛋和輝達，成了這場選戰最有名的一段。" },
+      { eventId: "sp-incumbent-11", optionId: "admit", text: "辯論上你承認做得不夠好的那一段，是整場觀看數最高的片段。" },
+      { eventId: "sp-incumbent-03", optionId: "off", text: "七月那天沒風沒雨的颱風假，後來被做成了梗圖。" },
+      { eventId: "sp-incumbent-03", optionId: "work", text: "七月那天你守在應變中心沒有放假，股市照常開盤，也沒有人淹水。" },
+      { eventId: "sp-incumbent-06", optionId: "never", text: "「本來就沒有要邀他上台」這句話，在網路上流傳得比你的政見還久。" },
+      { eventId: "sp-incumbent-06", optionId: "freedom", text: "你說出席誰的活動都是他的自由，那句話後來連對手都引用了。" },
+      { eventId: "sp-incumbent-07", optionId: "announce", text: "選前宣布的機場，選後還沒有人知道要遷到哪裡。" },
+      { eventId: "sp-incumbent-09", optionId: "experience", text: "那天搬樹枝的影片，被剪進了好幾支合輯。" },
+      { eventId: "sp-incumbent-09", optionId: "thanks", text: "颱風後你只說了一句謝謝，清潔隊員到現在還記得。" },
+      { eventId: "sp-incumbent-12", optionId: "family", text: "選前之夜的家族故事，網路上的留言比現場的掌聲還多。" },
+      { eventId: "sp-incumbent-12", optionId: "sorry", text: "選前之夜那句「我聽到了」，很多人說是你這四年最像市長的一句話。" },
+      { eventId: "sp-incumbent-f06", optionId: "split", text: "那晚你說「我是台灣人」，黨部的電話響到天亮。" },
+      { eventId: "sp-incumbent-f02", optionId: "pan", text: "「這個鍋子我還不熟悉」，變成了那年冬天最常聽到的一句玩笑話。" },
+      { eventId: "sp-incumbent-02", optionId: "press", text: "大陸小組那幾份新聞稿，被記者整理成了一張時間表。" },
+    ],
     realityNow: {
       paragraphs: [
         "沈伯洋被徵召後的第一份民調，蔣萬安領先二十八個百分點，很多人說這場選舉躺著選就好。",
@@ -410,11 +453,50 @@ export function realityCheck(def: SpecialDef, state: GameState, events: GameEven
   return { rows, same, closing: [closing, c.always] };
 }
 
+/** 這一局的轉折：支持度漲最多與跌最多的那一步（變化至少 3 點才算） */
+export function turningPoints(state: GameState, events: GameEvent[]) {
+  const steps = state.history
+    .map((h) => ({ event: events.find((e) => e.id === h.eventId)!, change: h.optionDelta?.approval ?? 0 }))
+    .filter((x) => x.event);
+  const up = [...steps].sort((a, b) => b.change - a.change)[0];
+  const down = [...steps].sort((a, b) => a.change - b.change)[0];
+  // 標題裡的「（架空）」只在遊戲進行中標示，後日談不重複
+  const name = (e: GameEvent) => ({ ...e, title: e.title.replace(/（架空）$/, "") });
+  return { up: up && up.change >= 3 ? name(up.event) : undefined, down: down && down.change <= -3 ? name(down.event) : undefined };
+}
+
+/** 選擇的回響：這一局做過的選擇，最多挑兩句；起點依種子輪換，同樣的選擇在不同局會被提到不同的句子 */
+function choiceRecaps(def: SpecialDef, state: GameState): string[] {
+  const picked = [...state.history, ...(state.interludes ?? [])];
+  const hits = def.recaps.filter((r) => picked.some((p) => p.eventId === r.eventId && p.optionId === r.optionId));
+  if (hits.length <= 2) return hits.map((r) => r.text);
+  const start = state.seed % hits.length;
+  return [hits[start], hits[(start + 1) % hits.length]].map((r) => r.text);
+}
+
+function turningLine(state: GameState, events: GameEvent[], won: boolean): string | undefined {
+  const { up, down } = turningPoints(state, events);
+  if (won) {
+    if (up && down) return `回頭看，替你拉開差距的是〈${up.title}〉那一步；差點讓你翻船的，是〈${down.title}〉。`;
+    if (up) return `回頭看，替你拉開差距的是〈${up.title}〉那一步。`;
+    if (down) return `回頭看，差點讓你翻船的，是〈${down.title}〉那一步。`;
+  } else {
+    if (down && up) return `回頭看，最傷的是〈${down.title}〉那一步；最好的一步是〈${up.title}〉，只是還不夠。`;
+    if (down) return `回頭看，最傷的是〈${down.title}〉那一步。`;
+    if (up) return `回頭看，最好的一步是〈${up.title}〉，只是還不夠。`;
+  }
+  return undefined;
+}
+
 export function specialEnding(def: SpecialDef, state: GameState, won: boolean, probability: number, events: GameEvent[]) {
   const promises = promiseLedger(state, events);
   const ending = def.endings.find((e) => e.when(state, won, probability, promises))!;
   const paragraphs = ending.paragraphs(state, promises);
   // 放在第一段之後、其他補充段落之前
   if (!won && state.stats.integrity >= PRINCIPLED_LOSS_INTEGRITY) paragraphs.splice(1, 0, PRINCIPLED_LOSS);
+  // 依這一局的選擇加上轉折與回響，讓每一局的後日談不一樣
+  const turning = turningLine(state, events, won);
+  const extra = [...(turning ? [turning] : []), ...choiceRecaps(def, state)];
+  paragraphs.splice(paragraphs.length - 1, 0, ...extra);
   return { ...ending, paragraphs };
 }

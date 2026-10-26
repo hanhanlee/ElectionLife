@@ -93,6 +93,25 @@ describe("特別篇：首都保衛戰（萬安守城）", () => {
     }
   });
 
+  it("後日談依選擇變化：回響都對得到選項；不同選擇的同一種結局，內容不一樣", () => {
+    for (const d of [def, specialById("capital-2026")!]) {
+      for (const r of d.recaps) {
+        const e = EVENTS.find((x) => x.id === r.eventId);
+        expect(e, r.eventId).toBeDefined();
+        expect(e!.options.some((o) => o.id === r.optionId), `${r.eventId}/${r.optionId}`).toBe(true);
+      }
+    }
+    const byEnding = new Map<string, Set<string>>();
+    for (let seed = 1; seed <= 200; seed++) {
+      const g = play(seed, random);
+      const end = specialEnding(def, g, g.firstElection!.won, g.firstElection!.probability, EVENTS);
+      if (!byEnding.has(end.title)) byEnding.set(end.title, new Set());
+      byEnding.get(end.title)!.add(end.paragraphs.join("|"));
+    }
+    // 每一種結局都至少出現兩種不同的後日談
+    for (const [title, texts] of byEnding) expect(texts.size, title).toBeGreaterThan(1);
+  });
+
   it("結局：五種都遇得到", () => {
     const seen = new Set<string>();
     for (let seed = 1; seed <= 400; seed++) {

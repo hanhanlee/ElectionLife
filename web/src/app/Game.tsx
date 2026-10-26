@@ -53,7 +53,7 @@ import { arcProgress, fillArcText, openArcs } from "@/game/story";
 import { summarize, type FinalStage, type ReflectionItem } from "@/game/endings";
 import { choiceShare, percent, STATS_MIN_SAMPLE, type PlayerStats } from "@/game/stats";
 import { usePlayerStats } from "./playerStats";
-import { fillSaid, realityCheck, SPECIAL_SERIES, specialById, specialEnding, type SpecialDef } from "@/game/special";
+import { fillSaid, realityCheck, turningPoints, SPECIAL_SERIES, specialById, specialEnding, type SpecialDef } from "@/game/special";
 import {
   CAMPAIGN_SCALES,
   FATE_ENABLED,
@@ -1592,7 +1592,7 @@ function SpecialEndScreen({
         label={`特別篇・${def.title}`}
         result={result}
         headline={ending.headline}
-        story={def.shareStory(won, check.same, check.rows.length)}
+        story={def.shareStory(won, check.same, check.rows.length, (won ? turningPoints(state, EVENTS).up : turningPoints(state, EVENTS).down)?.title)}
         line={check.closing[1]}
         won={won}
       />
