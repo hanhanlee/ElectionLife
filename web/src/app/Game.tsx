@@ -284,7 +284,11 @@ export default function Game() {
             <span className={styles.ballotNo}>1</span>
             <BallotPhoto src={`/specials/${SPECIAL_SERIES.art}.webp`} />
             <span className={styles.ballotBody}>
-              <span className={styles.ballotBadge}>HOT</span>
+              <picture className={styles.ballotBadge}>
+                {/* 開了「減少動態效果」就換成不會動的那一張 */}
+                <source srcSet={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/hot-still.webp`} media="(prefers-reduced-motion: reduce)" />
+                <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/hot.webp`} alt="HOT" width={53} height={24} />
+              </picture>
               <strong className={styles.ballotName}>{SPECIAL_SERIES.title}</strong>
               <span className={styles.ballotParty}>特別篇｜取材自進行中的選戰</span>
               <span className={styles.ballotText}>{SPECIAL_SERIES.teaser}</span>
