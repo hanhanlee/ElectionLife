@@ -284,7 +284,7 @@ export default function Game() {
             <span className={styles.ballotNo}>1</span>
             <BallotPhoto src={`/specials/${SPECIAL_SERIES.art}.webp`} />
             <span className={styles.ballotBody}>
-              <span className={styles.ballotBadge}>選戰進行中</span>
+              <span className={styles.ballotBadge}>HOT</span>
               <strong className={styles.ballotName}>{SPECIAL_SERIES.title}</strong>
               <span className={styles.ballotParty}>特別篇｜取材自進行中的選戰</span>
               <span className={styles.ballotText}>{SPECIAL_SERIES.teaser}</span>
