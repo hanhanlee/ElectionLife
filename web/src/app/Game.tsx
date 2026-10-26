@@ -279,25 +279,27 @@ export default function Game() {
             <h2 id="ballot-title">選擇你要參加的選舉</h2>
             <span>請圈選一項</span>
           </div>
-          <button className={styles.ballotRow} onClick={restart}>
+          {/* 特別篇放第一位、加強調：正在進行的選戰，是現在最多人想玩的 */}
+          <button className={`${styles.ballotRow} ${styles.ballotFeatured}`} onClick={() => setSeries(true)}>
             <span className={styles.ballotNo}>1</span>
+            <BallotPhoto src={`/specials/${SPECIAL_SERIES.art}.webp`} />
+            <span className={styles.ballotBody}>
+              <span className={styles.ballotBadge}>選戰進行中</span>
+              <strong className={styles.ballotName}>{SPECIAL_SERIES.title}</strong>
+              <span className={styles.ballotParty}>特別篇｜取材自進行中的選戰</span>
+              <span className={styles.ballotText}>{SPECIAL_SERIES.teaser}</span>
+              <span className={`${styles.ballotAction} ${styles.ballotCta} ${styles.glow}`}>選擇陣營</span>
+            </span>
+            <span className={styles.ballotStamp} aria-hidden="true" />
+          </button>
+          <button className={styles.ballotRow} onClick={restart}>
+            <span className={styles.ballotNo}>2</span>
             <BallotPhoto src="/title.webp" />
             <span className={styles.ballotBody}>
               <strong className={styles.ballotName}>市長篇</strong>
               <span className={styles.ballotParty}>主線｜隨機人生</span>
               <span className={styles.ballotText}>城市、政黨、出身和個性全部隨機。選上之後，還有四年任期和下一場選舉。</span>
               <span className={styles.ballotAction}>開始參選</span>
-            </span>
-            <span className={styles.ballotStamp} aria-hidden="true" />
-          </button>
-          <button className={styles.ballotRow} onClick={() => setSeries(true)}>
-            <span className={styles.ballotNo}>2</span>
-            <BallotPhoto src={`/specials/${SPECIAL_SERIES.art}.webp`} />
-            <span className={styles.ballotBody}>
-              <strong className={styles.ballotName}>{SPECIAL_SERIES.title}</strong>
-              <span className={styles.ballotParty}>特別篇｜取材自進行中的選戰</span>
-              <span className={styles.ballotText}>{SPECIAL_SERIES.teaser}</span>
-              <span className={styles.ballotAction}>選擇陣營</span>
             </span>
             <span className={styles.ballotStamp} aria-hidden="true" />
           </button>

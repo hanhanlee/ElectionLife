@@ -1168,6 +1168,44 @@ button.ballotRow:focus-visible {
   margin-top: 2px;
 }
 
+/* 主打的一列（特別篇）：底色帶一點圈選章的紅、照片大一號、行動鈕做成實心 */
+.ballotFeatured {
+  background: color-mix(in srgb, var(--stamp) 9%, transparent);
+  box-shadow: inset 4px 0 0 var(--stamp);
+}
+
+button.ballotFeatured:hover {
+  background: color-mix(in srgb, var(--stamp) 14%, transparent);
+}
+
+.ballotFeatured .ballotPhoto {
+  height: 112px;
+}
+
+.ballotFeatured .ballotName {
+  font-size: 1.5rem;
+}
+
+.ballotBadge {
+  align-self: flex-start;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--stamp);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.ballotCta {
+  align-self: flex-start;
+  margin-top: 6px;
+  padding: 6px 16px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+
 /* 圈選欄：平常是空的虛線圈；按下或滑過時蓋上圈選章 */
 .ballotStamp {
   position: relative;
@@ -1224,6 +1262,14 @@ button:active > .ballotStamp::after {
   .ballotStamp {
     width: 34px;
     height: 34px;
+  }
+
+  .ballotFeatured .ballotPhoto {
+    height: 92px;
+  }
+
+  .ballotFeatured .ballotName {
+    font-size: 1.3125rem;
   }
 
 }
