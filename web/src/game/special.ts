@@ -473,7 +473,7 @@ export const SPECIAL_SERIES: {
   teaser: "有人盼望奇蹟，有人不能輸。你能將選戰帶向不同的結局嗎？",
   routes: [
     { title: "洋流慧聚", side: "挑戰者路線", teaser: "被對岸立案偵查的立委，落後二十八點，挑戰首都的現任市長。", art: "route-challenger", cta: "大洋流號，出發", specialId: "capital-2026" },
-    { title: "萬安守城", side: "現任市長路線", teaser: "民調一路領先的現任市長，要守住這座城。", art: "route-incumbent", cta: "守住這一城", specialId: "capital-2026-incumbent" },
+    { title: "萬安守城", side: "現任市長路線", teaser: "民調一路領先的現任市長，要守住這座城。", art: "route-incumbent", cta: "台北安可", specialId: "capital-2026-incumbent" },
   ],
 };
 
