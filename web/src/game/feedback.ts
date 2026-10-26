@@ -83,7 +83,8 @@ const SPECIAL_CALLBACKS: typeof CALLBACKS = {
 };
 
 export function staffReport(state: GameState, arcDefs: ArcDef[], events: GameEvent[] = []): StaffReport {
-  const callbacks = state.special ? SPECIAL_CALLBACKS : CALLBACKS;
+  // 挑戰者路線的「政策準備」說法；守城路線的施政成果沿用主篇
+  const callbacks = state.special === "capital-2026" ? SPECIAL_CALLBACKS : CALLBACKS;
   const served = state.turn >= 12 || state.flags.includes("bg-incumbent");
   const you = served ? "市長" : "老闆";
   const s = state.stats;

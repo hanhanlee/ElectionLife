@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { ARCS, backgroundById, CRISES, EVENTS, PARTIES, partyById, specialSetup } from "@/content";
 import { choose, chooseInterlude, currentEvent, drawInterlude, interludeEvent, lacksFunds, newGame } from "./engine";
 import { mulberry32 } from "./rng";
-import { fillSaid, PRINCIPLED_LOSS_INTEGRITY, realityCheck, specialEnding, SPECIALS } from "./special";
+import { fillSaid, realityCheck, specialEnding, SPECIALS } from "./special";
 import type { GameState } from "./types";
 
 const def = SPECIALS[0];
@@ -101,10 +101,10 @@ describe("特別篇：首都逆轉戰", () => {
 
   it("原則很高卻落選時，結局有那段旁白；當選或原則不夠高時沒有", () => {
     const g = play(5);
-    const lost = { ...g, firstElection: { ...g.firstElection!, won: false }, stats: { ...g.stats, integrity: PRINCIPLED_LOSS_INTEGRITY } };
+    const lost = { ...g, firstElection: { ...g.firstElection!, won: false }, stats: { ...g.stats, integrity: def.principledLoss } };
     expect(specialEnding(def, lost, false, 0.3, EVENTS).paragraphs.some((p) => p.includes("你想不通"))).toBe(true);
     expect(specialEnding(def, lost, true, 0.6, EVENTS).paragraphs.some((p) => p.includes("你想不通"))).toBe(false);
-    const low = { ...lost, stats: { ...lost.stats, integrity: PRINCIPLED_LOSS_INTEGRITY - 1 } };
+    const low = { ...lost, stats: { ...lost.stats, integrity: def.principledLoss - 1 } };
     expect(specialEnding(def, low, false, 0.3, EVENTS).paragraphs.some((p) => p.includes("你想不通"))).toBe(false);
   });
 
@@ -211,6 +211,22 @@ describe("特別篇：首都逆轉戰", () => {
       expect(g.firstElection!.mobilization).toBe(0);
       expect(g.history.flatMap((h) => [h.delta.treasury, h.delta.council, h.delta.business]).every((v) => v === 0)).toBe(true);
     }
+  });
+
+  it("後日談依選擇變化：回響都對得到選項；同一種結局在不同局會寫出不同的內容", () => {
+    for (const r of def.recaps) {
+      const e = own.find((x) => x.id === r.eventId);
+      expect(e, r.eventId).toBeDefined();
+      expect(e!.options.some((o) => o.id === r.optionId), `${r.eventId}/${r.optionId}`).toBe(true);
+    }
+    const byEnding = new Map<string, string[]>();
+    for (let seed = 1; seed <= 200; seed++) {
+      const g = play(seed, seed % 2 === 0);
+      const end = specialEnding(def, g, g.firstElection!.won, g.firstElection!.probability, EVENTS);
+      byEnding.set(end.title, [...(byEnding.get(end.title) ?? []), end.paragraphs.join("|")]);
+    }
+    // 出現至少三次的結局，內容不能每次都一樣
+    for (const [title, texts] of byEnding) if (texts.length >= 3) expect(new Set(texts).size, title).toBeGreaterThan(1);
   });
 
   it("聲量很高時，F13〈短影音被斷章取義〉一定會出現（每局插曲上限內）", () => {

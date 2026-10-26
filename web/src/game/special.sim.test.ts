@@ -1,5 +1,6 @@
 // 特別篇平衡模擬：平常不跑，設定 SIM_N 才會執行並輸出報表。
 // SIM_N=10000 SIM_OUT=../docs/research/special-capital-sim.md npx vitest run src/game/special.sim.test.ts
+// SIM_SPECIAL=1 SIM_N=10000 SIM_OUT=../docs/research/special-incumbent-sim.md npx vitest run src/game/special.sim.test.ts
 
 import { writeFileSync } from "node:fs";
 import { test } from "vitest";
@@ -10,7 +11,8 @@ import { mulberry32 } from "./rng";
 import { SPECIALS, specialEnding } from "./special";
 import type { GameOption, GameState } from "./types";
 
-const def = SPECIALS[0];
+// SIM_SPECIAL=1：守城路線（預設 0：挑戰者路線）
+const def = SPECIALS[Number(process.env.SIM_SPECIAL ?? 0)];
 const N = Number(process.env.SIM_N ?? 0);
 type Pick = (opts: GameOption[], s: GameState, r: () => number) => GameOption;
 
@@ -106,7 +108,7 @@ test.skipIf(!N)("特別篇平衡模擬", () => {
     out.push("\n結局筆數（每局一個結局）與突發事件觸發次數（一局可能觸發多次）：\n", "| 策略 | 結局筆數 | 突發事件觸發次數 |", "|---|---|---|", ...endRows);
     out.push(`\n隨機遊玩時，各替換事件與插曲的出現局數（共 ${N.toLocaleString()} 局）：\n`, "| 卡 | 出現局數 |", "|---|---|");
     for (const [id, v] of Object.entries(cards).sort((a, b) => b[1] - a[1])) {
-      out.push(`| ${id.replace("sp-capital-", "").toUpperCase()} ${title(id)} | ${v.toLocaleString()} |`);
+      out.push(`| ${id.replace(/^sp-[a-z]+-/, "").toUpperCase()} ${title(id)} | ${v.toLocaleString()} |`);
     }
   }
   writeFileSync(process.env.SIM_OUT ?? "special-sim.md", out.join("\n") + "\n");

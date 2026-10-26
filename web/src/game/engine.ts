@@ -249,12 +249,19 @@ function specialEvent(state: GameState, events: GameEvent[], turn: number): Game
  */
 export function drawInterlude(state: GameState, events: GameEvent[], turn: number): GameEvent | undefined {
   const seen = state.interludes ?? [];
-  if (seen.length >= INTERLUDE_MAX) return undefined;
+  const isFollowUp = (id: string) => !!events.find((e) => e.id === id)?.interludeFollowUp;
+  // 延伸插曲優先：條件符合就出現，不受機率與上限影響
+  const followUp = events.find(
+    (e) => e.special === state.special && e.interludeFollowUp && !seen.some((i) => i.eventId === e.id) && meetsCondition(state, e.conditions),
+  );
+  if (followUp) return followUp;
+  if (seen.filter((i) => !isFollowUp(i.eventId)).length >= INTERLUDE_MAX) return undefined;
   const wildcards = seen.filter((i) => events.find((e) => e.id === i.eventId)?.interlude === "wildcard").length;
   const eligible = events.filter(
     (e) =>
       e.special === state.special &&
       e.interlude &&
+      !e.interludeFollowUp &&
       !seen.some((i) => i.eventId === e.id) &&
       !(e.interlude === "wildcard" && wildcards >= 1) &&
       meetsCondition(state, e.conditions),

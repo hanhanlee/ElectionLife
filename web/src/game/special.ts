@@ -2,6 +2,7 @@
 // 取材自正在進行的真實選戰，人名一律以身分或綽號影射。
 
 import { opponentStrength } from "./profile";
+import type { CardKind } from "./shareCard";
 import type { GameEvent, GameState, Opponent, Profile, StatDelta, StatKey, Trait } from "./types";
 
 /** 結局判斷用的承諾帳：做過幾個沒有財源的承諾、具體縮減或補上試算了幾次 */
@@ -17,6 +18,8 @@ export interface SpecialEnding {
   title: string;
   headline: string;
   paragraphs: (s: GameState, promises: PromiseLedger) => string[];
+  /** 這個結局本身就在講「守住原則卻輸了」，不再加高原則落選的旁白 */
+  principled?: boolean;
 }
 
 export interface SpecialDef {
@@ -26,6 +29,8 @@ export interface SpecialDef {
   teaser: string;
   /** 開場插畫（web/public/specials/<art>.webp） */
   art: string;
+  /** 開場頁的開始按鈕 */
+  startLabel: string;
   /** 開局說明，一段一句 */
   intro: string[];
   party: string;
@@ -51,23 +56,24 @@ export interface SpecialDef {
   reality: string;
   /** 現實中的挑戰者在各題的選擇（事件 id → 選項 id）；結局頁的終章反思和平衡模擬的「現實路線」都用這份 */
   realChoices: Record<string, string>;
+  /** 終章反思的最後一句：依輸贏與和現實相同的題數換一句，再加一句兩條路線共同的問題 */
+  closings: { lost: string; wonSame: string; wonDifferent: string; always: string };
+  /** 分享圖卡：底圖與小故事 */
+  cards: { win: CardKind; loss: CardKind };
+  /** turning：這一局的轉折點（事件標題），讓每個人分享的小故事不一樣 */
+  shareStory: (won: boolean, same: number, total: number, turning?: string) => string;
+  /** 選擇的回響：玩家這一局做過的選擇，在後日談裡被提到（每局最多兩句） */
+  recaps: { eventId: string; optionId: string; text: string }[];
+  /** 原則很高卻落選時加一段旁白的門檻（挑戰者開局原則就高，門檻也比較高，旁白才不會每次都出現） */
+  principledLoss: number;
+  /** 這一局的你：依數值挑一句（團隊累垮、政見寫成白皮書、說了自己不信的話……），沒有特別的就不寫 */
+  statLine: (s: GameState) => string | undefined;
   /** 終章反思開頭：現實的選戰走到哪裡（真名只出現在結局頁） */
   realityNow: { paragraphs: string[]; refs: { title: string; url: string }[] };
   /** 結局頁導向主篇的一句話 */
   cta: string;
 }
 
-const has = (s: GameState, flag: string) => s.flags.includes(flag);
-
-/** 結局的補充段落：讓前面的選擇在後日談裡被提到 */
-function echoes(s: GameState): string[] {
-  const lines: string[] = [];
-  // 已經在插曲 L02 被追問過的，結局不再重提颱風夜
-  if (has(s, "sp-typhoon") && !s.interludes?.some((i) => i.eventId === "sp-capital-l02")) lines.push("檢討會上，幕僚把那段颱風夜的發言放了三遍。論點值得討論，只是說在了颱風夜，也沒先問在金融業上班的人怎麼想。");
-  if (has(s, "sp-local")) lines.push("那張老鼠通報地圖，後來被好幾個里長貼在辦公室的牆上。");
-  if (has(s, "sp-courted")) lines.push("前副市長團隊的那兩位老幕僚，選後傳了一句訊息給你：「下次還可以再談。」");
-  return lines.slice(0, 1);
-}
 
 export const SPECIALS: SpecialDef[] = [
   {
@@ -75,6 +81,7 @@ export const SPECIALS: SpecialDef[] = [
     title: "首都逆轉戰",
     teaser: "被對岸立案偵查的立委，落後二十八點，挑戰首都的現任市長。",
     art: "route-challenger",
+    startLabel: "接受徵召",
     intro: [
       "你是綠黨的立法委員，在大學教犯罪學，創辦了一間民防學院，教民眾在戰爭與災難中自救、識讀假訊息。",
       "對岸說你「分裂國家」，對你立案偵查。半年後，黨要你去挑戰首都的現任市長。",
@@ -109,52 +116,48 @@ export const SPECIALS: SpecialDef[] = [
         when: (_s, won, _p, promises) => won && promises.debt === 0,
         title: "不可能的任務",
         headline: "落後二十八點的人，當選了",
-        paragraphs: (s) => [
-          "開票到晚上九點，公子市長的競選總部關燈了。你上台的第一句話是：「明天早上，我要去看那幾個最常淹水的地方。」",
-          ...echoes(s),
-          "你答應過的事不多，但每一件都算過。接下來四年，才是真正難的部分。",
+        paragraphs: () => [
+          "開票到晚上九點，公子市長的競選總部關了燈。你走上台，台下有人哭、有人笑，有人還舉著五月那份「落後二十八點」的民調截圖。你說的第一句話是：「明天早上，我要先去看那幾個最常淹水的地方。」",
+          "你答應過的事不多，但每一件都算過錢、排過時程。贏下選舉只是拿到鑰匙，接下來四年，才是真正難的部分。",
         ],
       },
       {
         when: (_s, won) => won,
         title: "代價昂貴的翻盤",
         headline: "你贏了，帳單也到了",
-        paragraphs: (s, promises) => [
-          "開票到最後一刻，你以些微差距勝出。慶功宴上，財政局的老科長傳來一句話：「恭喜。那些承諾的錢，要從哪裡來？」",
-          ...echoes(s),
+        paragraphs: (_s, promises) => [
+          "開票開到最後一刻，你以些微差距勝出。慶功宴還沒散，財政局的老科長傳來一則訊息：「恭喜市長。那些承諾的錢，要從哪裡來？」",
           promises.trimmed > 0
-            ? "你在選前縮減過承諾，但看板上的數字，大家還記得。"
-            : "看板上的數字很大，大家都記得。四年後，大家也會記得你做到了多少。",
+            ? "你在選前縮減過一些承諾，但看板上的數字，大家都還記得。四年後，他們會一個一個對答案。"
+            : "看板上的數字很大，大家都記得。四年後，他們會一個一個對答案。",
         ],
       },
       {
         when: (s, won) => !won && s.stats.integrity >= 75 && s.stats.achievement >= 40,
         title: "雖敗猶榮",
+        principled: true,
         headline: "你輸了，但大家記得你講過的每一個數字",
-        paragraphs: (s) => [
-          "你輸了。敗選記者會上，你把政策團隊做的那一疊研究放在桌上，說：「這些不會浪費。」",
-          ...echoes(s),
-          "半年前沒有人相信你能追上來。現在，對手的施政報告裡，開始出現你提過的那些地方。",
+        paragraphs: () => [
+          "你輸了。敗選記者會上，你把政策團隊做的那一疊研究放在桌上：「這些不會浪費，誰當市長都可以拿去用。」",
+          "半年前，沒有人相信你追得上來。現在，公子市長的施政報告裡，開始出現你提過的那些地名和數字。",
         ],
       },
       {
         when: (s, won) => !won && s.stats.media >= 50 && s.stats.team >= 45,
         title: "意外的政治新星",
         headline: "選舉輸了，但所有人都認識你了",
-        paragraphs: (s) => [
-          "你輸了，但你的名字比選前大了十倍。敗選記者會結束後，有三個電視節目邀你去當來賓。",
-          ...echoes(s),
-          "你的團隊沒有散。有人問下一場仗在哪裡，你說：「先睡一覺。」",
+        paragraphs: () => [
+          "你輸了，但你的名字比選前大了十倍。敗選記者會才結束，就有三個節目打電話來邀你當來賓。",
+          "你的團隊沒有散。有人問下一場仗在哪裡，你說：「先回家睡一覺。」然後，你把那張落後二十八點的民調截圖，設成了手機桌布。",
         ],
       },
       {
         when: () => true,
         title: "沒有奇蹟",
         headline: "首都還是公子市長的",
-        paragraphs: (s) => [
-          "開票不到一小時，勝負就出來了。你走上台，謝謝每一位在雨中幫你發傳單的志工。",
-          ...echoes(s),
-          "落後二十八點的仗，本來就很少有人打贏。但你讓很多人想了想：這座城市要的是什麼樣的市長。",
+        paragraphs: () => [
+          "開票不到一小時，勝負就出來了。你走上台，先謝謝那些在雨裡幫你發傳單的志工，再向公子市長道賀。",
+          "落後二十八點的仗，本來就很少有人打贏。但這半年，很多人第一次認真想了想：這座城市要的，是什麼樣的市長。",
         ],
       },
     ],
@@ -179,6 +182,81 @@ export const SPECIALS: SpecialDef[] = [
       "sp-capital-n06": "more",
       "sp-capital-n07": "books",
     },
+    closings: {
+      lost: "現實裡，他做了這些選擇，把落後二十八點追成拉鋸。你在哪幾題做了不一樣的決定？",
+      wonSame: "你走了他走過的路，也走到了終點。現實裡，這條路還沒走完。",
+      wonDifferent: "你用自己的方法贏了。他在現實裡為什麼沒這樣選？是他錯了，還是你漏看了什麼？",
+      always: "他的選擇裡，有哪些是你不會做的？",
+    },
+    cards: { win: "capital-win", loss: "capital-loss" },
+    shareStory: (won, same, total, turning) =>
+      `落後二十八點起步，${won ? "我當選了" : "最後沒能翻盤"}。${turning ? `轉折點是〈${turning}〉。` : ""}${total > 0 ? `${total} 個真實攻防裡，我有 ${same} 題和現實選得一樣。` : ""}`,
+    recaps: [
+      { eventId: "sp-capital-01", optionId: "defiant", text: "「下一步大概是通緝吧，我們沒在怕」，那支短影音後來被志工印在背心上，跟著你跑完了整場選戰。" },
+      { eventId: "sp-capital-01", optionId: "report", text: "你那份跨境鎮壓的研究報告，選後被翻成英文和日文，還有外國記者專程飛來問細節。" },
+      { eventId: "sp-capital-01", optionId: "calm", text: "被立案偵查的那天，你照常去上課。學生說，那是他們這學期最安靜的一堂課。" },
+      { eventId: "sp-capital-02", optionId: "staff", text: "黨中央派來的輔選人力一直待到開票那晚。他們排的行程很多，你自己想跑的地方，也少了很多。" },
+      { eventId: "sp-capital-03", optionId: "local", text: "你一區一區跑出來的那張老鼠和淹水通報地圖，後來被好幾個里長貼在辦公室的牆上。" },
+      { eventId: "sp-capital-03", optionId: "security", text: "「首都是滲透的第一線」這句話跟著你跑了整場選戰。支持你的人很買單，也有人說，他們比較想聽巷口的事。" },
+      { eventId: "sp-capital-03", optionId: "poll", text: "那份只公布一題的民調，選後還是有人在問：完整的問卷，到底長什麼樣子？" },
+      { eventId: "sp-capital-04", optionId: "timeline", text: "你公開的那份家族生意時間線，讓謠言少了很多。也有人說，參選人不該連父親的帳都要攤開。" },
+      { eventId: "sp-capital-04", optionId: "ignore", text: "你沒有回應家裡生意的謠言。選後，它還在某些群組裡，被當成「大家都知道」的事。" },
+      { eventId: "sp-capital-05", optionId: "costs", text: "政策島上每一頁的財源和時程，選後被好幾個公民團體拿去對照，連對手的幕僚都在看。" },
+      { eventId: "sp-capital-05", optionId: "remix", text: "二創大賽的作品比你的政見還多。有幾支到投票那天都還在被轉傳，只是很少人點進去看政見。" },
+      { eventId: "sp-capital-06", optionId: "earn", text: "「不管上一屆投誰」那段話被剪成好幾支短影音。開票後，有人留言說，他就是因為那段才投給你。" },
+      { eventId: "sp-capital-06", optionId: "invite", text: "前副市長團隊的那兩位老幕僚，選後傳來一句：「下次還可以再談。」" },
+      { eventId: "sp-capital-06", optionId: "ads", text: "那批鎖定第三勢力選民的精準廣告點擊率很高；被截圖的那一張，也一直被拿出來講。" },
+      { eventId: "sp-capital-07", optionId: "thank", text: "你說參加選舉活動是很正常的小事。那位藝人後來傳來一句謝謝，沒有署名，但你知道是誰。" },
+      { eventId: "sp-capital-07", optionId: "law", text: "你要求修的那條法，選後還在委員會排隊。不過，跨境恐嚇候選人這件事，第一次被認真寫進了法案。" },
+      { eventId: "sp-capital-08", optionId: "decouple", text: "檢討會上，幕僚把那段颱風夜的發言放了三遍。論點值得討論，只是說在了颱風夜，也沒先問在金融業上班的人怎麼想。" },
+      { eventId: "sp-capital-08", optionId: "listen", text: "颱風過後你去聽的那幾個淹水社區，選後有里長打電話來問：上次說的抽水站，什麼時候動工？" },
+      { eventId: "sp-capital-09", optionId: "brag", text: "造勢場上念出的「領先十七點」，選後被拿來對照開票結果，做成了一張很難看的圖。" },
+      { eventId: "sp-capital-09", optionId: "challenger", text: "「我永遠是挑戰者」，後來成了你的志工群組名稱。" },
+      { eventId: "sp-capital-11", optionId: "rest", text: "選前那兩天的輪休，讓志工在選前之夜還有力氣，一路喊到最後一刻。" },
+      { eventId: "sp-capital-11", optionId: "rally", text: "那場包下廣場的大型造勢，空拍畫面很壯觀。收場的志工，凌晨三點才回到家。" },
+      { eventId: "sp-capital-12", optionId: "fear", text: "選前之夜那句「我不怕，是因為有你們」，很多人錄了下來，選後還在轉。" },
+      { eventId: "sp-capital-12", optionId: "trim", text: "選前之夜你縮成的三件事，後來被貼在競總的牆上，旁邊有人用麥克筆寫：「記得喔。」" },
+      { eventId: "sp-capital-12", optionId: "third", text: "選前之夜站上台的那幾位第三勢力選民，選後有人說，那是整場選戰最真實的十分鐘。" },
+      { eventId: "sp-capital-m01", optionId: "explain", text: "你承認十二年前寫得太省的那段話，成了整場選戰被轉傳最多次的澄清。" },
+      { eventId: "sp-capital-m01", optionId: "counter", text: "「台北市現在就在做，你的市府就在做」，那句反擊到投票那天都還在留言區被引用。" },
+      { eventId: "sp-capital-m03", optionId: "unscripted", text: "「市長，你給我聽好了」辦了好幾場，選後還有市民來問：下一場什麼時候？" },
+      { eventId: "sp-capital-m03", optionId: "mock", text: "你轉發的那支「講稿機」合輯，後來被人用同樣的手法，剪成了你的版本。" },
+      { eventId: "sp-capital-m07", optionId: "attack", text: "「垃圾桶少了，老鼠還在」成了這場選戰最常被引用的一句話。老鼠倒是一隻也沒有少。" },
+      { eventId: "sp-capital-m07", optionId: "joke", text: "「兩天是開始，不是結束」，選後還是有人每天到你的臉書留言：今天是第幾天？" },
+      { eventId: "sp-capital-m07", optionId: "hormone", text: "你提的荷爾蒙滅鼠藥劑，選後真的有廠商去找市府談了。" },
+      { eventId: "sp-capital-n01", optionId: "changed", text: "你承認對雙城論壇的想法調整過。有中間選民說，那是他們第一次聽到候選人承認自己變了。" },
+      { eventId: "sp-capital-n02", optionId: "calm", text: "地檢署起訴那天，你只說了一句「希望這種事不要再發生在任何一個候選人身上」。那句話，比任何反擊都走得遠。" },
+      { eventId: "sp-capital-n03", optionId: "mock", text: "「市府是賣鮮奶的廠商嗎？」被做成了好幾張梗圖。至於午餐，到投票那天都沒有人再問。" },
+      { eventId: "sp-capital-n04", optionId: "firm", text: "你說「選舉比的是市政，不是長相」，前部長那通電話講了很久。中間選民倒是記住了這一句。" },
+      { eventId: "sp-capital-n06", optionId: "more", text: "那幾集偏藍節目的專訪，選後觀看數還在漲；其中一位主持人，還因此被黨內連署要開除黨籍。" },
+      { eventId: "sp-capital-n07", optionId: "books", text: "那張青年政策的試算表，被工程師社群整理成了一個網頁，連青年局的人都在看。" },
+      { eventId: "sp-capital-n07", optionId: "push", text: "「AI 卡」三個字很紅。錢從哪裡來，到現在還是沒有人知道。" },
+      { eventId: "sp-capital-02", optionId: "warrior", text: "「戰士沒有選擇戰場的權利」，這句話後來成了你的競選口號之一。" },
+      { eventId: "sp-capital-04", optionId: "enemy", text: "你說家裡生意的事是對岸在干擾選舉。支持者很買單，但那份時間線，你始終沒有公開。" },
+      { eventId: "sp-capital-10", optionId: "map", text: "辯論上你攤開的淹水與鼠患數據，選後被好幾個里長印出來，貼在里民活動中心。" },
+      { eventId: "sp-capital-10", optionId: "plan", text: "辯論那晚你不攻擊，只講政見、財源和時程。有人說那是整場最無聊的十分鐘，也有人說，那是唯一聽得懂的十分鐘。" },
+      { eventId: "sp-capital-10", optionId: "security", text: "辯論上你把話題拉到跨境鎮壓和城市韌性。支持者很振奮，也有人說，他們那天比較想聽淹水的事。" },
+      { eventId: "sp-capital-10", optionId: "evidence", text: "辯論上你一題一題拿出政策研究，請對手回應。那一段後來被網友剪成一支影片，標題叫「挑戰者的期末報告」。" },
+      { eventId: "sp-capital-m06", optionId: "files", text: "辯論上你拿出對手的舊公文和舊發言。那幾分鐘很精彩，也讓人想起，你自己也有舊帳。" },
+      { eventId: "sp-capital-m06", optionId: "own", text: "辯論一開場，你先交代了自己前後說法的差異。對手準備好的那幾題，後來一題都沒問。" },
+      { eventId: "sp-capital-11", optionId: "stations", text: "選前那兩天你一站一站掃捷運站。有個上班族說，他連續三天，都在同一個出口遇到你。" },
+      { eventId: "sp-capital-12", optionId: "rats", text: "選前之夜你最後一次講老鼠、淹水和老公寓。台下有位阿嬤說，這是她第一次聽完一整場政見。" },
+      { eventId: "sp-capital-n03", optionId: "lunch", text: "你一直追問的午餐招標，選前終於全部完成了。教育局沒有提到你，但家長群組有。" },
+      { eventId: "sp-capital-n03", optionId: "swap", text: "你提的「加碼鮮奶的錢，先拿去提升午餐品質」，被一個家長社團整理成了連署。" },
+    ],
+    principledLoss: 95,
+    statLine: (s) =>
+      s.stats.team <= 40
+        ? "選戰最後一個月，競總裡幾乎沒有人睡滿六個小時。開票那晚，有志工靠在牆邊睡著了，手裡還拿著傳單。"
+        : s.stats.achievement >= 70
+          ? "你的政策團隊整理出兩百多頁的政見白皮書。選後，有大學拿去當公共政策課的教材。"
+          : s.stats.integrity <= 60
+            ? "選戰後半段，你說了幾句自己也不太相信的話。開票那晚，你想起了其中一句。"
+            : s.stats.media >= 75
+              ? "這半年，你上了上百次新聞。有人說你是這場選戰最會用網路的人，也有人說，你是被網路用得最兇的人。"
+              : s.stats.party <= 40
+                ? "黨中央的人，開票那晚沒有來。你知道，這一路上你和黨之間的帳，還沒算完。"
+                : undefined,
     realityNow: {
       paragraphs: [
         "沈伯洋被徵召後的第一份民調，落後蔣萬安二十八個百分點，很多人說這是垃圾時間。",
@@ -254,8 +332,7 @@ export function promiseLedger(state: GameState, events: GameEvent[]): PromiseLed
   return { made, trimmed, debt: Math.max(0, made - trimmed) };
 }
 
-/** 原則很高卻落選時，結局加這段旁白：守原則的人，選戰往往不吃香 */
-export const PRINCIPLED_LOSS_INTEGRITY = 85;
+/** 原則很高卻落選時，結局加這段旁白：守原則的人，選戰往往不吃香（門檻見各路線的 principledLoss） */
 const PRINCIPLED_LOSS =
   "開票那晚，競選總部的人走得差不多了。你一路上沒有說過一句自己不相信的話，沒有剪過一支斷章取義的影片，也沒有答應過一件做不到的事。你坐在空下來的椅子上，想了很久：為什麼最後是這個下場？你想不通。也許選舉本來就不是在比誰比較誠實；也許，只是還不到時候。";
 
@@ -273,12 +350,64 @@ export function realityCheck(def: SpecialDef, state: GameState, events: GameEven
   });
   const same = rows.filter((r) => r.same).length;
   const mostlySame = same * 2 >= rows.length;
-  const closing = !won
-    ? "現實裡，他做了這些選擇，把落後二十八點追成拉鋸。你在哪幾題做了不一樣的決定？"
-    : mostlySame
-      ? "你走了他走過的路，也走到了終點。現實裡，這條路還沒走完。"
-      : "你用自己的方法贏了。他在現實裡為什麼沒這樣選？是他錯了，還是你漏看了什麼？";
-  return { rows, same, closing: [closing, "他的選擇裡，有哪些是你不會做的？"] };
+  const c = def.closings;
+  const closing = !won ? c.lost : mostlySame ? c.wonSame : c.wonDifferent;
+  return { rows, same, closing: [closing, c.always] };
+}
+
+/** 這一局的轉折：支持度漲最多與跌最多的那一步（變化至少 3 點才算），連同玩家在那一步選了什麼 */
+export function turningPoints(state: GameState, events: GameEvent[]) {
+  const steps = state.history.flatMap((h) => {
+    const event = events.find((e) => e.id === h.eventId);
+    const option = event?.options.find((o) => o.id === h.optionId);
+    // 標題裡的「（架空）」只在遊戲進行中標示，後日談不重複
+    return event && option ? [{ title: event.title.replace(/（架空）$/, ""), event, option, change: h.optionDelta?.approval ?? 0 }] : [];
+  });
+  const up = [...steps].sort((a, b) => b.change - a.change)[0];
+  const down = [...steps].sort((a, b) => a.change - b.change)[0];
+  return { up: up && up.change >= 3 ? up : undefined, down: down && down.change <= -3 ? down : undefined };
+}
+
+type Step = NonNullable<ReturnType<typeof turningPoints>["up"]>;
+
+const recapOf = (def: SpecialDef, step: Step) => def.recaps.find((r) => r.eventId === step.event.id && r.optionId === step.option.id)?.text;
+/** 沒有寫好回響的選項，就引用玩家當時選的那句 */
+const choseLine = (step: Step) => `那天，你選了：「${step.option.label.replace(/「/g, "『").replace(/」/g, "』")}」。`;
+
+/** 轉折段落：寫出關鍵的那一天、玩家做了什麼、後來怎麼了 */
+function turningParagraph(def: SpecialDef, state: GameState, events: GameEvent[], won: boolean): { text?: string; used: string[] } {
+  const { up, down } = turningPoints(state, events);
+  const key = won ? up : down;
+  const other = won ? down : up;
+  const used = [key, other].flatMap((x) => (x ? [`${x.event.id}/${x.option.id}`] : []));
+  // 兩種說法依種子輪換，同一個轉折在不同局讀起來不一樣
+  const v = state.seed % 2;
+  const lines: string[] = [];
+  if (key) {
+    lines.push(
+      won
+        ? [`回頭看，這場仗是在〈${key.title}〉那一天拉開的。`, `如果要選一天，你會選〈${key.title}〉。`][v]
+        : [`回頭看，最痛的一刀，在〈${key.title}〉。`, `後來你最常想起的，是〈${key.title}〉那一天。`][v],
+    );
+    lines.push(recapOf(def, key) ?? choseLine(key));
+  }
+  if (other) {
+    lines.push(
+      won
+        ? [`差點讓你輸掉的，是〈${other.title}〉。`, `也有讓你冒冷汗的一天：〈${other.title}〉。`][v]
+        : [`你走得最好的一步在〈${other.title}〉，可惜那樣的路，後來沒能一直走下去。`, `其實你也有走對的時候，例如〈${other.title}〉；只是不夠。`][v],
+    );
+  }
+  return { text: lines.length ? lines.join("") : undefined, used };
+}
+
+/** 選擇的回響：轉折之外，再挑一句；起點依種子輪換，同樣的選擇在不同局會被提到不同的句子 */
+function choiceRecap(def: SpecialDef, state: GameState, used: string[]): string | undefined {
+  const picked = [...state.history, ...(state.interludes ?? [])];
+  const hits = def.recaps.filter(
+    (r) => !used.includes(`${r.eventId}/${r.optionId}`) && picked.some((p) => p.eventId === r.eventId && p.optionId === r.optionId),
+  );
+  return hits.length ? hits[state.seed % hits.length].text : undefined;
 }
 
 export function specialEnding(def: SpecialDef, state: GameState, won: boolean, probability: number, events: GameEvent[]) {
@@ -286,6 +415,12 @@ export function specialEnding(def: SpecialDef, state: GameState, won: boolean, p
   const ending = def.endings.find((e) => e.when(state, won, probability, promises))!;
   const paragraphs = ending.paragraphs(state, promises);
   // 放在第一段之後、其他補充段落之前
-  if (!won && state.stats.integrity >= PRINCIPLED_LOSS_INTEGRITY) paragraphs.splice(1, 0, PRINCIPLED_LOSS);
+  if (!won && !ending.principled && state.stats.integrity >= def.principledLoss) paragraphs.splice(1, 0, PRINCIPLED_LOSS);
+  // 開票夜之後、尾聲之前：這一局的轉折、另一個選擇的回響、這一局的你
+  const turning = turningParagraph(def, state, events, won);
+  const recap = choiceRecap(def, state, turning.used);
+  const statLine = def.statLine(state);
+  const extra = [turning.text, recap, statLine].filter((x): x is string => !!x);
+  paragraphs.splice(paragraphs.length - 1, 0, ...extra);
   return { ...ending, paragraphs };
 }

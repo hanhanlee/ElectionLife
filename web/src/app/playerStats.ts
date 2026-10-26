@@ -4,7 +4,7 @@
 // 後端連不上時什麼都不顯示，不影響遊戲。
 
 import { useEffect, useState } from "react";
-import { buildPlay, type PlayerStats } from "@/game/stats";
+import { buildPlay, STATS_SCENARIOS, type PlayerStats } from "@/game/stats";
 import type { GameState } from "@/game/types";
 
 const STATS_URL = process.env.NEXT_PUBLIC_STATS_URL ?? "https://api.beyondvote.com";
@@ -18,7 +18,8 @@ function newPlayId(): string {
 export function usePlayerStats(state: GameState, won: boolean, ending: string, sameAsReal: number, realTotal: number): PlayerStats | null {
   const [stats, setStats] = useState<PlayerStats | null>(null);
   useEffect(() => {
-    if (!state.special) return;
+    // 只有收統計的特別篇才送（其他路線還在本機測試）
+    if (!state.special || !(STATS_SCENARIOS as readonly string[]).includes(state.special)) return;
     let alive = true;
     // 用種子當這一局的記號：先記下這一局的 id 再送，重送（重新整理、重跑）都是同一個 id，後端會去重
     const idKey = `election-life:stats-id:${state.special}:${state.seed}`;
