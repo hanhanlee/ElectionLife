@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { backgroundById, CRISES, EVENTS, PARTIES, partyById, specialSetup, ARCS } from "@/content";
 import { choose, chooseInterlude, currentEvent, interludeEvent, newGame } from "./engine";
 import { SPECIALS } from "./special";
-import { buildPlay, choiceShare, STATS_MIN_SAMPLE, validatePlay, type PlayerStats } from "./stats";
+import { buildPlay, choiceShare, STATS_MIN_SAMPLE, validatePlay, validateStart, type PlayerStats } from "./stats";
 
 const def = SPECIALS[0];
 
@@ -59,5 +59,16 @@ describe("玩家統計", () => {
     expect(choiceShare(stats, "b", "z")).toBe(0);
     expect(choiceShare(stats, "c", "x")).toBeUndefined();
     expect(STATS_MIN_SAMPLE).toBeGreaterThanOrEqual(30);
+  });
+});
+
+describe("開局計數", () => {
+  it("主線和兩條特別篇都收，其他路線或格式不對就丟掉", () => {
+    for (const scenario of ["main", "capital-2026", "capital-2026-incumbent"]) {
+      expect(validateStart({ scenario, branch: false })).toEqual({ scenario, branch: false });
+    }
+    expect(validateStart({ scenario: "taipei", branch: false })).toBeNull();
+    expect(validateStart({ scenario: "main" })).toBeNull();
+    expect(validateStart(null)).toBeNull();
   });
 });

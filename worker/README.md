@@ -4,6 +4,7 @@
 
 - `POST /plays`：一局的紀錄，格式與檢查在 `web/src/game/stats.ts`（前後端共用）。同一局重送不重複計算；同一來源 10 分鐘最多 20 局。
 - `GET /stats?scenario=capital-2026`：彙整，快取 60 秒。
+- `POST /starts`：開局計數（主線 `main` 與兩條特別篇），每開一局一筆，只記路線、是否分支模式與時間；繼續存檔不算。同一來源 10 分鐘最多 60 次。不對外提供讀取，要看用 `wrangler d1 execute` 查 `starts` 表。
 - 只允許 beyondvote.com 與本機 localhost:3000 跨網域呼叫。
 - 不存個人資料；`ip_hash` 是當天的雜湊，只用來限制送出頻率。
 

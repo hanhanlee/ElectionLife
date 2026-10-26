@@ -1,7 +1,7 @@
-// 玩家統計後端：收遊戲送來的匿名紀錄（POST /plays），回傳彙整（GET /stats?scenario=…）。
+// 玩家統計後端：收遊戲送來的匿名紀錄（POST /plays），回傳彙整（GET /stats?scenario=…），另外記開局次數（POST /starts）。
 // 格式檢查與遊戲端共用 web/src/game/stats.ts。
 
-import { STATS_SCENARIOS, validatePlay, type PlayerStats } from "../../web/src/game/stats";
+import { STATS_SCENARIOS, validatePlay, validateStart, type PlayerStats } from "../../web/src/game/stats";
 
 // 只用到 D1 的這幾個方法，不另外裝型別套件
 interface D1Result<T> {
@@ -28,6 +28,8 @@ const ORIGINS = ["https://beyondvote.com", "https://www.beyondvote.com", "http:/
 /** 同一個來源 10 分鐘內最多送幾局 */
 const RATE_WINDOW_MS = 10 * 60 * 1000;
 const RATE_MAX = 20;
+/** 同一個來源 10 分鐘內最多記幾次開局 */
+const START_RATE_MAX = 60;
 const MAX_BODY = 8 * 1024;
 /** 統計快取秒數 */
 const STATS_TTL = 60;
@@ -84,6 +86,30 @@ async function savePlay(req: Request, env: Env): Promise<Response> {
   return json(req, { ok: true });
 }
 
+/** 開局計數：一次開局一筆，不回傳任何統計 */
+async function saveStart(req: Request, env: Env): Promise<Response> {
+  const text = await req.text();
+  if (text.length > 512) return json(req, { error: "too large" }, 413);
+  let body: unknown;
+  try {
+    body = JSON.parse(text);
+  } catch {
+    return json(req, { error: "bad json" }, 400);
+  }
+  const start = validateStart(body);
+  if (!start) return json(req, { error: "invalid" }, 400);
+
+  const now = Date.now();
+  const hash = await ipHash(req, env.SALT ?? "");
+  const recent = await env.DB.prepare("SELECT COUNT(*) AS n FROM starts WHERE ip_hash = ? AND created_at > ?").bind(hash, now - RATE_WINDOW_MS).first<{ n: number }>();
+  if ((recent?.n ?? 0) >= START_RATE_MAX) return json(req, { error: "slow down" }, 429);
+
+  await env.DB.prepare("INSERT INTO starts (scenario, branch, ip_hash, created_at) VALUES (?, ?, ?, ?)")
+    .bind(start.scenario, start.branch ? 1 : 0, hash, now)
+    .run();
+  return json(req, { ok: true });
+}
+
 /** 真人局數到這個數字後，不再計入電腦模擬的基礎樣本 */
 const DROP_SIMULATED_AT = 300;
 
@@ -121,6 +147,7 @@ export default {
     const url = new URL(req.url);
     if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: cors(req) });
     if (req.method === "POST" && url.pathname === "/plays") return savePlay(req, env);
+    if (req.method === "POST" && url.pathname === "/starts") return saveStart(req, env);
     if (req.method === "GET" && url.pathname === "/stats") {
       const scenario = url.searchParams.get("scenario") ?? "";
       if (!(STATS_SCENARIOS as readonly string[]).includes(scenario)) return json(req, { error: "unknown scenario" }, 404);

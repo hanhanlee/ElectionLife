@@ -53,7 +53,7 @@ import { staffReport } from "@/game/feedback";
 import { arcProgress, fillArcText, openArcs } from "@/game/story";
 import { summarize, type FinalStage, type ReflectionItem } from "@/game/endings";
 import { choiceShare, percent, STATS_MIN_SAMPLE, type PlayerStats } from "@/game/stats";
-import { usePlayerStats } from "./playerStats";
+import { countStart, usePlayerStats } from "./playerStats";
 import { fillSaid, realityCheck, turningPoints, SPECIAL_SERIES, specialById, specialEnding, type SpecialDef } from "@/game/special";
 import {
   CAMPAIGN_SCALES,
@@ -197,6 +197,12 @@ export default function Game() {
     setGame(state);
   }
 
+  /** 開新的一局（繼續存檔不算）：記一次開局 */
+  function begin(state: GameState) {
+    start(state);
+    countStart(state);
+  }
+
   function restart() {
     clearGame();
     setSaved(null);
@@ -219,7 +225,7 @@ export default function Game() {
   }
 
   function startSpecial(def: SpecialDef) {
-    start(
+    begin(
       newGame(EVENTS, newSeed(), partyById(def.party), backgroundById(def.background), specialSetup(def), {
         special: def.id,
         specialBranch: specialPlayed(def.id),
@@ -240,7 +246,7 @@ export default function Game() {
       <CharacterReveal
         character={character}
         onStart={() =>
-          start(newGame(EVENTS, newSeed(), character.party, character.background, profileSetup(character.profile), { fate: FATE_ENABLED }))
+          begin(newGame(EVENTS, newSeed(), character.party, character.background, profileSetup(character.profile), { fate: FATE_ENABLED }))
         }
       />
     );

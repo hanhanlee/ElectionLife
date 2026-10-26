@@ -24,3 +24,13 @@ CREATE TABLE IF NOT EXISTS picks (
   PRIMARY KEY (play_id, event_id)
 );
 CREATE INDEX IF NOT EXISTS picks_scenario ON picks (scenario, event_id, option_id);
+
+-- 開局計數：每開一局一筆（主線與特別篇），只記路線與時間
+CREATE TABLE IF NOT EXISTS starts (
+  scenario TEXT NOT NULL,
+  branch INTEGER NOT NULL,
+  ip_hash TEXT NOT NULL,
+  created_at INTEGER NOT NULL
+);
+CREATE INDEX IF NOT EXISTS starts_scenario ON starts (scenario, created_at);
+CREATE INDEX IF NOT EXISTS starts_ip ON starts (ip_hash, created_at);

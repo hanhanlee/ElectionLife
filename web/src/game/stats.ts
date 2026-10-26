@@ -6,6 +6,8 @@ import type { GameState } from "./types";
 
 /** 收統計的特別篇 */
 export const STATS_SCENARIOS = ["capital-2026", "capital-2026-incumbent"] as const;
+/** 記開局次數的路線：主線（main）加上收統計的特別篇 */
+export const START_SCENARIOS = ["main", ...STATS_SCENARIOS] as const;
 /** 樣本少於這個數字時不顯示比例，避免「100% 的玩家都選了這個」 */
 export const STATS_MIN_SAMPLE = 30;
 
@@ -84,6 +86,20 @@ export function validatePlay(body: unknown): PlayRecord | null {
     picks: b.picks as [string, string][],
     interludes: b.interludes as [string, string][],
   };
+}
+
+/** 開局計數：只記哪一條路線、是不是第二局起的分支模式 */
+export interface StartRecord {
+  scenario: string;
+  branch: boolean;
+}
+
+export function validateStart(body: unknown): StartRecord | null {
+  if (!body || typeof body !== "object") return null;
+  const b = body as Record<string, unknown>;
+  if (typeof b.scenario !== "string" || !(START_SCENARIOS as readonly string[]).includes(b.scenario)) return null;
+  if (typeof b.branch !== "boolean") return null;
+  return { scenario: b.scenario, branch: b.branch };
 }
 
 /** 這一題有多少玩家選了這個選項；樣本不夠時回傳 undefined */

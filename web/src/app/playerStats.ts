@@ -4,7 +4,7 @@
 // 後端連不上時什麼都不顯示，不影響遊戲。
 
 import { useEffect, useState } from "react";
-import { buildPlay, STATS_SCENARIOS, type PlayerStats } from "@/game/stats";
+import { buildPlay, START_SCENARIOS, STATS_SCENARIOS, type PlayerStats, type StartRecord } from "@/game/stats";
 import type { GameState } from "@/game/types";
 
 const STATS_URL = process.env.NEXT_PUBLIC_STATS_URL ?? "https://api.beyondvote.com";
@@ -13,6 +13,22 @@ const STATS_URL = process.env.NEXT_PUBLIC_STATS_URL ?? "https://api.beyondvote.c
 function newPlayId(): string {
   if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") return crypto.randomUUID();
   return `p-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`;
+}
+
+/** 開局時記一次（主線與特別篇都算）；送不出去就算了，不影響遊戲 */
+export function countStart(state: GameState) {
+  const record: StartRecord = { scenario: state.special ?? "main", branch: !!state.specialBranch };
+  if (!(START_SCENARIOS as readonly string[]).includes(record.scenario)) return;
+  try {
+    fetch(`${STATS_URL}/starts`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(record),
+      keepalive: true,
+    }).catch(() => {});
+  } catch {
+    // 同上
+  }
 }
 
 export function usePlayerStats(state: GameState, won: boolean, ending: string, sameAsReal: number, realTotal: number): PlayerStats | null {
