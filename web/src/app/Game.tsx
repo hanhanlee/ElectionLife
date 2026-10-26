@@ -1561,6 +1561,9 @@ function SpecialEndScreen({
   const check = realityCheck(def, state, EVENTS, won);
   const result = won ? "當選" : "落選";
   const players = usePlayerStats(state, won, ending.title, check.same, check.rows.length);
+  // 分享圖卡的轉折點：贏了寫拉開差距的那一步，輸了寫最痛的那一步；沒有就改寫另一個
+  const turns = turningPoints(state, EVENTS);
+  const shareTurning = won ? (turns.up ?? turns.down) : (turns.down ?? turns.up);
 
   useEffect(() => {
     try {
@@ -1592,7 +1595,7 @@ function SpecialEndScreen({
         label={`特別篇・${def.title}`}
         result={result}
         headline={ending.headline}
-        story={def.shareStory(won, check.same, check.rows.length, (won ? turningPoints(state, EVENTS).up : turningPoints(state, EVENTS).down)?.title)}
+        story={def.shareStory(won, check.same, check.rows.length, shareTurning?.title)}
         line={check.closing[1]}
         won={won}
       />

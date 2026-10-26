@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { ARCS, backgroundById, CRISES, EVENTS, PARTIES, partyById, specialSetup } from "@/content";
 import { choose, chooseInterlude, currentEvent, drawInterlude, interludeEvent, lacksFunds, newGame } from "./engine";
 import { mulberry32 } from "./rng";
-import { fillSaid, PRINCIPLED_LOSS_INTEGRITY, realityCheck, specialEnding, SPECIALS } from "./special";
+import { fillSaid, realityCheck, specialEnding, SPECIALS } from "./special";
 import type { GameState } from "./types";
 
 const def = SPECIALS[0];
@@ -101,10 +101,10 @@ describe("特別篇：首都逆轉戰", () => {
 
   it("原則很高卻落選時，結局有那段旁白；當選或原則不夠高時沒有", () => {
     const g = play(5);
-    const lost = { ...g, firstElection: { ...g.firstElection!, won: false }, stats: { ...g.stats, integrity: PRINCIPLED_LOSS_INTEGRITY } };
+    const lost = { ...g, firstElection: { ...g.firstElection!, won: false }, stats: { ...g.stats, integrity: def.principledLoss } };
     expect(specialEnding(def, lost, false, 0.3, EVENTS).paragraphs.some((p) => p.includes("你想不通"))).toBe(true);
     expect(specialEnding(def, lost, true, 0.6, EVENTS).paragraphs.some((p) => p.includes("你想不通"))).toBe(false);
-    const low = { ...lost, stats: { ...lost.stats, integrity: PRINCIPLED_LOSS_INTEGRITY - 1 } };
+    const low = { ...lost, stats: { ...lost.stats, integrity: def.principledLoss - 1 } };
     expect(specialEnding(def, low, false, 0.3, EVENTS).paragraphs.some((p) => p.includes("你想不通"))).toBe(false);
   });
 
