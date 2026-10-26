@@ -1339,3 +1339,15 @@ button:active > .ballotStamp::after {
   height: 100%;
   background: var(--accent);
 }
+
+/* 結局頁的說明：和後日談的敘事分開，看起來像旁註而不是故事的一部分 */
+.disclaimer {
+  margin: 4px 0 0;
+  padding: 10px 12px;
+  border-left: 3px solid var(--border);
+  background: color-mix(in srgb, var(--muted) 8%, transparent);
+  border-radius: 0 6px 6px 0;
+  color: var(--muted);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}

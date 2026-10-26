@@ -1589,7 +1589,7 @@ function SpecialEndScreen({
         <div className={styles.epilogue}>
           {ending.paragraphs.map((p) => <p key={p}>{p}</p>)}
         </div>
-        <p><small>這是遊戲裡的虛構結果，不是真實選情。原則不會直接換成選票，但決定了你用什麼方式贏，或用什麼方式輸。</small></p>
+        <p className={styles.disclaimer}>這是遊戲裡的虛構結果，不是真實選情。原則不會直接換成選票，但決定了你用什麼方式贏，或用什麼方式輸。</p>
       </section>
       <ShareCard
         kind={won ? def.cards.win : def.cards.loss}
