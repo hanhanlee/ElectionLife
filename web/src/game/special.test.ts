@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { ARCS, backgroundById, CRISES, EVENTS, PARTIES, partyById, specialSetup } from "@/content";
-import { choose, chooseInterlude, currentEvent, drawInterlude, interludeEvent, lacksFunds, newGame } from "./engine";
+import { choose, chooseInterlude, currentEvent, displayOrder, drawInterlude, interludeEvent, lacksFunds, newGame } from "./engine";
 import { mulberry32 } from "./rng";
 import { fillSaid, realityCheck, specialEnding, SPECIALS } from "./special";
 import type { GameState } from "./types";
@@ -211,6 +211,24 @@ describe("特別篇：首都逆轉戰", () => {
       expect(g.firstElection!.mobilization).toBe(0);
       expect(g.history.flatMap((h) => [h.delta.treasury, h.delta.council, h.delta.business]).every((v) => v === 0)).toBe(true);
     }
+  });
+
+  it("選項顯示順序依種子打亂：同一局固定，現實的選擇不會總是排在第一個", () => {
+    const e = own.find((x) => x.id === "sp-capital-01")!;
+    const base = newGame(EVENTS, 1, partyById(def.party), backgroundById(def.background), specialSetup(def), { special: def.id });
+    expect(displayOrder(base, e, e.options).map((o) => o.id)).toEqual(displayOrder({ ...base }, e, e.options).map((o) => o.id));
+    const firsts = new Map<string, number>();
+    for (const [eventId, optionId] of Object.entries(def.realChoices)) {
+      const ev = own.find((x) => x.id === eventId)!;
+      for (let seed = 1; seed <= 60; seed++) {
+        const order = displayOrder({ ...base, seed }, ev, ev.options).map((o) => o.id);
+        const k = String(order.indexOf(optionId));
+        firsts.set(k, (firsts.get(k) ?? 0) + 1);
+      }
+    }
+    const total = [...firsts.values()].reduce((a, b) => a + b, 0);
+    // 現實的選擇排在第一個的比例，接近隨機（三到四個選項，約 25–40%），不再是七成以上
+    expect((firsts.get("0") ?? 0) / total).toBeLessThan(0.45);
   });
 
   it("後日談依選擇變化：回響都對得到選項；同一種結局在不同局會寫出不同的內容", () => {

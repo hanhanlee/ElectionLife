@@ -92,6 +92,7 @@ const FATE_ROLL_SALT = 0xd1ce;
 const FATE_TEXT_SALT = 0x7e47;
 const SPECIAL_SWAP_SALT = 0x5a4b;
 const INTERLUDE_SALT = 0x1e7d;
+const OPTION_ORDER_SALT = 0x0bde;
 
 /** 特別篇分支模式：可替換的回合換成替換事件的機率 */
 const SPECIAL_SWAP_CHANCE = 0.5;
@@ -419,6 +420,22 @@ export function currentEvent(state: GameState, events: GameEvent[]): GameEvent |
 /** 目前事件實際提供給玩家的選項 */
 export function offeredOptions(state: GameState, event: GameEvent): GameOption[] {
   return event.options.filter((o) => state.offered.includes(o.id));
+}
+
+/**
+ * 畫面上的選項順序：依種子與事件打亂（同一局重新整理不變、換一局就不同），
+ * 免得玩家發現「第一個選項就是現實的選擇」之類的排列習慣。只影響顯示，不影響效果。
+ */
+export function displayOrder(state: GameState, event: GameEvent, options: GameOption[]): GameOption[] {
+  let h = OPTION_ORDER_SALT;
+  for (const ch of event.id) h = (h * 31 + ch.charCodeAt(0)) | 0;
+  const rng = turnRng(state.seed, 0, h);
+  const out = [...options];
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
 }
 
 export function isPerk(events: GameEvent[], eventId: string, optionId: string): boolean {

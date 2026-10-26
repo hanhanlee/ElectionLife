@@ -30,6 +30,7 @@ import {
   FIRST_ELECTION_TURN,
   newGame,
   offeredOptions,
+  displayOrder,
   isCampaignTurn,
   lacksFunds,
   nextPayout,
@@ -309,7 +310,7 @@ export default function Game() {
   const fate = outcome ? undefined : game.pendingFate;
   const interlude = outcome || fate ? undefined : interludeEvent(game, EVENTS);
   const event = outcome || fate ? undefined : interlude ?? currentEvent(game, EVENTS);
-  const options = interlude ? interlude.options : event ? offeredOptions(game, event) : [];
+  const options = interlude ? displayOrder(game, interlude, interlude.options) : event ? displayOrder(game, event, offeredOptions(game, event)) : [];
 
   function pick(o: GameOption) {
     if (interlude) {
