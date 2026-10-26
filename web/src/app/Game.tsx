@@ -796,7 +796,7 @@ function SeriesScreen({ onPick, onBack }: { onPick: (def: SpecialDef) => void; o
                 <h2>{route.title}</h2>
                 <p>{route.teaser}</p>
                 {def ? (
-                  <button className={`${styles.primary} ${styles.glow}`} onClick={() => onPick(def)}>站在這一邊</button>
+                  <button className={`${styles.primary} ${styles.glow}`} onClick={() => onPick(def)}>{route.cta}</button>
                 ) : (
                   <button className={styles.secondary} disabled>即將推出</button>
                 )}
