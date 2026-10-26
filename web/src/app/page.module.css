@@ -24,7 +24,7 @@
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 6px;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -49,7 +49,7 @@
 .optionLocked {
   text-align: left;
   padding: 14px 16px;
-  border-radius: 10px;
+  border-radius: 5px;
   border: 1px solid var(--border);
   background: var(--background);
   cursor: pointer;
@@ -70,7 +70,7 @@
 .primary,
 .secondary {
   padding: 14px 16px;
-  border-radius: 10px;
+  border-radius: 5px;
   border: 1px solid var(--accent);
   cursor: pointer;
   font-weight: 600;
@@ -141,7 +141,7 @@
 
 .crisis,
 .crisisGood {
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 12px 14px;
   border: 1px solid var(--warn);
   display: flex;
@@ -190,7 +190,7 @@
 .choiceActive {
   flex: 1;
   padding: 10px;
-  border-radius: 8px;
+  border-radius: 4px;
   border: 1px solid var(--border);
   background: var(--background);
   cursor: pointer;
@@ -213,7 +213,7 @@
 
 .share {
   padding: 12px;
-  border-radius: 8px;
+  border-radius: 4px;
   border: 1px dashed var(--accent);
 }
 
@@ -283,7 +283,7 @@
   flex-direction: column;
   gap: 2px;
   padding: 12px 14px;
-  border-radius: 10px;
+  border-radius: 5px;
   border: 1px solid var(--border);
   background: var(--surface);
   min-height: 64px;
@@ -333,7 +333,7 @@
 .bannerLose {
   position: relative;
   overflow: hidden;
-  border-radius: 16px;
+  border-radius: 8px;
   padding: 36px 20px 28px;
   min-height: 240px;
   display: flex;
@@ -390,7 +390,7 @@
   color: #7f1d1d;
   background: linear-gradient(180deg, #fde68a, #f59e0b);
   padding: 6px 28px;
-  border-radius: 6px;
+  border-radius: 3px;
   box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
   transform: rotate(-3deg);
 }
@@ -400,7 +400,7 @@
   color: #e2e8f0;
   border: 4px solid #e2e8f0;
   padding: 4px 24px;
-  border-radius: 8px;
+  border-radius: 4px;
   transform: rotate(4deg);
   opacity: 0.9;
 }
@@ -452,7 +452,7 @@
   align-items: center;
   gap: 2px;
   padding: 8px 4px;
-  border-radius: 10px;
+  border-radius: 5px;
   font: inherit;
   cursor: pointer;
   color: var(--foreground);
@@ -565,7 +565,7 @@
 .staff {
   border-left: 3px solid var(--accent);
   background: var(--surface);
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 10px 14px;
   display: flex;
   flex-direction: column;
@@ -594,7 +594,7 @@
 /* 政治帳本 */
 .ledger {
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 8px 14px;
   background: var(--surface);
   font-size: 0.875rem;
@@ -640,7 +640,7 @@
 .storyNotice {
   font-size: 0.875rem;
   padding: 6px 10px;
-  border-radius: 8px;
+  border-radius: 4px;
   border: 1px dashed var(--accent);
 }
 
@@ -663,7 +663,7 @@
   height: auto;
   aspect-ratio: 3 / 2;
   object-fit: cover;
-  border-radius: 14px;
+  border-radius: 6px;
   background: var(--border);
 }
 
@@ -707,7 +707,7 @@
   max-width: 420px;
   height: auto;
   margin: 0 auto;
-  border-radius: 12px;
+  border-radius: 6px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
 }
 
@@ -750,7 +750,7 @@
   background: var(--surface);
   border: 1px solid var(--border);
   border-top: 4px solid var(--kind);
-  border-radius: 12px;
+  border-radius: 6px;
   cursor: pointer;
   transition: transform 0.15s ease, border-color 0.15s ease;
 }
@@ -1023,7 +1023,7 @@
 
 .aboutClosing {
   padding: 16px;
-  border-radius: 12px;
+  border-radius: 6px;
   background: var(--surface);
   border: 1px solid var(--border);
   text-align: center;
@@ -1225,9 +1225,11 @@ button.ballotFeatured:hover {
   align-self: flex-start;
   margin-top: 6px;
   padding: 6px 16px;
-  border-radius: 6px;
-  background: var(--accent);
-  color: var(--accent-fg);
+  border-radius: 3px;
+  background: var(--stamp);
+  color: #fff;
+  /* 呼吸光暈（.glow）跟著用圈選章的紅 */
+  --accent: var(--stamp);
 }
 
 /* 圈選欄：平常是空的虛線圈；按下或滑過時蓋上圈選章 */
@@ -1319,7 +1321,7 @@ button:active > .ballotStamp::after {
   flex-direction: column;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 6px;
   overflow: hidden;
 }
 
@@ -1416,7 +1418,7 @@ button:active > .ballotStamp::after {
   padding: 10px 12px;
   border-left: 3px solid var(--border);
   background: color-mix(in srgb, var(--muted) 8%, transparent);
-  border-radius: 0 6px 6px 0;
+  border-radius: 0 3px 3px 0;
   color: var(--muted);
   font-size: 0.8125rem;
   line-height: 1.6;

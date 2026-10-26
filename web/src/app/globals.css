@@ -1,14 +1,15 @@
 :root {
   color-scheme: light;
-  --background: #f6f4ef;
-  --surface: #ffffff;
-  --foreground: #1c1b19;
-  --muted: #6b6760;
-  --accent: #c2410c;
+  /* 選票配色：冷灰的公報紙、近黑的油墨；按鈕與連結用油墨色，紅色只留給圈選章 */
+  --background: #eceeec;
+  --surface: #fbfbfa;
+  --foreground: #16181b;
+  --muted: #5a5f66;
+  --accent: #1d2026;
   --accent-fg: #ffffff;
   /* 首頁選票的圈選章 */
-  --stamp: #c8102e;
-  --border: #e3dfd6;
+  --stamp: #b3132b;
+  --border: #c8cbc8;
   --warn: #9a3412;
   --tier-negative: #dc2626;
   --tier-common: #16a34a;
@@ -24,14 +25,14 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --background: #141311;
-    --surface: #1f1d1a;
-    --foreground: #ece9e2;
-    --muted: #a39e94;
-    --accent: #fb923c;
-    --accent-fg: #1c1b19;
-  --stamp: #f2545b;
-    --border: #34312c;
+    --background: #111315;
+    --surface: #1a1d20;
+    --foreground: #e8e9ea;
+    --muted: #9ba0a6;
+    --accent: #e8e9ea;
+    --accent-fg: #111315;
+    --stamp: #f0575d;
+    --border: #33373b;
     --warn: #fdba74;
     --tier-negative: #f87171;
     --tier-common: #4ade80;
@@ -45,14 +46,14 @@
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --background: #141311;
-  --surface: #1f1d1a;
-  --foreground: #ece9e2;
-  --muted: #a39e94;
-  --accent: #fb923c;
-  --accent-fg: #1c1b19;
-  --stamp: #f2545b;
-  --border: #34312c;
+  --background: #111315;
+  --surface: #1a1d20;
+  --foreground: #e8e9ea;
+  --muted: #9ba0a6;
+  --accent: #e8e9ea;
+  --accent-fg: #111315;
+  --stamp: #f0575d;
+  --border: #33373b;
   --warn: #fdba74;
   --tier-negative: #f87171;
   --tier-common: #4ade80;
