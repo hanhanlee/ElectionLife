@@ -1186,15 +1186,67 @@ button.ballotFeatured:hover {
   font-size: 1.5rem;
 }
 
+/* HOT 標籤：小火苗搖晃、底色像火焰一樣流動、外圈忽明忽暗 */
 .ballotBadge {
   align-self: flex-start;
-  padding: 1px 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0 6px 0 4px;
   border-radius: 999px;
-  background: var(--stamp);
+  background: linear-gradient(90deg, #d7261e, #ff7a00, #ffb300, #ff7a00, #d7261e);
+  background-size: 300% 100%;
   color: #fff;
+  font-size: 0.625rem;
+  font-weight: 800;
+  line-height: 1.6;
+  letter-spacing: 0.1em;
+  text-shadow: 0 1px 1px rgb(120 20 0 / 0.6);
+  animation:
+    flame-flow 2.4s linear infinite,
+    flame-glow 1.3s ease-in-out infinite alternate;
+}
+
+.ballotBadge::before {
+  content: "🔥";
+  display: inline-block;
   font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  transform-origin: 50% 90%;
+  animation: flame-flicker 0.9s ease-in-out infinite alternate;
+}
+
+@keyframes flame-flow {
+  to {
+    background-position: 300% 0;
+  }
+}
+
+@keyframes flame-glow {
+  from {
+    box-shadow: 0 0 3px 0 rgb(255 110 0 / 0.45);
+  }
+  to {
+    box-shadow: 0 0 9px 2px rgb(255 120 0 / 0.75);
+  }
+}
+
+@keyframes flame-flicker {
+  0% {
+    transform: rotate(-6deg) scale(1);
+  }
+  50% {
+    transform: rotate(4deg) scale(1.12, 1.18);
+  }
+  100% {
+    transform: rotate(-2deg) scale(0.95, 1.05);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ballotBadge,
+  .ballotBadge::before {
+    animation: none;
+  }
 }
 
 .ballotCta {
