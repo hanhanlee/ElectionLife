@@ -231,7 +231,7 @@ export const SPECIALS: SpecialDef[] = [
       traits: ["policy-wonk", "meme-lord", "principled"],
       burden: "activist-network",
     },
-    opponentIntro: "大學犯罪學教授、民防學院創辦人，被對岸立案偵查。網路梗很多，政見很長。批評的人說：學者從政，懂理論不懂市政。",
+    opponentIntro: "大學犯罪學教授、民防學院創辦人，被對岸立案偵查，網路梗很多。批評的人說：國安理論一百分，市政實務零經驗，政見長到像在寫期末論文。",
     opponentBonus: -0.3,
     startDelta: {},
     statLabels: { approval: "支持度" },
