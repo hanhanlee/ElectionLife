@@ -213,6 +213,22 @@ describe("特別篇：首都逆轉戰", () => {
     }
   });
 
+  it("後日談依選擇變化：回響都對得到選項；同一種結局在不同局會寫出不同的內容", () => {
+    for (const r of def.recaps) {
+      const e = own.find((x) => x.id === r.eventId);
+      expect(e, r.eventId).toBeDefined();
+      expect(e!.options.some((o) => o.id === r.optionId), `${r.eventId}/${r.optionId}`).toBe(true);
+    }
+    const byEnding = new Map<string, string[]>();
+    for (let seed = 1; seed <= 200; seed++) {
+      const g = play(seed, seed % 2 === 0);
+      const end = specialEnding(def, g, g.firstElection!.won, g.firstElection!.probability, EVENTS);
+      byEnding.set(end.title, [...(byEnding.get(end.title) ?? []), end.paragraphs.join("|")]);
+    }
+    // 出現至少三次的結局，內容不能每次都一樣
+    for (const [title, texts] of byEnding) if (texts.length >= 3) expect(new Set(texts).size, title).toBeGreaterThan(1);
+  });
+
   it("聲量很高時，F13〈短影音被斷章取義〉一定會出現（每局插曲上限內）", () => {
     const f13 = own.find((e) => e.id === "sp-capital-f13")!;
     expect(f13.interludeUrgent).toBeDefined();
