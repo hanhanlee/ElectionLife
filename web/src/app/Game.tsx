@@ -177,6 +177,8 @@ export default function Game() {
   const [special, setSpecial] = useState<SpecialDef | null>(null);
   /** 特別篇的選邊頁：先選這場選舉，再選站哪一邊 */
   const [series, setSeries] = useState(false);
+  /** 首頁選票上正指著的那一列：主視覺換成那一列的圖 */
+  const [hovered, setHovered] = useState<"main" | "special" | null>(null);
 
   useEffect(() => {
     // 存檔只在瀏覽器端讀取，避免伺服器輸出與客戶端不一致
@@ -257,15 +259,27 @@ export default function Game() {
       <main className={styles.main}>
         {/* 主視覺已經寫著標題，文字標題留給螢幕閱讀器與搜尋引擎 */}
         <h1 className={styles.visuallyHidden}>選舉人生：市長篇</h1>
-        {/* eslint-disable-next-line @next/next/no-img-element -- 靜態輸出不使用 next/image 的圖片最佳化 */}
-        <img
-          className={styles.hero}
-          src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/title.webp`}
-          alt="選舉人生：市長篇。候選人站在競選宣傳車上，對著夕陽下的城市揮手。"
-          width={1200}
-          height={800}
-          fetchPriority="high"
-        />
+        {/* 主視覺：滑過（或用鍵盤移到）選票上的特別篇時，淡入特別篇的圖 */}
+        <div className={styles.heroStack}>
+          {/* eslint-disable-next-line @next/next/no-img-element -- 靜態輸出不使用 next/image 的圖片最佳化 */}
+          <img
+            className={styles.hero}
+            src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/title.webp`}
+            alt="選舉人生：市長篇。候選人站在競選宣傳車上，對著夕陽下的城市揮手。"
+            width={1200}
+            height={800}
+            fetchPriority="high"
+          />
+          {/* eslint-disable-next-line @next/next/no-img-element -- 同上 */}
+          <img
+            className={`${styles.hero} ${styles.heroOver} ${hovered === "special" ? styles.heroShown : ""}`}
+            src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/specials/${SPECIAL_SERIES.art}.webp`}
+            alt=""
+            aria-hidden="true"
+            width={1200}
+            height={800}
+          />
+        </div>
         <p className={styles.lead}>選一場選舉參選。事件取材自真實的選舉公報與報導，並已虛構化。</p>
         {stale && <p className={styles.notice}>遊戲更新了，上一局的存檔無法繼續。請開始新的一局。</p>}
         {saved && !saved.finished && (
@@ -280,7 +294,14 @@ export default function Game() {
             <span>請圈選一項</span>
           </div>
           {/* 特別篇放第一位、加強調：正在進行的選戰，是現在最多人想玩的 */}
-          <button className={`${styles.ballotRow} ${styles.ballotFeatured}`} onClick={() => setSeries(true)}>
+          <button
+            className={`${styles.ballotRow} ${styles.ballotFeatured}`}
+            onClick={() => setSeries(true)}
+            onMouseEnter={() => setHovered("special")}
+            onFocus={() => setHovered("special")}
+            onMouseLeave={() => setHovered(null)}
+            onBlur={() => setHovered(null)}
+          >
             <span className={styles.ballotNo}>1</span>
             <BallotPhoto src={`/specials/${SPECIAL_SERIES.art}.webp`} />
             <span className={styles.ballotBody}>
@@ -296,7 +317,14 @@ export default function Game() {
             </span>
             <span className={styles.ballotStamp} aria-hidden="true" />
           </button>
-          <button className={styles.ballotRow} onClick={restart}>
+          <button
+            className={styles.ballotRow}
+            onClick={restart}
+            onMouseEnter={() => setHovered("main")}
+            onFocus={() => setHovered("main")}
+            onMouseLeave={() => setHovered(null)}
+            onBlur={() => setHovered(null)}
+          >
             <span className={styles.ballotNo}>2</span>
             <BallotPhoto src="/title.webp" />
             <span className={styles.ballotBody}>
