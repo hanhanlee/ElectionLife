@@ -75,6 +75,15 @@ export interface SpecialDef {
 }
 
 
+/** 挑戰者當選後說的第一句話：取自這場選戰市民最在意的事，依種子輪換 */
+const FIRST_MORNING = [
+  "明天早上，我要先去看老鼠最多的那幾條巷子。",
+  "明天早上，我要把那一千多則「市長，你給我聽好了」，一則一則交給市府。",
+  "明天早上，我要先去學校，看孩子們的營養午餐。",
+  "明天早上，我要先去爬幾棟沒有電梯的老公寓。那些長輩，等很久了。",
+  "明天早上，我要先去捷運站，看看大家上班的路，順不順。",
+];
+
 export const SPECIALS: SpecialDef[] = [
   {
     id: "capital-2026",
@@ -116,8 +125,8 @@ export const SPECIALS: SpecialDef[] = [
         when: (_s, won, _p, promises) => won && promises.debt === 0,
         title: "不可能的任務",
         headline: "落後二十八點的人，當選了",
-        paragraphs: () => [
-          "開票到晚上九點，公子市長的競選總部關了燈。你走上台，台下有人哭、有人笑，有人還舉著五月那份「落後二十八點」的民調截圖。你說的第一句話是：「明天早上，我要先去看那幾個最常淹水的地方。」",
+        paragraphs: (s) => [
+          `開票到晚上九點，公子市長的競選總部關了燈。你走上台，台下有人哭、有人笑，有人還舉著五月那份「落後二十八點」的民調截圖。你說的第一句話是：「${FIRST_MORNING[s.seed % FIRST_MORNING.length]}」`,
           "你答應過的事不多，但每一件都算過錢、排過時程。贏下選舉只是拿到鑰匙，接下來四年，才是真正難的部分。",
         ],
       },
@@ -235,7 +244,7 @@ export const SPECIALS: SpecialDef[] = [
       { eventId: "sp-capital-04", optionId: "enemy", text: "你說家裡生意的事是對岸在干擾選舉。支持者很買單，但那份時間線，你始終沒有公開。" },
       { eventId: "sp-capital-10", optionId: "map", text: "辯論上你攤開的淹水與鼠患數據，選後被好幾個里長印出來，貼在里民活動中心。" },
       { eventId: "sp-capital-10", optionId: "plan", text: "辯論那晚你不攻擊，只講政見、財源和時程。有人說那是整場最無聊的十分鐘，也有人說，那是唯一聽得懂的十分鐘。" },
-      { eventId: "sp-capital-10", optionId: "security", text: "辯論上你把話題拉到跨境鎮壓和城市韌性。支持者很振奮，也有人說，他們那天比較想聽淹水的事。" },
+      { eventId: "sp-capital-10", optionId: "security", text: "辯論上你把話題拉到跨境鎮壓和城市韌性。支持者很振奮，也有人說，他們那天比較想聽巷口的老鼠和家裡的老公寓。" },
       { eventId: "sp-capital-10", optionId: "evidence", text: "辯論上你一題一題拿出政策研究，請對手回應。那一段後來被網友剪成一支影片，標題叫「挑戰者的期末報告」。" },
       { eventId: "sp-capital-m06", optionId: "files", text: "辯論上你拿出對手的舊公文和舊發言。那幾分鐘很精彩，也讓人想起，你自己也有舊帳。" },
       { eventId: "sp-capital-m06", optionId: "own", text: "辯論一開場，你先交代了自己前後說法的差異。對手準備好的那幾題，後來一題都沒問。" },
